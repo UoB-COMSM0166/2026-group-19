@@ -25,14 +25,14 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 
 ## Your Group
 
-GROUP PHOTO. Add a group photo here.
+![Group Photo](group-photo.JPG)
 
-- Group member 1, name, email, role
-- Group member 2, name, email, role
-- Group member 3, name, email, role
-- Group member 4, name, email, role
-- Group member 5, name, email, role
-- Group member 6, name, email, role
+- Alexander Hoover, lv25122@bristol.ac.uk, ROLE
+- Jui Cheng Ho, ax25117@bristol.ac.uk, ROLE
+- Wei Lun Chang, jb25862@bristol.ac.uk, ROLE
+- Chi-Wei Feng, yx25778@bristol.ac.uk, ROLE
+- Johnny Fraser, qk18837@bristol.ac.uk, ROLE
+- Oliver Parry, nf25715@bristol.ac.uk, ROLE 
 
 ## Project Report
 
