@@ -36,10 +36,30 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 
 ## Project Report
 
+
 ### Introduction
 
 - 5% ~250 words 
-- Describe your game, what is based on, what makes it novel? (what's the "twist"?) 
+- Describe your game, what is based on, what makes it novel? (what's the "twist"?)
+
+- 
+Our team outlined two main project ideas for potential development. The first game idea was based on the existing game Super Crate Box, and the second is based on the browser game Learn2Fly. Although both of these games are part of different genres, they share similarities in being 2D platformers with side-view perspective, being arcade-like in style and relatively fast-paced for the player.
+
+Game 1: Super Crate Box
+Main mechanics:
+Fixed map arcade game, where the player controls a character equipped with weapons.
+Scoring system is defined by picking up crates, which spawn randomly and periodically around the map. Picking up crates results in a counter incrementing, and being ultimately stored in a leaderboard.
+Crates also contain a random weapon within, with weapons having their own unique attributes to fight against enemies.
+Enemies spawn in through the top of the map, progress over platforms within the map, and if they collide with the player, the game ends.
+Enemies differ in size between 'normal' sized enemies, which are smaller in hitbox and take 1 hit, and 'big' enemies, which are larger but take multiple hits to kill.
+If enemies reach the bottom of the map, and fall through a gate at the bottom, they re-appear at the top again, only much faster in movement.
+The music is retro/arcade, adding to the fast-paced nature of the game, and evoking a sense of nostalgia to older games of a similar genre.
+
+Key strengths:
+The core game mechanics are relatively simple, so there won't be the case of biting off more than we can chew. Moreover, we can implement the main features, and then work on adding our own twists to the game, iterating and further polishing as we go so that a seamless experience is achieved. The game is not so reliant on the quality of the graphics, so although we will all gain some experience creating our own visual entities, the quality of the graphics won't weigh down the implementation of other more important aspects of the game. This way development can continue to be refined simultaneous to the development of better graphics if need be.
+
+Possible Twists:
+Main twists would be changes to the environment in which the map is played. Adding wind which would affect bullet trajectory and physics as well as potentially the player would be interesting, which would occur at random points within the game for a specified amount of time. Similarly, limiting the perspective that the player can see from, for example removing lighting would be another interesting mechanic. In this way, the entire map would no longer be able to be seen in its entirety as usual, and instead the player is limited to seeing based on proximity from their player entity and which way they are facing. Changing gravity conditions is also a good twist, where the entire map flips, and the player has to traverse the map upside-down, with the enemies moving in the opposite direction.
 
 ### Requirements 
 
