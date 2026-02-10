@@ -41,8 +41,6 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 
 - 5% ~250 words 
 - Describe your game, what is based on, what makes it novel? (what's the "twist"?)
-
-- 
 Our team outlined two main project ideas for potential development. The first game idea was based on the existing game Super Crate Box, and the second is based on the browser game Learn2Fly. Although both of these games are part of different genres, they share similarities in being 2D platformers with side-view perspective, being arcade-like in style and relatively fast-paced for the player.
 
 Game 1: Super Crate Box
@@ -64,7 +62,23 @@ Main twists would be changes to the environment in which the map is played. Addi
 ### Requirements 
 
 - 15% ~750 words
-- Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories. 
+- Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories.
+
+- Stakeholders:
+causal players
+serious / competetive players
+young users
+hearing sensitive
+sight impared
+
+
+EPICS:
+ - as a competititive player i want to see my score and know my old high score so that i can see if i am improving at the game (competetive players)
+ - as a casual gamer i would like to be able to unlock new weapons and things to progress in the game other than score, maybe from a shop screen with collectible coins (casual users)
+ - as a casual gamer i want clear instrustions on how to play and options for difficulty levels so that the game isn't too hard (casual users)
+ - as a user with sensitive hearing i would like to be able to control the volume of in-game sounds and music independently
+ - as a user with 
+
 
 ### Design
 
