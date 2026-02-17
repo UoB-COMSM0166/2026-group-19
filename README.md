@@ -94,6 +94,49 @@ They ensure academic, technical, and strategic alignment.
 The end users of the product, such as casual and competitive gamers.  
 Their needs, behaviours, and feedback shape the product’s evolution.
 
+graph TD
+    subgraph Wider_Environment [Wider Environment]
+        subgraph Containing_System [Containing System]
+            Core((Core: The game))
+            
+            subgraph Support_Maintenance [Support and Maintenance]
+                TechStaff[Technical staff]
+                G19[Group 19]
+                Testers[Student Volunteers & Game Testers]
+            end
+
+            subgraph Direct_Users [Direct Users]
+                Players[Younger, Competitive, & Casual Players]
+                Accessibility[Sensitive hearing & Visually impaired users]
+            end
+
+            Beneficiaries[Immediate Beneficiaries: Unit lecturers & Academic supervisors]
+            Context[Academic Context: Computer Science course MSc]
+        end
+
+        subgraph External_Tools [External Influences from Tools]
+            P5[p5.js]
+            Git[Github]
+            Browsers[Web Browsers]
+        end
+
+        subgraph Regulators [Regulators]
+            GRA[Games Rating Authority]
+            UoB[University of Bristol]
+            GDPR[GDPR Advisors]
+        end
+
+        subgraph Indirect [Indirect Stakeholders]
+            Neg[Negative Stakeholders]
+            Public[Wider Public]
+        end
+    end
+
+    style Core fill:#f9f,stroke:#333,stroke-width:4px
+    style Containing_System fill:#fff2cc,stroke:#d6b656
+    style Wider_Environment fill:#dae8fe,stroke:#6c8ebf
+
+
 EPICS:
  - as a competititive player i want to see my score and know my old high score so that i can see if i am improving at the game (competetive players)
  - as a casual gamer i would like to be able to unlock new weapons and things to progress in the game other than score, maybe from a shop screen with collectible coins (casual users)
