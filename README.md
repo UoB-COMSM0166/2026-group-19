@@ -94,47 +94,47 @@ They ensure academic, technical, and strategic alignment.
 The end users of the product, such as casual and competitive gamers.  
 Their needs, behaviours, and feedback shape the product’s evolution.
 
-graph TD
-    subgraph Wider_Environment [Wider Environment]
-        subgraph Containing_System [Containing System]
-            Core((Core: The game))
-            
-            subgraph Support_Maintenance [Support and Maintenance]
-                TechStaff[Technical staff]
-                G19[Group 19]
-                Testers[Student Volunteers & Game Testers]
-            end
+Stakeholders
 
-            subgraph Direct_Users [Direct Users]
-                Players[Younger, Competitive, & Casual Players]
-                Accessibility[Sensitive hearing & Visually impaired users]
-            end
+Core: The game
 
-            Beneficiaries[Immediate Beneficiaries: Unit lecturers & Academic supervisors]
-            Context[Academic Context: Computer Science course MSc]
-        end
+Containing System - people benefitting from the system's results, primary users interacting with game
 
-        subgraph External_Tools [External Influences from Tools]
-            P5[p5.js]
-            Git[Github]
-            Browsers[Web Browsers]
-        end
+Support and Maintenance - technical staff keeping the game running and updated
+Group 19
+Student Volunteers & Game Testers
 
-        subgraph Regulators [Regulators]
-            GRA[Games Rating Authority]
-            UoB[University of Bristol]
-            GDPR[GDPR Advisors]
-        end
+Direct Users:
+Younger players
+Competitive players
+Casual Players
+Sensitive hearing users
+Visually impaired
 
-        subgraph Indirect [Indirect Stakeholders]
-            Neg[Negative Stakeholders]
-            Public[Wider Public]
-        end
-    end
+Immediate Beneficiaries:
+Unit lecturers and academic supervisors
 
-    style Core fill:#f9f,stroke:#333,stroke-width:4px
-    style Containing_System fill:#fff2cc,stroke:#d6b656
-    style Wider_Environment fill:#dae8fe,stroke:#6c8ebf
+Academic Context:
+Computer Science course MSc
+
+
+Wider Environment - stakeholders not touching the software but influence its requirements and are affected by it.
+Sponsors and purchasers, regulators, the public, negative stakeholders
+
+External Influences from Tools used:
+p5.js (potential maintenance operator: handling hosting of code)
+Github (hosting and saving of repo)
+Web Browsers = Interfacing Systems
+
+Regulators:
+Games Rating Authority
+University of Bristol
+GDPR Advisors
+
+Indirect Stakeholders:
+Negative Stakeholders
+Wider Public
+
 
 
 EPICS:
