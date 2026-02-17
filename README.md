@@ -118,6 +118,7 @@ EPICS/STORIES:
 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
+![Class Diagram](class_diagram.png)
 
 ### Implementation
 
