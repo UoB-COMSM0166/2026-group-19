@@ -76,7 +76,7 @@ At the same time, we explored ways to extend and innovate on the original concep
 - 15% ~750 words
 - Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories.
 
-- Stakeholders:
+### Stakeholders:
 ![Group Photo](Stakeholders.svg)
 ### 1. Core Product
 The central software artifact being developed.  
