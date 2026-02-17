@@ -76,44 +76,75 @@ At the same time, we explored ways to extend and innovate on the original concep
 - 15% ~750 words
 - Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories.
 
-- Stakeholders:
-causal players
-serious / competetive players
-young users
-hearing sensitive
-sight impared
-EPICS/STORIES:
+### Stakeholders:
+![Group Photo](Stakeholders.svg)
+### 1. Core Product
+The central software artifact being developed.  
+It represents the primary value delivered to users and the focus of all technical and design decisions.
+
+### 2. Implementation Team
+The developers and designers responsible for building, testing, and maintaining the product.  
+They translate requirements into a working system.
+
+### 3. Supervisory Body
+Professors, experts, or sponsors providing oversight and governance.  
+They ensure academic, technical, and strategic alignment.
+
+### 4. Target Audience
+The end users of the product, such as casual and competitive gamers.  
+Their needs, behaviours, and feedback shape the product’s evolution.
+
+Stakeholders
+
+Core: The game
+
+Containing System - people benefitting from the system's results, primary users interacting with game
+
+Support and Maintenance - technical staff keeping the game running and updated
+Group 19
+Student Volunteers & Game Testers
+
+Direct Users:
+Younger players
+Competitive players
+Casual Players
+Sensitive hearing users
+Visually impaired
+
+Immediate Beneficiaries:
+Unit lecturers and academic supervisors
+
+Academic Context:
+Computer Science course MSc
+
+
+Wider Environment - stakeholders not touching the software but influence its requirements and are affected by it.
+Sponsors and purchasers, regulators, the public, negative stakeholders
+
+External Influences from Tools used:
+p5.js (potential maintenance operator: handling hosting of code)
+Github (hosting and saving of repo)
+Web Browsers = Interfacing Systems
+
+Regulators:
+Games Rating Authority
+University of Bristol
+GDPR Advisors
+
+Indirect Stakeholders:
+Negative Stakeholders
+Wider Public
+
+
+
+EPICS:
  - as a competititive player i want to see my score and know my old high score so that i can see if i am improving at the game (competetive players)
  - as a casual gamer i would like to be able to unlock new weapons and things to progress in the game other than score, maybe from a shop screen with collectible coins (casual users)
  - as a casual gamer i want clear instrustions on how to play and options for difficulty levels so that the game isn't too hard (casual users)
  - as a user with sensitive hearing i would like to be able to control the volume of in-game sounds and music independently
- - as a user with poor sight i would like the enemies and player charater to be easily visible in front of the background, and also have a high contrast option
+ - as a user with 
 
-### Epic: Weapon System
-**Goal:** Create a chaotic, satisfying combat loop that forces adaptation.
 
-| User Story | Persona / Bartle Type | Acceptance Criteria |
-| :--- | :--- | :--- |
-| "As a Strategy Gamer, I want my weapon to force-switch every time I score a point, so that I cannot camp in one safe spot with a powerful gun." | **The Explorer**<br>*(Wants to master systems)* | - Collecting a crate grants +1 score.<br>- Collecting a crate immediately replaces current weapon with a random new one.<br>- Ammo is unlimited. |
-| "As a Action Gamer, I want distinct visual feedback for different weapons, so I instantly know how to adjust my playstyle." | **The Killer**<br>*(Focuses on combat)* | - Shotguns have a spread pattern.<br>- Laser rifles have a continuous beam.<br>- Rocket launchers have recoil and explosion radius. |
-| "As a Casual Player, I want the weapons to feel powerful ('Juicy'), so that the game feels satisfying even if I lose quickly." | **The Non-Gamer**<br>*(Needs instant gratification)* | - Screen shake is applied when firing heavy weapons.<br>- Enemies explode into particles upon death. |
-
-### Epic: Local Co-op
-**Goal:** Enable shared-screen multiplayer without hardware conflicts.
-
-| User Story | Persona / Bartle Type | Acceptance Criteria |
-| :--- | :--- | :--- |
-| "As a Social Gamer, I want to play with a friend on the same keyboard, so we can play together without needing extra controllers." | **The Socializer**<br>*(Emma equivalent)* | - Player 1 uses WASD + Space.<br>- Player 2 uses Arrows + Enter.<br>- Input from one does not block the other (ghosting check). |
-| "As a Competitive Friend, I want a summary screen at the end of a co-op session, so we can see who collected the most crates." | **The Achiever**<br>*(Hans equivalent)* | - Game Over screen displays individual scores alongside the total team score. |
-| "As a Teammate, I want friendly fire to be disabled, so I don't accidentally kill my partner in the chaos." | **The Socializer** | - Projectiles pass through the other player model without causing damage. |
-
-### Epic: The Twist (Environmental Hazards)
-**Goal:** Introduce dynamic difficulty to distinguish the game from standard platformers.
-
-| User Story | Persona / Bartle Type | Acceptance Criteria |
-| :--- | :--- | :--- |
-| "As a Veteran Player, I want there to be random increases in difficulty such as weather or platform changes as I progress, so the game doesn't become predictable." | **The Killer**<br>*(Wants challenge)* | - Every 10 crates collected, the level layout shifts.<br>- Warning indicator flashes 2 seconds before a platform disappears. |
-| "As an Explorer, I want different 'Hazard Modes' to appear randomly, so I have to adapt my movement strategy." | **The Explorer** | - Random chance for "Low Gravity" mode.<br>- Random chance for "Lights Out" mode (flashlight only). |
 ### Design
 
 - 15% ~750 words 
