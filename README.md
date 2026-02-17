@@ -82,15 +82,27 @@ serious / competetive players
 young users
 hearing sensitive
 sight impared
-
-
-EPICS:
+EPICS/STORIES:
  - as a competititive player i want to see my score and know my old high score so that i can see if i am improving at the game (competetive players)
  - as a casual gamer i would like to be able to unlock new weapons and things to progress in the game other than score, maybe from a shop screen with collectible coins (casual users)
  - as a casual gamer i want clear instrustions on how to play and options for difficulty levels so that the game isn't too hard (casual users)
  - as a user with sensitive hearing i would like to be able to control the volume of in-game sounds and music independently
- - as a user with 
+ - as a user with poor sight i would like the enemies and player charater to be easily visible in front of the background, and also have a high contrast option
 
+  **user stories related to weapons system** 
+  User Story,Persona / Bartle Type,Acceptance Criteria
+"""As a Strategy Gamer, I want my weapon to force-switch every time I score a point, so that I cannot camp in one safe spot with a powerful gun.""",The Explorer(Wants to master systems),- Collecting a crate grants +1 score.- Collecting a crate immediately replaces current weapon with a random new one.- Ammo is unlimited.
+"""As a Action Gamer, I want distinct visual feedback for different weapons, so I instantly know how to adjust my playstyle.""",The Killer(Focuses on combat),- Shotguns have a spread pattern.- Laser rifles have a continuous beam.- Rocket launchers have recoil and explosion radius.
+"""As a Casual Player, I want the weapons to feel powerful ('Juicy'), so that the game feels satisfying even if I lose quickly.""",The Non-Gamer(Needs instant gratification),- Screen shake is applied when firing heavy weapons.- Enemies explode into particles upon death.
+**local coop related stories**
+User Story,Persona / Bartle Type,Acceptance Criteria
+"""As a Social Gamer, I want to play with a friend on the same keyboard, so we can play together without needing extra controllers.""",The Socializer(Emma equivalent),- Player 1 uses WASD + Space.- Player 2 uses Arrows + Enter.- Input from one does not block the other (ghosting check).
+"""As a Competitive Friend, I want a summary screen at the end of a co-op session, so we can see who collected the most crates.""",The Achiever(Hans equivalent),- Game Over screen displays individual scores alongside the total team score.
+"""As a Teammate, I want friendly fire to be disabled, so I don't accidentally kill my partner in the chaos.""",The Socializer,- Projectiles pass through the other player model without causing damage.
+**'twist' related stories**
+User Story,Persona / Bartle Type,Acceptance Criteria
+"""As a Veteran Player, I want there to be random increases in difficulty such as weather or platform changes as I progress, so the game doesn't become predictable.""",The Killer(Wants challenge),"- Every 10 crates collected, the level layout shifts.- Warning indicator flashes 2 seconds before a platform disappears."
+"""As an Explorer, I want different 'Hazard Modes' to appear randomly, so I have to adapt my movement strategy.""",The Explorer,"- Random chance for ""Low Gravity"" mode.- Random chance for ""Lights Out"" mode (flashlight only)."
 
 ### Design
 
