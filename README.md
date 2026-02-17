@@ -25,7 +25,7 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 
 ## Your Group
 
-![Group Photo](group-photo.JPG)
+![Group Photo](./image/group-photo.JPG)
 
 - Alexander Hoover, lv25122@bristol.ac.uk, ROLE
 - Jui Cheng Ho, ax25117@bristol.ac.uk, ROLE
@@ -63,6 +63,9 @@ Main twists would be changes to the environment in which the map is played. Addi
 The first stage of our development process was to identify what type of game we wanted to make. To do this, we chose two games as inspiration: Super Crate Box and Learn 2 Fly.
 
 #### Idea Development
+| ![Game picture](./image/supercratebox.jpeg) | ![Game picture](./image/learn2fly.jpeg) |
+|---|---|
+| **Super Crate Box**<br>Fast-paced arcade platform shooter | **Learn 2 Fly 2**<br>Physics-based launch/upgrade game |
 
 We began by brainstorming potential game genres to ensure our team shared a clear and unified vision for the type of game we wanted to create. Each team member then ranked their preferred genres, and Arcade-style and Platformer emerged as the clear favourites. With this focus established, we explored specific game ideas within these genres and ultimately selected Super Crate Box and Learn 2 Fly as our primary sources of inspiration. 
 
@@ -77,7 +80,7 @@ At the same time, we explored ways to extend and innovate on the original concep
 - Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories.
 
 ### Stakeholders:
-![Group Photo](Stakeholders.svg)
+![Group Photo](./image/Stakeholders.svg)
 ### 1. Core Product
 The central software artifact being developed.  
 It represents the primary value delivered to users and the focus of all technical and design decisions.
@@ -149,7 +152,7 @@ EPICS:
 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
-![Class Diagram](class_diagram.png)
+![Class Diagram](./image/class_diagram.png)
 
 ### Implementation
 
