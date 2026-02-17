@@ -60,6 +60,18 @@ Possible Twists:
 Main twists would be changes to the environment in which the map is played. Adding wind which would affect bullet trajectory and physics as well as potentially the player would be interesting, which would occur at random points within the game for a specified amount of time. Similarly, limiting the perspective that the player can see from, for example removing lighting would be another interesting mechanic. In this way, the entire map would no longer be able to be seen in its entirety as usual, and instead the player is limited to seeing based on proximity from their player entity and which way they are facing. Changing gravity conditions is also a good twist, where the entire map flips, and the player has to traverse the map upside-down, with the enemies moving in the opposite direction.
 
 ### Requirements 
+The first stage of our development process was to identify what type of game we wanted to make. To do this, we chose two games as inspiration: Super Crate Box and Learn 2 Fly.
+
+#### Idea Development
+
+We began by brainstorming potential game genres to ensure our team shared a clear and unified vision for the type of game we wanted to create. Each team member then ranked their preferred genres, and Arcade-style and Platformer emerged as the clear favourites. With this focus established, we explored specific game ideas within these genres and ultimately selected Super Crate Box and Learn 2 Fly as our primary sources of inspiration. 
+
+We created paper prototypes for both game concepts and tested them with classmates to evaluate the user experience. Based on their feedback, users preferred the Super Crate Box–inspired version, noting that it had clearer objectives and more intuitive game mechanics. Our group was also more motivated to pursue this direction, as the Super Crate Box concept offered greater potential for expansion beyond the original, such as introducing new enemies, items, and additional gameplay features.
+
+With the core gameplay inspiration established, we began identifying the key elements we wanted our game to inherit, as well as areas where we could expand and introduce new ideas. Several features stood out to us from the original game. In particular, the variety of weapon types helped ensure that each playthrough felt fresh and dynamic, while the mechanic of enemies becoming more powerful upon reaching the bottom added tension and encouraged players to act quickly. We also appreciated the smooth animations and camera shake effects, which made the gameplay feel responsive and impactful.
+
+At the same time, we explored ways to extend and innovate on the original concept. One idea was to increase the difficulty and atmosphere by having the lights turn off partway through the game, limiting the player’s visibility to a small radius illuminated by a headlamp. We also considered introducing a jetpack obtained from crates, allowing the player greater mobility and vertical freedom. Additionally, we discussed expanding the combat system to include hand-to-hand or melee weapons alongside firearms, adding further variety and strategic options for the player.
+
 
 - 15% ~750 words
 - Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories.
