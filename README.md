@@ -94,6 +94,49 @@ They ensure academic, technical, and strategic alignment.
 The end users of the product, such as casual and competitive gamers.  
 Their needs, behaviours, and feedback shape the product’s evolution.
 
+Stakeholders
+
+Core: The game
+
+Containing System - people benefitting from the system's results, primary users interacting with game
+
+Support and Maintenance - technical staff keeping the game running and updated
+Group 19
+Student Volunteers & Game Testers
+
+Direct Users:
+Younger players
+Competitive players
+Casual Players
+Sensitive hearing users
+Visually impaired
+
+Immediate Beneficiaries:
+Unit lecturers and academic supervisors
+
+Academic Context:
+Computer Science course MSc
+
+
+Wider Environment - stakeholders not touching the software but influence its requirements and are affected by it.
+Sponsors and purchasers, regulators, the public, negative stakeholders
+
+External Influences from Tools used:
+p5.js (potential maintenance operator: handling hosting of code)
+Github (hosting and saving of repo)
+Web Browsers = Interfacing Systems
+
+Regulators:
+Games Rating Authority
+University of Bristol
+GDPR Advisors
+
+Indirect Stakeholders:
+Negative Stakeholders
+Wider Public
+
+
+
 EPICS:
  - as a competititive player i want to see my score and know my old high score so that i can see if i am improving at the game (competetive players)
  - as a casual gamer i would like to be able to unlock new weapons and things to progress in the game other than score, maybe from a shop screen with collectible coins (casual users)
@@ -106,6 +149,7 @@ EPICS:
 
 - 15% ~750 words 
 - System architecture. Class diagrams, behavioural diagrams. 
+![Class Diagram](class_diagram.png)
 
 ### Implementation
 
