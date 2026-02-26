@@ -1,0 +1,27 @@
+{
+  "name": "2026-group-19",
+  "version": "1.0.0",
+  "description": "2026 COMSM0166 group 19",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UoB-COMSM0166/2026-group-19.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/UoB-COMSM0166/2026-group-19/issues"
+  },
+  "homepage": "https://github.com/UoB-COMSM0166/2026-group-19#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@fal-works/eslint-config-p5js": "^1.0.3",
+    "eslint": "^10.0.2",
+    "globals": "^17.3.0"
+  }
+}
