@@ -4,6 +4,8 @@
   "description": "2026 COMSM0166 group 19",
   "main": "index.js",
   "scripts": {
+    "start": "http-server ./src -p 8000",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +24,7 @@
     "@eslint/js": "^10.0.1",
     "@fal-works/eslint-config-p5js": "^1.0.3",
     "eslint": "^10.0.2",
-    "globals": "^17.3.0"
+    "globals": "^17.3.0",
+    "http-server": "^14.1.1"
   }
 }

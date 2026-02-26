@@ -4,7 +4,11 @@ import p5jsConfig from "@fal-works/eslint-config-p5js";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs}"], 
+  {
+    ignores: ["**/p5.js", "**/p5.min.js", "node_modules/"],
+  },
+  { 
+    files: ["**/*.{js,mjs,cjs}"], 
     plugins: { js }, 
     extends: ["js/recommended"], 
     ...js.configs.recommended,
@@ -19,6 +23,6 @@ export default defineConfig([
     rules: {
       "no-unused-vars": ["warn", { "varsIgnorePattern": "setup|draw" }],
       "no-undef": "error",
-    } 
+    },
   },
 ]);
