@@ -1,6 +1,5 @@
 class Renderable {
-    constructor(size, color) {
-        this.size = size;
+    constructor(color) {
         this.color = color;
     }
 }

@@ -15,7 +15,8 @@ class ECS {
         this.systems = [
             new MovementSystem(),
             new InputSystem(),
-            new RenderSystem()
+            new RenderSystem(),
+            new CollisionSystem()
         ]
     }
 
