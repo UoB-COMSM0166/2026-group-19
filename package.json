@@ -21,10 +21,6 @@
   },
   "homepage": "https://github.com/UoB-COMSM0166/2026-group-19#readme",
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@fal-works/eslint-config-p5js": "^1.0.3",
-    "eslint": "^10.0.2",
-    "globals": "^17.3.0",
     "http-server": "^14.1.1"
   }
 }
