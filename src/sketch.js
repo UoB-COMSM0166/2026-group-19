@@ -1,9 +1,11 @@
+let game;
+
 function setup() {
-  // Canvas init
-  createCanvas(1000, 800);
-  background(230);
+    createCanvas(800, 600);
+    game = new Game(width, height);
 }
 
 function draw() {
-
+    background(100);
+    game.update();
 }
