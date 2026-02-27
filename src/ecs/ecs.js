@@ -11,12 +11,17 @@ class ECS {
         //      Player   -> Map { 0 => Player {} },
         //      Enemy    -> Map { 1 => Enemy {} }
         //   }
+
+        // Potential optimization: Replace this hashmap datastructure with fixed sparse arrays
         this.components = new Map();
+
+        // The order of the systems in this array affects the order of execution
+        // Make sure that they are ordered correctly!
         this.systems = [
-            new MovementSystem(),
+            new GravitySystem(),
             new InputSystem(),
-            new RenderSystem(),
-            new CollisionSystem()
+            new PhysicsSystem(),
+            new RenderSystem()
         ]
     }
 

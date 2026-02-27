@@ -1,1 +1,5 @@
-class Player {}
+class Player {
+    constructor() {
+        this.onGround = false;
+    }
+}
