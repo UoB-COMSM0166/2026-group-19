@@ -1,4 +1,4 @@
-class gravity {
+class Gravity {
     constructor(g) {
         this.g = g;
     }

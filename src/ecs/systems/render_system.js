@@ -1,6 +1,5 @@
 class RenderSystem {
     update(ecs) {
-        // Proof of concept, every entity is rendered as a circle for now
         const entities = ecs.getEntitiesWith(Position, Collider, Renderable);
         for (let entity of entities) {
             const collider = ecs.getComponent(entity, Collider);
@@ -10,7 +9,7 @@ class RenderSystem {
             const bb = collider.getBoundingBox(pos);
             fill(...render.color);
             noStroke();
-            rect(bb.x, bb.y, bb.w, bb.h);
+            rect(bb.left_x, bb.top_y, bb.w, bb.h);
         }
     }
 }
