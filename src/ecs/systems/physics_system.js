@@ -3,7 +3,7 @@ const Axis = Object.freeze({
     Y: 'y'
 });
 
-class PhysicsSystem {
+class PhysicsSystem extends System {
     constructor() {
         // Walls never change, so can cache them
         this.walls = null;

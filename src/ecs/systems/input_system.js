@@ -1,4 +1,4 @@
-class InputSystem {
+class InputSystem extends System {
     constructor() {
         this.prev = new Map();
     }
