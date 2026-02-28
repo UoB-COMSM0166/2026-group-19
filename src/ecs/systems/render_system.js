@@ -1,13 +1,13 @@
 class RenderSystem extends System {
-    constructor() {
-        super();
+    constructor(ecs) {
+        super(ecs);
     }
-    update(ecs) {
-        const entities = ecs.getEntitiesWith(Position, Collider, Renderable);
+    update() {
+        const entities = this.ecs.getEntitiesWith(Position, Collider, Renderable);
         for (let entity of entities) {
-            const collider = ecs.getComponent(entity, Collider);
-            const pos = ecs.getComponent(entity, Position);
-            const render = ecs.getComponent(entity, Renderable);
+            const collider = this.ecs.getComponent(entity, Collider);
+            const pos = this.ecs.getComponent(entity, Position);
+            const render = this.ecs.getComponent(entity, Renderable);
 
             const bb = collider.getBoundingBox(pos);
             fill(...render.color);

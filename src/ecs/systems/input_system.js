@@ -1,13 +1,15 @@
 class InputSystem extends System {
-    constructor() {
-        super();
+    constructor(ecs) {
+        super(ecs);
         this.prev = new Map();
     }
-    update(ecs) {
-        const players = ecs.getEntitiesWith(Player, Velocity);
-        for (let entity of players) {
-            const vel = ecs.getComponent(entity, Velocity);
-            const player = ecs.getComponent(entity, Player);
+    update() {
+        const sprites = this.ecs.getEntitiesWith(Sprite, Velocity);
+        for (let id of sprites) {
+            const sprite = this.ecs.getComponent(id, Sprite);
+            if (!sprite.isPlayer) { continue; }
+
+            const vel = this.ecs.getComponent(id, Velocity);
             const speed = 10;
             const jumpSpeed = 13;
 
@@ -20,7 +22,7 @@ class InputSystem extends System {
             }
 
             // Jump
-            if (player.onGround && !this.prev.get(UP_ARROW) && keyIsDown(UP_ARROW)) {
+            if (sprite.onGround && !this.prev.get(UP_ARROW) && keyIsDown(UP_ARROW)) {
                 vel.vy = -jumpSpeed;
             }
 

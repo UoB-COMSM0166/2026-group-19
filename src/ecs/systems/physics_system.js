@@ -4,34 +4,32 @@ const Axis = Object.freeze({
 });
 
 class PhysicsSystem extends System {
-    constructor() {
-        super();
+    constructor(ecs) {
+        super(ecs);
         // Walls never change, so can cache them
         this.walls = null;
     }
-    update(ecs) {
-        const entities = ecs.getEntitiesWith(Position, Velocity, Collider);
+    update() {
+        const entities = this.ecs.getEntitiesWith(Position, Velocity, Collider, Sprite);
         if (!this.walls) {
-            this.walls = ecs.getEntitiesWith(Position, Collider, Immovable, Wall);
+            this.walls = this.ecs.getEntitiesWith(Position, Collider, Immovable, Wall);
         }
 
         for (let id of entities) {
-            const pos = ecs.getComponent(id, Position);
-            const vel = ecs.getComponent(id, Velocity);
-            const col = ecs.getComponent(id, Collider);
-            const player = ecs.getComponent(id, Player);
+            const pos = this.ecs.getComponent(id, Position);
+            const vel = this.ecs.getComponent(id, Velocity);
+            const col = this.ecs.getComponent(id, Collider);
+            const sprite = this.ecs.getComponent(id, Sprite);
 
-            if (player) {
-                player.onGround = false;
-            }
+            sprite.onGround = false;
 
             // X-AXIS MOVEMENT
             pos.x += vel.vx;
-            this.resolveWallCollisions(id, pos, col, ecs, Axis.X);
+            this.resolveWallCollisions(id, pos, col, this.ecs, Axis.X);
 
             // Y-AXIS MOVEMENT
             pos.y += vel.vy;
-            this.resolveWallCollisions(id, pos, col, ecs, Axis.Y);
+            this.resolveWallCollisions(id, pos, col, this.ecs, Axis.Y);
         }
     }
 
@@ -43,20 +41,20 @@ class PhysicsSystem extends System {
             a.top_y + a.h > b.top_y;
     }
 
-    resolveWallCollisions(entityId, pos, col, ecs, axis) {
+    resolveWallCollisions(entityId, pos, col, axis) {
         /*
         Resolves a collision between an entity having Position, Velocity, Collider and all walls
         */
         const bb_a = col.getBoundingBox(pos);
-        const vel = ecs.getComponent(entityId, Velocity);
-        const player = ecs.getComponent(entityId, Player);
+        const vel = this.ecs.getComponent(entityId, Velocity);
+        const sprite = this.ecs.getComponent(entityId, Sprite);
 
         // Loop through all walls
         // See if entity is colliding with wall(s)
         // Resolve collision in correct axis
         for (let wallId of this.walls) {
-            const wallPos = ecs.getComponent(wallId, Position);
-            const wallCol = ecs.getComponent(wallId, Collider);
+            const wallPos = this.ecs.getComponent(wallId, Position);
+            const wallCol = this.ecs.getComponent(wallId, Collider);
             const bb_b = wallCol.getBoundingBox(wallPos);
 
             if (this.collides(bb_a, bb_b)) {
@@ -73,10 +71,7 @@ class PhysicsSystem extends System {
                     // Resolve Y: Push out and kill velocity
                     if (vel.vy > 0) {
                         pos.y = bb_b.top_y - bb_a.h / 2; // Hit top of floor
-                        
-                        if (player) {
-                            player.onGround = true;
-                        }
+                        sprite.onGround = true;
 
                     } else if (vel.vy < 0) {
                         pos.y = bb_b.top_y + bb_b.h + bb_a.h / 2; // Hit bottom of ceiling

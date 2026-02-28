@@ -1,13 +1,14 @@
 class GravitySystem extends System {
-    constructor() {
-        super();
+    constructor(ecs) {
+        super(ecs);
         this.maxFall = 50; // Terminal velocity
     }
-    update(ecs) {
-        const ids = ecs.getEntitiesWith(Position, Velocity, Gravity);
+    
+    update() {
+        const ids = this.ecs.getEntitiesWith(Position, Velocity, Gravity);
         for (let id of ids) {
-            const velComp = ecs.getComponent(id, Velocity);
-            const gComp = ecs.getComponent(id, Gravity);
+            const velComp = this.ecs.getComponent(id, Velocity);
+            const gComp = this.ecs.getComponent(id, Gravity);
             const g = gComp.g;
 
             // Update velocity (v = a * t)
