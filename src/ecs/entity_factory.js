@@ -25,8 +25,14 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Collider(width, height, false));
         this.ecs.addComponent(entity, new Velocity(0, 0));
         this.ecs.addComponent(entity, new Gravity(0.5));
-        this.ecs.addComponent(entity, new Sprite(isPlayer));
-        this.ecs.addComponent(entity, new Renderable([255, 10, 155]));
+        this.ecs.addComponent(entity, new Character(isPlayer));
+        if (isPlayer) {
+            this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
+        }
+        else {
+            this.ecs.addComponent(entity, new Renderable([255, 10, 0]));              
+        }
+
         return entity;
     }
 

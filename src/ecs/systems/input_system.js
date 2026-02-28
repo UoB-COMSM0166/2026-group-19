@@ -4,9 +4,9 @@ class InputSystem extends System {
         this.prev = new Map();
     }
     update() {
-        const sprites = this.ecs.getEntitiesWith(Sprite, Velocity);
+        const sprites = this.ecs.getEntitiesWith(Character, Velocity);
         for (let id of sprites) {
-            const sprite = this.ecs.getComponent(id, Sprite);
+            const sprite = this.ecs.getComponent(id, Character);
             if (!sprite.isPlayer) { continue; }
 
             const vel = this.ecs.getComponent(id, Velocity);
