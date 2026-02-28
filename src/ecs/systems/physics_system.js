@@ -10,7 +10,7 @@ class PhysicsSystem extends System {
         this.walls = null;
     }
     update() {
-        const entities = this.ecs.getEntitiesWith(Position, Velocity, Collider, Sprite);
+        const entities = this.ecs.getEntitiesWith(Position, Velocity, Collider, Character);
         if (!this.walls) {
             this.walls = this.ecs.getEntitiesWith(Position, Collider, Immovable, Wall);
         }
@@ -19,17 +19,17 @@ class PhysicsSystem extends System {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
             const col = this.ecs.getComponent(id, Collider);
-            const sprite = this.ecs.getComponent(id, Sprite);
+            const sprite = this.ecs.getComponent(id, Character);
 
             sprite.onGround = false;
 
             // X-AXIS MOVEMENT
             pos.x += vel.vx;
-            this.resolveWallCollisions(id, pos, col, this.ecs, Axis.X);
+            this.resolveWallCollisions(id, pos, col, Axis.X);
 
             // Y-AXIS MOVEMENT
             pos.y += vel.vy;
-            this.resolveWallCollisions(id, pos, col, this.ecs, Axis.Y);
+            this.resolveWallCollisions(id, pos, col, Axis.Y);
         }
     }
 
@@ -47,7 +47,7 @@ class PhysicsSystem extends System {
         */
         const bb_a = col.getBoundingBox(pos);
         const vel = this.ecs.getComponent(entityId, Velocity);
-        const sprite = this.ecs.getComponent(entityId, Sprite);
+        const sprite = this.ecs.getComponent(entityId, Character);
 
         // Loop through all walls
         // See if entity is colliding with wall(s)
@@ -65,7 +65,13 @@ class PhysicsSystem extends System {
                     } else if (vel.vx < 0) {
                         pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit right side of wall
                     }
-                    vel.vx = 0;
+
+                    if (sprite.isPlayer) {
+                        vel.vx = 0;
+                    }
+                    else {
+                        vel.vx = -vel.vx;
+                    }
                 } 
                 else {
                     // Resolve Y: Push out and kill velocity
