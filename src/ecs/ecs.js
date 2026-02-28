@@ -14,20 +14,12 @@ class ECS {
 
         // Potential optimization: Replace this hashmap datastructure with fixed sparse arrays
         this.components = new Map();
-
-        // The order of the systems in this array affects the order of execution
-        // Make sure that they are ordered correctly!
-        this.systems = [
-            new GravitySystem(),
-            new InputSystem(),
-            new PhysicsSystem(),
-            new RenderSystem()
-        ]
+        this.systems = null;
     }
 
     update() {
         for (let system of this.systems) {
-            system.update(this);
+            system.update();
         }
     }
     
@@ -81,5 +73,9 @@ class ECS {
         
         // Return the entities that have all requested components
         return matchingEntityIds;
+    }
+
+    getSystem(systemClass) {
+        return this.systems.find(s => s instanceof systemClass);
     }
 }
