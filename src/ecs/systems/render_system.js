@@ -1,4 +1,7 @@
 class RenderSystem extends System {
+    constructor() {
+        super();
+    }
     update(ecs) {
         const entities = ecs.getEntitiesWith(Position, Collider, Renderable);
         for (let entity of entities) {
