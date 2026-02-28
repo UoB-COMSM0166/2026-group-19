@@ -20,16 +20,20 @@ class EntityFactory {
     }
 
     createSprite(center_x, center_y, width, height, isPlayer) {
+        const speed = 5;
+
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y));
         this.ecs.addComponent(entity, new Collider(width, height, false));
-        this.ecs.addComponent(entity, new Velocity(0, 0));
         this.ecs.addComponent(entity, new Gravity(0.5));
         this.ecs.addComponent(entity, new Character(isPlayer));
         if (isPlayer) {
+            this.ecs.addComponent(entity, new Velocity(0, 0));
             this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
         }
         else {
+            const sign = Math.random() < 0.5 ? -1 : 1;
+            this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
             this.ecs.addComponent(entity, new Renderable([255, 10, 0]));              
         }
 
