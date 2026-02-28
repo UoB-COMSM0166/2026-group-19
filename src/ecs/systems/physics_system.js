@@ -5,6 +5,7 @@ const Axis = Object.freeze({
 
 class PhysicsSystem extends System {
     constructor() {
+        super();
         // Walls never change, so can cache them
         this.walls = null;
     }

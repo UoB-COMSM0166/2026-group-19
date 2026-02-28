@@ -1,5 +1,6 @@
 class InputSystem extends System {
     constructor() {
+        super();
         this.prev = new Map();
     }
     update(ecs) {
