@@ -1,6 +1,5 @@
 class Character {
-    constructor(isPlayer) {
-        this.isPlayer = isPlayer;
+    constructor() {
         this.onGround = false;
     }
 }
