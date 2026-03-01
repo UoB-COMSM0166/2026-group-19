@@ -47,6 +47,7 @@ class PhysicsSystem extends System {
         const bb_a = pos.getBoundingBox();
         const vel = this.ecs.getComponent(entityId, Velocity);
         const sprite = this.ecs.getComponent(entityId, Character);
+        const player = this.ecs.getComponent(entityId, Player);
 
         // Loop through all walls
         // See if entity is colliding with wall(s)
@@ -64,7 +65,7 @@ class PhysicsSystem extends System {
                         pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit right side of wall
                     }
 
-                    if (sprite.isPlayer) {
+                    if (player) {
                         vel.vx = 0;
                     }
                     else {
