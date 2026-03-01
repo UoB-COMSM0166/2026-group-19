@@ -44,7 +44,6 @@ class PhysicsSystem extends System {
         /*
         Resolves a collision between an entity having Position, Velocity, Collider and all walls
         */
-        const bb_a = pos.getBoundingBox();
         const vel = this.ecs.getComponent(entityId, Velocity);
         const sprite = this.ecs.getComponent(entityId, Character);
         const player = this.ecs.getComponent(entityId, Player);
@@ -53,6 +52,7 @@ class PhysicsSystem extends System {
         // See if entity is colliding with wall(s)
         // Resolve collision in correct axis
         for (let wallId of this.walls) {
+            const bb_a = pos.getBoundingBox();
             const wallPos = this.ecs.getComponent(wallId, Position);
             const bb_b = wallPos.getBoundingBox();
 
