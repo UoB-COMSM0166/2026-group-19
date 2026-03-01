@@ -25,7 +25,7 @@ class EntityFactory {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Gravity(0.5));
-        this.ecs.addComponent(entity, new Character());
+        this.ecs.addComponent(entity, new Character(10));
         if (isPlayer) {
             this.ecs.addComponent(entity, new Player());
             this.ecs.addComponent(entity, new Velocity(0, 0));
