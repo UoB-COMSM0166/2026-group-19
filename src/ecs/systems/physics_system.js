@@ -10,26 +10,25 @@ class PhysicsSystem extends System {
         this.walls = null;
     }
     update() {
-        const entities = this.ecs.getEntitiesWith(Position, Velocity, Collider, Character);
+        const entities = this.ecs.getEntitiesWith(Position, Velocity, Character);
         if (!this.walls) {
-            this.walls = this.ecs.getEntitiesWith(Position, Collider, Immovable, Wall);
+            this.walls = this.ecs.getEntitiesWith(Position, Wall);
         }
 
         for (let id of entities) {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
-            const col = this.ecs.getComponent(id, Collider);
             const sprite = this.ecs.getComponent(id, Character);
 
             sprite.onGround = false;
 
             // X-AXIS MOVEMENT
             pos.x += vel.vx;
-            this.resolveWallCollisions(id, pos, col, Axis.X);
+            this.resolveWallCollisions(id, pos, Axis.X);
 
             // Y-AXIS MOVEMENT
             pos.y += vel.vy;
-            this.resolveWallCollisions(id, pos, col, Axis.Y);
+            this.resolveWallCollisions(id, pos, Axis.Y);
         }
     }
 
@@ -41,11 +40,11 @@ class PhysicsSystem extends System {
             a.top_y + a.h > b.top_y;
     }
 
-    resolveWallCollisions(entityId, pos, col, axis) {
+    resolveWallCollisions(entityId, pos, axis) {
         /*
         Resolves a collision between an entity having Position, Velocity, Collider and all walls
         */
-        const bb_a = col.getBoundingBox(pos);
+        const bb_a = pos.getBoundingBox();
         const vel = this.ecs.getComponent(entityId, Velocity);
         const sprite = this.ecs.getComponent(entityId, Character);
 
@@ -54,8 +53,7 @@ class PhysicsSystem extends System {
         // Resolve collision in correct axis
         for (let wallId of this.walls) {
             const wallPos = this.ecs.getComponent(wallId, Position);
-            const wallCol = this.ecs.getComponent(wallId, Collider);
-            const bb_b = wallCol.getBoundingBox(wallPos);
+            const bb_b = wallPos.getBoundingBox();
 
             if (this.collides(bb_a, bb_b)) {
                 if (axis === Axis.X) {
