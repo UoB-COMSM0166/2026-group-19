@@ -11,7 +11,7 @@ class MenuScene extends Scene {
         this.btnY = 300;
 
         // Load the SVG images ONCE when the scene is created
-        this.menuImage = loadImage('UI/menu_component.svg');
+        this.menuImage = loadImage('assets/menu_component.svg');
     }
 
     display() {
