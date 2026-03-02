@@ -67,4 +67,14 @@ class MenuScene extends Scene {
 =======
 >>>>>>> 32540c5 (add : menu image and draw button)
     }
+
+    checkClick() {
+        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
+            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
+
+        if (isHovering) {
+            return true;
+        }
+        return false;
+    }
 }
