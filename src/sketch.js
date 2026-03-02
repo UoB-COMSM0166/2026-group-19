@@ -2,9 +2,12 @@ let game;
 let gameState = GameStepConfig.State;
 let menuScene;
 let uiFont;
+let playBg;
+let playBgImage;
 
 function preload() {
-    uiFont = loadFont("assets/SF-Mono-Regular.otf");
+    uiFont = loadFont("assets/TaipeiSans-font-subset.ttf");
+    playBgImage = loadImage("assets/gray_gameBg.png");
 }
 
 function setup() {
