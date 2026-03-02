@@ -9,17 +9,20 @@ class EntityFactory {
         */
        switch(type) {
             case EntityType.PLAYER:
-                return this.createSprite(data.center_x, data.center_y, data.width, data.height, true);
+                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, true);
             case EntityType.ENEMY:
-                return this.createSprite(data.center_x, data.center_y, data.width, data.height, false);
+                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, false);
             case EntityType.WALL:
                 return this.createWall(data.left_x, data.top_y, data.width, data.height);
+            case EntityType.BOX:
+                return this.createBox(data.left_x, data.top_y, data.width, data.height);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
        }
     }
 
-    createSprite(center_x, center_y, width, height, isPlayer) {
+    // TODO: Refactor these create methods into something prettier
+    createCharacter(center_x, center_y, width, height, isPlayer) {
         const speed = 5;
 
         const entity = this.ecs.createEntity();
@@ -32,6 +35,7 @@ class EntityFactory {
             this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
         }
         else {
+            this.ecs.addComponent(entity, new Enemy());
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
             this.ecs.addComponent(entity, new Renderable([255, 10, 0]));              
@@ -45,6 +49,14 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
         this.ecs.addComponent(entity, new Wall());
         this.ecs.addComponent(entity, new Renderable([200, 0, 0]));
+        return entity;
+    }
+
+    createBox(left_x, top_y, width, height) {
+        const entity = this.ecs.createEntity();
+        this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
+        this.ecs.addComponent(entity, new Box());
+        this.ecs.addComponent(entity, new Renderable([82, 51, 45]));
         return entity;
     }
 }
