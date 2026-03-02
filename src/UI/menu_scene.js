@@ -9,12 +9,15 @@ class MenuScene extends Scene {
 
         // Load the SVG images ONCE when the scene is created
         this.menuImage = loadImage('assets/menu_component.svg');
+<<<<<<< HEAD
 
         // animated Game title Setting
         this.fullTitle = "NEED VISA";
         this.visibleCount = 0;
         this.lastTypedTime = 0;
         this.typingInterval = 150; // in milliseconds
+=======
+>>>>>>> 15ba5cb (chore : update assets background images)
     }
 
     display() {
