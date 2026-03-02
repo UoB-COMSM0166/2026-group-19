@@ -112,4 +112,14 @@ class MenuScene extends Scene {
         return mouseX > btnX - w / 2 && mouseX < btnX + w / 2 &&
             mouseY > btnY - h / 2 && mouseY < btnY + h / 2;
     }
+
+    checkClick() {
+        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
+            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
+
+        if (isHovering) {
+            return true;
+        }
+        return false;
+    }
 }
