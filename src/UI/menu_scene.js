@@ -50,4 +50,14 @@ class MenuScene extends Scene {
         // 4. Center the text dynamically based on the variables
         text(btnText, this.btnX + (w / 2), this.btnY + (h / 2));
     }
+
+    checkClick() {
+        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
+            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
+
+        if (isHovering) {
+            return true;
+        }
+        return false;
+    }
 }
