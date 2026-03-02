@@ -1,6 +1,9 @@
 let game;
 let currentScene;
+<<<<<<< HEAD
 let gameState = "LANDING";
+=======
+>>>>>>> 32540c5 (add : menu image and draw button)
 
 function setup() {
     createCanvas(800, 600);
@@ -11,6 +14,13 @@ function setup() {
 
 function draw() {
     background(100);
+<<<<<<< HEAD
+=======
+
+    game.update();
+    currentScene.display();
+
+>>>>>>> 32540c5 (add : menu image and draw button)
     cursor(ARROW);
 
     if (gameState === "LANDING") {
