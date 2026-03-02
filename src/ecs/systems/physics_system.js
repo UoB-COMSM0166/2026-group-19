@@ -4,12 +4,32 @@ const Axis = Object.freeze({
 });
 
 class PhysicsSystem extends System {
+    /*
+    Handles all physics simulation for the game.
+
+    Responsibilities:
+    - Apply gravity
+    - Update entity positions based on velocity
+    - Resolve all collisions between entities
+
+    The system processes entities in two phases per frame:
+    - Movement Phase: Apply velocity and gravity, resolve wall collisions (axis-by-axis to allow sliding)
+    - Interaction Phase: Check for gameplay interactions (pickups, damage, etc.)
+    */
     constructor(ecs) {
         super(ecs);
         this.maxFall = 50; // Terminal velocity
     }
 
     update() {
+        /*
+        Main update loop called each frame.
+        For each entity with Position and Velocity:
+        1. Apply gravity
+        2. Update X position and resolve wall collisions
+        3. Update Y position and resolve wall collisions
+        4. Check for interaction collisions (pickups, damage, etc.)
+        */
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
 
         for (let id of moving_ids) {
@@ -35,6 +55,7 @@ class PhysicsSystem extends System {
 
     collides(a, b) {
         /*
+        AABB collision detection.
         Returns true if bounding box a and bounding box b are overlapping.
         */
         return a.left_x < b.left_x + b.w &&
@@ -44,6 +65,11 @@ class PhysicsSystem extends System {
     }
 
     resolveMovementCollisions(id, axis) {
+        /*
+        Resolves collsions between a character and walls for a specific axis.
+        Prevents characters from passing through walls by pushing them out and stopping velocity.
+        Also marks the character as "on ground" if they collide with a floor (for jumping logic in InputSystem)
+        */
         const char = this.ecs.getComponent(id, Character);
         if (!char) return;
         const pos = this.ecs.getComponent(id, Position);
@@ -62,6 +88,9 @@ class PhysicsSystem extends System {
     }
 
     resolveInteractionCollisions(id) {
+        /*
+        Handles gameplay interaction collisions for the entity.
+        */
         if (this.ecs.getComponent(id, Player)) {
             this.handlePlayerEnemyCollision(id);
             this.handlePlayerBoxCollision(id);
@@ -79,7 +108,7 @@ class PhysicsSystem extends System {
         callback for each entity whose bounding box collides with the given positition's bounding box.
 
         Position pos - The position to check collisions against
-        [] components - Array of component types to query (e.g., [Enemy, Position])
+        Component[] components - Array of component types to query (e.g., [Enemy, Position])
         Function callback - A function reference/pointer called with entity id for each collision found
         */
         const ids = this.ecs.getEntitiesWith(...components);
@@ -94,6 +123,7 @@ class PhysicsSystem extends System {
     }
 
     resolveWallPenetration(pos, vel, char, player, axis, wallPos) {
+        // Helper private method for resolveMovementCollisions
         const bb_a = pos.getBoundingBox();
         const bb_b = wallPos.getBoundingBox();
 

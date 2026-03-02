@@ -1,4 +1,10 @@
 class EntityFactory {
+    /*
+    Factory pattern implementation that abstracts entity creation.
+    Purpose is to:
+    1. Centralize entity construction logic
+    2. Provide a simple interface to create entities
+    */
     constructor(ecs) {
         this.ecs = ecs;
     }
@@ -6,6 +12,7 @@ class EntityFactory {
     create(type, data) {
         /*
         Creates an entity of type with data
+        This could probably be improved with some sort of pre-made templates
         */
        switch(type) {
             case EntityType.PLAYER:

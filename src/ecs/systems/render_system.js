@@ -1,4 +1,7 @@
 class RenderSystem extends System {
+    /*
+    Handles drawing of all renderable entities to the screen
+    */
     constructor(ecs) {
         super(ecs);
     }
