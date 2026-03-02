@@ -1,4 +1,7 @@
 class InputSystem extends System {
+    /*
+    Reads keyboard input and updates player velocity based on input
+    */
     constructor(ecs) {
         super(ecs);
         this.prev = new Map();
