@@ -12,10 +12,14 @@ class MenuScene extends Scene {
 
         // Load the SVG images ONCE when the scene is created
 <<<<<<< HEAD
+<<<<<<< HEAD
         this.menuImage = loadImage('assets/menu_component.svg');
 =======
         this.menuImage = loadImage('UI/menu_component.svg');
 >>>>>>> 32540c5 (add : menu image and draw button)
+=======
+        this.menuImage = loadImage('assets/menu_component.svg');
+>>>>>>> 2ddfd7d (chore : update assets background images)
     }
 
     display() {
