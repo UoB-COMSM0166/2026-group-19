@@ -8,7 +8,9 @@ class MenuScene extends Scene {
         this.btnHeight = 80;
 
         // Load the SVG images ONCE when the scene is created
+<<<<<<< HEAD
         this.menuImage = loadImage('assets/menu_component.svg');
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         // animated Game title Setting
@@ -18,6 +20,11 @@ class MenuScene extends Scene {
         this.typingInterval = 150; // in milliseconds
 =======
 >>>>>>> 15ba5cb (chore : update assets background images)
+=======
+=======
+        this.menuImage = loadImage('UI/menu_component.svg');
+>>>>>>> 32540c5 (add : menu image and draw button)
+>>>>>>> c7681fd (add : menu image and draw button)
     }
 
     display() {
@@ -79,6 +86,7 @@ class MenuScene extends Scene {
         pop();
     }
 
+<<<<<<< HEAD
     drawButton(btnText) {
         const { btnX, btnY, w, h } = this.getButtonBounds();
 
@@ -114,6 +122,11 @@ class MenuScene extends Scene {
         const { btnX, btnY, w, h } = this.getButtonBounds();
         return mouseX > btnX - w / 2 && mouseX < btnX + w / 2 &&
             mouseY > btnY - h / 2 && mouseY < btnY + h / 2;
+=======
+        // 4. Center the text dynamically based on the variables
+        text(btnText, this.btnX + (w / 2), this.btnY + (h / 2));
+<<<<<<< HEAD
+>>>>>>> c7681fd (add : menu image and draw button)
     }
 
     checkClick() {
@@ -124,5 +137,7 @@ class MenuScene extends Scene {
             return true;
         }
         return false;
+=======
+>>>>>>> 32540c5 (add : menu image and draw button)
     }
 }
