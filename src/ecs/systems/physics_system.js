@@ -16,9 +16,10 @@ class PhysicsSystem extends System {
     - Movement Phase: Apply velocity and gravity, resolve wall collisions (axis-by-axis to allow sliding)
     - Interaction Phase: Check for gameplay interactions (pickups, damage, etc.)
     */
-    constructor(ecs) {
+    constructor(ecs, spawner) {
         super(ecs);
-        this.maxFall = 25; // Terminal velocity
+        this.spawner = spawner;
+        this.maxFall = PhysicsConstants.TERMINAL_VELOCITY; // Terminal velocity
     }
 
     update() {
@@ -57,27 +58,7 @@ class PhysicsSystem extends System {
                 pos.y = pos.y + vel.vy;
             }   
             this.resolveMovementCollisions(id, Axis.Y);
-
-            // Interaction phase (axis-independent)
-            this.resolveInteractionCollisions(id, toDelete);
         }
-
-        // Delay deletion in case the update still looping through the things we already deleted right away
-        for (let id of toDelete){
-            console.log('Deleting');
-            this.ecs.removeEntity(id);
-        }
-    }
-
-    collides(a, b) {
-        /*
-        AABB collision detection.
-        Returns true if bounding box a and bounding box b are overlapping.
-        */
-        return a.left_x < b.left_x + b.w &&
-            a.left_x + a.w > b.left_x &&
-            a.top_y < b.top_y + b.h &&
-            a.top_y + a.h > b.top_y;
     }
 
     resolveMovementCollisions(id, axis) {
@@ -103,42 +84,6 @@ class PhysicsSystem extends System {
         })
     }
 
-    resolveInteractionCollisions(id, toDelete) {
-        /*
-        Handles gameplay interaction collisions for the entity.
-        */
-        if (this.ecs.getComponent(id, Player)) {
-            this.handlePlayerEnemyCollision(id);
-            this.handlePlayerBoxCollision(id, toDelete);
-        }
-
-        if (this.ecs.getComponent(id, Projectile)) {
-            this.handleProjectileEnemyCollision(id, toDelete);
-            this.handleProjectileWallCollision(id, toDelete);
-        }
-    }
-
-    forEachCollision(pos, components, callback) {
-        /*
-        Iterates through all entities with the given components and calls the
-        callback for each entity whose bounding box collides with the given positition's bounding box.
-
-        Position pos - The position to check collisions against
-        Component[] components - Array of component types to query (e.g., [Enemy, Position])
-        Function callback - A function reference/pointer called with entity id for each collision found
-        */
-        const ids = this.ecs.getEntitiesWith(...components);
-        const bb_a = pos.getBoundingBox();
-        for (let id of ids) {
-            const otherPos = this.ecs.getComponent(id, Position);
-            if (otherPos === pos) continue;
-            const bb_b = otherPos.getBoundingBox();
-            if (this.collides(bb_a, bb_b)) {
-                callback(id);
-            }
-        }
-    }
-
     resolveWallPenetration(pos, vel, char, player, axis, wallPos) {
         // Helper private method for resolveMovementCollisions
         const bb_a = pos.getBoundingBox();
@@ -156,7 +101,6 @@ class PhysicsSystem extends System {
                 vel.vx = 0; 
             }
             else { 
-                console.log('Bounce');
                 vel.vx = -vel.vx; 
             }
         } 
@@ -173,43 +117,4 @@ class PhysicsSystem extends System {
         }
     }
 
-    handlePlayerEnemyCollision(playerId) {
-        const pos = this.ecs.getComponent(playerId, Position);
-        this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            // TODO: Implement logic
-            console.log('Player dies');
-        })
-    }
-
-    handlePlayerBoxCollision(playerId, toDelete) {
-        const pos = this.ecs.getComponent(playerId, Position);
-        this.forEachCollision(pos, [Box, Position], (boxId) => {
-            // Player gets weapon, box is removed
-            this.ecs.addComponent(playerId, new Weapon(WeaponType.RIFLE));
-            toDelete.push(boxId);
-            
-            
-            console.log('Player gets weapon, box is removed');
-        })
-    }
-
-    handleProjectileEnemyCollision(projectileId, toDelete) {
-        const pos = this.ecs.getComponent(projectileId, Position);
-        this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            // TODO: Implement logic
-            // So far disappear
-            toDelete.push(projectileId);
-            toDelete.push(enemyId);
-            console.log('Enemy takes damage');
-        })
-    }
-
-    handleProjectileWallCollision(projectileId, toDelete) {
-        const pos = this.ecs.getComponent(projectileId, Position);
-        this.forEachCollision(pos, [Wall, Position], (wallId) => {
-            // TODO: Implement logic
-            toDelete.push(projectileId);
-            console.log('Projectile hits wall, should be deleted');
-        })
-    }
 }
