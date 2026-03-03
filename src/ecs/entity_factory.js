@@ -32,7 +32,7 @@ class EntityFactory {
 
     // TODO: Refactor these create methods into something prettier
     createCharacter(center_x, center_y, width, height, isPlayer) {
-        const speed = 3;
+        const speed = 4;
 
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));

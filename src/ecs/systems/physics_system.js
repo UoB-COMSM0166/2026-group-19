@@ -49,7 +49,13 @@ class PhysicsSystem extends System {
             pos.x += vel.vx;
             this.resolveMovementCollisions(id, Axis.X);
             
-            pos.y = pos.y > height ? 0 : pos.y + vel.vy;
+            if (pos.y > height) {
+                pos.y = 0;
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12);
+            }
+            else {
+                pos.y = pos.y + vel.vy;
+            }   
             this.resolveMovementCollisions(id, Axis.Y);
 
             // Interaction phase (axis-independent)
