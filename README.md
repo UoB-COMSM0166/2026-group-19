@@ -164,7 +164,21 @@ EPICS:
 
 - 15% ~750 words
 
-- One qualitative evaluation (of your choice) 
+- One qualitative evaluation (of your choice)
+
+Think-Aloud User Evaluation chosen:
+During the devlopment process, we employed an iterative design, whereby user testing consistently used to ensure our aims for the final product were well-met and intuitive. During this testing process, users were asked to verbalise their thought processes and opinions of the gaming experience.
+
+For our first think-aloud evaluation, our main objectives were to ensure controls were intuitive and that the movement of the character and enemies were fluid and felt controllable.
+The user testing results were as follows:
+
+-User Controls: Players did not have an issue with the placement of the keys, nor was there an issue with the choice of the arrow keys to control movement, these were picked up quickly and easily by all users.
+-Entity Movement: Users enjoyed the movement of the character; they felt that they were in control, and could easily traverse the platforms within the game. Any difficulty with speed and gravity was overcome easily with familiarity to the game. Enemy entities were smooth and the slow increase in enemy speed as the game progressed was seen positively as a way to increase difficulty. However, there were parts of the map where the enemies would not path/spawn to, therefore the player could stand there without fear of being hit.
+
+Key Issues Identified:
+-At higher speeds, collisions between character projectiles and enemy entities were not always accurate, and would not result in proper collision detection.
+-Without player health, collision detection between enemy and player entities, and a score counter, there was little to indicate what the objective of the game was. There is no incentive for the player to shoot or to try to prevent the enemies from reaching the bottom of the map, since the player was unkillable and there was no change in the enemies after having reached th bottom either. There was also no score tracker, so no way of giving an idea of the underlying goal of staying alive and killing enemies.
+-An area was identified whereby the player could jump outside of the map and outside of view.
 
 - One quantitative evaluation (of your choice) 
 
