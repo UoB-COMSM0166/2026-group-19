@@ -48,7 +48,8 @@ class PhysicsSystem extends System {
             // Movement phase (axis-dependent)
             pos.x += vel.vx;
             this.resolveMovementCollisions(id, Axis.X);
-            pos.y = pos.y > 600 ? 0 : pos.y + vel.vy;
+            
+            pos.y = pos.y > height ? 0 : pos.y + vel.vy;
             this.resolveMovementCollisions(id, Axis.Y);
 
             // Interaction phase (axis-independent)
