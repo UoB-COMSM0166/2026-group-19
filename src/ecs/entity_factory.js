@@ -23,6 +23,8 @@ class EntityFactory {
                 return this.createWall(data.left_x, data.top_y, data.width, data.height);
             case EntityType.BOX:
                 return this.createBox(data.left_x, data.top_y, data.width, data.height);
+            case EntityType.Projectile:
+                return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
        }
@@ -38,6 +40,7 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Character(10));
         if (isPlayer) {
             this.ecs.addComponent(entity, new Player());
+            this.ecs.addComponent(entity, new Weapon());
             this.ecs.addComponent(entity, new Velocity(0, 0));
             this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
         }
@@ -64,6 +67,15 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
         this.ecs.addComponent(entity, new Box());
         this.ecs.addComponent(entity, new Renderable([82, 51, 45]));
+        return entity;
+    }
+
+    createProjectile(center_x, center_y, width, height, velocity_x, damage) {
+        const entity = this.ecs.createEntity();
+        this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
+        this.ecs.addComponent(entity, new Velocity(velocity_x, 0));
+        this.ecs.addComponent(entity, new Projectile(damage));
+        this.ecs.addComponent(entity, new Renderable([255, 255, 0]));
         return entity;
     }
 }
