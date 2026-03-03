@@ -19,13 +19,13 @@ class RenderSystem extends System {
             if (render.facingRight === undefined) {
                 render.facingRight = true; // Default to facing right
             }
-            
+
             // player's facing direction should base on the last key, or the recoil will make it flip
             if (player) {
-                if (player.direction === 1){
+                if (player.direction === 1) {
                     render.facingRight = true;
                 }
-                else if (player.direction === -1){
+                else if (player.direction === -1) {
                     render.facingRight = false;
                 }
             }
