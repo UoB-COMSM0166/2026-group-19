@@ -27,6 +27,12 @@ class ECS {
         return this.nextEntityId++;
     }
 
+    removeEntity(entityID){
+        for (let compMap of this.components.values()){
+            compMap.delete(entityID);
+        }
+    }
+
     addComponent(entityId, component) {
         /*
         Adds a component to an entity

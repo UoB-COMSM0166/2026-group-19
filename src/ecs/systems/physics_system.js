@@ -30,7 +30,9 @@ class PhysicsSystem extends System {
         3. Update Y position and resolve wall collisions
         4. Check for interaction collisions (pickups, damage, etc.)
         */
+        const toDelete = [];
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
+        
 
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
@@ -49,7 +51,12 @@ class PhysicsSystem extends System {
             this.resolveMovementCollisions(id, Axis.Y);
 
             // Interaction phase (axis-independent)
-            this.resolveInteractionCollisions(id);
+            this.resolveInteractionCollisions(id, toDelete);
+        }
+
+        // Delay deletion in case the update still looping through the things we already deleted right away
+        for (let id of toDelete){
+            this.ecs.removeEntity(id);
         }
     }
 
@@ -87,18 +94,18 @@ class PhysicsSystem extends System {
         })
     }
 
-    resolveInteractionCollisions(id) {
+    resolveInteractionCollisions(id, toDelete) {
         /*
         Handles gameplay interaction collisions for the entity.
         */
         if (this.ecs.getComponent(id, Player)) {
             this.handlePlayerEnemyCollision(id);
-            this.handlePlayerBoxCollision(id);
+            this.handlePlayerBoxCollision(id, toDelete);
         }
 
         if (this.ecs.getComponent(id, Projectile)) {
-            this.handleProjectileEnemyCollision(id);
-            this.handleProjectileWallCollision(id);
+            this.handleProjectileEnemyCollision(id, toDelete);
+            this.handleProjectileWallCollision(id, toDelete);
         }
     }
 
@@ -132,7 +139,8 @@ class PhysicsSystem extends System {
             if (vel.vx > 0) {
                 pos.x = bb_b.left_x - bb_a.w / 2; // Hit left side of wall
             } else if (vel.vx < 0) {
-                pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit right side of wall
+                pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit ri
+                // ght side of wall
             }
             
             if (player) { vel.vx = 0; }
@@ -159,26 +167,34 @@ class PhysicsSystem extends System {
         })
     }
 
-    handlePlayerBoxCollision(playerId) {
+    handlePlayerBoxCollision(playerId, toDelete) {
         const pos = this.ecs.getComponent(playerId, Position);
         this.forEachCollision(pos, [Box, Position], (boxId) => {
-            // TODO: Implement logic
+            // Player gets weapon, box is removed
+            this.ecs.addComponent(playerId, new Weapon("pistol"));
+            toDelete.push(boxId);
+            
+            
             console.log('Player gets weapon, box is removed');
         })
     }
 
-    handleProjectileEnemyCollision(projectileId) {
+    handleProjectileEnemyCollision(projectileId, toDelete) {
         const pos = this.ecs.getComponent(projectileId, Position);
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
             // TODO: Implement logic
+            // So far disappear
+            toDelete.push(projectileId);
+            toDelete.push(enemyId);
             console.log('Enemy takes damage');
         })
     }
 
-    handleProjectileWallCollision(projectileId) {
+    handleProjectileWallCollision(projectileId, toDelete) {
         const pos = this.ecs.getComponent(projectileId, Position);
         this.forEachCollision(pos, [Wall, Position], (wallId) => {
             // TODO: Implement logic
+            toDelete.push(projectileId);
             console.log('Projectile hits wall, should be deleted');
         })
     }
