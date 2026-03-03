@@ -1,5 +1,5 @@
 const EntityType = Object.freeze({
-    Projectile: 'Projectile',
+    PROJECTILE: 'PROJECTILE',
     PLAYER: 'PLAYER',
     ENEMY: 'ENEMY',
     WALL: 'WALL',

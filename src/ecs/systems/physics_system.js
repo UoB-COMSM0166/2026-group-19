@@ -171,7 +171,7 @@ class PhysicsSystem extends System {
         const pos = this.ecs.getComponent(playerId, Position);
         this.forEachCollision(pos, [Box, Position], (boxId) => {
             // Player gets weapon, box is removed
-            this.ecs.addComponent(playerId, new Weapon("pistol"));
+            this.ecs.addComponent(playerId, new Weapon(WeaponType.PISTOL));
             toDelete.push(boxId);
             
             

@@ -1,11 +1,14 @@
+const SPACE = 32;
+
 class InputSystem extends System {
     /*
     Reads keyboard input and updates player velocity based on input
     */
-    constructor(ecs, factory) {
+    constructor(ecs, spawner) {
         super(ecs);
-        this.factory = factory;
+        this.spawner = spawner;
         this.prev = new Map();
+        this.lastDirection = 1; // 1 for right, -1 for left
     }
     update() {
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
@@ -18,8 +21,14 @@ class InputSystem extends System {
             const jumpSpeed = 13;
 
             // Side-to-side
-            if (keyIsDown(LEFT_ARROW)) { vel.vx = -speed; }
-            else if (keyIsDown(RIGHT_ARROW)) { vel.vx = speed; }
+            if (keyIsDown(LEFT_ARROW)) { 
+                vel.vx = -speed; 
+                this.lastDirection = -1;
+            }
+            else if (keyIsDown(RIGHT_ARROW)) { 
+                vel.vx = speed; 
+                this.lastDirection = 1;
+            }
             else {
                 vel.vx *= 0.8;
                 if (Math.abs(vel.vx) < 0.01) { vel.vx = 0; }
@@ -31,27 +40,21 @@ class InputSystem extends System {
             }
 
             // Spawn Projectile
-            if ((weapon.type != null) && keyIsDown(32)) {
-                console.log("inside");
-                // This should be altered, cuz input_system shouldn't spawn anything
-                const local_x = pos.x;
-                const local_y = pos.y;
-                const damage = weapon.bulletDamage;
-                const width = weapon.bulletSize.w;
-                const height = weapon.bulletSize.h;
-                const sign = vel.vx < 0 ? -1 : 1;
-                const velocity_x = sign * weapon.bulletSpeed;
-            
-                this.factory.create(EntityType.Projectile, {center_x: local_x, center_y: local_y, width: width, height: height, velocity_x: velocity_x, damage: damage});
-
+            if (keyIsDown(SPACE) && weapon && !this.prev.get(SPACE)) {
+                const vx = this.lastDirection * weapon.bulletSpeed;
+                this.spawner.request(EntityType.PROJECTILE, 
+                    {center_x: pos.x, 
+                     center_y: pos.y, 
+                     width: weapon.bulletSize.w, 
+                     height: weapon.bulletSize.h, 
+                     velocity_x: vx, 
+                     damage: weapon.bulletDamage});
             }
 
 
             // Update previous key-state
             this.prev.set(UP_ARROW, keyIsDown(UP_ARROW));
-            this.prev.set(LEFT_ARROW, keyIsDown(LEFT_ARROW));
-            this.prev.set(RIGHT_ARROW, keyIsDown(RIGHT_ARROW));
-            this.prev.set(32, keyIsDown(32));
+            this.prev.set(SPACE, keyIsDown(32));
 
         }
     }
