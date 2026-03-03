@@ -4,6 +4,7 @@ class Game {
         this.factory = new EntityFactory(this.ecs);
         this.spawner = new SpawningSystem(this.ecs, this.factory);
         this.ecs.systems = [
+            new EnemySpawnSystem(this.ecs, this.spawner),
             this.spawner,
             new InputSystem(this.ecs, this.spawner),
             new PhysicsSystem(this.ecs),
