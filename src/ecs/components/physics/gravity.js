@@ -1,5 +1,5 @@
 class Gravity {
-    constructor(g) {
+    constructor(g = PhysicsConstants.GRAVITY) {
         this.g = g;
     }
 }

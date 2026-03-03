@@ -1,4 +1,6 @@
 const SPACE = 32;
+const LEFT = -1;
+const RIGHT = 1;
 
 class InputSystem extends System {
     /*
@@ -17,17 +19,17 @@ class InputSystem extends System {
             const player = this.ecs.getComponent(id, Player);
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
-            const speed = 10;
-            const jumpSpeed = 13;
+            const speed = PhysicsConstants.PLAYER_SPEED;
+            const jumpSpeed = PhysicsConstants.JUMP_SPEED;
 
             // Side-to-side
             if (keyIsDown(LEFT_ARROW)) { 
                 vel.vx = -speed; 
-                player.direction = -1;
+                player.direction = LEFT;
             }
             else if (keyIsDown(RIGHT_ARROW)) { 
                 vel.vx = speed; 
-                player.direction = 1;
+                player.direction = RIGHT;
             }
             else {
                 vel.vx *= 0.8;
@@ -58,7 +60,7 @@ class InputSystem extends System {
 
             // Update previous key-state
             this.prev.set(UP_ARROW, keyIsDown(UP_ARROW));
-            this.prev.set(SPACE, keyIsDown(32));
+            this.prev.set(SPACE, keyIsDown(SPACE));
 
         }
     }
