@@ -18,7 +18,7 @@ class PhysicsSystem extends System {
     */
     constructor(ecs) {
         super(ecs);
-        this.maxFall = 50; // Terminal velocity
+        this.maxFall = 25; // Terminal velocity
     }
 
     update() {
@@ -48,7 +48,14 @@ class PhysicsSystem extends System {
             // Movement phase (axis-dependent)
             pos.x += vel.vx;
             this.resolveMovementCollisions(id, Axis.X);
-            pos.y = pos.y > 600 ? 0 : pos.y + vel.vy;
+            
+            if (pos.y > height) {
+                pos.y = 0;
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12);
+            }
+            else {
+                pos.y = pos.y + vel.vy;
+            }   
             this.resolveMovementCollisions(id, Axis.Y);
 
             // Interaction phase (axis-independent)
@@ -57,6 +64,7 @@ class PhysicsSystem extends System {
 
         // Delay deletion in case the update still looping through the things we already deleted right away
         for (let id of toDelete){
+            console.log('Deleting');
             this.ecs.removeEntity(id);
         }
     }
@@ -123,6 +131,7 @@ class PhysicsSystem extends System {
         const bb_a = pos.getBoundingBox();
         for (let id of ids) {
             const otherPos = this.ecs.getComponent(id, Position);
+            if (otherPos === pos) continue;
             const bb_b = otherPos.getBoundingBox();
             if (this.collides(bb_a, bb_b)) {
                 callback(id);
@@ -140,12 +149,16 @@ class PhysicsSystem extends System {
             if (vel.vx > 0) {
                 pos.x = bb_b.left_x - bb_a.w / 2; // Hit left side of wall
             } else if (vel.vx < 0) {
-                pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit ri
-                // ght side of wall
+                pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit right side of wall
             }
             
-            if (player) { vel.vx = 0; }
-            else { vel.vx = -vel.vx; }
+            if (player) { 
+                vel.vx = 0; 
+            }
+            else { 
+                console.log('Bounce');
+                vel.vx = -vel.vx; 
+            }
         } 
         else {
             // Resolve Y: Push out and kill velocity
