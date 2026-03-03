@@ -5,8 +5,7 @@ class Game {
         this.spawner = new SpawningSystem(this.ecs, this.factory);
         this.ecs.systems = [
             this.spawner,
-            // Key Space will trigger projectile spawn
-            new InputSystem(this.ecs, this.factory),
+            new InputSystem(this.ecs, this.spawner),
             new PhysicsSystem(this.ecs),
             new RenderSystem(this.ecs)
         ];

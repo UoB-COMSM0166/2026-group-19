@@ -23,7 +23,7 @@ class EntityFactory {
                 return this.createWall(data.left_x, data.top_y, data.width, data.height);
             case EntityType.BOX:
                 return this.createBox(data.left_x, data.top_y, data.width, data.height);
-            case EntityType.Projectile:
+            case EntityType.PROJECTILE:
                 return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
@@ -40,7 +40,6 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Character(10));
         if (isPlayer) {
             this.ecs.addComponent(entity, new Player());
-            this.ecs.addComponent(entity, new Weapon());
             this.ecs.addComponent(entity, new Velocity(0, 0));
             this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
         }
