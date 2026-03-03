@@ -29,6 +29,7 @@ class PhysicsSystem extends System {
         2. Update X position and resolve wall collisions
         3. Update Y position and resolve wall collisions
         4. Check for interaction collisions (pickups, damage, etc.)
+        5. If entity fallen off bottom of screen, respawn at top
         */
         const toDelete = [];
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
@@ -47,7 +48,7 @@ class PhysicsSystem extends System {
             // Movement phase (axis-dependent)
             pos.x += vel.vx;
             this.resolveMovementCollisions(id, Axis.X);
-            pos.y += vel.vy;
+            pos.y = pos.y > 600 ? 0 : pos.y + vel.vy;
             this.resolveMovementCollisions(id, Axis.Y);
 
             // Interaction phase (axis-independent)
