@@ -26,10 +26,6 @@ function windowResized() {
 
 function draw() {
     background(100);
-
-    game.update();
-    currentScene.display();
-
     cursor(ARROW);
     fps.display();
 
