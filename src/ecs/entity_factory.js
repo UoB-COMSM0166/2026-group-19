@@ -14,7 +14,7 @@ class EntityFactory {
         Creates an entity of type with data
         This could probably be improved with some sort of pre-made templates
         */
-       switch(type) {
+        switch (type) {
             case EntityType.PLAYER:
                 return this.createCharacter(data.center_x, data.center_y, data.width, data.height, true);
             case EntityType.ENEMY:
@@ -27,7 +27,7 @@ class EntityFactory {
                 return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
-       }
+        }
     }
 
     // TODO: Refactor these create methods into something prettier
@@ -41,13 +41,14 @@ class EntityFactory {
         if (isPlayer) {
             this.ecs.addComponent(entity, new Player());
             this.ecs.addComponent(entity, new Velocity(0, 0));
-            this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
+            const dragonImg = loadImage('assets/dragon.svg');
+            this.ecs.addComponent(entity, new Renderable([255, 10, 155], dragonImg));
         }
         else {
             this.ecs.addComponent(entity, new Enemy());
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
-            this.ecs.addComponent(entity, new Renderable([100, 10, 200]));              
+            this.ecs.addComponent(entity, new Renderable([100, 10, 200]));
         }
 
         return entity;
