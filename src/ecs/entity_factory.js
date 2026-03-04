@@ -17,9 +17,11 @@ class EntityFactory {
         */
         switch (type) {
             case EntityType.PLAYER:
-                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, true);
+                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, EntityType.PLAYER);
             case EntityType.ENEMY:
-                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, false);
+                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, EntityType.ENEMY);
+            case EntityType.ENEMY_FLOATING:
+                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, EntityType.ENEMY_FLOATING);
             case EntityType.WALL:
                 return this.createWall(data.left_x, data.top_y, data.width, data.height);
             case EntityType.BOX:
@@ -32,7 +34,7 @@ class EntityFactory {
     }
 
     // TODO: Refactor these create methods into something prettier
-    createCharacter(center_x, center_y, width, height, isPlayer) {
+    createCharacter(center_x, center_y, width, height, charType) {
         const speed = 4;
 
         const entity = this.ecs.createEntity();
@@ -40,15 +42,27 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Gravity(0.5));
         this.ecs.addComponent(entity, new Character(10));
 
-        // Setup the render component with the correct fallback color
-        const color = isPlayer ? [255, 10, 155] : [100, 10, 200];
+        let color;
+        if (charType === EntityType.PLAYER) {
+            color = [255, 10, 155];
+        } else if (charType === EntityType.ENEMY_FLOATING) {
+            color = [10, 200, 255];
+        } else {
+            color = [100, 10, 200];
+        }
         const renderComponent = new Renderable(color);
         this.ecs.addComponent(entity, renderComponent);
 
-        if (isPlayer) {
+        if (charType === EntityType.PLAYER) {
             this.ecs.addComponent(entity, new Player());
             this.ecs.addComponent(entity, new Velocity(0, 0));
-        } else {
+
+        } else if (charType === EntityType.ENEMY_FLOATING) {
+            this.ecs.addComponent(entity, new EnemyFloating());
+            this.ecs.addComponent(entity, new Velocity(0, 0));
+            this.ecs.addComponent(entity, new Force(-2, -1));
+
+        } else if (charType === EntityType.ENEMY) {
             this.ecs.addComponent(entity, new Enemy());
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));

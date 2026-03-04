@@ -33,15 +33,15 @@ class PhysicsSystem extends System {
         */
         const toDelete = [];
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
-        
+        const force_ids = this.ecs.getEntitiesWith(Position, Velocity, Force);
 
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
             const g = this.ecs.getComponent(id, Gravity);
 
-            // Apply Gravity
-            if (g) {
+            // Apply Gravity (but not to floating enemies)
+            if (g && !this.ecs.getComponent(id, EnemyFloating)) {
                 vel.vy = Math.min(vel.vy + g.g, this.maxFall);
             }
 
@@ -51,7 +51,7 @@ class PhysicsSystem extends System {
             
             if (pos.y > height) {
                 pos.y = 0;
-                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12);
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12); //replace with angry_mode=true eventually
             }
             else {
                 pos.y = pos.y + vel.vy;
@@ -67,6 +67,34 @@ class PhysicsSystem extends System {
             console.log('Deleting');
             this.ecs.removeEntity(id);
         }
+
+        // Find the player
+        const players = this.ecs.getEntitiesWith(Player, Position);
+        if (players.length === 0) return; // No player found
+
+        const playerId = players[0];
+        const playerPos = this.ecs.getComponent(playerId, Position);
+
+        // Find floating enemies and update their force toward player
+        const floatingEnemies = this.ecs.getEntitiesWith(EnemyFloating, Position, Force);
+        for (let enemyId of floatingEnemies) {
+            const enemyPos = this.ecs.getComponent(enemyId, Position);
+            const force = this.ecs.getComponent(enemyId, Force);
+            
+            // Calculate direction from enemy to player
+            const dx = playerPos.x - enemyPos.x;
+            const dy = playerPos.y - enemyPos.y;
+            
+            // Normalize and apply force (adjust strength as needed)
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const strength = 0.5; // Adjust this value to control speed
+            
+            if (distance > 0) {
+                force.fx = (dx / distance) * strength;
+                force.fy = (dy / distance) * strength;
+            }
+        }
+
     }
 
     collides(a, b) {
