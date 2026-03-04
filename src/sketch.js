@@ -24,6 +24,10 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 function draw() {
     background(100);
     cursor(ARROW);
@@ -36,6 +40,7 @@ function draw() {
         translate(-width / 2, -height / 2);
         menuScene = null; // dispose of menu scene
         game.update();
+        pop();
     }
 
     else if (gameState === "PAUSE") {
