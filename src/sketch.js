@@ -1,12 +1,24 @@
 let game;
 let currentScene;
+
 let gameState = GameStepConfig.State;
+let uiFont;
+
+function preload() {
+    uiFont = loadFont("assets/SF-Mono-Regular.otf");
+}
 
 function setup() {
-    createCanvas(800, 600);
+    setAttributes({ version: 1 });
+    createCanvas(windowWidth, windowHeight, WEBGL);
     frameRate(60);
+    textFont(uiFont);
     game = new Game(width, height);
     currentScene = new MenuScene();
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
@@ -17,7 +29,10 @@ function draw() {
         currentScene.display();
     }
     else if (gameState === "PLAY") {
+        push();
+        translate(-width / 2, -height / 2);
         game.update();
+        pop();
     }
     else if (gameState === "PAUSE") {
         // Draw the frozen game state
@@ -38,11 +53,14 @@ function draw() {
 
     // Draw the FPS counter on top of everything
     let fps = frameRate();
+    push();
+    translate(-width / 2, -height / 2);
     fill(0);
-    stroke(0);
+    noStroke();
     textSize(16);
     textAlign(LEFT, TOP);
     text("FPS: " + fps.toFixed(2), 10, 20);
+    pop();
 }
 
 function mousePressed() {

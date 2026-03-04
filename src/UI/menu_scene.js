@@ -2,72 +2,69 @@ class MenuScene extends Scene {
     constructor() {
         super();
         this.buttonText = "Start";
+        this.background = new bgShader();
 
         this.btnWidth = 200;
-        this.btnHeight = 50;
-
-        // 1. Update these to match the actual position where you want the button!
-        this.btnX = 570;
-        this.btnY = 300;
+        this.btnHeight = 80;
 
         // Load the SVG images ONCE when the scene is created
         this.menuImage = loadImage('assets/menu_component.svg');
     }
 
     display() {
+        this.background.display();
+        push();
+        translate(-width / 2, -height / 2);
         this.drawBaseImage();
-        this.drawButton(this.buttonText, this.btnWidth, this.btnHeight);
+        this.drawButton(this.buttonText);
+        pop();
     }
 
     drawBaseImage() {
         if (this.menuImage.width > 0) {
             let ratio = this.menuImage.height / this.menuImage.width;
             let newHeight = width * ratio;
-            image(this.menuImage, 0, height / 4, width, newHeight);
+
+            push();
+            imageMode(CENTER);
+            tint(255, 225); // the alpha of ticket image
+            image(this.menuImage, width / 2, height / 2, width * 0.7, newHeight * 0.7);
+            pop();
         }
     }
 
-    drawButton(btnText, w, h) {
-        // 2. The hover math now correctly checks 570 and 300
-        let isHovering = mouseX > this.btnX && mouseX < this.btnX + w &&
-            mouseY > this.btnY && mouseY < this.btnY + h;
-
+    drawButton(btnText) {
+        const { btnX, btnY, w, h } = this.getButtonBounds();
+    
+        let isHovering =
+            mouseX > btnX - w/2 && mouseX < btnX + w/2 &&
+            mouseY > btnY - h/2 && mouseY < btnY + h/2;
+    
         if (isHovering) {
-            fill(100, 200, 100, 200);
             cursor(HAND);
+            fill(255, 240, 120); // highlight
         } else {
-            fill(200, 200, 200, 200);
+            fill(255, 255, 255, 180); // white text
         }
-
-        // 3. Use the variables instead of hardcoded numbers
-        rect(this.btnX, this.btnY, w, h, 10);
-
-        // Draw the Text
-        fill(0);
+    
         textAlign(CENTER, CENTER);
-        textSize(24);
+        textSize(64);
+    
+        text(btnText, btnX -15, btnY + 15);
+    }
 
-        // 4. Center the text dynamically based on the variables
-        text(btnText, this.btnX + (w / 2), this.btnY + (h / 2));
+    getButtonBounds() {
+        return {
+            btnX: width * 0.75,
+            btnY: height * 0.5,
+            w: this.btnWidth,
+            h: this.btnHeight
+        };
     }
 
     checkClick() {
-        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
-            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
-
-        if (isHovering) {
-            return true;
-        }
-        return false;
-    }
-
-    checkClick() {
-        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
-            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
-
-        if (isHovering) {
-            return true;
-        }
-        return false;
+        const { btnX, btnY, w, h } = this.getButtonBounds();
+        return mouseX > btnX - w / 2 && mouseX < btnX + w / 2 &&
+            mouseY > btnY - h / 2 && mouseY < btnY + h / 2;
     }
 }
