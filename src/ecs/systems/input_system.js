@@ -8,13 +8,13 @@ class InputSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.prev = new Map();
-        this.lastDirection = 1; // 1 for right, -1 for left
     }
     update() {
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
             const weapon = this.ecs.getComponent(id, Weapon);
+            const player = this.ecs.getComponent(id, Player);
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
             const speed = 10;
@@ -23,11 +23,11 @@ class InputSystem extends System {
             // Side-to-side
             if (keyIsDown(LEFT_ARROW)) { 
                 vel.vx = -speed; 
-                this.lastDirection = -1;
+                player.direction = -1;
             }
             else if (keyIsDown(RIGHT_ARROW)) { 
                 vel.vx = speed; 
-                this.lastDirection = 1;
+                player.direction = 1;
             }
             else {
                 vel.vx *= 0.8;
@@ -41,7 +41,7 @@ class InputSystem extends System {
 
             // Spawn Projectile
             if (keyIsDown(SPACE) && weapon && !this.prev.get(SPACE)) {
-                const vx = this.lastDirection * weapon.bulletSpeed;
+                const vx = player.direction * weapon.bulletSpeed;
                 this.spawner.request(EntityType.PROJECTILE, 
                     {center_x: pos.x, 
                      center_y: pos.y, 
@@ -49,6 +49,10 @@ class InputSystem extends System {
                      height: weapon.bulletSize.h, 
                      velocity_x: vx, 
                      damage: weapon.bulletDamage});
+                if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)){
+                    vel.vx = (-1) * player.direction * weapon.recoilKick * width;
+                }
+                
             }
 
 

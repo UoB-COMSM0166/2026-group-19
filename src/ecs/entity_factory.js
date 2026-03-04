@@ -46,7 +46,7 @@ class EntityFactory {
         this.ecs.addComponent(entity, renderComponent);
 
         if (isPlayer) {
-            this.ecs.addComponent(entity, new Player());
+            this.ecs.addComponent(entity, new Player(1));
             this.ecs.addComponent(entity, new Velocity(0, 0));
         } else {
             this.ecs.addComponent(entity, new Enemy());
