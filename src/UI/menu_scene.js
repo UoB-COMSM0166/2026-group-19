@@ -39,11 +39,15 @@ class MenuScene extends Scene {
         this.background.display();
         push();
         translate(-width / 2, -height / 2);
+<<<<<<< HEAD
 
         // base image anomation
         let t = millis();
         this.drawAnimatedGameTitle();
         this.drawBaseImage(Math.max(Math.sin(t / 1000), 0.8) * 255);
+=======
+        this.drawBaseImage();
+>>>>>>> 878f13c (add: background ; adjust window size)
         this.drawButton(this.buttonText);
         pop();
     }
@@ -60,6 +64,7 @@ class MenuScene extends Scene {
 
             push();
             imageMode(CENTER);
+<<<<<<< HEAD
             tint(255, dynamicAlpha); // second parameter is the alpha of ticket image
             image(
                 this.menuImage,
@@ -68,10 +73,15 @@ class MenuScene extends Scene {
                 width * 0.65,
                 newHeight * 0.65
             );
+=======
+            tint(255, 225); // the alpha of ticket image
+            image(this.menuImage, width / 2, height / 2, width * 0.7, newHeight * 0.7);
+>>>>>>> 878f13c (add: background ; adjust window size)
             pop();
         }
     }
 
+<<<<<<< HEAD
     drawAnimatedGameTitle() {
         let now = millis();
 
@@ -138,25 +148,40 @@ class MenuScene extends Scene {
 >>>>>>> c7681fd (add : menu image and draw button)
 =======
 >>>>>>> 2bc1a2a (fix : resolve merge conflicts in menu scene and sketch files)
+=======
+    drawButton(btnText) {
+        const { btnX, btnY, w, h } = this.getButtonBounds();
+    
+        let isHovering =
+            mouseX > btnX - w/2 && mouseX < btnX + w/2 &&
+            mouseY > btnY - h/2 && mouseY < btnY + h/2;
+    
+        if (isHovering) {
+            cursor(HAND);
+            fill(255, 240, 120); // highlight
+        } else {
+            fill(255, 255, 255, 180); // white text
+        }
+    
+        textAlign(CENTER, CENTER);
+        textSize(64);
+    
+        text(btnText, btnX -15, btnY + 15);
+    }
+
+    getButtonBounds() {
+        return {
+            btnX: width * 0.75,
+            btnY: height * 0.5,
+            w: this.btnWidth,
+            h: this.btnHeight
+        };
+>>>>>>> 878f13c (add: background ; adjust window size)
     }
 
     checkClick() {
-        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
-            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
-
-        if (isHovering) {
-            return true;
-        }
-        return false;
-    }
-
-    checkClick() {
-        let isHovering = mouseX > this.btnX && mouseX < this.btnX + this.btnWidth &&
-            mouseY > this.btnY && mouseY < this.btnY + this.btnHeight;
-
-        if (isHovering) {
-            return true;
-        }
-        return false;
+        const { btnX, btnY, w, h } = this.getButtonBounds();
+        return mouseX > btnX - w / 2 && mouseX < btnX + w / 2 &&
+            mouseY > btnY - h / 2 && mouseY < btnY + h / 2;
     }
 }
