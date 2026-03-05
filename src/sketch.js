@@ -1,5 +1,4 @@
 let game;
-let currentScene;
 let gameState = GameStepConfig.State;
 let menuScene;
 let uiFont;
@@ -58,8 +57,9 @@ function draw() {
 
 function mousePressed() {
     if (gameState === "LANDING") {
-        if (currentScene.checkClick()) {
-            game.loadLevel(LevelData[1]);
+        if (menuScene.checkClick()) {
+            game.loadLevel(LevelData[2]);
+            gameState = "PLAY";
         }
     }
 }
