@@ -30,7 +30,7 @@ function draw() {
         menuScene.display();
     }
     else if (gameState === "PLAY") {
-        translate(-width/2, -height/2);
+        translate(-width / 2, -height / 2);
         menuScene = null; // dispose of menu scene
         game.update();
     }
