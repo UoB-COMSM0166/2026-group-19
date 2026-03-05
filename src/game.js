@@ -12,32 +12,42 @@ class Game {
             new PhysicsSystem(this.ecs, this.spawner),
             new RenderSystem(this.ecs)
         ];
-
-        this.init();
     }
 
     update() {
         this.ecs.update();
     }
 
-    init() {
-        this.spawner.request(EntityType.PLAYER, { center_x: 450, center_y: 50, width: 20, height: 20 });
-        this.spawner.request(EntityType.ENEMY, { center_x: 400, center_y: 50, width: 20, height: 20 });
-        this.spawner.request(EntityType.ENEMY, { center_x: 350, center_y: 50, width: 30, height: 30 }); 
-        this.spawner.request(EntityType.ENEMY, { center_x: 300, center_y: 50, width: 30, height: 30 }); 
-        this.spawner.request(EntityType.ENEMY, { center_x: 500, center_y: 50, width: 20, height: 20 }); 
+    loadLevel(levelConfig) {
+        // Clear out any old entities
+        this.ecs.clear();
 
-        this.spawner.request(EntityType.WALL, { left_x: 0, top_y: 580, width: 360, height: 20, spawnable: true }); //bottom left wall
-        this.spawner.request(EntityType.WALL, { left_x: 440, top_y: 580, width: 360, height: 20 }); //bottom right wall
-        this.spawner.request(EntityType.WALL, { left_x: 0, top_y: 0, width: 360, height: 20 }); //top left wall
-        this.spawner.request(EntityType.WALL, { left_x: 440, top_y: 0, width: 360, height: 20 }); //top right wall
-        this.spawner.request(EntityType.WALL, { left_x: 0, top_y: 0, width: 20, height: 600 }); //left wall
-        this.spawner.request(EntityType.WALL, { left_x: 780, top_y: 0, width: 20, height: 600 }); //right wall
-        
-        this.spawner.request(EntityType.WALL, { left_x: 200, top_y: 150, width: 400, height: 20, spawnable: true }); 
-        this.spawner.request(EntityType.WALL, { left_x: 200, top_y: 450, width: 400, height: 20, spawnable: true });
-        this.spawner.request(EntityType.WALL, { left_x: 0, top_y: 300, width: 200, height: 20, spawnable: true }); //left middle platform
-        this.spawner.request(EntityType.WALL, { left_x: 600, top_y: 300, width: 200, height: 20, spawnable: true });
-        this.spawner.request(EntityType.BOX, { left_x: 620, top_y: 280, width: 20, height: 20, spawnable: true });
+        // Pass parameters into the spawner system dynamically
+        this.spawner.request(EntityType.PLAYER, levelConfig.player);
+
+        for (let enemyData of levelConfig.enemies) {
+            this.spawner.request(EntityType.ENEMY, enemyData);
+        }
+
+        for (let wallData of levelConfig.walls) {
+            this.spawner.request(EntityType.WALL, wallData);
+        }
+
+        if (levelConfig.boxes) {
+            for (let boxData of levelConfig.boxes) {
+                this.spawner.request(EntityType.BOX, boxData);
+            }
+        }
+
+        // Immediately update the spawner so entities appear on frame 1
+        this.spawner.update();
+    }
+
+    renderOnly() {
+        // Runs ONLY the RenderSystem so the game freezes but stays visible on screen
+        const renderSys = this.ecs.getSystem(RenderSystem);
+        if (renderSys) {
+            renderSys.update();
+        }
     }
 }
