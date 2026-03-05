@@ -22,13 +22,13 @@ class ECS {
             system.update();
         }
     }
-    
+
     createEntity() {
         return this.nextEntityId++;
     }
 
-    removeEntity(entityID){
-        for (let compMap of this.components.values()){
+    removeEntity(entityID) {
+        for (let compMap of this.components.values()) {
             compMap.delete(entityID);
         }
     }
@@ -39,12 +39,12 @@ class ECS {
         */
 
         //.constructor returns a reference to the constructor function or class used to create the object.
-       const compClass = component.constructor;
+        const compClass = component.constructor;
 
-       if (!this.components.has(compClass)) {
+        if (!this.components.has(compClass)) {
             this.components.set(compClass, new Map());
-       }
-       this.components.get(compClass).set(entityId, component);
+        }
+        this.components.get(compClass).set(entityId, component);
     }
 
     getComponent(entityId, compClass) {
@@ -63,7 +63,7 @@ class ECS {
         */
 
         // In js, a null value behaves as false
-        const componentMaps = compClasses.map(compClass => 
+        const componentMaps = compClasses.map(compClass =>
             this.components.get(compClass) || new Map()
         );
 
@@ -76,12 +76,18 @@ class ECS {
         const matchingEntityIds = candidateEntityIds.filter(entityId =>
             componentMaps.every(map => map.has(entityId))
         );
-        
+
         // Return the entities that have all requested components
         return matchingEntityIds;
     }
 
     getSystem(systemClass) {
         return this.systems.find(s => s instanceof systemClass);
+    }
+
+    // Reset the ECS to an empty state (used when loading a new level)
+    clear() {
+        this.components.clear();
+        this.nextEntityId = 0;
     }
 }
