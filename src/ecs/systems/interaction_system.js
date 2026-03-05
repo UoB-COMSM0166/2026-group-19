@@ -40,7 +40,7 @@ class InteractionSystem extends System {
         if (!pos) return;
         this.forEachCollision(pos, [Box, Position], (boxId) => {
             // Player gets weapon, box is removed
-            this.ecs.addComponent(playerId, new Weapon(WeaponType.RIFLE));
+            this.ecs.addComponent(playerId, new Weapon(WeaponType.ROCKET));
             this.ecs.removeEntity(boxId);
         })
     }

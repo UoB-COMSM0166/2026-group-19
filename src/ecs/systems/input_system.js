@@ -44,7 +44,7 @@ class InputSystem extends System {
             }
 
             // Spawn Projectile
-            if (isShootPressed && weapon) {
+            if (keyIsDown(SPACE) && weapon && !this.prev.get(SPACE)) {
                 const vx = player.direction * weapon.bulletSpeed;
                 if (now - weapon.lastShotTime >= weapon.fireRate){
                     this.spawner.request(EntityType.PROJECTILE, 

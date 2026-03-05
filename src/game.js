@@ -7,6 +7,7 @@ class Game {
             new EnemySpawnSystem(this.ecs, this.spawner),
             new BoxSpawnSystem(this.ecs, this.spawner),
             new InputSystem(this.ecs, this.spawner),
+            new WeaponSystem(this.ecs, this.spawner),
             this.spawner,
             new InteractionSystem(this.ecs, this.spawner),
             new PhysicsSystem(this.ecs, this.spawner),
