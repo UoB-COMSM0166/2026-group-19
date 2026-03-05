@@ -47,6 +47,15 @@ class ECS {
         this.components.get(compClass).set(entityId, component);
     }
 
+    // Remove a component from an entity
+    removeComponent(entityID, compClass) {
+        const compMap = this.components.get(compClass);
+        if (compMap) {
+            compMap.delete(entityID);
+        }
+            
+    }
+
     getComponent(entityId, compClass) {
         /*
         If the compClass exists in components, return the component object corresponding to the entityId
