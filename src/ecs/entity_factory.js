@@ -7,6 +7,7 @@ class EntityFactory {
     */
     constructor(ecs) {
         this.ecs = ecs;
+        this.dragonImg = loadImage('assets/dragon.svg');
     }
 
     create(type, data) {
@@ -14,7 +15,7 @@ class EntityFactory {
         Creates an entity of type with data
         This could probably be improved with some sort of pre-made templates
         */
-       switch(type) {
+        switch (type) {
             case EntityType.PLAYER:
                 return this.createCharacter(data.center_x, data.center_y, data.width, data.height, true);
             case EntityType.ENEMY:
@@ -27,7 +28,7 @@ class EntityFactory {
                 return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
-       }
+        }
     }
 
     // TODO: Refactor these create methods into something prettier
@@ -38,18 +39,22 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Gravity(0.5));
         this.ecs.addComponent(entity, new Character(10));
+
+        // Setup the render component with the correct fallback color
+        const color = isPlayer ? [255, 10, 155] : [100, 10, 200];
+        const renderComponent = new Renderable(color);
+        this.ecs.addComponent(entity, renderComponent);
+
         if (isPlayer) {
-            this.ecs.addComponent(entity, new Player());
+            this.ecs.addComponent(entity, new Player(1));
             this.ecs.addComponent(entity, new Velocity(0, 0));
-            this.ecs.addComponent(entity, new Renderable([255, 10, 155]));  
-        }
-        else {
+        } else {
             this.ecs.addComponent(entity, new Enemy());
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
-            this.ecs.addComponent(entity, new Renderable([100, 10, 200]));              
         }
 
+        renderComponent.image = this.dragonImg;
         return entity;
     }
 
