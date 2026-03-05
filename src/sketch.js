@@ -1,7 +1,7 @@
 let game;
 let currentScene;
-
 let gameState = GameStepConfig.State;
+let menuScene;
 let uiFont;
 
 function preload() {
@@ -14,7 +14,8 @@ function setup() {
     frameRate(60);
     textFont(uiFont);
     game = new Game(width, height);
-    currentScene = new MenuScene();
+    menuScene = new MenuScene();
+    fps = new drawFps();
 }
 
 function windowResized() {
@@ -24,16 +25,17 @@ function windowResized() {
 function draw() {
     background(100);
     cursor(ARROW);
+    fps.display();
 
     if (gameState === "LANDING") {
-        currentScene.display();
+        menuScene.display();
     }
     else if (gameState === "PLAY") {
-        push();
-        translate(-width / 2, -height / 2);
+        translate(-width/2, -height/2);
+        menuScene = null; // dispose of menu scene
         game.update();
-        pop();
     }
+
     else if (gameState === "PAUSE") {
         // Draw the frozen game state
         game.renderOnly();
@@ -51,23 +53,13 @@ function draw() {
         pop();
     }
 
-    // Draw the FPS counter on top of everything
-    let fps = frameRate();
-    push();
-    translate(-width / 2, -height / 2);
-    fill(0);
-    noStroke();
-    textSize(16);
-    textAlign(LEFT, TOP);
-    text("FPS: " + fps.toFixed(2), 10, 20);
-    pop();
+    fps.display();
 }
 
 function mousePressed() {
     if (gameState === "LANDING") {
         if (currentScene.checkClick()) {
             game.loadLevel(LevelData[1]);
-            gameState = "PLAY";
         }
     }
 }
