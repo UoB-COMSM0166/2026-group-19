@@ -20,6 +20,11 @@ class MenuScene extends Scene {
         pop();
     }
 
+    dispose() {
+        this.background.dispose();
+    }
+
+    // main components of the menu scene
     drawBaseImage() {
         if (this.menuImage.width > 0) {
             let ratio = this.menuImage.height / this.menuImage.width;
@@ -53,6 +58,7 @@ class MenuScene extends Scene {
         text(btnText, btnX -15, btnY + 15);
     }
 
+    // -- helper function --
     getButtonBounds() {
         return {
             btnX: width * 0.75,
@@ -62,9 +68,10 @@ class MenuScene extends Scene {
         };
     }
 
+    // -- game state function --
     checkClick() {
         const { btnX, btnY, w, h } = this.getButtonBounds();
         return mouseX > btnX - w / 2 && mouseX < btnX + w / 2 &&
-            mouseY > btnY - h / 2 && mouseY < btnY + h / 2;
+               mouseY > btnY - h / 2 && mouseY < btnY + h / 2;
     }
 }

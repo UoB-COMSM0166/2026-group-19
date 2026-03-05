@@ -1,5 +1,11 @@
-// backgorund.js
 // p5.js (WEBGL) background shader drawn on a full-canvas rectangle at lower z depth.
+// The shader is based on a Shadertoy fragment shader and runs on a fullscreen plane.
+// JS updates uniforms each frame:
+//   u_time        -> animation time
+//   u_resolution  -> render resolution
+//   u_channel0    -> procedural noise texture (Shadertoy iChannel0 replacement)
+// The vertex shader passes geometry to the GPU, while the fragment shader
+// generates the animated visual effect per pixel.
 
 class bgShader {
     constructor() {
@@ -16,10 +22,7 @@ class bgShader {
       this._channel0 = null;
       this._channel0InitFailed = false;
   
-      // Shadertoy -> p5 uniforms:
-      // iTime        -> u_time (float)
-      // iResolution  -> u_resolution (vec2)
-      // iChannel0    -> u_channel0 (sampler2D)
+      // Shadertoy shader source
       this.vert = `
         precision highp float;
   
@@ -36,9 +39,7 @@ class bgShader {
           gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
         }
       `;
-  
-      // Replaces the old fragment shader with the shader you provided (Shadertoy style).
-      // Ported to WebGL1 (GLSL ES 1.00): texture2D + gl_FragColor.
+
       this.frag = `
         precision mediump float;
 
@@ -56,7 +57,6 @@ class bgShader {
 
         void main(){
 
-            
             vec2 uv = vec2(vTexCoord.x, 1.0 - vTexCoord.y);
             vec2 x = uv * u_resolution;
 
@@ -92,7 +92,6 @@ class bgShader {
             gl_FragColor = O;
             
         }
-
       `;
     }
   
@@ -147,7 +146,7 @@ class bgShader {
   
     // Call this every frame from your scene: background.display();
     display() {
-      const p = window; // assumes global-mode p5
+      const p = window;
       this._ensureOffscreen(p);
       this._ensureChannel0(p);
 
@@ -189,5 +188,9 @@ class bgShader {
       p.image(g, 0, 0, p.width, p.height);
       p.pop();
     }
-  }
-  
+
+    dispose(){
+        this._offscreen.remove();
+    }
+
+}
