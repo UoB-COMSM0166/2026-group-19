@@ -12,6 +12,7 @@ class InputSystem extends System {
         this.prev = new Map();
     }
     update() {
+        const now = millis();
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
@@ -44,16 +45,20 @@ class InputSystem extends System {
             // Spawn Projectile
             if (keyIsDown(SPACE) && weapon && !this.prev.get(SPACE)) {
                 const vx = player.direction * weapon.bulletSpeed;
-                this.spawner.request(EntityType.PROJECTILE, 
+                if (now - weapon.lastShotTime >= weapon.fireRate){
+                    this.spawner.request(EntityType.PROJECTILE, 
                     {center_x: pos.x, 
                      center_y: pos.y, 
                      width: weapon.bulletSize.w, 
                      height: weapon.bulletSize.h, 
                      velocity_x: vx, 
                      damage: weapon.bulletDamage});
+                    weapon.lastShotTime = now;
+                }
                 if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)){
                     vel.vx = (-1) * player.direction * weapon.recoilKick * width;
                 }
+
                 
             }
 

@@ -4,7 +4,7 @@ const WeaponType = Object.freeze({
 })
 
 const WEAPON_CONFIGS = {
-  [WeaponType.RIFLE]: {fireRate: 150, 
+  [WeaponType.RIFLE]: {fireRate: 100, 
                        bulletDamage: 1, 
                        bulletSpeed: 12, 
                        bulletSize: {w: 6, h: 4},
@@ -12,7 +12,7 @@ const WEAPON_CONFIGS = {
                        maxRange: 1.0,
                       },
 
-  [WeaponType.ROCKET]: {fireRate: 1200, 
+  [WeaponType.ROCKET]: {fireRate: 500, 
                         bulletDamage: 5, 
                         bulletSpeed: 20, 
                         bulletSize: {w:12, h:8},
@@ -26,6 +26,7 @@ class Weapon {
     this.type = type;
     if (type){
       const config = WEAPON_CONFIGS[type]
+      this.lastShotTime = 0;
       // Map config data to the component instance
       this.fireRate = config.fireRate;
       this.bulletDamage = config.bulletDamage;
