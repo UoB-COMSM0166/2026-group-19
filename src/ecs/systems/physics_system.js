@@ -38,10 +38,18 @@ class PhysicsSystem extends System {
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
+            const force = this.ecs.getComponent(id, Force);
+            const enemy = this.ecs.getComponent(id, Enemy);
             const g = this.ecs.getComponent(id, Gravity);
 
+            //apply if forces if they are present
+            if (force) {
+                vel.vx += force.fx;
+                vel.vy += force.fy;
+            }
+
             // Apply Gravity (but not to floating enemies)
-            if (g && !this.ecs.getComponent(id, EnemyFloating)) {
+            if (g && !(enemy && enemy.type === EnemyType.FLOATING)) {
                 vel.vy = Math.min(vel.vy + g.g, this.maxFall);
             }
 
@@ -68,32 +76,6 @@ class PhysicsSystem extends System {
             this.ecs.removeEntity(id);
         }
 
-        // Find the player
-        const players = this.ecs.getEntitiesWith(Player, Position);
-        if (players.length === 0) return; // No player found
-
-        const playerId = players[0];
-        const playerPos = this.ecs.getComponent(playerId, Position);
-
-        // Find floating enemies and update their force toward player
-        const floatingEnemies = this.ecs.getEntitiesWith(EnemyFloating, Position, Force);
-        for (let enemyId of floatingEnemies) {
-            const enemyPos = this.ecs.getComponent(enemyId, Position);
-            const force = this.ecs.getComponent(enemyId, Force);
-            
-            // Calculate direction from enemy to player
-            const dx = playerPos.x - enemyPos.x;
-            const dy = playerPos.y - enemyPos.y;
-            
-            // Normalize and apply force (adjust strength as needed)
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            const strength = 0.5; // Adjust this value to control speed
-            
-            if (distance > 0) {
-                force.fx = (dx / distance) * strength;
-                force.fy = (dy / distance) * strength;
-            }
-        }
 
     }
 

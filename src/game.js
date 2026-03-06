@@ -8,6 +8,7 @@ class Game {
             new InputSystem(this.ecs, this.spawner),
             this.spawner,
             new PhysicsSystem(this.ecs),
+            new PathingSystem(this.ecs),
             new RenderSystem(this.ecs)
         ];
 
@@ -20,12 +21,12 @@ class Game {
 
     init() {
         this.spawner.request(EntityType.PLAYER, { center_x: 450, center_y: 50, width: 20, height: 20 });
-        this.spawner.request(EntityType.ENEMY, { center_x: 400, center_y: 50, width: 20, height: 20 });
-        this.spawner.request(EntityType.ENEMY, { center_x: 350, center_y: 50, width: 30, height: 30 }); 
-        this.spawner.request(EntityType.ENEMY, { center_x: 300, center_y: 50, width: 30, height: 30 }); 
-        this.spawner.request(EntityType.ENEMY, { center_x: 500, center_y: 50, width: 20, height: 20 }); 
-        this.spawner.request(EntityType.ENEMY, { center_x: 500, center_y: 50, width: 20, height: 20 }); 
-        this.spawner.request(EntityType.ENEMY_FLOATING, { center_x: 500, center_y: 300, width: 50, height: 50 }); 
+        this.spawner.request(EntityType.ENEMY, { center_x: 400, center_y: 50, type: EnemyType.NORMAL });
+        this.spawner.request(EntityType.ENEMY, { center_x: 350, center_y: 50, type: EnemyType.LARGE }); 
+        this.spawner.request(EntityType.ENEMY, { center_x: 300, center_y: 50, type: EnemyType.FLOATING }); 
+        this.spawner.request(EntityType.ENEMY, { center_x: 500, center_y: 50, type: EnemyType.NORMAL }); 
+        this.spawner.request(EntityType.ENEMY, { center_x: 500, center_y: 50, type: EnemyType.NORMAL }); 
+        //this.spawner.request(EntityType.ENEMY_FLOATING, { center_x: 500, center_y: 300, width: 50, height: 50 });
 
         this.spawner.request(EntityType.WALL, { left_x: 0, top_y: 580, width: 360, height: 20 }); //bottom left wall
         this.spawner.request(EntityType.WALL, { left_x: 440, top_y: 580, width: 360, height: 20 }); //bottom right wall

@@ -7,20 +7,25 @@
 
   </head>
   <body>
-    <script src="src/sketch.js"></script>
+
+    
+    
+    <script src="src/ecs/entity_types.js"></script>
+
 
     <!-- Components -->
     <script src="src/ecs/components/physics/position.js"></script>
     <script src="src/ecs/components/physics/force.js"></script>
     <script src="src/ecs/components/physics/velocity.js"></script>
     <script src="src/ecs/components/physics/gravity.js"></script>
+    <script src="src/ecs/components/health.js"></script>
+    <script src="src/ecs/components/speed.js"></script>
     <script src="src/ecs/components/character.js"></script>
     <script src="src/ecs/components/weapon.js"></script>
     <script src="src/ecs/components/tags/wall.js"></script>
     <script src="src/ecs/components/tags/box.js"></script>
     <script src="src/ecs/components/tags/projectile.js"></script>
     <script src="src/ecs/components/tags/enemy.js"></script>
-    <script src="src/ecs/components/tags/enemy_floating.js"></script>
     <script src="src/ecs/components/tags/player.js"></script>
     <script src="src/ecs/components/rendering/renderable.js"></script>
 
@@ -31,15 +36,18 @@
     <script src="src/ecs/systems/physics_system.js"></script>
     <script src="src/ecs/systems/spawning_system.js"></script>
     <script src="src/ecs/systems/enemy_spawn_system.js"></script>
+    <script src="src/ecs/systems/pathing_system.js"></script>
 
     <!-- Core -->
     <script src="src/ecs/ecs.js"></script>
-    <script src="src/game.js"></script>
     <script src="src/ecs/entity_factory.js"></script>
-    <script src="src/ecs/entity_types.js"></script>
+    <script src="src/game.js"></script>
 
     <!-- UI -->
     <script src="src/UI/scene.js"></script>
     <script src="src/UI/menu_scene.js"></script>
+
+    <script src="src/sketch.js"></script>
+
   </body>
 </html>
