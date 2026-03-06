@@ -4,6 +4,7 @@ class RenderSystem extends System {
     */
     constructor(ecs) {
         super(ecs);
+        this.debugLineOfSight = true;
     }
 
     update() {
@@ -46,6 +47,27 @@ class RenderSystem extends System {
                 fill(...render.color);
                 noStroke();
                 rect(bb.left_x, bb.top_y, bb.w, bb.h);
+            }
+        }
+
+        if (this.debugLineOfSight) {
+            const players = this.ecs.getEntitiesWith(Player, Position);
+            if (players.length > 0) {
+                const playerPos = this.ecs.getComponent(players[0], Position);
+                const floatingEnemies = this.ecs.getEntitiesWith(Enemy, Position, Force);
+                for (let enemyId of floatingEnemies) {
+                    const enemyPos = this.ecs.getComponent(enemyId, Position);
+
+                    push();
+                    stroke(255, 0, 0);
+                    strokeWeight(1);
+                    drawingContext.setLineDash([5, 5]);
+                    line (
+                        enemyPos.x, enemyPos.y,
+                        playerPos.x, playerPos.y
+                    );
+                    pop();
+                }
             }
         }
     }
