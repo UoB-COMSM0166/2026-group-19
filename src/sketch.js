@@ -22,6 +22,9 @@ function setup() {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    if (playBg) {
+        playBg.resize(width, height);
+    }
 }
 
 function windowResized() {
@@ -38,6 +41,10 @@ function draw() {
     }
     else if (gameState === "PLAY") {
         translate(-width / 2, -height / 2);
+        if (playBg) {
+            playBg.update();
+            playBg.draw();
+        }
         menuScene = null; // dispose of menu scene
         game.update();
         pop();
@@ -66,7 +73,12 @@ function draw() {
 function mousePressed() {
     if (gameState === "LANDING") {
         if (menuScene.checkClick()) {
-            game.loadLevel(LevelData[2]);
+            game.loadLevel(LevelData[3]);
+            playBg = new ScrollingPlayBg(playBgImage, {
+                speedX: 0,
+                speedY: 1.2,
+                tileScale: 1
+            });
             gameState = "PLAY";
         }
     }

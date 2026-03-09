@@ -50,5 +50,58 @@ const LevelData = {
         boxes: [
             { left_x: 350, top_y: 330, width: 20, height: 20 }
         ]
-    }
+    },
+
+    3: (() => {
+        const W = window.innerWidth;
+        const H = window.innerHeight;
+        const T = 20; // wall thickness
+        const holeWidth = W * 0.2;
+        const holeStart = (W - holeWidth) / 2;
+
+        return {
+            enemySpeed: 4,
+
+            player: {
+                center_x: W * 0.1,
+                center_y: H * 0.85,
+                width: 20,
+                height: 20
+            },
+
+            enemies: [
+                { center_x: W * 0.35, center_y: H * 0.75, width: 20, height: 20 },
+                { center_x: W * 0.55, center_y: H * 0.55, width: 30, height: 30 },
+                { center_x: W * 0.75, center_y: H * 0.35, width: 20, height: 20 },
+                { center_x: W * 0.88, center_y: H * 0.2,  width: 30, height: 30 }
+            ],
+
+            walls: [
+                // outer boundaries
+                { left_x: 0,     top_y: H - T, width: W, height: T },
+                { left_x: 0, top_y: 0, width: holeStart, height: T },
+                { left_x: holeStart + holeWidth, top_y: 0, width: W - (holeStart + holeWidth), height: T },
+                { left_x: 0,     top_y: 0,     width: T, height: H },
+                { left_x: W - T, top_y: 0,     width: T, height: H },
+
+                // platforms across the fullscreen map
+                { left_x: W * 0.05, top_y: H * 0.75, width: W * 0.22, height: T, spawnable: true },
+                { left_x: W * 0.30, top_y: H * 0.68, width: W * 0.20, height: T, spawnable: true },
+                { left_x: W * 0.55, top_y: H * 0.52, width: W * 0.20, height: T, spawnable: true },
+                { left_x: W * 0.72, top_y: H * 0.40, width: W * 0.18, height: T, spawnable: true },
+
+                // middle support platform
+                { left_x: W * 0.40, top_y: H * 0.82, width: W * 0.18, height: T, spawnable: true },
+
+                // high risk / reward top platform
+                { left_x: W * 0.18, top_y: H * 0.20, width: W * 0.22, height: T, spawnable: false }
+            ],
+
+            boxes: [
+                { left_x: W * 0.32, top_y: H * 0.66, width: 20, height: 20 },
+                { left_x: W * 0.58, top_y: H * 0.50, width: 20, height: 20 },
+                { left_x: W * 0.78, top_y: H * 0.38, width: 20, height: 20 }
+            ]
+        };
+    })()
 };
