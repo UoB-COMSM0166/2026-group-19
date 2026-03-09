@@ -8,6 +8,7 @@ class EntityFactory {
     constructor(ecs) {
         this.ecs = ecs;
         this.mainCharacterSpriteSheet = loadImage('assets/main_characterSprites.png');
+        this.wallTileImage = loadImage('assets/Idle_block.png');
     }
 
     create(type, data) {
@@ -74,7 +75,7 @@ class EntityFactory {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
         this.ecs.addComponent(entity, new Wall());
-        this.ecs.addComponent(entity, new Renderable([200, 0, 0]));
+        this.ecs.addComponent(entity, new Renderable([200, 0, 0], this.wallTileImage));
         if (spawnable) {
             this.ecs.addComponent(entity, new SpawnablePlatform());
         }

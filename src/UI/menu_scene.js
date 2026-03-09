@@ -201,8 +201,8 @@ class MenuScene extends Scene {
 
     getButtonBounds() {
         return {
-            btnX: width * 0.75 - 42 ,
-            btnY: height * 0.5 + this.menuImage.height * 0.35,
+            btnX: width * 0.75 - 55 ,
+            btnY: height * 0.5 + this.menuImage.height * 0.425,
             w: this.btnWidth,
             h: this.btnHeight
         };
