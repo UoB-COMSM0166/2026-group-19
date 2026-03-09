@@ -13,7 +13,39 @@ class RenderSystem extends System {
             const render = this.ecs.getComponent(entity, Renderable);
             const player = this.ecs.getComponent(entity, Player);
             const vel = this.ecs.getComponent(entity, Velocity);
+            const sprite = this.ecs.getComponent(entity, Sprite);
             const bb = pos.getBoundingBox();
+
+            if (sprite && sprite.image && sprite.image.width > 0) {
+                const anim = sprite.animations[sprite.currentAnimation];
+                if (anim) {
+                    const frameIndex = anim.start + sprite.currentFrame;
+                    const sx = frameIndex * sprite.frameWidth;
+                    const sy = 0;
+                    const drawW = bb.w * sprite.scale;
+                    const drawH = bb.h * sprite.scale;
+
+                    push();
+                    translate(pos.x, pos.y);
+                    if (sprite.flipX) {
+                        scale(-1, 1);
+                    }
+                    imageMode(CENTER);
+                    image(
+                        sprite.image,
+                        0,
+                        0,
+                        drawW,
+                        drawH,
+                        sx,
+                        sy,
+                        sprite.frameWidth,
+                        sprite.frameHeight
+                    );
+                    pop();
+                    continue;
+                }
+            }
 
             // Keep track of which way the entity is facing
             if (render.facingRight === undefined) {

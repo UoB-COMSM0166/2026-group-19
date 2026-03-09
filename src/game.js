@@ -10,6 +10,7 @@ class Game {
             this.spawner,
             new InteractionSystem(this.ecs, this.spawner),
             new PhysicsSystem(this.ecs, this.spawner),
+            new AnimationSystem(this.ecs),
             new RenderSystem(this.ecs)
         ];
     }

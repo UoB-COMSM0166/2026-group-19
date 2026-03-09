@@ -12,12 +12,16 @@ class MenuScene extends Scene {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 288be23 (change font; add landing titile; animated character)
 
         // animated Game title Setting
         this.fullTitle = "NEED VISA";
         this.visibleCount = 0;
         this.lastTypedTime = 0;
         this.typingInterval = 150; // in milliseconds
+<<<<<<< HEAD
 =======
 >>>>>>> 15ba5cb (chore : update assets background images)
 =======
@@ -33,6 +37,8 @@ class MenuScene extends Scene {
 >>>>>>> 7e11de7 (chore : update assets background images)
 =======
 >>>>>>> 2bc1a2a (fix : resolve merge conflicts in menu scene and sketch files)
+=======
+>>>>>>> 288be23 (change font; add landing titile; animated character)
     }
 
     display() {
@@ -40,14 +46,20 @@ class MenuScene extends Scene {
         push();
         translate(-width / 2, -height / 2);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 288be23 (change font; add landing titile; animated character)
 
         // base image anomation
         let t = millis();
         this.drawAnimatedGameTitle();
         this.drawBaseImage(Math.max(Math.sin(t / 1000), 0.8) * 255);
+<<<<<<< HEAD
 =======
         this.drawBaseImage();
 >>>>>>> 878f13c (add: background ; adjust window size)
+=======
+>>>>>>> 288be23 (change font; add landing titile; animated character)
         this.drawButton(this.buttonText);
         pop();
     }
@@ -65,6 +77,7 @@ class MenuScene extends Scene {
             push();
             imageMode(CENTER);
 <<<<<<< HEAD
+<<<<<<< HEAD
             tint(255, dynamicAlpha); // second parameter is the alpha of ticket image
             image(
                 this.menuImage,
@@ -77,12 +90,26 @@ class MenuScene extends Scene {
             tint(255, 225); // the alpha of ticket image
             image(this.menuImage, width / 2, height / 2, width * 0.7, newHeight * 0.7);
 >>>>>>> 878f13c (add: background ; adjust window size)
+=======
+            tint(255, dynamicAlpha); // second parameter is the alpha of ticket image
+            image(
+                this.menuImage, 
+                width / 2, 
+                height / 2 + height * 0.2, 
+                width * 0.65, 
+                newHeight * 0.65
+            );
+>>>>>>> 288be23 (change font; add landing titile; animated character)
             pop();
         }
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     drawAnimatedGameTitle() {
+=======
+    drawAnimatedGameTitle(){
+>>>>>>> 288be23 (change font; add landing titile; animated character)
         let now = millis();
 
         // control tying speed
@@ -104,6 +131,7 @@ class MenuScene extends Scene {
         pop();
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     drawButton(btnText) {
         const { btnX, btnY, w, h } = this.getButtonBounds();
@@ -149,6 +177,8 @@ class MenuScene extends Scene {
 =======
 >>>>>>> 2bc1a2a (fix : resolve merge conflicts in menu scene and sketch files)
 =======
+=======
+>>>>>>> 288be23 (change font; add landing titile; animated character)
     drawButton(btnText) {
         const { btnX, btnY, w, h } = this.getButtonBounds();
     
@@ -166,13 +196,13 @@ class MenuScene extends Scene {
         textAlign(CENTER, CENTER);
         textSize(64);
     
-        text(btnText, btnX -15, btnY + 15);
+        text(btnText, btnX, btnY);
     }
 
     getButtonBounds() {
         return {
-            btnX: width * 0.75,
-            btnY: height * 0.5,
+            btnX: width * 0.75 - 42 ,
+            btnY: height * 0.5 + this.menuImage.height * 0.35,
             w: this.btnWidth,
             h: this.btnHeight
         };
