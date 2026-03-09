@@ -7,7 +7,7 @@ class EntityFactory {
     */
     constructor(ecs) {
         this.ecs = ecs;
-        this.dragonImg = loadImage('assets/dragon.svg');
+        this.mainCharacterSpriteSheet = loadImage('assets/main_characterSprites.png');
     }
 
     create(type, data) {
@@ -48,13 +48,25 @@ class EntityFactory {
         if (isPlayer) {
             this.ecs.addComponent(entity, new Player(1));
             this.ecs.addComponent(entity, new Velocity(0, 0));
+
+            // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
+            // If your frame ranges are different, edit start/count here.
+            this.ecs.addComponent(entity, new Sprite(
+                this.mainCharacterSpriteSheet,
+                24,
+                24,
+                {
+                    IDLE:   { start: 0,  count: 4, speed: 8, loop: true },
+                    MOVE:   { start: 17,  count: 7, speed: 10, loop: false },
+                    HURT:   { start: 15, count: 3, speed: 8, loop: false }
+                },
+                1.6
+            ));
         } else {
             this.ecs.addComponent(entity, new Enemy());
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
         }
-
-        renderComponent.image = this.dragonImg;
         return entity;
     }
 

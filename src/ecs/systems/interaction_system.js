@@ -24,10 +24,14 @@ class InteractionSystem extends System {
 
     handlePlayerEnemy(playerId) {
         const pos = this.ecs.getComponent(playerId, Position);
+        const sprite = this.ecs.getComponent(playerId, Sprite);
         if (!pos) return;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            // TODO: Implement logic
-            console.log('Player dies');
+            const now = millis();
+            if (sprite) {
+                // Extend hurt state while colliding, with tiny anti-jitter buffer.
+                sprite.hurtUntil = Math.max(sprite.hurtUntil, now + 280);
+            }
         })
     }
 
