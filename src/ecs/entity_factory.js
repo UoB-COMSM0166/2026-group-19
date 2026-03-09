@@ -71,10 +71,12 @@ class EntityFactory {
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Character(10));
         this.ecs.addComponent(entity, new Health(health));
-        this.ecs.addComponent(entity, new Speed(speed));
 
         if (charType === EntityType.PLAYER || charType === EnemyType.FLOATING) {
             this.ecs.addComponent(entity, new Velocity(0, 0));
+        } else {
+            const sign = Math.random() < 0.5 ? -1 : 1;
+            this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
         }
 
         const renderComponent = new Renderable(color);
