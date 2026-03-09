@@ -62,8 +62,6 @@ class EntityFactory {
             if (charType === EnemyType.FLOATING) {
                 this.ecs.addComponent(entity, new Force(0, 0));
             } else {
-                const sign = Math.random() < 0.5 ? -1 : 1;
-                this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
                 this.ecs.addComponent(entity, new Gravity(0.5));
             }
         }
