@@ -7,7 +7,8 @@ class EntityFactory {
     */
     constructor(ecs) {
         this.ecs = ecs;
-        this.dragonImg = loadImage('assets/dragon.svg');
+        this.mainCharacterSpriteSheet = loadImage('assets/main_characterSprites.png');
+        this.wallTileImage = loadImage('assets/Idle_block.png');
     }
 
     create(type, data) {
@@ -25,7 +26,7 @@ class EntityFactory {
             case EntityType.BOX:
                 return this.createBox(data.left_x, data.top_y, data.width, data.height);
             case EntityType.PROJECTILE:
-                return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage);
+                return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage, data.range);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
         }
@@ -33,15 +34,16 @@ class EntityFactory {
 
     // TODO: Refactor these create methods into something prettier
     createCharacter(center_x, center_y, charType) {
+        let speed = charType === EntityType.PLAYER ? PhysicsConstants.PLAYER_SPEED : PhysicsConstants.ENEMY_SPEED;
+
         const entity = this.ecs.createEntity();
 
-        let width, height, health, speed, color;
+        let width, height, health, color;
 
         if (charType === EntityType.PLAYER) {
             width = 20;
             height = 20;
             health = 10;
-            speed = 5;
             color = [255, 10, 155];
             this.ecs.addComponent(entity, new Player());
             this.ecs.addComponent(entity, new Gravity(0.5));
@@ -65,19 +67,28 @@ class EntityFactory {
         }
 
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Character(10));
         this.ecs.addComponent(entity, new Character(health));
 
         if (charType === EntityType.PLAYER || charType === EnemyType.FLOATING) {
             this.ecs.addComponent(entity, new Velocity(0, 0));
+
+            // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
+            // If your frame ranges are different, edit start/count here.
+            this.ecs.addComponent(entity, new Sprite(
+                this.mainCharacterSpriteSheet,
+                24,
+                24,
+                {
+                    IDLE: { start: 0, count: 4, speed: 8, loop: true },
+                    MOVE: { start: 17, count: 7, speed: 10, loop: false },
+                    HURT: { start: 15, count: 3, speed: 8, loop: false }
+                },
+                1.6
+            ));
         } else {
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
         }
-
-        const renderComponent = new Renderable(color);
-        this.ecs.addComponent(entity, renderComponent);
-        renderComponent.image = this.dragonImg;
         return entity;
     }
 
@@ -85,7 +96,7 @@ class EntityFactory {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
         this.ecs.addComponent(entity, new Wall());
-        this.ecs.addComponent(entity, new Renderable([200, 0, 0]));
+        this.ecs.addComponent(entity, new Renderable([200, 0, 0], this.wallTileImage));
         if (spawnable) {
             this.ecs.addComponent(entity, new SpawnablePlatform());
         }
@@ -100,11 +111,11 @@ class EntityFactory {
         return entity;
     }
 
-    createProjectile(center_x, center_y, width, height, velocity_x, damage) {
+    createProjectile(center_x, center_y, width, height, velocity_x, damage, range) {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Velocity(velocity_x, 0));
-        this.ecs.addComponent(entity, new Projectile(damage));
+        this.ecs.addComponent(entity, new Projectile(damage, range));
         this.ecs.addComponent(entity, new Renderable([255, 255, 0]));
         return entity;
     }

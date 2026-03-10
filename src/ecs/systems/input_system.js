@@ -1,6 +1,6 @@
 const SPACE = 32;
-const LEFT = -1;
-const RIGHT = 1;
+const DIR_LEFT = -1;
+const DIR_RIGHT = 1;
 
 class InputSystem extends System {
     /*
@@ -22,15 +22,16 @@ class InputSystem extends System {
             const vel = this.ecs.getComponent(id, Velocity);
             const speed = PhysicsConstants.PLAYER_SPEED;
             const jumpSpeed = PhysicsConstants.JUMP_SPEED;
+            const isShootPressed = keyIsDown(SPACE) && !this.prev.get(SPACE);
 
             // Side-to-side
             if (keyIsDown(LEFT_ARROW)) { 
                 vel.vx = -speed; 
-                player.direction = LEFT;
+                player.direction = DIR_LEFT;
             }
             else if (keyIsDown(RIGHT_ARROW)) { 
                 vel.vx = speed; 
-                player.direction = RIGHT;
+                player.direction = DIR_RIGHT;
             }
             else {
                 vel.vx *= 0.8;
@@ -43,21 +44,8 @@ class InputSystem extends System {
             }
 
             // Spawn Projectile
-            if (keyIsDown(SPACE) && weapon && !this.prev.get(SPACE)) {
-                const vx = player.direction * weapon.bulletSpeed;
-                if (now - weapon.lastShotTime >= weapon.fireRate){
-                    this.spawner.request(EntityType.PROJECTILE, 
-                    {center_x: pos.x, 
-                     center_y: pos.y, 
-                     width: weapon.bulletSize.w, 
-                     height: weapon.bulletSize.h, 
-                     velocity_x: vx, 
-                     damage: weapon.bulletDamage});
-                    weapon.lastShotTime = now;
-                }
-                if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)){
-                    vel.vx = (-1) * player.direction * weapon.recoilKick * width;
-                }
+            if (isShootPressed && weapon) {
+                this.ecs.addComponent(id, new FireRequest());
 
                 
             }

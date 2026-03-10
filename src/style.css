@@ -1,7 +1,166 @@
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
+
 canvas {
   display: block;
+}
+
+/* --- Pause Menu Overlay --- */
+#pause-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  pointer-events: none;
+  /* Let clicks pass through to game when hidden */
+  opacity: 0;
+  transition: opacity 0.1s;
+  font-family: 'Courier New', Courier, monospace;
+  overflow: hidden;
+}
+
+#pause-overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+/* --- BOTTOM LAYER: The Menu --- */
+#pause-menu-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Changed from 0.95 to 0.70 to make it more see-through */
+  background: rgba(10, 10, 15, 0.70);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.pause-title {
+  color: white;
+  font-size: 5rem;
+  letter-spacing: 15px;
+  margin-bottom: 50px;
+  text-shadow: 0px 0px 20px rgba(100, 255, 150, 0.8);
+}
+
+.options-container {
+  display: flex;
+  gap: 40px;
+}
+
+/* --- TOP LAYER: The Screenshot Split --- */
+.split-image {
+  position: absolute;
+  width: 50vw;
+  /* Box is exactly half screen width */
+  height: 50vh;
+  /* Box is exactly half screen height */
+  background-size: 100vw 100vh;
+  /* Image is exactly full screen size */
+  background-repeat: no-repeat;
+  z-index: 2;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+/* TOP-LEFT: Stays at the start (0,0) */
+#split-tl {
+  top: 0;
+  left: 0;
+  background-position: 0px 0px;
+}
+
+/* TOP-RIGHT: Shift the image LEFT by half the screen */
+#split-tr {
+  top: 0;
+  left: 50vw;
+  background-position: -50vw 0px;
+}
+
+/* BOTTOM-LEFT: Shift the image UP by half the screen */
+#split-bl {
+  top: 50vh;
+  left: 0;
+  background-position: 0px -50vh;
+}
+
+/* BOTTOM-RIGHT: Shift the image LEFT and UP */
+#split-br {
+  top: 50vh;
+  left: 50vw;
+  background-position: -50vw -50vh;
+}
+
+/* ANIMATION: Pushing the 4 pieces outward diagonally! */
+#pause-overlay.split #split-tl {
+  transform: translate(-25vw, -25vh);
+}
+
+/* Up and Left */
+#pause-overlay.split #split-tr {
+  transform: translate(25vw, -25vh);
+}
+
+/* Up and Right */
+#pause-overlay.split #split-bl {
+  transform: translate(-25vw, 25vh);
+}
+
+/* Down and Left */
+#pause-overlay.split #split-br {
+  transform: translate(25vw, 25vh);
+}
+
+/* --- GLOW CARD BUTTONS --- */
+.glow-card {
+  position: relative;
+  width: 250px;
+  height: 80px;
+  /* Sized like standard buttons now */
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 2px;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(100, 255, 150, 0.8), transparent 40%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+.glow-card-content {
+  background-color: rgba(12, 12, 12, 0.98);
+  border-radius: inherit;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }

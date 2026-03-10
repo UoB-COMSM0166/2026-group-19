@@ -1,23 +1,28 @@
 const WeaponType = Object.freeze({
     RIFLE: "RIFLE",
+    TWOWAYRIFLE: "TWOWAYRIFLE",
     ROCKET: "ROCKET"
 })
 
-const WEAPON_CONFIGS = {
-  [WeaponType.RIFLE]: {fireRate: 100, 
-                       bulletDamage: 1, 
-                       bulletSpeed: 12, 
-                       bulletSize: {w: 6, h: 4},
-                       recoilKick: 0.003,
-                       maxRange: 1.0,
-                      },
+const BASICRIFLE = {
+    fireRate: 100, 
+    bulletDamage: 1, 
+    bulletSpeed: 10, 
+    bulletSize: {w: 6, h: 4},
+    recoilKick: 0.003,
+    maxRange: 0.3,
 
+}
+
+const WEAPON_CONFIGS = {
+  [WeaponType.RIFLE]: BASICRIFLE,
+  [WeaponType.TWOWAYRIFLE]: BASICRIFLE,
   [WeaponType.ROCKET]: {fireRate: 500, 
                         bulletDamage: 5, 
                         bulletSpeed: 20, 
-                        bulletSize: {w:12, h:8},
+                        bulletSize: {w:18, h:12},
                         recoilKick: 0.009,
-                        maxRange: 1.5,
+                        maxRange: 0.7,
                       },
 }
 
