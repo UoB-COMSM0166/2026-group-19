@@ -14,3 +14,7 @@ const PhysicsConstants = {
 const SpawnDefaults = {
     SPAWN_RATE: 120,
 };
+
+const AnimationDefaults = {
+    HURT_TIME: 280
+}

@@ -27,11 +27,11 @@ class InputSystem extends System {
             // Side-to-side
             if (keyIsDown(LEFT_ARROW)) { 
                 vel.vx = -speed; 
-                player.direction = DIR_LEFT;
+                character.direction = DIR_LEFT;
             }
             else if (keyIsDown(RIGHT_ARROW)) { 
                 vel.vx = speed; 
-                player.direction = DIR_RIGHT;
+                character.direction = DIR_RIGHT;
             }
             else {
                 vel.vx *= 0.8;

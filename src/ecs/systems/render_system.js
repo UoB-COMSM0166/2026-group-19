@@ -7,6 +7,36 @@ class RenderSystem extends System {
     }
 
     update() {
+        // const sprite_ids = this.ecs.getEntitiesWith(Animation, Position, Renderable);
+
+        // for (let id of sprite_ids) {
+        //     const anim = sprite.animations[sprite.currentAnimation];
+        //     const frameIndex = anim.start + sprite.currentFrame;
+        //     const sx = frameIndex * sprite.frameWidth;
+        //     const sy = 0;
+        //     const drawW = bb.w * sprite.scale;
+        //     const drawH = bb.h * sprite.scale;
+
+        //     push();
+        //     translate(pos.x, pos.y);
+        //     if (sprite.flipX) {
+        //         scale(-1, 1);
+        //     }
+        //     imageMode(CENTER);
+        //     image(
+        //         sprite.image,
+        //         0,
+        //         0,
+        //         drawW,
+        //         drawH,
+        //         sx,
+        //         sy,
+        //         sprite.frameWidth,
+        //         sprite.frameHeight
+        //     );
+        //     pop();
+        // }
+
         const entities = this.ecs.getEntitiesWith(Position, Renderable);
         for (let entity of entities) {
             const pos = this.ecs.getComponent(entity, Position);
@@ -14,7 +44,7 @@ class RenderSystem extends System {
             const player = this.ecs.getComponent(entity, Player);
             const wall = this.ecs.getComponent(entity, Wall);
             const vel = this.ecs.getComponent(entity, Velocity);
-            const sprite = this.ecs.getComponent(entity, Sprite);
+            const sprite = this.ecs.getComponent(entity, Animation);
             const bb = pos.getBoundingBox();
 
             if (sprite && sprite.image && sprite.image.width > 0) {

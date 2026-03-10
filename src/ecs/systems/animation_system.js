@@ -4,41 +4,43 @@ class AnimationSystem extends System {
     }
 
     update() {
+        // Update sets the correct frame to animate
         const now = millis();
-        const entities = this.ecs.getEntitiesWith(Sprite, Velocity);
+        const entities = this.ecs.getEntitiesWith(Animation, Velocity);
 
         for (const id of entities) {
-            const sprite = this.ecs.getComponent(id, Sprite);
+            const anim = this.ecs.getComponent(id, Animation);
             const vel = this.ecs.getComponent(id, Velocity);
-            const player = this.ecs.getComponent(id, Player);
 
-            if (player) {
-                if (player.direction > 0) sprite.flipX = false;
-                else if (player.direction < 0) sprite.flipX = true;
-            } else if (Math.abs(vel.vx) > 0.05) {
-                sprite.flipX = vel.vx < 0;
+            // ---- Animation selection ----
+            const hurtEnded = (anim.current === AnimationType.HURT && now > anim.hurtUntil);
+
+            if (anim.current === AnimationType.HURT && !hurtEnded) {
+                // stay in hurt animation
+            }
+            else if (Math.abs(vel.vx) > 0.05) {
+                anim.setAnimation(AnimationType.MOVE);
+            }
+            else {
+                anim.setAnimation(AnimationType.IDLE);
             }
 
-            let nextAnim = "IDLE";
-            if (now < sprite.hurtUntil) {
-                nextAnim = "HURT";
-            } else if (Math.abs(vel.vx) > 0.1) {
-                nextAnim = "MOVE";
-            }
+            // ---- Frame update ----
 
-            sprite.setAnimation(nextAnim);
-            const anim = sprite.animations[sprite.currentAnimation];
-            if (!anim) continue;
+            const animationData = anim.animations[anim.current];
+            anim.timer++;
 
-            sprite.frameTick++;
-            if (sprite.frameTick < anim.speed) continue;
+            // If frame update timer has not elapsed yet, continue
+            if (anim.timer >= animationData.speed) {
+                // Increment frame index
+                const nextFrame = anim.frameIndex + 1;
+                anim.frameIndex = animationData.loop
+                    ? nextFrame % animationData.frames.length               // Wrap-around
+                    : Math.min(nextFrame, animationData.frames.length - 1); // No wrap-around
+                }
 
-            sprite.frameTick = 0;
-            if (anim.loop === false) {
-                sprite.currentFrame = Math.min(sprite.currentFrame + 1, anim.count - 1);
-            } else {
-                sprite.currentFrame = (sprite.currentFrame + 1) % anim.count;
-            }
+                // Reset timer to 0
+                anim.timer = 0;
         }
     }
 }
