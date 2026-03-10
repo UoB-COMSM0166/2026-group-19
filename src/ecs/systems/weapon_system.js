@@ -10,12 +10,12 @@ class WeaponSystem extends System {
       const now = millis();
       
       // get the player Id when it simultaneously has Weapon and FireRequest components
-      const players = this.ecs.getEntitiesWith(Player, Weapon, FireRequest);
-      for (let id of players){
+      const ids = this.ecs.getEntitiesWith(FireRequest);
+      for (let id of ids){
         // Get the access of each component
           const pos = this.ecs.getComponent(id, Position);
           const vel = this.ecs.getComponent(id, Velocity);
-          const player = this.ecs.getComponent(id, Player);
+          const character = this.ecs.getComponent(id, Character);
           const weapon = this.ecs.getComponent(id, Weapon);
           
           const vx = character.direction * weapon.bulletSpeed;

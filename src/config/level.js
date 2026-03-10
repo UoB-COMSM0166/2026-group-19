@@ -11,7 +11,7 @@ const LevelData = {
         return {
             player: {
                 "pos": { center_x: W * 0.56, center_y: H * 0.08, width: 20, height: 20 },
-                "size": { width: 20, height: 20 },
+                "size": { width: 40, height: 40 },
                 "physics": {
                     GRAVITY: 0.5,
                     TERMINAL_VELOCITY: 25,
@@ -69,7 +69,7 @@ const LevelData = {
         return {
             player: {
                 "pos": { center_x: W * 0.56, center_y: H * 0.08, width: 20, height: 20 },
-                "size": { width: 20, height: 20 },
+                "size": { width: 40, height: 40 },
                 "physics": {
                     GRAVITY: 0.5,
                     TERMINAL_VELOCITY: 25,
@@ -90,7 +90,7 @@ const LevelData = {
                     PLAYER_SPEED: 4,
                     ENEMY_SPEED: 10,
                     JUMP_SPEED: 13,
-                    SPAWN_RATE: 20,
+                    SPAWN_RATE: 120,
                 }
             },
             walls: {
@@ -129,7 +129,7 @@ const LevelData = {
         return {
             player: {
                 "pos": { center_x: W * 0.1, center_y: H * 0.85, width: 20, height: 20 },
-                "size": { width: 20, height: 20 },
+                "size": { width: 40, height: 40 },
                 "physics": {
                     GRAVITY: 0.5,
                     TERMINAL_VELOCITY: 25,
@@ -150,7 +150,7 @@ const LevelData = {
                     PLAYER_SPEED: 4,
                     ENEMY_SPEED: 10,
                     JUMP_SPEED: 13,
-                    SPAWN_RATE: 20,
+                    SPAWN_RATE: 120,
                 }
             },
             walls: {

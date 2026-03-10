@@ -5,12 +5,11 @@ const AnimationType = Object.freeze({
 })
 
 class Animation {
-    constructor(spriteSheet, frameWidth, frameHeight, columns, initial = AnimationType.IDLE) {
+    constructor(spriteSheet, frameWidth, frameHeight, columns, animations, initial = AnimationType.IDLE) {
         // --- Sprite Sheet Metadata ---
-        this.spriteSheet = spriteSheet;   // Image that contains animation frames for character
+        this.spriteSheet = spriteSheet;   // Image that contains animation frames for character, assumed to be in single row
         this.frameWidth = frameWidth;     // Width of individual frame within sheet
         this.frameHeight = frameHeight;   // Height of individual frame within sheet
-        this.columns = columns;           // Number of columns in sprite sheet, allows for multiple rows
 
         // --- Animation definitions (static data) ---
         /*
@@ -34,8 +33,8 @@ class Animation {
 
     setAnimation(type) {
         if (this.current === type) return;
-        animation.current = type;
-        animation.frameIndex = 0;
-        animation.tick = 0;
+        this.current = type;
+        this.frameIndex = 0;
+        this.timer = 0;
     }
 }

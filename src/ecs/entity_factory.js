@@ -76,12 +76,8 @@ class EntityFactory {
                 this.mainCharacterSpriteSheet,
                 24,
                 24,
-                {
-                    IDLE: { start: 0, count: 4, speed: 8, loop: true },
-                    MOVE: { start: 17, count: 7, speed: 10, loop: false },
-                    HURT: { start: 15, count: 3, speed: 8, loop: false }
-                },
-                1.6
+                1,
+                PlayerAnimations,
             ));
         } else {
             this.ecs.addComponent(entity, new Enemy());

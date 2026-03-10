@@ -37,10 +37,10 @@ function draw() {
     }
     else if (gameState === "PLAY") {
         translate(-width / 2, -height / 2);
-        if (playBg) {
-            playBg.update();
-            playBg.draw();
-        }
+        // if (playBg) {
+        //     playBg.update();
+        //     playBg.draw();
+        // }
         menuScene = null; // dispose of menu scene
         game.update();
     }
