@@ -20,8 +20,6 @@ class EntityFactory {
                 return this.createCharacter(data.center_x, data.center_y, EntityType.PLAYER);
             case EntityType.ENEMY:
                 return this.createCharacter(data.center_x, data.center_y, data.type);
-            //case EntityType.ENEMY_FLOATING:
-            //    return this.createCharacter(data.center_x, data.center_y, data.width, data.height, EntityType.ENEMY_FLOATING);
             case EntityType.WALL:
                 return this.createWall(data.left_x, data.top_y, data.width, data.height, data.spawnable);
             case EntityType.BOX:
@@ -81,23 +79,6 @@ class EntityFactory {
         this.ecs.addComponent(entity, renderComponent);
         renderComponent.image = this.dragonImg;
         return entity;
-
-        /*
-        if (charType === EntityType.PLAYER) {
-            this.ecs.addComponent(entity, new Player());
-            this.ecs.addComponent(entity, new Velocity(0, 0));
-
-        } else if (charType === EntityType.ENEMY_FLOATING) {
-            this.ecs.addComponent(entity, new EnemyFloating());
-            this.ecs.addComponent(entity, new Velocity(0, 0));
-            this.ecs.addComponent(entity, new Force(-2, -1));
-
-        } else if (charType === EntityType.ENEMY) {
-            this.ecs.addComponent(entity, new Enemy());
-            const sign = Math.random() < 0.5 ? -1 : 1;
-            this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
-        }
-        */
     }
 
     createWall(left_x, top_y, width, height, spawnable = false) {

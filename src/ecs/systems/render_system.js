@@ -71,11 +71,24 @@ class RenderSystem extends System {
                     push();
                     stroke(255, 0, 0);
                     strokeWeight(1);
-                    drawingContext.setLineDash([5, 5]);
-                    line (
-                        enemyPos.x, enemyPos.y,
-                        playerPos.x, playerPos.y
-                    );
+                    
+                    const dashLength = 5;
+                    const gapLength = 5;
+                    const dx = enemyPos.x - playerPos.x;
+                    const dy = enemyPos.y - playerPos.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const steps = distance / (dashLength + gapLength);
+                    const stepX = dx / steps;
+                    const stepY = dy / steps;
+                    
+                    for (let i = 0; i < steps; i++) {
+                        const x1 = playerPos.x + stepX * i;
+                        const y1 = playerPos.y + stepY * i;
+                        const x2 = x1 + (stepX * dashLength / (dashLength + gapLength));
+                        const y2 = y1 + (stepY * dashLength / (dashLength + gapLength));
+                        line(x1, y1, x2, y2);
+                    }
+
                     pop();
                 }
             }

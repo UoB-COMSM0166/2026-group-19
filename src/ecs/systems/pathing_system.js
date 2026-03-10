@@ -15,6 +15,8 @@ class PathingSystem extends System {
      // Find floating enemies and update their force toward player
      const floatingEnemies = this.ecs.getEntitiesWith(Enemy, Position, Force);
      for (let enemyId of floatingEnemies) {
+         const enemy = this.ecs.getComponent(enemyId, Enemy);
+         if (enemy.type !== EnemyType.FLOATING) continue;
       // we only apply pathing to floating enemies
          const enemyPos = this.ecs.getComponent(enemyId, Position);
          const force = this.ecs.getComponent(enemyId, Force);

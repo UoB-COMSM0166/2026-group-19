@@ -6,7 +6,11 @@
     <meta charset="utf-8" />
   </head>
   <body>
+    <!-- entity_types MUST come before level.js since level.js uses EnemyType -->
+    <script src="src/config/settings.js"></script>
+    <script src="src/ecs/constants.js"></script>
     <script src="src/ecs/entity_types.js"></script>
+    <script src="src/config/level.js"></script>
 
     <!-- Components -->
     <script src="src/ecs/components/physics/position.js"></script>
@@ -21,6 +25,7 @@
     <script src="src/ecs/components/tags/projectile.js"></script>
     <script src="src/ecs/components/tags/enemy.js"></script>
     <script src="src/ecs/components/tags/player.js"></script>
+    <script src="src/ecs/components/tags/spawnable_platform.js"></script>
     <script src="src/ecs/components/rendering/renderable.js"></script>
 
     <!-- Systems -->
@@ -30,18 +35,22 @@
     <script src="src/ecs/systems/physics_system.js"></script>
     <script src="src/ecs/systems/spawning_system.js"></script>
     <script src="src/ecs/systems/enemy_spawn_system.js"></script>
+    <script src="src/ecs/systems/box_spawn_system.js"></script>
+    <script src="src/ecs/systems/interaction_system.js"></script>
     <script src="src/ecs/systems/pathing_system.js"></script>
 
     <!-- Core -->
     <script src="src/ecs/ecs.js"></script>
     <script src="src/ecs/entity_factory.js"></script>
-    <script src="src/game.js"></script>
 
     <!-- UI -->
     <script src="src/UI/scene.js"></script>
+    <script src="src/UI/draw_background.js"></script>
+    <script src="src/UI/draw_fps.js"></script>
     <script src="src/UI/menu_scene.js"></script>
 
-    <!-- Entry -->
+    <!-- Bootstrap -->
+    <script src="src/game.js"></script>
     <script src="src/sketch.js"></script>
   </body>
 </html>

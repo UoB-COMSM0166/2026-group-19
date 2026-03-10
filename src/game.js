@@ -9,6 +9,7 @@ class Game {
             new InputSystem(this.ecs, this.spawner),
             this.spawner,
             new InteractionSystem(this.ecs, this.spawner),
+            new PathingSystem(this.ecs),
             new PhysicsSystem(this.ecs, this.spawner),
             new RenderSystem(this.ecs)
         ];

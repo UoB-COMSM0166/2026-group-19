@@ -4,10 +4,10 @@ const LevelData = {
     1: {
         player: { center_x: 450, center_y: 50, width: 20, height: 20 },
         enemies: [
-            { center_x: 400, center_y: 50, width: 20, height: 20 },
-            { center_x: 350, center_y: 50, width: 30, height: 30 },
-            { center_x: 300, center_y: 50, width: 30, height: 30 },
-            { center_x: 500, center_y: 50, width: 20, height: 20 }
+            { center_x: 400, center_y: 50, type: EnemyType.NORMAL },
+            { center_x: 350, center_y: 50, type: EnemyType.LARGE },
+            { center_x: 300, center_y: 50, type: EnemyType.FLOATING },
+            { center_x: 500, center_y: 50, type: EnemyType.NORMAL }
         ],
         walls: [
             // Outer boundaries (spawnable defaults to false)
@@ -32,9 +32,9 @@ const LevelData = {
         enemySpeed: 3,
         player: { center_x: 100, center_y: 500, width: 20, height: 20 },
         enemies: [
-            { center_x: 400, center_y: 300, width: 20, height: 20 },
-            { center_x: 700, center_y: 200, width: 30, height: 30 },
-            { center_x: 600, center_y: 500, width: 20, height: 20 }
+            { center_x: 400, center_y: 300, type: EnemyType.NORMAL },
+            { center_x: 700, center_y: 200, type: EnemyType.LARGE },
+            { center_x: 600, center_y: 500, type: EnemyType.NORMAL }
         ],
         walls: [
             { left_x: 0, top_y: 580, width: 800, height: 20 },
