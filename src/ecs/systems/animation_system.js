@@ -12,35 +12,33 @@ class AnimationSystem extends System {
             const anim = this.ecs.getComponent(id, Animation);
             const vel = this.ecs.getComponent(id, Velocity);
 
-            // ---- Animation selection ----
-            const hurtEnded = (anim.current === AnimationType.HURT && now > anim.hurtUntil);
-
-            if (anim.current === AnimationType.HURT && !hurtEnded) {
-                // stay in hurt animation
-            }
-            else if (Math.abs(vel.vx) > 0.05) {
-                anim.setAnimation(AnimationType.MOVE);
-            }
-            else {
-                anim.setAnimation(AnimationType.IDLE);
-            }
-
-            // ---- Frame update ----
-
-            const animationData = anim.animations[anim.current];
-            anim.timer++;
-
-            // If frame update timer has not elapsed yet, continue
-            if (anim.timer >= animationData.speed) {
-                // Increment frame index
-                const nextFrame = anim.frameIndex + 1;
-                anim.frameIndex = animationData.loop
-                    ? nextFrame % animationData.frames.length               // Wrap-around
-                    : Math.min(nextFrame, animationData.frames.length - 1); // No wrap-around
-                }
-
-                // Reset timer to 0
-                anim.timer = 0;
+            this.selectAnimation(anim, vel, now);
+            this.advanceFrame(anim);
         }
+    }
+
+    selectAnimation(anim, vel, now) {
+        const hurtEnded = (anim.current === AnimationType.HURT && now > anim.hurtUntil);
+        if (anim.current === AnimationType.HURT && !hurtEnded) return; // locked in hurt
+
+        const isMoving = Math.abs(vel.vx) > 0.05;
+        anim.setAnimation(isMoving ? AnimationType.MOVE : AnimationType.IDLE);
+    }
+
+    advanceFrame(anim) {
+        const animationData = anim.animations[anim.current];
+        if (!animationData) return;
+
+        anim.timer++;
+        if (anim.timer < animationData.speed) return;
+
+        // Increment frame index
+        const nextFrame = anim.frameIndex + 1;
+        anim.frameIndex = animationData.loop
+            ? nextFrame % animationData.frames.length               // Wrap-around
+            : Math.min(nextFrame, animationData.frames.length - 1); // No wrap-around
+
+        // Reset timer to 0
+        anim.timer = 0;
     }
 }
