@@ -1,4 +1,6 @@
 const SPACE = 32;
+const LEFT = -1;
+const RIGHT = 1;
 
 class InputSystem extends System {
     /*
@@ -8,26 +10,27 @@ class InputSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.prev = new Map();
-        this.lastDirection = 1; // 1 for right, -1 for left
     }
     update() {
+        const now = millis();
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
             const weapon = this.ecs.getComponent(id, Weapon);
+            const player = this.ecs.getComponent(id, Player);
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
-            const speed = 10;
-            const jumpSpeed = 13;
+            const speed = PhysicsConstants.PLAYER_SPEED;
+            const jumpSpeed = PhysicsConstants.JUMP_SPEED;
 
             // Side-to-side
             if (keyIsDown(LEFT_ARROW)) { 
                 vel.vx = -speed; 
-                this.lastDirection = -1;
+                player.direction = LEFT;
             }
             else if (keyIsDown(RIGHT_ARROW)) { 
                 vel.vx = speed; 
-                this.lastDirection = 1;
+                player.direction = RIGHT;
             }
             else {
                 vel.vx *= 0.8;
@@ -41,20 +44,28 @@ class InputSystem extends System {
 
             // Spawn Projectile
             if (keyIsDown(SPACE) && weapon && !this.prev.get(SPACE)) {
-                const vx = this.lastDirection * weapon.bulletSpeed;
-                this.spawner.request(EntityType.PROJECTILE, 
+                const vx = player.direction * weapon.bulletSpeed;
+                if (now - weapon.lastShotTime >= weapon.fireRate){
+                    this.spawner.request(EntityType.PROJECTILE, 
                     {center_x: pos.x, 
                      center_y: pos.y, 
                      width: weapon.bulletSize.w, 
                      height: weapon.bulletSize.h, 
                      velocity_x: vx, 
                      damage: weapon.bulletDamage});
+                    weapon.lastShotTime = now;
+                }
+                if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)){
+                    vel.vx = (-1) * player.direction * weapon.recoilKick * width;
+                }
+
+                
             }
 
 
             // Update previous key-state
             this.prev.set(UP_ARROW, keyIsDown(UP_ARROW));
-            this.prev.set(SPACE, keyIsDown(32));
+            this.prev.set(SPACE, keyIsDown(SPACE));
 
         }
     }

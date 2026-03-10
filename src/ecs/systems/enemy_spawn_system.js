@@ -3,9 +3,6 @@ class EnemySpawnSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.spawnTimer = 0;
-        this.spawnInterval = 600; // Frames
-        //this.minSize = 20;
-        //this.maxSize = 40;
     }
 
     update() {

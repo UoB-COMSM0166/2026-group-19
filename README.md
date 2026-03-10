@@ -154,6 +154,26 @@ EPICS:
 - System architecture. Class diagrams, behavioural diagrams. 
 ![Class Diagram](./image/class_diagram.png)
 
+With a set of preliminary requirements established for our game, we next turned to designing its architecture. During the 2026 BrisHack hackathon, our team experimented with a traditional object-oriented design using deep inheritance hierarchies. In this approach, a typical class structure might resemble:
+
+```
+GameObject → MovingEntity → Character → Player
+```
+
+While this design works adequately for small projects, we found that it did not scale well. Managing deep inheritance trees quickly became difficult, and the structure made it harder to reason about the relationships between classes. Additionally, we encountered the “God Class” problem, where individual classes accumulated large amounts of logic within a single file, making the code harder to maintain and extend.
+For the development of our actual game, we therefore sought a design pattern that minimized inheritance, separated entity behaviour from the entities themselves, and remained conceptually simple. Based on these goals, we chose to implement an Entity–Component–System (ECS) architecture for the backend of our game. Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts.
+
+- <strong>Entities:</strong>
+An entity is simply a unique integer identifier. By itself, an entity contains no data or behaviour.
+
+- <strong>Components:</strong>
+Components store data but contain no logic. For example, a position component may store an entity’s x and y coordinates. Components are typically represented as lightweight structures.
+
+- <strong>Systems:</strong>
+Systems contain the game’s logic. Each system queries the ECS “database” for entities that possess a specific combination of components, then applies the relevant behaviour to those entities.
+
+This architecture also provides several additional benefits. The ECS database can be organized so that components are stored contiguously in memory, improving cache locality and overall performance. Achieving this level of memory efficiency is far more difficult with traditional object-oriented designs. Furthermore, ECS makes it easy to add new functionality. Rather than modifying existing class hierarchies, new behaviour can be introduced by defining a new component and system, then attaching the component to relevant entities. This modular structure enables rapid development of new features without requiring significant refactoring of existing code.
+
 ### Implementation
 
 - 15% ~750 words
@@ -164,7 +184,21 @@ EPICS:
 
 - 15% ~750 words
 
-- One qualitative evaluation (of your choice) 
+- One qualitative evaluation (of your choice)
+
+Think-Aloud User Evaluation chosen:
+During the devlopment process, we employed an iterative design, whereby user testing consistently used to ensure our aims for the final product were well-met and intuitive. During this testing process, users were asked to verbalise their thought processes and opinions of the gaming experience.
+
+For our first think-aloud evaluation, our main objectives were to ensure controls were intuitive and that the movement of the character and enemies were fluid and felt controllable.
+The user testing results were as follows:
+
+-User Controls: Players did not have an issue with the placement of the keys, nor was there an issue with the choice of the arrow keys to control movement, these were picked up quickly and easily by all users.
+-Entity Movement: Users enjoyed the movement of the character; they felt that they were in control, and could easily traverse the platforms within the game. Any difficulty with speed and gravity was overcome easily with familiarity to the game. Enemy entities were smooth and the slow increase in enemy speed as the game progressed was seen positively as a way to increase difficulty. However, there were parts of the map where the enemies would not path/spawn to, therefore the player could stand there without fear of being hit.
+
+Key Issues Identified:
+-At higher speeds, collisions between character projectiles and enemy entities were not always accurate, and would not result in proper collision detection.
+-Without player health, collision detection between enemy and player entities, and a score counter, there was little to indicate what the objective of the game was. There is no incentive for the player to shoot or to try to prevent the enemies from reaching the bottom of the map, since the player was unkillable and there was no change in the enemies after having reached th bottom either. There was also no score tracker, so no way of giving an idea of the underlying goal of staying alive and killing enemies.
+-An area was identified whereby the player could jump outside of the map and outside of view.
 
 - One quantitative evaluation (of your choice) 
 

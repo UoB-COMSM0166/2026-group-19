@@ -23,7 +23,7 @@ class EntityFactory {
             //case EntityType.ENEMY_FLOATING:
             //    return this.createCharacter(data.center_x, data.center_y, data.width, data.height, EntityType.ENEMY_FLOATING);
             case EntityType.WALL:
-                return this.createWall(data.left_x, data.top_y, data.width, data.height);
+                return this.createWall(data.left_x, data.top_y, data.width, data.height, data.spawnable);
             case EntityType.BOX:
                 return this.createBox(data.left_x, data.top_y, data.width, data.height);
             case EntityType.PROJECTILE:
@@ -100,11 +100,14 @@ class EntityFactory {
         */
     }
 
-    createWall(left_x, top_y, width, height) {
+    createWall(left_x, top_y, width, height, spawnable = false) {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
         this.ecs.addComponent(entity, new Wall());
         this.ecs.addComponent(entity, new Renderable([200, 0, 0]));
+        if (spawnable) {
+            this.ecs.addComponent(entity, new SpawnablePlatform());
+        }
         return entity;
     }
 
