@@ -3,18 +3,33 @@ class EnemySpawnSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.spawnTimer = 0;
+        this.spawnInterval = 600;
     }
 
     update() {
         this.spawnTimer++;
 
-        if (this.spawnTimer >= SpawnDefaults.SPAWN_RATE) {
+        if (this.spawnTimer >= this.spawnInterval) {
+            // Math.floor is important here.
+            const types = [EnemyType.NORMAL, EnemyType.LARGE, EnemyType.FLOATING];
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            const config = EnemyConfig[randomType];
+
             this.spawner.request(EntityType.ENEMY, {
                 center_x: 400,
-                center_y: 20,
-                width: EntityDefaults.ENEMY.width,
-                height: EntityDefaults.ENEMY.height
-            })
+                center_y: 50,
+                type: randomType
+            });
+
+
+            /*
+            if (randomType === EntityType.ENEMY_FLOATING) {
+                spawnData.hasForce = true;
+            }
+            */
+
+            //const size = Math.floor(random(this.minSize, this.maxSize));
+            //this.spawner.request(EntityType.ENEMY, spawnData);
             this.spawnTimer = 0;
         }
     }

@@ -18,9 +18,9 @@ class EntityFactory {
         */
         switch (type) {
             case EntityType.PLAYER:
-                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, true);
+                return this.createCharacter(data.center_x, data.center_y, EntityType.PLAYER);
             case EntityType.ENEMY:
-                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, false);
+                return this.createCharacter(data.center_x, data.center_y, data.type);
             case EntityType.WALL:
                 return this.createWall(data.left_x, data.top_y, data.width, data.height, data.spawnable);
             case EntityType.BOX:
@@ -33,21 +33,44 @@ class EntityFactory {
     }
 
     // TODO: Refactor these create methods into something prettier
-    createCharacter(center_x, center_y, width, height, isPlayer) {
-        const speed = isPlayer ? PhysicsConstants.PLAYER_SPEED : PhysicsConstants.ENEMY_SPEED;
+    createCharacter(center_x, center_y, charType) {
+        let speed = charType === EntityType.PLAYER ? PhysicsConstants.PLAYER_SPEED : PhysicsConstants.ENEMY_SPEED;
 
         const entity = this.ecs.createEntity();
+
+        let width, height, health, color;
+
+        if (charType === EntityType.PLAYER) {
+            width = 20;
+            height = 20;
+            health = 10;
+            color = [255, 10, 155];
+            this.ecs.addComponent(entity, new Player());
+            this.ecs.addComponent(entity, new Gravity(0.5));
+        } else {
+            //all enemies will use Enemy component with type
+            const config = EnemyConfig[charType];
+            width = config.width;
+            height = config.height;
+            health = config.health;
+            speed = config.speed;
+            color = config.color;
+            this.ecs.addComponent(entity, new Enemy(charType));
+
+
+            //add force for floating, velocity for normal (+ large)
+            if (charType === EnemyType.FLOATING) {
+                this.ecs.addComponent(entity, new Force(0, 0));
+            } else {
+                this.ecs.addComponent(entity, new Gravity(0.5));
+            }
+        }
+
+        this.ecs.addComponent(entity, new Renderable(color));
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Gravity(PhysicsConstants.GRAVITY));
-        this.ecs.addComponent(entity, new Character(10));
+        this.ecs.addComponent(entity, new Character(health));
 
-        // Setup the render component with the correct fallback color
-        const color = isPlayer ? [255, 10, 155] : [100, 10, 200];
-        const renderComponent = new Renderable(color);
-        this.ecs.addComponent(entity, renderComponent);
-
-        if (isPlayer) {
-            this.ecs.addComponent(entity, new Player(1));
+        if (charType === EntityType.PLAYER || charType === EnemyType.FLOATING) {
             this.ecs.addComponent(entity, new Velocity(0, 0));
 
             // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
@@ -64,7 +87,6 @@ class EntityFactory {
                 1.6
             ));
         } else {
-            this.ecs.addComponent(entity, new Enemy());
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
         }

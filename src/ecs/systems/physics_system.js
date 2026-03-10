@@ -34,15 +34,23 @@ class PhysicsSystem extends System {
         */
         const toDelete = [];
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
-        
+        const force_ids = this.ecs.getEntitiesWith(Position, Velocity, Force);
 
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
+            const force = this.ecs.getComponent(id, Force);
+            const enemy = this.ecs.getComponent(id, Enemy);
             const g = this.ecs.getComponent(id, Gravity);
 
-            // Apply Gravity
-            if (g) {
+            //apply if forces if they are present
+            if (force) {
+                vel.vx += force.fx;
+                vel.vy += force.fy;
+            }
+
+            // Apply Gravity (but not to floating enemies)
+            if (g && !(enemy && enemy.type === EnemyType.FLOATING)) {
                 vel.vy = Math.min(vel.vy + g.g, this.maxFall);
             }
 
@@ -52,7 +60,7 @@ class PhysicsSystem extends System {
             
             if (pos.y > height) {
                 pos.y = 0;
-                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12);
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12); //replace with angry_mode=true eventually
             }
             else {
                 pos.y = pos.y + vel.vy;
