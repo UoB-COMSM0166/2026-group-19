@@ -66,7 +66,7 @@ class EntityFactory {
 
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Character(10));
-        this.ecs.addComponent(entity, new Health(health));
+        this.ecs.addComponent(entity, new Character(health));
 
         if (charType === EntityType.PLAYER || charType === EnemyType.FLOATING) {
             this.ecs.addComponent(entity, new Velocity(0, 0));
