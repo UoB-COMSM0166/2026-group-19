@@ -34,11 +34,11 @@ class EntityFactory {
 
     // TODO: Refactor these create methods into something prettier
     createCharacter(center_x, center_y, width, height, isPlayer) {
-        const speed = 4;
+        const speed = isPlayer ? PhysicsConstants.PLAYER_SPEED : PhysicsConstants.ENEMY_SPEED;
 
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Gravity(0.5));
+        this.ecs.addComponent(entity, new Gravity(PhysicsConstants.GRAVITY));
         this.ecs.addComponent(entity, new Character(10));
 
         // Setup the render component with the correct fallback color
@@ -57,9 +57,9 @@ class EntityFactory {
                 24,
                 24,
                 {
-                    IDLE:   { start: 0,  count: 4, speed: 8, loop: true },
-                    MOVE:   { start: 17,  count: 7, speed: 10, loop: false },
-                    HURT:   { start: 15, count: 3, speed: 8, loop: false }
+                    IDLE: { start: 0, count: 4, speed: 8, loop: true },
+                    MOVE: { start: 17, count: 7, speed: 10, loop: false },
+                    HURT: { start: 15, count: 3, speed: 8, loop: false }
                 },
                 1.6
             ));

@@ -73,11 +73,11 @@ function draw() {
 function mousePressed() {
     if (gameState === "LANDING") {
         if (menuScene.checkClick()) {
-            game.loadLevel(LevelData[3]);
+            game.loadLevel(LevelData[2]);
             playBg = new ScrollingPlayBg(playBgImage, {
                 speedX: 0,
-                speedY: 1.2,
-                tileScale: 1
+                speedY: 0.6,
+                tileScale: 2
             });
             gameState = "PLAY";
         }
@@ -86,10 +86,78 @@ function mousePressed() {
 
 function keyPressed() {
     if (key === 'p' || key === 'P' || keyCode === ESCAPE) {
+        let tl = document.getElementById('split-tl');
+        let tr = document.getElementById('split-tr');
+        let bl = document.getElementById('split-bl');
+        let br = document.getElementById('split-br');
+        let overlay = document.getElementById('pause-overlay');
+
         if (gameState === "PLAY") {
-            gameState = "PAUSE"; // Freeze the game
+            // 1. Force a clean render of the current frame
+            game.renderOnly();
+
+            // 2. Capture the canvas exactly as it appears
+            let canvasElt = document.querySelector('canvas');
+            let dataUrl = canvasElt.toDataURL('image/jpeg');
+
+            document.querySelectorAll('.split-image').forEach(el => {
+                el.style.backgroundImage = `url(${dataUrl})`;
+            });
+
+            // 4. Update state and trigger animation
+            gameState = "PAUSE";
+            overlay.classList.add('active');
+            setTimeout(() => {
+                overlay.classList.add('split');
+            }, 50);
+
         } else if (gameState === "PAUSE") {
-            gameState = "PLAY";  // Unfreeze the game
+            resumeGame();
         }
     }
 }
+
+// --- HELPER FUNCTION TO SLIDE DOORS BACK TOGETHER ---
+function resumeGame() {
+    let overlay = document.getElementById('pause-overlay');
+
+    // 1. Slide doors back together
+    overlay.classList.remove('split');
+
+    // 2. Wait 600ms for the CSS animation to finish, then hide overlay and resume
+    setTimeout(() => {
+        overlay.classList.remove('active');
+        gameState = "PLAY";
+    }, 600);
+}
+
+// --- BUTTON CLICK LOGIC ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Hover glow logic
+    const cards = document.querySelectorAll('.glow-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+            card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+        });
+    });
+
+    // Button clicks
+    document.getElementById('btn-resume').addEventListener('click', () => {
+        if (gameState === "PAUSE") resumeGame();
+    });
+
+    document.getElementById('btn-quit').addEventListener('click', () => {
+        if (gameState === "PAUSE") {
+            let overlay = document.getElementById('pause-overlay');
+            overlay.classList.remove('split'); // Slide doors together first
+
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                gameState = "LANDING";
+                menuScene = new MenuScene();
+            }, 600);
+        }
+    });
+});

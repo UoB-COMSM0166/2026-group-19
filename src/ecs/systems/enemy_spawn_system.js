@@ -9,11 +9,11 @@ class EnemySpawnSystem extends System {
         this.spawnTimer++;
 
         if (this.spawnTimer >= SpawnDefaults.SPAWN_RATE) {
-            this.spawner.request(EntityType.ENEMY, { 
-                center_x: width / 2, 
-                center_y: 0, 
+            this.spawner.request(EntityType.ENEMY, {
+                center_x: 400,
+                center_y: 20,
                 width: EntityDefaults.ENEMY.width,
-                height: EntityDefaults.ENEMY.height 
+                height: EntityDefaults.ENEMY.height
             })
             this.spawnTimer = 0;
         }

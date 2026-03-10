@@ -52,6 +52,34 @@
   <script src="config/settings.js"></script>
 
   <script src="sketch.js"></script>
-  </body>
+</head>
+
+<body>
+  <div id="pause-overlay" class="hidden">
+
+    <div id="pause-menu-bg">
+      <h1 class="pause-title">PAUSED</h1>
+
+      <div class="options-container">
+        <div class="glow-card" id="btn-resume">
+          <div class="glow-card-content">
+            <h2>RESUME</h2>
+          </div>
+        </div>
+        <div class="glow-card" id="btn-quit">
+          <div class="glow-card-content">
+            <h2>QUIT TO MENU</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="split-tl" class="split-image"></div>
+    <div id="split-tr" class="split-image"></div>
+    <div id="split-bl" class="split-image"></div>
+    <div id="split-br" class="split-image"></div>
+
+  </div>
+</body>
 
 </html>
