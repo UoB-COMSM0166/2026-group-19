@@ -26,7 +26,7 @@ class EntityFactory {
             case EntityType.BOX:
                 return this.createBox(data.left_x, data.top_y, data.width, data.height);
             case EntityType.PROJECTILE:
-                return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage);
+                return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage, data.range);
             default:
                 throw new Error(`Unknown entity type: ${type}`);
         }
@@ -90,11 +90,11 @@ class EntityFactory {
         return entity;
     }
 
-    createProjectile(center_x, center_y, width, height, velocity_x, damage) {
+    createProjectile(center_x, center_y, width, height, velocity_x, damage, range) {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Velocity(velocity_x, 0));
-        this.ecs.addComponent(entity, new Projectile(damage));
+        this.ecs.addComponent(entity, new Projectile(damage, range));
         this.ecs.addComponent(entity, new Renderable([255, 255, 0]));
         return entity;
     }

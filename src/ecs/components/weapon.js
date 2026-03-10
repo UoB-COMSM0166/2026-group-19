@@ -1,23 +1,31 @@
 const WeaponType = Object.freeze({
     RIFLE: "RIFLE",
-    ROCKET: "ROCKET"
+    ROCKET: "ROCKET",
+    SHOTGUN: "SHOTGUN"
 })
 
 const WEAPON_CONFIGS = {
   [WeaponType.RIFLE]: {fireRate: 100, 
                        bulletDamage: 1, 
-                       bulletSpeed: 12, 
+                       bulletSpeed: 10, 
                        bulletSize: {w: 6, h: 4},
                        recoilKick: 0.003,
-                       maxRange: 1.0,
+                       maxRange: 0.3,
+                      },
+  [WeaponType.SHOTGUN]: {fireRate: 300,
+                        bulletDamage: 2,
+                        bulletSpeed: 15,
+                        bulletSize: {w: 12, h: 8},
+                        recoilKick: 0.006,
+                        maxRange: 0.5,
                       },
 
   [WeaponType.ROCKET]: {fireRate: 500, 
                         bulletDamage: 5, 
                         bulletSpeed: 20, 
-                        bulletSize: {w:12, h:8},
+                        bulletSize: {w:18, h:12},
                         recoilKick: 0.009,
-                        maxRange: 1.5,
+                        maxRange: 0.7,
                       },
 }
 
