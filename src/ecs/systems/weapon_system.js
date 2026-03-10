@@ -28,10 +28,19 @@ class WeaponSystem extends System {
                   velocity_x: vx, 
                   damage: weapon.bulletDamage,
                   range: weapon.maxRange});
+              if (weapon.type === WeaponType.TWOWAYRIFLE){
+                  this.spawner.request(EntityType.PROJECTILE, {center_x: pos.x, 
+                  center_y: pos.y, 
+                  width: weapon.bulletSize.w, 
+                  height: weapon.bulletSize.h, 
+                  velocity_x: -vx, 
+                  damage: weapon.bulletDamage,
+                  range: weapon.maxRange});
+              }
               weapon.lastShotTime = now;
               this.ecs.removeComponent(id, FireRequest);
               // Control recoil feature when there is a fire 
-              if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW)){
+              if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && weapon.type != WeaponType.TWOWAYRIFLE){
                   vel.vx = (-1) * player.direction * weapon.recoilKick * width;
               }
           }
