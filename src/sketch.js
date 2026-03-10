@@ -47,7 +47,6 @@ function draw() {
         }
         menuScene = null; // dispose of menu scene
         game.update();
-        pop();
     }
 
     else if (gameState === "PAUSE") {
@@ -73,7 +72,8 @@ function draw() {
 function mousePressed() {
     if (gameState === "LANDING") {
         if (menuScene.checkClick()) {
-            game.loadLevel(LevelData[2]);
+
+            game.loadLevel(LevelData[3]);
             playBg = new ScrollingPlayBg(playBgImage, {
                 speedX: 0,
                 speedY: 0.6,
