@@ -10,7 +10,6 @@ class Game {
             this.spawner,
             new InteractionSystem(this.ecs, this.spawner),
             new PhysicsSystem(this.ecs, this.spawner),
-            new AnimationSystem(this.ecs),
             new RenderSystem(this.ecs)
         ];
     }
@@ -20,23 +19,60 @@ class Game {
     }
 
     loadLevel(levelConfig) {
-        // Clear out any old entities
-        this.ecs.clear();
+        this.applyLevelConstants(levelConfig);
+        this.spawnLevelEntities(levelConfig);
+    }
 
-        // Pass parameters into the spawner system dynamically
-        this.spawner.request(EntityType.PLAYER, levelConfig.player);
+    applyLevelConstants(levelConfig) {
+        if (levelConfig.player) {
+            EntityDefaults.PLAYER.width = levelConfig.player.size.width;
+            EntityDefaults.PLAYER.height = levelConfig.player.size.height;
 
-        for (let enemyData of levelConfig.enemies) {
-            this.spawner.request(EntityType.ENEMY, enemyData);
+            PhysicsConstants.GRAVITY = levelConfig.player.physics.GRAVITY;
+            PhysicsConstants.TERMINAL_VELOCITY = levelConfig.player.physics.TERMINAL_VELOCITY;
+            PhysicsConstants.PLAYER_SPEED = levelConfig.player.physics.PLAYER_SPEED;
+            PhysicsConstants.JUMP_SPEED = levelConfig.player.physics.JUMP_SPEED;
         }
 
-        for (let wallData of levelConfig.walls) {
-            this.spawner.request(EntityType.WALL, wallData);
+        if (levelConfig.enemies) {
+            EntityDefaults.ENEMY.width = levelConfig.enemies.size.width;
+            EntityDefaults.ENEMY.height = levelConfig.enemies.size.height;
+
+            PhysicsConstants.ENEMY_SPEED = levelConfig.enemies.physics.ENEMY_SPEED;
+            SpawnDefaults.SPAWN_RATE = levelConfig.enemies.physics.SPAWN_RATE;
         }
 
         if (levelConfig.boxes) {
-            for (let boxData of levelConfig.boxes) {
-                this.spawner.request(EntityType.BOX, boxData);
+            EntityDefaults.BOX.width = levelConfig.boxes.size.width;
+            EntityDefaults.BOX.height = levelConfig.boxes.size.height;
+        }
+    }
+
+    spawnLevelEntities(levelConfig) {
+        // Clear out any old entities
+        this.ecs.clear();
+
+        // Spawn Entities normally
+        this.spawner.request(EntityType.PLAYER, {
+            ...levelConfig.player.pos,
+            ...levelConfig.player.size
+        });
+
+        for (let pos of levelConfig.enemies.pos) {
+            this.spawner.request(EntityType.ENEMY, { ...pos, ...levelConfig.enemies.size });
+        }
+
+        for (let pos of levelConfig.walls.pos) {
+            this.spawner.request(EntityType.WALL, pos);
+        }
+
+        if (levelConfig.boxes) {
+            const boxPositions = Array.isArray(levelConfig.boxes.pos)
+                ? levelConfig.boxes.pos
+                : [levelConfig.boxes.pos];
+
+            for (let pos of boxPositions) {
+                this.spawner.request(EntityType.BOX, { ...pos, ...levelConfig.boxes.size });
             }
         }
 
