@@ -36,7 +36,7 @@ class RenderSystem extends System {
             }
             else {
                 imageMode(CENTER);
-                image(render.image, pos.x, pox.y, bb.w, bb.h);
+                image(render.image, pos.x, pos.y, bb.w, bb.h);
             }
         }
     }
