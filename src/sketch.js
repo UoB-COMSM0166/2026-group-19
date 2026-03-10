@@ -27,10 +27,6 @@ function windowResized() {
     }
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-}
-
 function draw() {
     background(100);
     cursor(ARROW);
