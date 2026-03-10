@@ -1,5 +1,6 @@
 class Projectile {
-  constructor(damage){
+  constructor(damage, range){
     this.damage = damage;
+    this.range = range * width;
   }
 }

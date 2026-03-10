@@ -26,7 +26,8 @@ class WeaponSystem extends System {
                   width: weapon.bulletSize.w, 
                   height: weapon.bulletSize.h, 
                   velocity_x: vx, 
-                  damage: weapon.bulletDamage});
+                  damage: weapon.bulletDamage,
+                  range: weapon.maxRange});
               weapon.lastShotTime = now;
               this.ecs.removeComponent(id, FireRequest);
               // Control recoil feature when there is a fire 
