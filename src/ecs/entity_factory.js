@@ -66,6 +66,7 @@ class EntityFactory {
             }
         }
 
+        this.ecs.addComponent(entity, new Renderable(color));
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Character(health));
 

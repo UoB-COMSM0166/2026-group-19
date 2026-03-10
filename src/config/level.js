@@ -22,8 +22,8 @@ const LevelData = {
             },
             enemies: {
                 "pos": [
-                    { center_x: W * 0.5, center_y: H * 0.08, width: 20, height: 20 },
-                    { center_x: W * 0.44, center_y: H * 0.08, width: 30, height: 30 }
+                    { center_x: W * 0.5, center_y: H * 0.08, type: EnemyType.NORMAL },
+                    { center_x: W * 0.44, center_y: H * 0.08, type: EnemyType.LARGE }
                 ],
                 "size": { width: 20, height: 20 },
                 "physics": {
@@ -80,8 +80,8 @@ const LevelData = {
             },
             enemies: {
                 "pos": [
-                    { center_x: W * 0.5, center_y: H * 0.08, width: 20, height: 20 },
-                    { center_x: W * 0.44, center_y: H * 0.08, width: 30, height: 30 }
+                    { center_x: W * 0.5, center_y: H * 0.08, type: EnemyType.NORMAL },
+                    { center_x: W * 0.44, center_y: H * 0.08, type: EnemyType.LARGE }
                 ],
                 "size": { width: 20, height: 20 },
                 "physics": {
@@ -140,8 +140,8 @@ const LevelData = {
             },
             enemies: {
                 "pos": [
-                    { center_x: W * 0.35, center_y: H * 0.75, width: 20, height: 20 },
-                    { center_x: W * 0.55, center_y: H * 0.55, width: 30, height: 30 }
+                    { center_x: W * 0.35, center_y: H * 0.75, type: EnemyType.NORMAL },
+                    { center_x: W * 0.55, center_y: H * 0.55, type: EnemyType.LARGE }
                 ],
                 "size": { width: 20, height: 20 },
                 "physics": {
