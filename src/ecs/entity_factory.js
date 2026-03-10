@@ -1,3 +1,23 @@
+const PlayerAnimations = {
+    [AnimationType.IDLE]: {
+        frames: [0,1,2,3],
+        speed: 8,
+        loop: true
+    },
+
+    [AnimationType.MOVE]: {
+        frames: [17,18,19,20,21,22,23],
+        speed: 10,
+        loop: true
+    },
+
+    [AnimationType.HURT]: {
+        frames: [15,16,17],
+        speed: 8,
+        loop: false
+    }
+};
+
 class EntityFactory {
     /*
     Factory pattern implementation that abstracts entity creation.
@@ -52,7 +72,7 @@ class EntityFactory {
 
             // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
             // If your frame ranges are different, edit start/count here.
-            this.ecs.addComponent(entity, new Sprite(
+            this.ecs.addComponent(entity, new Animation(
                 this.mainCharacterSpriteSheet,
                 24,
                 24,

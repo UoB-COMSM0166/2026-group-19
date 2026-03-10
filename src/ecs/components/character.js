@@ -1,6 +1,7 @@
 class Character {
-    constructor(health) {
+    constructor(health, direction) {
         this.onGround = false;
         this.health = health;
+        this.direction = direction;
     }
 }

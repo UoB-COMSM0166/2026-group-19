@@ -18,7 +18,7 @@ class WeaponSystem extends System {
           const player = this.ecs.getComponent(id, Player);
           const weapon = this.ecs.getComponent(id, Weapon);
           
-          const vx = player.direction * weapon.bulletSpeed;
+          const vx = character.direction * weapon.bulletSpeed;
           // Count the time if exceed the weapon fireRate
           if (now - weapon.lastShotTime >= weapon.fireRate){
               this.spawner.request(EntityType.PROJECTILE, {center_x: pos.x, 
@@ -41,7 +41,7 @@ class WeaponSystem extends System {
               this.ecs.removeComponent(id, FireRequest);
               // Control recoil feature when there is a fire 
               if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && weapon.type != WeaponType.TWOWAYRIFLE){
-                  vel.vx = (-1) * player.direction * weapon.recoilKick * width;
+                  vel.vx = (-1) * character.direction * weapon.recoilKick * width;
               }
           }
           this.ecs.removeComponent(id, FireRequest);
