@@ -64,7 +64,6 @@ class EntityFactory {
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
         this.ecs.addComponent(entity, new Gravity(this.physics.GRAVITY));
-        this.ecs.addComponent(entity, new Character(10));
 
         // Setup the render component with the correct fallback color
         const color = isPlayer ? [255, 10, 155] : [100, 10, 200];
@@ -74,6 +73,7 @@ class EntityFactory {
         if (isPlayer) {
             this.ecs.addComponent(entity, new Player(1));
             this.ecs.addComponent(entity, new Velocity(0, 0));
+            this.ecs.addComponent(entity, new Character(DEFAULTS.playerHealth));
 
             // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
             // If your frame ranges are different, edit start/count here.
@@ -86,6 +86,7 @@ class EntityFactory {
             ));
         } else {
             this.ecs.addComponent(entity, new Enemy());
+            this.ecs.addComponent(entity, new Character(DEFAULTS.enemyHealth));
             const sign = Math.random() < 0.5 ? -1 : 1;
             this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
         }

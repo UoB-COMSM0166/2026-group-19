@@ -18,7 +18,7 @@ const WEAPON_CONFIGS = {
   [WeaponType.RIFLE]: BASICRIFLE,
   [WeaponType.TWOWAYRIFLE]: BASICRIFLE,
   [WeaponType.ROCKET]: {fireRate: 500, 
-                        bulletDamage: 5, 
+                        bulletDamage: 3, 
                         bulletSpeed: 20, 
                         bulletSize: {w:18, h:12},
                         recoilKick: 0.009,
