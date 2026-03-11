@@ -1,18 +1,23 @@
-const TYPE = [
-  WeaponType.RIFLE,
-  WeaponType.TWOWAYRIFLE,
-  WeaponType.ROCKET
-]
+const TYPE = Object.values(WeaponType)
 
 class Box {
-  constructor() {
-    this.weapon = this.pickUp();
-  }
+  static lastWeapon = null;
 
+  constructor() {
+    this.weapon = null;
+  }
 
   pickUp() {
-    const index = Math.floor(random() * TYPE.length);
-    return TYPE[index];
+    let index = Math.floor(random() * TYPE.length);
+    let selected = TYPE[index];
+    
+    // If it's the same as last time, roll ONE more time
+    if (selected === Box.lastWeapon) {
+      index = Math.floor(random() * TYPE.length);
+      selected = TYPE[index];
+    }
+    console.log(selected);
+    Box.lastWeapon = selected; 
+    this.weapon = selected;
   }
-
 }

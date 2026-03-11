@@ -41,6 +41,7 @@ class InteractionSystem extends System {
         this.forEachCollision(pos, [Box, Position], (boxId) => {
             // Player gets weapon, box is removed
             const box = this.ecs.getComponent(boxId, Box);
+            box.pickUp()
             this.ecs.addComponent(playerId, new Weapon(box.weapon));
             this.ecs.removeEntity(boxId);
         })
@@ -55,7 +56,6 @@ class InteractionSystem extends System {
             const character = this.ecs.getComponent(enemyId, Character);
             if (!proj || !character) return;
             character.health -= proj.damage;
-            console.log(character.health);
             if (character.health <= 0){
                 this.ecs.removeEntity(enemyId);
             }
