@@ -14,8 +14,6 @@ class ProjectileSystem extends System {
       else {
         this.ecs.removeEntity(id);
       }
-
-
     }
   }
 }
