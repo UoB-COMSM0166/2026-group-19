@@ -3,17 +3,22 @@ class EnemySpawnSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.spawnTimer = 0;
+        this.spawnRate = DEFAULTS.physics.SPAWN_RATE;
+    }
+
+    applyPhysics(physics) {
+        this.spawnRate = physics.SPAWN_RATE;
     }
 
     update() {
         this.spawnTimer++;
 
-        if (this.spawnTimer >= SpawnDefaults.SPAWN_RATE) {
+        if (this.spawnTimer >= this.spawnRate) {
             this.spawner.request(EntityType.ENEMY, {
                 center_x: 400,
                 center_y: 20,
-                width: EntityDefaults.ENEMY.width,
-                height: EntityDefaults.ENEMY.height
+                width: DEFAULTS.sizes.enemy.width,
+                height: DEFAULTS.sizes.enemy.height
             })
             this.spawnTimer = 0;
         }

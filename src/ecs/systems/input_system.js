@@ -10,7 +10,13 @@ class InputSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.prev = new Map();
+        this.physics = DEFAULTS.physics;
     }
+
+    applyPhysics(physics) {
+        this.physics = physics;
+    }
+
     update() {
         const now = millis();
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
@@ -20,8 +26,8 @@ class InputSystem extends System {
             const player = this.ecs.getComponent(id, Player);
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
-            const speed = PhysicsConstants.PLAYER_SPEED;
-            const jumpSpeed = PhysicsConstants.JUMP_SPEED;
+            const speed = this.physics.PLAYER_SPEED;
+            const jumpSpeed = this.physics.JUMP_SPEED;
             const isShootPressed = keyIsDown(SPACE) && !this.prev.get(SPACE);
 
             // Side-to-side

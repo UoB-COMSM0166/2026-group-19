@@ -21,7 +21,7 @@ class RenderSystem extends System {
             const wall   = this.ecs.getComponent(id, Wall);
             const bb     = pos.getBoundingBox();
             // Fallback: If no image or animation, draw a rectangle
-            if ((!render.image && !anim) || false) {
+            if (!render.image && !anim) {
                 fill(...render.color);
                 noStroke();
                 rect(bb.left_x, bb.top_y, bb.w, bb.h);
