@@ -13,5 +13,7 @@ const DEFAULTS = {
         box:    { width: 20, height: 20 },
     },
     wallThickness: 20,
-    hurtTime: 280 
+    hurtTime: 280,
+    playerHealth: 3,
+    enemyHealth: 5
 };

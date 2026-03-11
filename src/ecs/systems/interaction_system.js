@@ -24,8 +24,11 @@ class InteractionSystem extends System {
     handlePlayerEnemy(playerId) {
         const pos = this.ecs.getComponent(playerId, Position);
         const anim = this.ecs.getComponent(playerId, Animation);
+        const char = this.ecs.getComponent(playerId, Character);
         if (!pos) return;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
+            char.health--; // Update health of player
+
             const now = millis();
             if (anim) {
                 anim.setAnimation(AnimationType.HURT);
@@ -47,12 +50,16 @@ class InteractionSystem extends System {
 
     handleProjectileEnemy(projectileId) {
         const pos = this.ecs.getComponent(projectileId, Position);
+        const projectile = this.ecs.getComponent(projectileId, Projectile);
         if (!pos) return;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            // TODO: Implement logic
-            // So far disappear
+            const enemyChar = this.ecs.getComponent(enemyId, Character);
+            enemyChar.health -= projectile.damage;
             this.ecs.removeEntity(projectileId);
-            this.ecs.removeEntity(enemyId);
+
+            if (enemyChar.health <= 0) {
+                this.ecs.removeEntity(enemyId);
+            }
         })
     }
 
