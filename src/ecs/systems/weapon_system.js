@@ -6,46 +6,49 @@ class WeaponSystem extends System {
 
 
     update() {
-      // Catch the latest time in ms
-      const now = millis();
-      
-      // get the player Id when it simultaneously has Weapon and FireRequest components
-      const ids = this.ecs.getEntitiesWith(FireRequest);
-      for (let id of ids){
-        // Get the access of each component
-          const pos = this.ecs.getComponent(id, Position);
-          const vel = this.ecs.getComponent(id, Velocity);
-          const character = this.ecs.getComponent(id, Character);
-          const weapon = this.ecs.getComponent(id, Weapon);
-          
-          const vx = character.direction * weapon.bulletSpeed;
-          // Count the time if exceed the weapon fireRate
-          if (now - weapon.lastShotTime >= weapon.fireRate){
-              this.spawner.request(EntityType.PROJECTILE, {center_x: pos.x, 
-                  center_y: pos.y, 
-                  width: weapon.bulletSize.w, 
-                  height: weapon.bulletSize.h, 
-                  velocity_x: vx, 
-                  damage: weapon.bulletDamage,
-                  range: weapon.maxRange});
-              if (weapon.type === WeaponType.TWOWAYRIFLE){
-                  this.spawner.request(EntityType.PROJECTILE, {center_x: pos.x, 
-                  center_y: pos.y, 
-                  width: weapon.bulletSize.w, 
-                  height: weapon.bulletSize.h, 
-                  velocity_x: -vx, 
-                  damage: weapon.bulletDamage,
-                  range: weapon.maxRange});
-              }
-              weapon.lastShotTime = now;
-              this.ecs.removeComponent(id, FireRequest);
-              // Control recoil feature when there is a fire 
-              if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && weapon.type != WeaponType.TWOWAYRIFLE){
-                  vel.vx = (-1) * character.direction * weapon.recoilKick * width;
-              }
-          }
-          this.ecs.removeComponent(id, FireRequest);
-          
-      }
+        const now = millis();
+        const ids = this.ecs.getEntitiesWith(FireRequest);
+        for (let id of ids) {
+            this.processFireRequest(id, now);
+            this.ecs.removeComponent(id, FireRequest);
+        }
+    }
+
+    processFireRequest(id, now) {
+        const weapon = this.ecs.getComponent(id, Weapon);
+        if (now - weapon.lastShotTime < weapon.fireRate) return;
+
+        const pos = this.ecs.getComponent(id, Position);
+        const vel = this.ecs.getComponent(id, Velocity);
+        const character = this.ecs.getComponent(id, Character);
+
+        this.spawnProjectiles(pos, weapon, character);
+        this.applyRecoil(vel, weapon, character);
+        weapon.lastShowTime = now;
+    }
+
+    spawnProjectiles(pos, weapon, character) {
+        const vx = character.direction * weapon.bulletSpeed;
+        const projectileData = {
+            center_x: pos.x,
+            center_y: pos.y,
+            width: weapon.bulletSize.w,
+            height: weapon.bulletSize.h,
+            damage: weapon.bulletDamage,
+            range: weapon.maxRange
+        };
+
+        this.spawner.request(EntityType.PROJECTILE, { ...projectileData, velocity_x: vx });
+
+        if (weapon.type === WeaponType.TWOWAYRIFLE) {
+            this.spawner.request(EntityType.PROJECTILE, { ...projectileData, velocity_x: -vx });
+        }
+    }
+
+    applyRecoil(vel, weapon, character) {
+        const isMoving = keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW);
+        if (!isMoving && weapon.type !== WeaponType.TWOWAYRIFLE) {
+            vel.vx = -character.direction * weapon.recoilKick * width;
+        }
     }
 }
