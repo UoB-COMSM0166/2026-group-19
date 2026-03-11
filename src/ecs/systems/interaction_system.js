@@ -50,9 +50,15 @@ class InteractionSystem extends System {
         if (!pos) return;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
             // TODO: Implement logic
-            // So far disappear
+            const proj = this.ecs.getComponent(projectileId, Projectile);
+            const character = this.ecs.getComponent(enemyId, Character);
+            if (!proj || !character) return;
+            character.health -= proj.damage;
+            console.log(character.health);
+            if (character.health <= 0){
+                this.ecs.removeEntity(enemyId);
+            }
             this.ecs.removeEntity(projectileId);
-            this.ecs.removeEntity(enemyId);
         })
     }
 
