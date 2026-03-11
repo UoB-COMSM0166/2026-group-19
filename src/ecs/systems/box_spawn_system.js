@@ -23,9 +23,9 @@ class BoxSpawnSystem extends System {
 
             this.spawner.request(EntityType.BOX, {
                 left_x: bb.left_x + this.getRandomPositionOnPlatform(bb),
-                top_y: bb.top_y - EntityDefaults.BOX.height,
-                width: EntityDefaults.BOX.width,
-                height: EntityDefaults.BOX.height
+                top_y: bb.top_y - DEFAULTS.sizes.box.height,
+                width: DEFAULTS.sizes.box.width,
+                height: DEFAULTS.sizes.box.height
             });
         }
     }
@@ -40,7 +40,7 @@ class BoxSpawnSystem extends System {
     getRandomPositionOnPlatform(platformBoundingBox) {
         // Returns a random left_x position on platform, relative to platform start
         const min = 0;
-        const max = platformBoundingBox.w - EntityDefaults.BOX.width;
+        const max = platformBoundingBox.w - DEFAULTS.sizes.box.width;
         return Math.floor(random(min, max));
     }
 }

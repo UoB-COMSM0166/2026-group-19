@@ -8,10 +8,10 @@ class MenuScene extends Scene {
         this.btnHeight = 80;
 
         // Load the SVG images ONCE when the scene is created
-        this.menuImage = loadImage('assets/menu_component.svg');
+        this.menuImage = loadImage('src/assets/menu_component.svg');
 
         // animated Game title Setting
-        this.fullTitle = "NEED VISA";
+        this.fullTitle = "CRATE BOX";
         this.visibleCount = 0;
         this.lastTypedTime = 0;
         this.typingInterval = 150; // in milliseconds

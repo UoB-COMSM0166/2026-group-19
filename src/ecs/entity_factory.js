@@ -27,8 +27,13 @@ class EntityFactory {
     */
     constructor(ecs) {
         this.ecs = ecs;
-        this.mainCharacterSpriteSheet = loadImage('assets/main_characterSprites.png');
-        this.wallTileImage = loadImage('assets/Idle_block.png');
+        this.characterSpriteSheet = characterSpriteSheet;
+        this.wallTileImage = wallTileImage;
+        this.physics = DEFAULTS.physics;
+    }
+
+    applyPhysics(physics) {
+        this.physics = physics;
     }
 
     create(type, data) {
@@ -54,11 +59,11 @@ class EntityFactory {
 
     // TODO: Refactor these create methods into something prettier
     createCharacter(center_x, center_y, width, height, isPlayer) {
-        const speed = isPlayer ? PhysicsConstants.PLAYER_SPEED : PhysicsConstants.ENEMY_SPEED;
+        const speed = isPlayer ? this.physics.PLAYER_SPEED : this.physics.ENEMY_SPEED;
 
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Gravity(PhysicsConstants.GRAVITY));
+        this.ecs.addComponent(entity, new Gravity(this.physics.GRAVITY));
         this.ecs.addComponent(entity, new Character(10));
 
         // Setup the render component with the correct fallback color
@@ -73,7 +78,7 @@ class EntityFactory {
             // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
             // If your frame ranges are different, edit start/count here.
             this.ecs.addComponent(entity, new Animation(
-                this.mainCharacterSpriteSheet,
+                this.characterSpriteSheet,
                 24,
                 24,
                 1,

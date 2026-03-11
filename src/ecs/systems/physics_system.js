@@ -19,7 +19,11 @@ class PhysicsSystem extends System {
     constructor(ecs, spawner) {
         super(ecs);
         this.spawner = spawner;
-        this.maxFall = PhysicsConstants.TERMINAL_VELOCITY; // Terminal velocity
+        this.maxFall = DEFAULTS.physics.TERMINAL_VELOCITY; // Terminal velocity
+    }
+
+    applyPhysics(physics) {
+        this.maxFall = physics.TERMINAL_VELOCITY;
     }
 
     update() {

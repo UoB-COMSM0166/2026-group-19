@@ -21,7 +21,6 @@ class InteractionSystem extends System {
         }
     }
 
-
     handlePlayerEnemy(playerId) {
         const pos = this.ecs.getComponent(playerId, Position);
         const anim = this.ecs.getComponent(playerId, Animation);
@@ -30,7 +29,7 @@ class InteractionSystem extends System {
             const now = millis();
             if (anim) {
                 anim.setAnimation(AnimationType.HURT);
-                anim.hurtUntil = Math.max(anim.hurtUntil, now + AnimationDefaults.HURT_TIME);
+                anim.hurtUntil = Math.max(anim.hurtUntil, now + DEFAULTS.hurtTime);
             }
         })
     }
