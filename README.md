@@ -147,6 +147,7 @@ EPICS:
  - as a user with sensitive hearing i would like to be able to control the volume of in-game sounds and music independently
  - as a user with 
 
+![Use Case Diagram](./image/use_case_diagram.png)
 
 ### Design
 
