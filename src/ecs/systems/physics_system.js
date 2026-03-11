@@ -34,24 +34,15 @@ class PhysicsSystem extends System {
         */
         const toDelete = [];
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
-        const force_ids = this.ecs.getEntitiesWith(Position, Velocity, Force);
 
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
-            const force = this.ecs.getComponent(id, Force);
-            const enemy = this.ecs.getComponent(id, Enemy);
-            const g = this.ecs.getComponent(id, Gravity);
 
-            //apply if forces if they are present
-            if (force) {
-                vel.vx += force.fx;
-                vel.vy += force.fy;
-            }
-
-            // Apply Gravity (but not to floating enemies)
-            if (g && !(enemy && enemy.type === EnemyType.FLOATING)) {
-                vel.vy = Math.min(vel.vy + g.g, this.maxFall);
+            const acc = this.ecs.getComponent(id, Acceleration);
+            if (acc) {
+                vel.vx += acc.ax;
+                vel.vy = Math.min(vel.vy + acc.ay, this.maxFall);
             }
 
             // Movement phase (axis-dependent)

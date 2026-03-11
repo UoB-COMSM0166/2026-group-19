@@ -38,37 +38,36 @@ class EntityFactory {
 
         const entity = this.ecs.createEntity();
 
-        let width, height, health, color;
+        let width, height, color;
 
         if (charType === EntityType.PLAYER) {
             width = 20;
             height = 20;
-            health = 10;
             color = [255, 10, 155];
             this.ecs.addComponent(entity, new Player());
-            this.ecs.addComponent(entity, new Gravity(0.5));
+            this.ecs.addComponent(entity, new Acceleration(0, 0.5));
+            this.ecs.addComponent(entity, new Character(10));
         } else {
             //all enemies will use Enemy component with type
             const config = EnemyConfig[charType];
             width = config.width;
             height = config.height;
-            health = config.health;
             speed = config.speed;
             color = config.color;
             this.ecs.addComponent(entity, new Enemy(charType));
+            this.ecs.addComponent(entity, new Character(config.health));
 
 
             //add force for floating, velocity for normal (+ large)
             if (charType === EnemyType.FLOATING) {
-                this.ecs.addComponent(entity, new Force(0, 0));
+                this.ecs.addComponent(entity, new Acceleration(0, 0));
             } else {
-                this.ecs.addComponent(entity, new Gravity(0.5));
+                this.ecs.addComponent(entity, new Acceleration(0, 0.5));
             }
         }
 
         this.ecs.addComponent(entity, new Renderable(color));
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Character(health));
 
         if (charType === EntityType.PLAYER || charType === EnemyType.FLOATING) {
             this.ecs.addComponent(entity, new Velocity(0, 0));

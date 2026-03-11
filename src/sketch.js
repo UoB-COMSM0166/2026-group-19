@@ -12,7 +12,7 @@ function preload() {
 
 function setup() {
 //    setAttributes({ version: 1 });
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, windowHeight, WEBGL);
     frameRate(60);
     textFont(uiFont);
     game = new Game(width, height);
@@ -36,7 +36,7 @@ function draw() {
         menuScene.display();
     }
     else if (gameState === "PLAY") {
-        //translate(-width / 2, -height / 2);
+        translate(-width / 2, -height / 2);
         if (playBg) {
             playBg.update();
             playBg.draw();
