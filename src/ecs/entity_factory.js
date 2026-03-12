@@ -1,10 +1,12 @@
+const EntityType = Object.freeze({
+    PROJECTILE: 'PROJECTILE',
+    PLAYER: 'PLAYER',
+    ENEMY: 'ENEMY',
+    WALL: 'WALL',
+    BOX: 'BOX'
+})
+
 class EntityFactory {
-    /*
-    Factory pattern implementation that abstracts entity creation.
-    Purpose is to:
-    1. Centralize entity construction logic
-    2. Provide a simple interface to create entities
-    */
     constructor(ecs) {
         this.ecs = ecs;
         this.characterSpriteSheet = characterSpriteSheet;
@@ -16,88 +18,144 @@ class EntityFactory {
         this.physics = physics;
     }
 
+    // Public Methods
+
     create(type, data) {
-        /*
-        Creates an entity of type with data
-        This could probably be improved with some sort of pre-made templates
-        */
         switch (type) {
-            case EntityType.PLAYER:
-                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, true);
-            case EntityType.ENEMY:
-                return this.createCharacter(data.center_x, data.center_y, data.width, data.height, false);
-            case EntityType.WALL:
-                return this.createWall(data.left_x, data.top_y, data.width, data.height, data.spawnable);
-            case EntityType.BOX:
-                return this.createBox(data.left_x, data.top_y, data.width, data.height);
-            case EntityType.PROJECTILE:
-                return this.createProjectile(data.center_x, data.center_y, data.width, data.height, data.velocity_x, data.damage, data.range);
-            default:
-                throw new Error(`Unknown entity type: ${type}`);
+            case EntityType.PLAYER:      return this.createPlayer(data);
+            case EntityType.ENEMY:       return this.createEnemy(data, false);
+            case EntityType.WALL:        return this.createWall(data);
+            case EntityType.BOX:         return this.createBox(data);
+            case EntityType.PROJECTILE:  return this.createProjectile(data);
+            default: throw new Error(`Unknown entity type: ${type}`);
         }
     }
 
-    // TODO: Refactor these create methods into something prettier
-    createCharacter(center_x, center_y, width, height, isPlayer) {
-        const speed = isPlayer ? this.physics.PLAYER_SPEED : this.physics.ENEMY_SPEED;
-
+    // Private Methods
+    createPlayer(data) {
+        /*
+         * createPlayer(data)
+         * data should contain:
+         *   - center_x: number  // center x position
+         *   - center_y: number  // center y position
+         *   - width: number
+         *   - height: number
+         */
         const entity = this.ecs.createEntity();
-        this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Acceleration(0, this.physics.GRAVITY));
+        const components = this.playerComponents(data);
+        this.addAll(entity, components);
+        return entity;
+    }
 
-        // Setup the render component with the correct fallback color
-        const color = isPlayer ? [255, 10, 155] : [100, 10, 200];
-        const renderComponent = new Renderable(color);
-        this.ecs.addComponent(entity, renderComponent);
+    createEnemy(data) {
+        /*
+         * createEnemy(data)
+         * data should contain:
+         *   - center_x: number
+         *   - center_y: number
+         *   - width: number
+         *   - height: number
+         */
+        const entity = this.ecs.createEntity();
+        const components = this.enemyComponents(data);
+        this.addAll(entity, components);
+        return entity;
+    }
 
-        if (isPlayer) {
-            this.ecs.addComponent(entity, new Player());
-            this.ecs.addComponent(entity, new Velocity(0, 0));
-            this.ecs.addComponent(entity, new Character(DEFAULTS.playerHealth));
+    createWall(data) {
+        /*
+         * createWall(data)
+         * data should contain:
+         *   - left_x: number     // left/top coordinates (not center)
+         *   - top_y: number
+         *   - width: number
+         *   - height: number
+         *   - spawnable?: boolean (optional) // whether wall can spawn boxes on top
+         */
+        const entity = this.ecs.createEntity();
+        const components = [
+            this.centeredPosition(data),
+            new Wall(),
+            new Renderable([200, 0, 0], this.wallTileImage),
+            ...(data.spawnable ? [new SpawnablePlatform()] : []),
+        ];
+        this.addAll(entity, components);
+        return entity;
+    }
 
-            // 576x24 spritesheet => 24 frames in one row, each frame 24x24.
-            // If your frame ranges are different, edit start/count here.
-            this.ecs.addComponent(entity, new Animation(
-                this.characterSpriteSheet,
-                24,
-                24,
-                1,
-                PlayerAnimations,
-            ));
-        } else {
-            this.ecs.addComponent(entity, new Enemy());
-            this.ecs.addComponent(entity, new Character(DEFAULTS.enemyHealth));
-            const sign = Math.random() < 0.5 ? -1 : 1;
-            this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
+    createBox(data) {
+        /*
+         * createBox(data)
+         * data should contain:
+         *   - left_x: number
+         *   - top_y: number
+         *   - width: number
+         *   - height: number
+         */
+        const entity = this.ecs.createEntity();
+        this.addAll(entity, [
+            this.centeredPosition(data),
+            new Box(),
+            new Renderable([82, 51, 45]),
+        ]);
+        return entity;
+    }
+
+    createProjectile(data) {
+        /*
+         * createProjectile(data)
+         * data should contain:
+         *   - center_x: number
+         *   - center_y: number
+         *   - width: number
+         *   - height: number
+         *   - velocity_x: number
+         *   - damage: number
+         *   - range: number
+         */
+        const entity = this.ecs.createEntity();
+        this.addAll(entity, [
+            new Position(data.center_x, data.center_y, data.width, data.height),
+            new Velocity(data.velocity_x, 0),
+            new Projectile(data.damage, data.range),
+            new Renderable([255, 255, 0]),
+        ]);
+        return entity;
+    }
+
+    // Helpers
+
+    playerComponents(data) {
+        return [
+            new Position(data.center_x, data.center_y, data.width, data.height),
+            new Acceleration(0, this.physics.GRAVITY),
+            new Renderable([255, 10, 155]),
+            new Player(),
+            new Velocity(0, 0),
+            new Character(DEFAULTS.playerHealth),
+            new Animation(this.characterSpriteSheet, 24, 24, 1, PlayerAnimations),
+        ];
+    }
+
+    enemyComponents(data) {
+        const speed = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1);
+        return [
+            new Position(data.center_x, data.center_y, data.width, data.height),
+            new Acceleration(0, this.physics.GRAVITY),
+            new Renderable([100, 10, 200]),
+            new Enemy(),
+            new Character(DEFAULTS.enemyHealth),
+            new Velocity(speed, 0),
+        ];
+    }
+
+    centeredPosition({ left_x, top_y, width, height }) {
+        return new Position(left_x + width / 2, top_y + height / 2, width, height);
+    }
+
+    addAll(entity, components) {
+        for (const component of components) {
+            this.ecs.addComponent(entity, component);
         }
-        return entity;
-    }
-
-    createWall(left_x, top_y, width, height, spawnable = false) {
-        const entity = this.ecs.createEntity();
-        this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
-        this.ecs.addComponent(entity, new Wall());
-        this.ecs.addComponent(entity, new Renderable([200, 0, 0], this.wallTileImage));
-        if (spawnable) {
-            this.ecs.addComponent(entity, new SpawnablePlatform());
-        }
-        return entity;
-    }
-
-    createBox(left_x, top_y, width, height) {
-        const entity = this.ecs.createEntity();
-        this.ecs.addComponent(entity, new Position(left_x + width / 2, top_y + height / 2, width, height));
-        this.ecs.addComponent(entity, new Box());
-        this.ecs.addComponent(entity, new Renderable([82, 51, 45]));
-        return entity;
-    }
-
-    createProjectile(center_x, center_y, width, height, velocity_x, damage, range) {
-        const entity = this.ecs.createEntity();
-        this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Velocity(velocity_x, 0));
-        this.ecs.addComponent(entity, new Projectile(damage, range));
-        this.ecs.addComponent(entity, new Renderable([255, 255, 0]));
-        return entity;
     }
 }
