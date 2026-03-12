@@ -79,7 +79,6 @@ class EntityFactory {
             const config = EnemyConfig[charType];
             width = config.width;
             height = config.height;
-            speed = config.speed;
             color = config.color;
             this.ecs.addComponent(entity, new Enemy(charType));
             this.ecs.addComponent(entity, new Character(config.health));
