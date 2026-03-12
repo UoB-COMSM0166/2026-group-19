@@ -11,12 +11,13 @@ class PlayScene extends Scene {
     }
 
     setup() {
+        console.log("PlayScene setup: loading level 1");
         this.game.loadLevel(1);
-        this.playBg = new ScrollingPlayBg(playBgImage, {
-            speedX: 0,
-            speedY: 0.6,
-            tileScale: 2
-        });
+        // this.playBg = new ScrollingPlayBg(playBgImage, {
+        //     speedX: 0,
+        //     speedY: 0.6,
+        //     tileScale: 2
+        // });
 
         // Add DOM listeners for pause menu
         const resumeBtn = document.getElementById('btn-resume');
@@ -32,19 +33,18 @@ class PlayScene extends Scene {
     }
 
     display() {
-        translate(-width / 2, -height / 2);
-        
-        if (this.playBg) {
-            this.playBg.display();
-        }
-
         if (this.isPaused) {
+            push();
+            translate(-width / 2, -height / 2);
             this.game.renderOnly();
             this.drawPauseOverlay();
+            pop();
         } else {
-            // Render system is inside game.update() usually, 
-            // but if we are paused we use renderOnly()
-            // If not paused, update() above handles ECS systems.
+            push();
+            translate(-width / 2, -height / 2);
+            background(50); //temporarily removed tiled bg, performance issues
+            this.game.renderOnly(); 
+            pop();
         }
     }
 
@@ -109,6 +109,7 @@ class PlayScene extends Scene {
     }
 
     quitToMenu() {
+        console.log("PlayScene: Quitting to menu");
         let overlay = document.getElementById('pause-overlay');
         if (overlay) {
             overlay.classList.remove('split');
@@ -122,6 +123,7 @@ class PlayScene extends Scene {
     }
 
     dispose() {
+        console.log("PlayScene: Disposing");
         // Clean up DOM listeners
         const resumeBtn = document.getElementById('btn-resume');
         const quitBtn = document.getElementById('btn-quit');
