@@ -77,6 +77,7 @@ class EntityFactory {
         const entity = this.ecs.createEntity();
         const components = this.enemyComponents(data);
         components.push(new Floating());
+        components.push(new Acceleration(0, this.physics.GRAVITY / 5));
         this.addAll(entity, components);
         return entity;
     }

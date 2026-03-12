@@ -15,17 +15,17 @@ class EnemySpawnSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.spawnTimer = 0;
-        this.spawnRate = DEFAULTS.physics.SPAWN_RATE;
+        this.physics = DEFAULTS.physics;
     }
 
     applyPhysics(physics) {
-        this.spawnRate = physics.SPAWN_RATE;
+        this.physics = physics;
     }
 
     update(dt) {
         this.spawnTimer += dt;
 
-        if (this.spawnTimer >= this.spawnRate) {
+        if (this.spawnTimer >= this.physics.SPAWN_RATE) {
             const enemyType = this.getRandomEnemyType();
             const config = EnemyConfig[enemyType];
             this.spawner.request(config.entityType, {
@@ -33,6 +33,7 @@ class EnemySpawnSystem extends System {
                 center_y: 0,
                 width: config.width,
                 height: config.height,
+                max_speed: this.physics.ENEMY_SPEED,
                 health: config.health,
                 color: config.color
             })
