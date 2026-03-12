@@ -1,7 +1,8 @@
 const EntityType = Object.freeze({
     PROJECTILE: 'PROJECTILE',
     PLAYER: 'PLAYER',
-    ENEMY: 'ENEMY',
+    GROUND_ENEMY: 'GROUND_ENEMY',
+    FLOATING_ENEMY: 'FLOATING_ENEMY',
     WALL: 'WALL',
     BOX: 'BOX'
 })
@@ -22,11 +23,12 @@ class EntityFactory {
 
     create(type, data) {
         switch (type) {
-            case EntityType.PLAYER:      return this.createPlayer(data);
-            case EntityType.ENEMY:       return this.createEnemy(data, false);
-            case EntityType.WALL:        return this.createWall(data);
-            case EntityType.BOX:         return this.createBox(data);
-            case EntityType.PROJECTILE:  return this.createProjectile(data);
+            case EntityType.PLAYER:         return this.createPlayer(data);
+            case EntityType.GROUND_ENEMY:   return this.createEnemy(data);
+            case EntityType.FLOATING_ENEMY: return this.createFloatingEnemy(data);
+            case EntityType.WALL:           return this.createWall(data);
+            case EntityType.BOX:            return this.createBox(data);
+            case EntityType.PROJECTILE:     return this.createProjectile(data);
             default: throw new Error(`Unknown entity type: ${type}`);
         }
     }
@@ -58,6 +60,23 @@ class EntityFactory {
          */
         const entity = this.ecs.createEntity();
         const components = this.enemyComponents(data);
+        components.push(new Acceleration(0, this.physics.GRAVITY));
+        this.addAll(entity, components);
+        return entity;
+    }
+
+    createFloatingEnemy(data) {
+        /*
+         * createFloatingEnemy(data)
+         * data should contain:
+         *   - center_x: number
+         *   - center_y: number
+         *   - width: number
+         *   - height: number
+         */
+        const entity = this.ecs.createEntity();
+        const components = this.enemyComponents(data);
+        components.push(new Floating());
         this.addAll(entity, components);
         return entity;
     }
@@ -132,7 +151,7 @@ class EntityFactory {
             new Renderable([255, 10, 155]),
             new Player(),
             new Velocity(0, 0),
-            new Character(DEFAULTS.playerHealth),
+            new Character(DEFAULTS.health.player),
             new Animation(this.characterSpriteSheet, 24, 24, 1, PlayerAnimations),
         ];
     }
@@ -141,10 +160,9 @@ class EntityFactory {
         const speed = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1);
         return [
             new Position(data.center_x, data.center_y, data.width, data.height),
-            new Acceleration(0, this.physics.GRAVITY),
-            new Renderable([100, 10, 200]),
+            new Renderable(data.color),
             new Enemy(),
-            new Character(DEFAULTS.enemyHealth),
+            new Character(data.health),
             new Velocity(speed, 0),
         ];
     }
