@@ -36,7 +36,6 @@ class PhysicsSystem extends System {
         4. Check for interaction collisions (pickups, damage, etc.)
         5. If entity fallen off bottom of screen, respawn at top
         */
-        const toDelete = [];
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
         
 
@@ -44,24 +43,39 @@ class PhysicsSystem extends System {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
             const accel = this.ecs.getComponent(id, Acceleration);
+            const enemy = this.ecs.getComponent(id, Enemy);
 
             // Apply Gravity
             if (accel) {
-                vel.vx = vel.vx + accel.ax * dt;
-                vel.vy = vel.vy + accel.ay * dt;
+                vel.vx = Math.min(vel.vx + accel.ax * dt, this.physics.TERMINAL_VELOCITY);
+                vel.vy = Math.min(vel.vy + accel.ay * dt, this.physics.TERMINAL_VELOCITY);
             }
 
             // Movement phase (axis-dependent)
-            pos.x += vel.vx * dt;
+            pos.x += Math.round(vel.vx * dt);
             this.resolveMovementCollisions(id, Axis.X);
             
             if (pos.y > height) {
                 pos.y = 0;
-                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * this.physics.ENEMY_SPEED_MULTIPLIER, this.physics.MAX_ENEMY_SPEED);
+                if (enemy) {
+                    enemy.powerful = true;
+                    vel.vx *= this.physics.ENEMY_SPEED_MULTIPLIER;
+                }
             }
             else {
                 pos.y = pos.y + vel.vy * dt;
-            }   
+            }  
+
+            // Clamp to max speed — magnified if enemy is in powerful state
+            if (enemy) {
+                const maxSpeed = enemy.powerful
+                    ? this.physics.ENEMY_SPEED * this.physics.ENEMY_SPEED_MULTIPLIER
+                    : this.physics.ENEMY_SPEED;
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx), maxSpeed);
+                vel.vy = Math.sign(vel.vy) * Math.min(Math.abs(vel.vy), maxSpeed);
+            }
+
+            // Resolve Wall Collisions
             this.resolveMovementCollisions(id, Axis.Y);
         }
     }
@@ -77,6 +91,7 @@ class PhysicsSystem extends System {
         const pos = this.ecs.getComponent(id, Position);
         const vel = this.ecs.getComponent(id, Velocity);
         const player = this.ecs.getComponent(id, Player);
+        const floating = this.ecs.getComponent(id, Floating);
 
         // Assume character is not on ground, update to true later if on ground
         if (axis === Axis.Y) {
@@ -85,11 +100,11 @@ class PhysicsSystem extends System {
 
         this.forEachCollision(pos, [Position, Wall], wallId => {
             const wallPos = this.ecs.getComponent(wallId, Position);
-            this.resolveWallPenetration(pos, vel, char, player, axis, wallPos);
+            this.resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos);
         })
     }
 
-    resolveWallPenetration(pos, vel, char, player, axis, wallPos) {
+    resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos) {
         // Helper private method for resolveMovementCollisions
         const bb_a = pos.getBoundingBox();
         const bb_b = wallPos.getBoundingBox();
@@ -115,10 +130,17 @@ class PhysicsSystem extends System {
                 pos.y = bb_b.top_y - bb_a.h / 2; // Hit top of floor
                 char.onGround = true;
 
+                if (floating) {
+                    vel.vy = -this.physics.FLOATING_ENEMY_BOUNCE;
+                }
+                else {
+                    vel.vy = 0;
+                }
+
             } else if (vel.vy < 0) {
                 pos.y = bb_b.top_y + bb_b.h + bb_a.h / 2; // Hit bottom of ceiling
+                vel.vy = 0;
             }
-            vel.vy = 0;
         }
     }
 

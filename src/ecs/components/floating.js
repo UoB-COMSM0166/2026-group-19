@@ -1,1 +1,5 @@
-class Floating {}
+class Floating {
+    constructor() {
+        this.wasInRange = false;
+    }
+}

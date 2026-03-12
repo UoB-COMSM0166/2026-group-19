@@ -54,7 +54,6 @@ class InputSystem extends System {
                 
             }
 
-
             // Update previous key-state
             this.prev.set(UP_ARROW, keyIsDown(UP_ARROW));
             this.prev.set(SPACE, keyIsDown(SPACE));
