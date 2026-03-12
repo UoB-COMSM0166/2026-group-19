@@ -1,7 +1,6 @@
 const DEFAULTS = {
     physics: {
         GRAVITY: 0.5,
-        TERMINAL_VELOCITY: 25,
         PLAYER_SPEED: 4,
         ENEMY_SPEED: 4,
         JUMP_SPEED: 13,

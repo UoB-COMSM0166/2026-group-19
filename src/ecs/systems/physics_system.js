@@ -43,11 +43,12 @@ class PhysicsSystem extends System {
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
-            const g = this.ecs.getComponent(id, Gravity);
+            const accel = this.ecs.getComponent(id, Acceleration);
 
             // Apply Gravity
-            if (g) {
-                vel.vy = Math.min(vel.vy + g.g * dt, this.physics.TERMINAL_VELOCITY);
+            if (accel) {
+                vel.vx = vel.vx + accel.ax * dt;
+                vel.vy = vel.vy + accel.ay * dt;
             }
 
             // Movement phase (axis-dependent)

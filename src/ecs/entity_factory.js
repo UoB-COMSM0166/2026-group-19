@@ -43,7 +43,7 @@ class EntityFactory {
 
         const entity = this.ecs.createEntity();
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-        this.ecs.addComponent(entity, new Gravity(this.physics.GRAVITY));
+        this.ecs.addComponent(entity, new Acceleration(0, this.physics.GRAVITY));
 
         // Setup the render component with the correct fallback color
         const color = isPlayer ? [255, 10, 155] : [100, 10, 200];
