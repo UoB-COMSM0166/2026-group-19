@@ -25,15 +25,20 @@ class InteractionSystem extends System {
         const pos = this.ecs.getComponent(playerId, Position);
         const anim = this.ecs.getComponent(playerId, Animation);
         const char = this.ecs.getComponent(playerId, Character);
-        if (!pos) return;
+        if (!pos || !char) return;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            char.health--; // Update health of player
+            const now = millis();
+            if (anim.hurtUntil < now) {
+                char.health--; // Update health of player
+            }
+            console.log(char.health);
 
             if (char.health <= 0) {
                 // TODO: GAME OVER LOGIC HERE
+                console.log("Player dead");
             }
 
-            const now = millis();
+
             if (anim) {
                 anim.setAnimation(AnimationType.HURT);
                 anim.hurtUntil = Math.max(anim.hurtUntil, now + DEFAULTS.hurtTime);
@@ -59,7 +64,12 @@ class InteractionSystem extends System {
         const pos = this.ecs.getComponent(projectileId, Position);
         const projectile = this.ecs.getComponent(projectileId, Projectile);
         if (!pos) return;
+        let hit = false;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
+            // Only let projectile hit one enemy
+            if (hit) return;
+            hit = true;
+
             const enemyChar = this.ecs.getComponent(enemyId, Character);
             enemyChar.health -= projectile.damage;
             this.ecs.removeEntity(projectileId);

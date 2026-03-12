@@ -24,7 +24,7 @@ class WeaponSystem extends System {
 
         this.spawnProjectiles(pos, weapon, character);
         this.applyRecoil(vel, weapon, character);
-        weapon.lastShowTime = now;
+        weapon.lastShotTime = now;
     }
 
     spawnProjectiles(pos, weapon, character) {
