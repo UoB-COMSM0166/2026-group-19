@@ -60,6 +60,7 @@ class EntityFactory {
     // TODO: Refactor these create methods into something prettier
     createCharacter(center_x, center_y, charType) {
         const entity = this.ecs.createEntity();
+
         let width, height, color;
 
         if (charType === EntityType.PLAYER) {
@@ -78,6 +79,7 @@ class EntityFactory {
             const config = EnemyConfig[charType];
             width = config.width;
             height = config.height;
+            speed = config.speed;
             color = config.color;
             this.ecs.addComponent(entity, new Enemy(charType));
             this.ecs.addComponent(entity, new Character(config.health));
@@ -90,13 +92,12 @@ class EntityFactory {
             } else {
                 this.ecs.addComponent(entity, new Acceleration(0, this.physics.GRAVITY));
                 const sign = Math.random() < 0.5 ? -1 : 1;
-                this.ecs.addComponent(entity, new Velocity(sign * config.speed, 0));
+                this.ecs.addComponent(entity, new Velocity(sign * speed, 0));
             }
         }
 
         this.ecs.addComponent(entity, new Renderable(color));
         this.ecs.addComponent(entity, new Position(center_x, center_y, width, height));
-
         return entity;
     }
 
