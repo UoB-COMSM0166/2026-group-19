@@ -41,10 +41,13 @@ class InteractionSystem extends System {
         const pos = this.ecs.getComponent(playerId, Position);
         if (!pos) return;
         this.forEachCollision(pos, [Box, Position], (boxId) => {
-            // Player gets weapon, box is removed
+            // Player gets weapon, box is removed, player score increments
             const box = this.ecs.getComponent(boxId, Box);
+            const player = this.ecs.getComponent(playerId, Player);
+            player.score++;
             this.ecs.addComponent(playerId, new Weapon(box.weapon));
             this.ecs.removeEntity(boxId);
+            console.log(player.score);
         })
     }
 

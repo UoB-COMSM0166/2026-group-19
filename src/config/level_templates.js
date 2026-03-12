@@ -41,7 +41,7 @@ const LevelTemplates = {
     },
 
     3: {
-        physics: { ENEMY_SPEED: 10 },
+        physics: { ENEMY_SPEED: 10, PLAYER_SPEED: 10 },
         player: { x: 0.10, y: 0.85 },
         platforms: [
             { x: 0.05, y: 0.75, w: 0.22, spawnable: true },
