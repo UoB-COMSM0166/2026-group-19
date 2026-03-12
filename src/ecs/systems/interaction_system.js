@@ -29,6 +29,10 @@ class InteractionSystem extends System {
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
             char.health--; // Update health of player
 
+            if (char.health <= 0) {
+                // TODO: GAME OVER LOGIC HERE
+            }
+
             const now = millis();
             if (anim) {
                 anim.setAnimation(AnimationType.HURT);
