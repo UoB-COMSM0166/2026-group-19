@@ -15,7 +15,7 @@ class FloatingSystem extends System {
         if (player_ids.length !== 1) return;
         const playerPos = this.ecs.getComponent(player_ids[0], Position);
 
-        const floatingEnemyIds = this.ecs.getEntitiesWith(Floating, Enemy, Acceleration);
+        const floatingEnemyIds = this.ecs.getEntitiesWith(Floating, Enemy, Acceleration, Position, Velocity);
         for (let enemyId of floatingEnemyIds) {
             const enemyPos = this.ecs.getComponent(enemyId, Position);
             const enemyVel = this.ecs.getComponent(enemyId, Velocity);

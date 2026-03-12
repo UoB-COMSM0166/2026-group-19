@@ -18,7 +18,6 @@ class InputSystem extends System {
     }
 
     update(dt) {
-        const now = millis();
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);

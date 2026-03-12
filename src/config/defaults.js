@@ -1,15 +1,15 @@
 const DEFAULTS = {
     physics: {
         GRAVITY: 0.5,
-        PLAYER_SPEED: 4,
-        ENEMY_SPEED: 4,
+        PLAYER_SPEED: 5,
+        ENEMY_SPEED: 3,
         MAX_ENEMY_SPEED: 12,
         JUMP_SPEED: 12,
         SPAWN_RATE: 180,
         ENEMY_SPEED_MULTIPLIER: 2,
         TERMINAL_VELOCITY: 6,
         PLAYER_DAMPING_MULTIPLIER: 0.8,
-        FLOATING_ENEMY_ACCEL: 0.2,
+        FLOATING_ENEMY_ACCEL: 0.1,
         FLOATING_ENEMY_BOUNCE: 2
     },
     sizes: {

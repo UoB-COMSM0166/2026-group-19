@@ -29,7 +29,7 @@ class AnimationSystem extends System {
         const animationData = anim.animations[anim.current];
         if (!animationData) return;
 
-        anim.timer += dt;
+        anim.timer += dt / 1000;
         if (anim.timer < animationData.duration_s) return;
 
         // Increment frame index
@@ -38,7 +38,6 @@ class AnimationSystem extends System {
             ? nextFrame % animationData.frames.length               // Wrap-around
             : Math.min(nextFrame, animationData.frames.length - 1); // No wrap-around
 
-        // Reset timer to 0
-        anim.timer = 0;
+        anim.timer -= animationData.duration_s;
     }
 }

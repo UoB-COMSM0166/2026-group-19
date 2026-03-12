@@ -47,7 +47,9 @@ class PhysicsSystem extends System {
 
             // Apply Gravity
             if (accel) {
-                vel.vx = Math.min(vel.vx + accel.ax * dt, this.physics.TERMINAL_VELOCITY);
+                vel.vx = vel.vx + accel.ax * dt;
+
+                // Terminal velocity only applies in downward direction (for gravity)
                 vel.vy = Math.min(vel.vy + accel.ay * dt, this.physics.TERMINAL_VELOCITY);
             }
 
