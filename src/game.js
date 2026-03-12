@@ -45,12 +45,14 @@ class Game {
         this.levelConfig = LevelFactory.build(template);
         this.ecs.clear();
 
-        // Push physics config to systems that need it
+        // The level configurations can modify the physics constants to alter difficulty
+        // Any systems or classes that use these physics constants must be able to receive the new values upon level load
         this.ecs.getSystem(PhysicsSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(EnemySpawnSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
 
+        // Spawn initial entities (Currently Player and walls)
         this.spawnLevelEntities(this.levelConfig);
     }
 
