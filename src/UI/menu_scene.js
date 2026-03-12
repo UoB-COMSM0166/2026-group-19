@@ -48,21 +48,31 @@ class MenuScene extends Scene {
             let ratio = this.menuImage.height / this.menuImage.width;
             let newHeight = width * ratio;
 
+            // Calculate the exact scaled dimensions used for the image
+            let scaledImageWidth = width * 0.65;
+            let scaledImageHeight = (width * ratio) * 0.65;
+
             push();
             imageMode(CENTER);
-            tint(255, dynamicAlpha); // second parameter is the alpha of ticket image
+            tint(255, dynamicAlpha); 
             image(
                 this.menuImage,
                 width / 2,
-                height / 2 + height * 0.2,
-                width * 0.65,
-                newHeight * 0.65
+                height * 0.7, // Centered at 70% height
+                scaledImageWidth,
+                scaledImageHeight
             );
             pop();
 
-            // Refresh button position to be responsive
-            this.startButton.x = width * 0.75 - 55;
-            this.startButton.y = height * 0.5 + this.menuImage.height * 0.425;
+            // Refresh button position: use the SAME center as the image (width/2, height*0.7)
+            // Offset horizontally by a fixed factor of the scaled image's width
+            this.startButton.x = width / 2 + (scaledImageWidth * 0.33); 
+            this.startButton.y = height * 0.7 + (scaledImageHeight * 0.06); 
+            
+            // Scale font and hit-box dimensions relative to width
+            this.startButton.w = scaledImageWidth * 0.2; 
+            this.startButton.h = scaledImageHeight * 0.15;
+            this.startButton.fontSize = width * 0.045; 
         }
     }
 
@@ -82,9 +92,11 @@ class MenuScene extends Scene {
 
         push();
         textAlign(CENTER, CENTER);
-        textSize(240);
+        // Scale title dynamically: approx 15% of width
+        let dynamicFontSize = width * 0.15;
+        textSize(dynamicFontSize);
         fill(255);
-        text(currentText, width / 2, height / 4);
+        text(currentText, width / 2, height * 0.2); // Position at 20% height
         pop();
     }
 

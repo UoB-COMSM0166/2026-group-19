@@ -26,6 +26,12 @@ class UIButton {
         this.update();
 
         push();
+        // DEBUG: Uncomment this to see the actual clickable HIT BOX
+        // noFill();
+        // stroke(255, 0, 0);
+        // rectMode(CENTER);
+        // rect(this.x, this.y, this.w, this.h);
+
         if (this.isHovered) {
             cursor(HAND);
             fill(255, 240, 120); // highlight

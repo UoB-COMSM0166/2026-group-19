@@ -45,13 +45,35 @@ class PlayScene extends Scene {
         noStroke();
         rect(0, 0, width, height);
 
-        // Header Text
+        // Header Text - Responsive sizing
         fill(255);
         textAlign(CENTER, CENTER);
-        textSize(64);
-        text("PAUSED", width / 2, height / 2 - 120);
+        let titleSize = min(width, height) * 0.12;
+        textSize(titleSize);
+        text("PAUSED", width / 2, height * 0.35);
 
-        // Display p5-based buttons
+        // Update button parameters before calculating width
+        this.resumeButton.fontSize = titleSize * 0.5;
+        this.quitButton.fontSize = titleSize * 0.5;
+        
+        // IMPORTANT: Must set textSize() BEFORE textWidth() for correct width calculation
+        textSize(this.resumeButton.fontSize);
+        let resumeW = textWidth(this.resumeButton.label);
+        let quitW = textWidth(this.quitButton.label);
+
+        // Display p5-based buttons - Responsive positioning and scaling
+        this.resumeButton.x = width / 2;
+        this.resumeButton.y = height / 2;
+        // Match collision box exactly to text label width and font size
+        this.resumeButton.w = resumeW;
+        this.resumeButton.h = this.resumeButton.fontSize * 0.8;
+
+        this.quitButton.x = width / 2;
+        this.quitButton.y = height / 2 + (titleSize * 0.8);
+        // Match collision box exactly to text label width and font size
+        this.quitButton.w = quitW;
+        this.quitButton.h = this.quitButton.fontSize * 0.8;
+
         this.resumeButton.display();
         this.quitButton.display();
     }
