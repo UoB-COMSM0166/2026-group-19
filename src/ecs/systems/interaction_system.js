@@ -21,16 +21,15 @@ class InteractionSystem extends System {
         }
     }
 
-
     handlePlayerEnemy(playerId) {
         const pos = this.ecs.getComponent(playerId, Position);
-        const sprite = this.ecs.getComponent(playerId, Sprite);
+        const anim = this.ecs.getComponent(playerId, Animation);
         if (!pos) return;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
             const now = millis();
-            if (sprite) {
-                // Extend hurt state while colliding, with tiny anti-jitter buffer.
-                sprite.hurtUntil = Math.max(sprite.hurtUntil, now + 280);
+            if (anim) {
+                anim.setAnimation(AnimationType.HURT);
+                anim.hurtUntil = Math.max(anim.hurtUntil, now + DEFAULTS.hurtTime);
             }
         })
     }

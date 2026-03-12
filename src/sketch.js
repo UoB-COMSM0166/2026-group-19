@@ -1,13 +1,17 @@
 let game;
-let gameState = GameStepConfig.State;
+let gameState = "LANDING";
 let menuScene;
 let uiFont;
 let playBg;
 let playBgImage;
+let characterSpriteSheet;
+let wallTileImage;
 
 function preload() {
-    uiFont = loadFont("assets/TaipeiSans-font-subset.ttf");
-    playBgImage = loadImage("assets/gray_gameBg.png");
+    uiFont = loadFont("src/assets/TaipeiSans-font-subset.ttf");
+    playBgImage = loadImage("src/assets/gray_gameBg.png");
+    wallTileImage = loadImage("src/assets/Idle_block.png");
+    characterSpriteSheet = loadImage("src/assets/main_characterSprites.png");
 }
 
 function setup() {
@@ -15,7 +19,8 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     frameRate(60);
     textFont(uiFont);
-    game = new Game(width, height);
+    game = new Game();
+    game.loadLevel(1);
     menuScene = new MenuScene();
     fps = new drawFps();
 }
@@ -36,11 +41,7 @@ function draw() {
         menuScene.display();
     }
     else if (gameState === "PLAY") {
-        //translate(-width / 2, -height / 2);
-        if (playBg) {
-            playBg.update();
-            playBg.draw();
-        }
+        translate(-width / 2, -height / 2);
         menuScene = null; // dispose of menu scene
         game.update();
     }
@@ -69,7 +70,7 @@ function mousePressed() {
     if (gameState === "LANDING") {
         if (menuScene.checkClick()) {
 
-            game.loadLevel(LevelData[3]);
+            game.loadLevel(1);
             playBg = new ScrollingPlayBg(playBgImage, {
                 speedX: 0,
                 speedY: 0.6,

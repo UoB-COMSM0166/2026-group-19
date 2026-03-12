@@ -4,41 +4,41 @@ class AnimationSystem extends System {
     }
 
     update() {
+        // Update sets the correct frame to animate
         const now = millis();
-        const entities = this.ecs.getEntitiesWith(Sprite, Velocity);
+        const entities = this.ecs.getEntitiesWith(Animation, Velocity);
 
         for (const id of entities) {
-            const sprite = this.ecs.getComponent(id, Sprite);
+            const anim = this.ecs.getComponent(id, Animation);
             const vel = this.ecs.getComponent(id, Velocity);
-            const player = this.ecs.getComponent(id, Player);
 
-            if (player) {
-                if (player.direction > 0) sprite.flipX = false;
-                else if (player.direction < 0) sprite.flipX = true;
-            } else if (Math.abs(vel.vx) > 0.05) {
-                sprite.flipX = vel.vx < 0;
-            }
-
-            let nextAnim = "IDLE";
-            if (now < sprite.hurtUntil) {
-                nextAnim = "HURT";
-            } else if (Math.abs(vel.vx) > 0.1) {
-                nextAnim = "MOVE";
-            }
-
-            sprite.setAnimation(nextAnim);
-            const anim = sprite.animations[sprite.currentAnimation];
-            if (!anim) continue;
-
-            sprite.frameTick++;
-            if (sprite.frameTick < anim.speed) continue;
-
-            sprite.frameTick = 0;
-            if (anim.loop === false) {
-                sprite.currentFrame = Math.min(sprite.currentFrame + 1, anim.count - 1);
-            } else {
-                sprite.currentFrame = (sprite.currentFrame + 1) % anim.count;
-            }
+            this.selectAnimation(anim, vel, now);
+            this.advanceFrame(anim);
         }
+    }
+
+    selectAnimation(anim, vel, now) {
+        const hurtEnded = (anim.current === AnimationType.HURT && now > anim.hurtUntil);
+        if (anim.current === AnimationType.HURT && !hurtEnded) return; // locked in hurt
+
+        const isMoving = Math.abs(vel.vx) > 0.05;
+        anim.setAnimation(isMoving ? AnimationType.MOVE : AnimationType.IDLE);
+    }
+
+    advanceFrame(anim) {
+        const animationData = anim.animations[anim.current];
+        if (!animationData) return;
+
+        anim.timer++;
+        if (anim.timer < animationData.speed) return;
+
+        // Increment frame index
+        const nextFrame = anim.frameIndex + 1;
+        anim.frameIndex = animationData.loop
+            ? nextFrame % animationData.frames.length               // Wrap-around
+            : Math.min(nextFrame, animationData.frames.length - 1); // No wrap-around
+
+        // Reset timer to 0
+        anim.timer = 0;
     }
 }

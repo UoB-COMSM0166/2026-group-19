@@ -10,15 +10,15 @@ class WeaponSystem extends System {
       const now = millis();
       
       // get the player Id when it simultaneously has Weapon and FireRequest components
-      const players = this.ecs.getEntitiesWith(Player, Weapon, FireRequest);
-      for (let id of players){
+      const ids = this.ecs.getEntitiesWith(FireRequest);
+      for (let id of ids){
         // Get the access of each component
           const pos = this.ecs.getComponent(id, Position);
           const vel = this.ecs.getComponent(id, Velocity);
-          const player = this.ecs.getComponent(id, Player);
+          const character = this.ecs.getComponent(id, Character);
           const weapon = this.ecs.getComponent(id, Weapon);
           
-          const vx = player.direction * weapon.bulletSpeed;
+          const vx = character.direction * weapon.bulletSpeed;
           // Count the time if exceed the weapon fireRate
           if (now - weapon.lastShotTime >= weapon.fireRate){
               this.spawner.request(EntityType.PROJECTILE, {center_x: pos.x, 
@@ -41,7 +41,7 @@ class WeaponSystem extends System {
               this.ecs.removeComponent(id, FireRequest);
               // Control recoil feature when there is a fire 
               if (!keyIsDown(LEFT_ARROW) && !keyIsDown(RIGHT_ARROW) && weapon.type != WeaponType.TWOWAYRIFLE){
-                  vel.vx = (-1) * player.direction * weapon.recoilKick * width;
+                  vel.vx = (-1) * character.direction * weapon.recoilKick * width;
               }
           }
           this.ecs.removeComponent(id, FireRequest);

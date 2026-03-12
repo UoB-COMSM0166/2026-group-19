@@ -13,13 +13,13 @@ class PathingSystem extends System {
      const playerPos = this.ecs.getComponent(playerId, Position);
 
      // Find floating enemies and update their force toward player
-     const floatingEnemies = this.ecs.getEntitiesWith(Enemy, Position, Force);
+     const floatingEnemies = this.ecs.getEntitiesWith(Enemy, Position, Acceleration);
      for (let enemyId of floatingEnemies) {
          const enemy = this.ecs.getComponent(enemyId, Enemy);
          if (enemy.type !== EnemyType.FLOATING) continue;
       // we only apply pathing to floating enemies
          const enemyPos = this.ecs.getComponent(enemyId, Position);
-         const force = this.ecs.getComponent(enemyId, Force);
+         const acc = this.ecs.getComponent(enemyId, Acceleration);
 
          // Calculate direction from enemy to player
          const dx = playerPos.x - enemyPos.x;
@@ -29,8 +29,8 @@ class PathingSystem extends System {
          const distance = Math.sqrt(dx * dx + dy * dy);
 
          if (distance > 0) {
-            force.fx = (dx / distance) * this.floatingEnemyStrength;
-            force.fy = (dy / distance) * this.floatingEnemyStrength;
+            acc.ax = (dx / distance) * this.floatingEnemyStrength;
+            acc.ay = (dy / distance) * this.floatingEnemyStrength;
          }
       }
    }

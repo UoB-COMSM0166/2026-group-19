@@ -1,8 +1,25 @@
+/*
+ * Game is the top-level coordinator for a running game session.
+ *
+ * Responsibilities:
+ *   - Owns the ECS instance and registers all systems in update order
+ *   - Loads levels by building a resolved config from a template and spawning
+ *     the initial set of entities (player + walls)
+ *   - Exposes update() for the main game loop and renderOnly() for frozen states
+ *     (e.g. pause screen, game over)
+ *
+ * Usage:
+ *   const game = new Game();
+ *   game.loadLevel(1);   // build and spawn level 1
+ *   game.update();       // call each frame in draw()
+ */
+
 class Game {
     constructor() {
         this.ecs = new ECS();
         this.factory = new EntityFactory(this.ecs);
         this.spawner = new SpawningSystem(this.ecs, this.factory);
+        this.levelConfig = null;
         this.ecs.systems = [
             new EnemySpawnSystem(this.ecs, this.spawner),
             new BoxSpawnSystem(this.ecs, this.spawner),
@@ -10,8 +27,7 @@ class Game {
             new WeaponSystem(this.ecs, this.spawner),
             this.spawner,
             new InteractionSystem(this.ecs, this.spawner),
-            new PathingSystem(this.ecs),
-            new PhysicsSystem(this.ecs, this.spawner),
+            new PhysicsSystem(this.ecs, this.spawner, this),
             new AnimationSystem(this.ecs),
             new ProjectileSystem(this.ecs),
             new RenderSystem(this.ecs)
@@ -22,62 +38,30 @@ class Game {
         this.ecs.update();
     }
 
-    loadLevel(levelConfig) {
-        this.applyLevelConstants(levelConfig);
-        this.spawnLevelEntities(levelConfig);
-    }
+    loadLevel(levelNumber) {
+        const template = LevelTemplates[levelNumber]
+        if (!template) throw new Error(`Unknown level: ${levelNumber}`);
 
-    applyLevelConstants(levelConfig) {
-        if (levelConfig.player) {
-            EntityDefaults.PLAYER.width = levelConfig.player.size.width;
-            EntityDefaults.PLAYER.height = levelConfig.player.size.height;
+        this.levelConfig = LevelFactory.build(template);
+        this.ecs.clear();
 
-            PhysicsConstants.GRAVITY = levelConfig.player.physics.GRAVITY;
-            PhysicsConstants.TERMINAL_VELOCITY = levelConfig.player.physics.TERMINAL_VELOCITY;
-            PhysicsConstants.PLAYER_SPEED = levelConfig.player.physics.PLAYER_SPEED;
-            PhysicsConstants.JUMP_SPEED = levelConfig.player.physics.JUMP_SPEED;
-        }
+        // Push physics config to systems that need it
+        this.ecs.getSystem(PhysicsSystem).applyPhysics(this.levelConfig.physics);
+        this.ecs.getSystem(EnemySpawnSystem).applyPhysics(this.levelConfig.physics);
+        this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
+        this.factory.applyPhysics(this.levelConfig.physics);
 
-        if (levelConfig.enemies) {
-            EntityDefaults.ENEMY.width = levelConfig.enemies.size.width;
-            EntityDefaults.ENEMY.height = levelConfig.enemies.size.height;
-
-            PhysicsConstants.ENEMY_SPEED = levelConfig.enemies.physics.ENEMY_SPEED;
-            SpawnDefaults.SPAWN_RATE = levelConfig.enemies.physics.SPAWN_RATE;
-        }
-
-        if (levelConfig.boxes) {
-            EntityDefaults.BOX.width = levelConfig.boxes.size.width;
-            EntityDefaults.BOX.height = levelConfig.boxes.size.height;
-        }
+        this.spawnLevelEntities(this.levelConfig);
     }
 
     spawnLevelEntities(levelConfig) {
-        // Clear out any old entities
-        this.ecs.clear();
-
-        // Spawn Entities normally
         this.spawner.request(EntityType.PLAYER, {
-            ...levelConfig.player.pos,
-            ...levelConfig.player.size
+            ...levelConfig.player,
+            ...DEFAULTS.sizes.player
         });
 
-        for (let pos of levelConfig.enemies.pos) {
-            this.spawner.request(EntityType.ENEMY, { ...pos, ...levelConfig.enemies.size });
-        }
-
-        for (let pos of levelConfig.walls.pos) {
-            this.spawner.request(EntityType.WALL, pos);
-        }
-
-        if (levelConfig.boxes) {
-            const boxPositions = Array.isArray(levelConfig.boxes.pos)
-                ? levelConfig.boxes.pos
-                : [levelConfig.boxes.pos];
-
-            for (let pos of boxPositions) {
-                this.spawner.request(EntityType.BOX, { ...pos, ...levelConfig.boxes.size });
-            }
+        for (let wall of levelConfig.walls) {
+            this.spawner.request(EntityType.WALL, wall);
         }
 
         // Immediately update the spawner so entities appear on frame 1
