@@ -5,7 +5,7 @@ class BoxSpawnSystem extends System {
         this.spawner = spawner;
     }
 
-    update() {
+    update(dt) {
         /*
         Update checks if there are currently no boxes in game.
         If so, spawns a new box on a platform.

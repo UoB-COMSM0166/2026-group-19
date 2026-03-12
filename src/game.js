@@ -35,7 +35,9 @@ class Game {
     }
 
     update() {
-        this.ecs.update();
+        const dt = deltaTime / (1000 / 60);
+        console.log(dt);
+        this.ecs.update(dt);
     }
 
     loadLevel(levelNumber) {

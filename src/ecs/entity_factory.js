@@ -1,23 +1,3 @@
-const PlayerAnimations = {
-    [AnimationType.IDLE]: {
-        frames: [0,1,2,3],
-        speed: 8,
-        loop: true
-    },
-
-    [AnimationType.MOVE]: {
-        frames: [17,18,19,20,21,22,23],
-        speed: 10,
-        loop: true
-    },
-
-    [AnimationType.HURT]: {
-        frames: [15,16,17],
-        speed: 8,
-        loop: false
-    }
-};
-
 class EntityFactory {
     /*
     Factory pattern implementation that abstracts entity creation.

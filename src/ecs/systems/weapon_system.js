@@ -5,7 +5,7 @@ class WeaponSystem extends System {
     }
 
 
-    update() {
+    update(dt) {
         const now = millis();
         const ids = this.ecs.getEntitiesWith(FireRequest);
         for (let id of ids) {

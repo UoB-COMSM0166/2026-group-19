@@ -5,7 +5,7 @@ class InteractionSystem extends System {
         this.spawner = spawner;
     }
 
-    update() {
+    update(dt) {
         const playerIds = this.ecs.getEntitiesWith(Player, Position);
 
         for (let playerId of playerIds) {

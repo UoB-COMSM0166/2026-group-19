@@ -3,7 +3,7 @@ class AnimationSystem extends System {
         super(ecs);
     }
 
-    update() {
+    update(dt) {
         // Update sets the correct frame to animate
         const now = millis();
         const entities = this.ecs.getEntitiesWith(Animation, Velocity);
@@ -13,7 +13,7 @@ class AnimationSystem extends System {
             const vel = this.ecs.getComponent(id, Velocity);
 
             this.selectAnimation(anim, vel, now);
-            this.advanceFrame(anim);
+            this.advanceFrame(anim, dt);
         }
     }
 
@@ -25,12 +25,12 @@ class AnimationSystem extends System {
         anim.setAnimation(isMoving ? AnimationType.MOVE : AnimationType.IDLE);
     }
 
-    advanceFrame(anim) {
+    advanceFrame(anim, dt) {
         const animationData = anim.animations[anim.current];
         if (!animationData) return;
 
-        anim.timer++;
-        if (anim.timer < animationData.speed) return;
+        anim.timer += dt;
+        if (anim.timer < animationData.duration_s) return;
 
         // Increment frame index
         const nextFrame = anim.frameIndex + 1;

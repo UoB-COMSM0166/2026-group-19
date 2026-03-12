@@ -10,8 +10,8 @@ class EnemySpawnSystem extends System {
         this.spawnRate = physics.SPAWN_RATE;
     }
 
-    update() {
-        this.spawnTimer++;
+    update(dt) {
+        this.spawnTimer += dt;
 
         if (this.spawnTimer >= this.spawnRate) {
             this.spawner.request(EntityType.ENEMY, {
