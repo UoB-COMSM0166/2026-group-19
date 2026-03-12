@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-resume').addEventListener('click', () => {
         if (gameState === "PAUSE") resumeGame();
     });
+    
 
     document.getElementById('btn-quit').addEventListener('click', () => {
         if (gameState === "PAUSE") {

@@ -33,7 +33,7 @@ class EntityFactory {
     }
 
     applyPhysics(physics) {
-        this.physics = physics;
+        this.maxfall = DEFAULTS.physics.TERMINAL_VELOCITY;
     }
 
     create(type, data) {
