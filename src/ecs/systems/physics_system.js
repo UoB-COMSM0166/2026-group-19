@@ -19,14 +19,14 @@ class PhysicsSystem extends System {
     constructor(ecs, spawner) {
         super(ecs);
         this.spawner = spawner;
-        this.maxFall = DEFAULTS.physics.TERMINAL_VELOCITY; // Terminal velocity
+        this.physics = DEFAULTS.physics; // Terminal velocity
     }
 
     applyPhysics(physics) {
-        this.maxFall = physics.TERMINAL_VELOCITY;
+        this.physics = physics;
     }
 
-    update() {
+    update(dt) {
         /*
         Main update loop called each frame.
         For each entity with Position and Velocity:
@@ -47,19 +47,19 @@ class PhysicsSystem extends System {
 
             // Apply Gravity
             if (g) {
-                vel.vy = Math.min(vel.vy + g.g, this.maxFall);
+                vel.vy = Math.min(vel.vy + g.g * dt, this.physics.TERMINAL_VELOCITY);
             }
 
             // Movement phase (axis-dependent)
-            pos.x += vel.vx;
+            pos.x += vel.vx * dt;
             this.resolveMovementCollisions(id, Axis.X);
             
             if (pos.y > height) {
                 pos.y = 0;
-                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * 2, 12);
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx) * this.physics.ENEMY_SPEED_MULTIPLIER, this.physics.MAX_ENEMY_SPEED);
             }
             else {
-                pos.y = pos.y + vel.vy;
+                pos.y = pos.y + vel.vy * dt;
             }   
             this.resolveMovementCollisions(id, Axis.Y);
         }

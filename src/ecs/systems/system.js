@@ -3,7 +3,7 @@ class System {
         this.ecs = ecs;
     }
 
-    update() {
+    update(dt) {
         throw new Error("System subclasses must implement update()");
     }
 

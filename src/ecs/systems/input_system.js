@@ -17,14 +17,12 @@ class InputSystem extends System {
         this.physics = physics;
     }
 
-    update() {
+    update(dt) {
         const now = millis();
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
             const weapon = this.ecs.getComponent(id, Weapon);
-            const player = this.ecs.getComponent(id, Player);
-            const pos = this.ecs.getComponent(id, Position);
             const vel = this.ecs.getComponent(id, Velocity);
             const speed = this.physics.PLAYER_SPEED;
             const jumpSpeed = this.physics.JUMP_SPEED;
@@ -40,7 +38,7 @@ class InputSystem extends System {
                 character.direction = DIR_RIGHT;
             }
             else {
-                vel.vx *= 0.8;
+                vel.vx *= Math.pow(this.physics.PLAYER_DAMPING_MULTIPLIER, dt);
                 if (Math.abs(vel.vx) < 0.01) { vel.vx = 0; }
             }
 

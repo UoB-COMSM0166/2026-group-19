@@ -6,7 +6,7 @@ class RenderSystem extends System {
         super(ecs);
     }
 
-    update() {
+    update(dt) {
         /*
         Called every frame. Iterates over all entities with a Position and Renderable
         component and dispatches to the correct drawing method based on what other

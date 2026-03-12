@@ -17,9 +17,9 @@ class ECS {
         this.systems = null;
     }
 
-    update() {
+    update(dt) {
         for (let system of this.systems) {
-            system.update();
+            system.update(dt);
         }
     }
 

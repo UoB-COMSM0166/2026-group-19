@@ -4,6 +4,26 @@ const AnimationType = Object.freeze({
     MOVE: "MOVE"
 })
 
+const PlayerAnimations = {
+    [AnimationType.IDLE]: {
+        frames: [0,1,2,3],
+        duration_s: 8,
+        loop: true
+    },
+
+    [AnimationType.MOVE]: {
+        frames: [17,18,19,20,21,22,23],
+        duration_s: 10,
+        loop: true
+    },
+
+    [AnimationType.HURT]: {
+        frames: [15,16,17],
+        duration_s: 8,
+        loop: false
+    }
+};
+
 class Animation {
     constructor(spriteSheet, frameWidth, frameHeight, columns, animations, initial = AnimationType.IDLE) {
         // --- Sprite Sheet Metadata ---

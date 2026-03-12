@@ -18,7 +18,7 @@ class SpawningSystem extends System {
         this.queue = [];
     }
 
-    update() {
+    update(dt) {
         while (this.queue.length > 0) {
             const { type, data } = this.queue.shift();
             this.factory.create(type, data);
