@@ -7,6 +7,20 @@ class UIButton {
         this.h = h;
         this.fontSize = fontSize;
         this.isHovered = false;
+        
+        // Background settings
+        this.hasBackground = false;
+        this.bgColor = color(0, 0, 0, 100);       // Default dark transparent
+        this.hoverBgColor = color(50, 50, 50, 150); // Lighter on hover
+        this.cornerRadius = 5;
+    }
+
+    setBackground(bgColor, hoverBgColor, radius = 5) {
+        this.hasBackground = true;
+        if (bgColor) this.bgColor = bgColor;
+        if (hoverBgColor) this.hoverBgColor = hoverBgColor;
+        this.cornerRadius = radius;
+        return this; // For chaining
     }
 
     update() {
@@ -25,7 +39,27 @@ class UIButton {
     display() {
         this.update();
 
+        // Automatically tighten the hit-box to the text dimensions if not manually set high
+        // This ensures clickable area matches the visual text
         push();
+        textSize(this.fontSize);
+        this.w = textWidth(this.label) * 1.2; // Add a small padding for comfort
+        this.h = this.fontSize * 0.8;
+        pop();
+
+        push();
+        // Background drawing logic
+        if (this.hasBackground) {
+            rectMode(CENTER);
+            noStroke();
+            if (this.isHovered) {
+                fill(this.hoverBgColor);
+            } else {
+                fill(this.bgColor);
+            }
+            rect(this.x, this.y, this.w, this.h, this.cornerRadius);
+        }
+
         // DEBUG: Uncomment this to see the actual clickable HIT BOX
         // noFill();
         // stroke(255, 0, 0);
@@ -36,7 +70,7 @@ class UIButton {
             cursor(HAND);
             fill(255, 240, 120); // highlight
         } else {
-            fill(255, 255, 255, 180); // white text
+            fill(255, 255, 255, 255); // opaque white text
         }
 
         textAlign(CENTER, CENTER);

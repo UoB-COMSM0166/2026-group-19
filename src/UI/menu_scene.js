@@ -21,10 +21,19 @@ class MenuScene extends Scene {
             80, 
             64
         );
+
+        // Level Selection
+        this.selectedLevel = 1;
+        this.maxLevel = 3;
+        this.leftArrow = new UIButton("<", 0, 0, 50, 50, 48);
+        this.rightArrow = new UIButton(">", 0, 0, 50, 50, 48);
+
+        // fps Display
+        this.fpsCounter = new drawFps();
     }
 
     display() {
-        // this.background.display();   //very heavy cloud generation currently commented out
+        this.background.display();   //very heavy cloud generation currently commented out
         push();
         translate(-width / 2, -height / 2);
 
@@ -35,11 +44,18 @@ class MenuScene extends Scene {
         
         // Use our new button class
         this.startButton.display();
+
+        // Display Level Selector
+        this.leftArrow.display();
+        this.rightArrow.display();
         pop();
+
+        // Draw HUD on top of everything (already deals with WEBGL translation)
+        this.fpsCounter.display();
     }
 
     dispose() {
-        // this.background.dispose();
+        this.background.dispose();
     }
 
     // main components of the menu scene
@@ -68,11 +84,26 @@ class MenuScene extends Scene {
             // Offset horizontally by a fixed factor of the scaled image's width
             this.startButton.x = width / 2 + (scaledImageWidth * 0.33); 
             this.startButton.y = height * 0.7 + (scaledImageHeight * 0.06); 
-            
-            // Scale font and hit-box dimensions relative to width
-            this.startButton.w = scaledImageWidth * 0.2; 
-            this.startButton.h = scaledImageHeight * 0.15;
             this.startButton.fontSize = width * 0.045; 
+
+            // Position and scale the Level Selector
+            let labelX = width / 2 - (scaledImageWidth * 0.185);
+            let labelY = height * 0.7 - (scaledImageHeight * 0.04);
+
+            push();
+            textAlign(CENTER, CENTER);
+            fill(255);
+            textSize(this.startButton.fontSize);
+            text("Level " + this.selectedLevel, labelX, labelY);
+            pop();
+
+            this.leftArrow.x = width / 2 + (scaledImageWidth * 0.044);
+            this.leftArrow.y = height * 0.7 - (scaledImageHeight * 0.012);
+            this.leftArrow.fontSize = this.startButton.fontSize;
+
+            this.rightArrow.x = width / 2 + (scaledImageWidth * 0.095);
+            this.rightArrow.y = height * 0.7 - (scaledImageHeight * 0.012);
+            this.rightArrow.fontSize = this.startButton.fontSize;
         }
     }
 
@@ -103,7 +134,13 @@ class MenuScene extends Scene {
     // -- game state function --
     handleMousePressed() {
         if (this.startButton.isClicked()) {
-            sceneManager.switchScene(new PlayScene(gameInstance));
+            sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel));
+        } else if (this.leftArrow.isClicked()) {
+            this.selectedLevel--;
+            if (this.selectedLevel < 1) this.selectedLevel = this.maxLevel;
+        } else if (this.rightArrow.isClicked()) {
+            this.selectedLevel++;
+            if (this.selectedLevel > this.maxLevel) this.selectedLevel = 1;
         }
     }
 }
