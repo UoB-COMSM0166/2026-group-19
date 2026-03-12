@@ -33,7 +33,6 @@ class EnemySpawnSystem extends System {
                 center_y: 0,
                 width: config.width,
                 height: config.height,
-                max_speed: this.physics.ENEMY_SPEED,
                 health: config.health,
                 color: config.color
             })

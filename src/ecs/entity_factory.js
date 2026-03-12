@@ -57,6 +57,8 @@ class EntityFactory {
          *   - center_y: number
          *   - width: number
          *   - height: number
+         *   - health: number
+         *   - color: RGB
          */
         const entity = this.ecs.createEntity();
         const components = this.enemyComponents(data);
@@ -73,6 +75,8 @@ class EntityFactory {
          *   - center_y: number
          *   - width: number
          *   - height: number
+         *   - health: number
+         *   - color: RGB
          */
         const entity = this.ecs.createEntity();
         const components = this.enemyComponents(data);

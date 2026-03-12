@@ -52,6 +52,7 @@ class Game {
         this.ecs.getSystem(PhysicsSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(EnemySpawnSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
+        this.ecs.getSystem(FloatingSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
 
         // Spawn initial entities (Currently Player and walls)
