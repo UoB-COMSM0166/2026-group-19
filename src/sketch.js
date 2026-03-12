@@ -1,11 +1,9 @@
 let gameInstance;
 let sceneManager;
 let uiFont;
-let playBg;
 let playBgImage;
 let characterSpriteSheet;
 let wallTileImage;
-let fps;
 
 function preload() {
     uiFont = loadFont("src/assets/TaipeiSans-font-subset.ttf");
@@ -23,8 +21,6 @@ function setup() {
     gameInstance = new Game();
     sceneManager = new SceneManager();
     sceneManager.switchScene(new MenuScene());
-    
-    fps = new drawFps();
 }
 
 function windowResized() {
@@ -37,8 +33,6 @@ function draw() {
 
     sceneManager.update();
     sceneManager.display();
-
-    fps.display();
 }
 
 function mousePressed() {
@@ -48,16 +42,3 @@ function mousePressed() {
 function keyPressed() {
     sceneManager.handleKeyPressed();
 }
-
-// --- BUTTON CLICK LOGIC & Global UI ---
-document.addEventListener('DOMContentLoaded', () => {
-    // Hover glow logic
-    const cards = document.querySelectorAll('.glow-card');
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-            card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-        });
-    });
-});

@@ -4,26 +4,16 @@ class PlayScene extends Scene {
         this.game = gameInstance;
         this.playBg = null;
         this.isPaused = false;
+        this.fpsCounter = new drawFps();
         
-        // Bind methods for DOM listeners
-        this.boundResume = this.resumeGame.bind(this);
-        this.boundQuit = this.quitToMenu.bind(this);
+        // Buttons for the in-game Pause Menu
+        this.resumeButton = new UIButton("RESUME", width / 2, height / 2, 240, 60, 32);
+        this.quitButton = new UIButton("QUIT", width / 2, height / 2 + 80, 240, 60, 32);
     }
 
     setup() {
         console.log("PlayScene setup: loading level 1");
         this.game.loadLevel(1);
-        // this.playBg = new ScrollingPlayBg(playBgImage, {
-        //     speedX: 0,
-        //     speedY: 0.6,
-        //     tileScale: 2
-        // });
-
-        // Add DOM listeners for pause menu
-        const resumeBtn = document.getElementById('btn-resume');
-        const quitBtn = document.getElementById('btn-quit');
-        if (resumeBtn) resumeBtn.addEventListener('click', this.boundResume);
-        if (quitBtn) quitBtn.addEventListener('click', this.boundQuit);
     }
 
     update() {
@@ -33,106 +23,56 @@ class PlayScene extends Scene {
     }
 
     display() {
+        push();
+        translate(-width / 2, -height / 2);
+        
         if (this.isPaused) {
-            push();
-            translate(-width / 2, -height / 2);
             this.game.renderOnly();
             this.drawPauseOverlay();
-            pop();
         } else {
-            push();
-            translate(-width / 2, -height / 2);
-            background(50); //temporarily removed tiled bg, performance issues
+            background(50); 
             this.game.renderOnly(); 
-            pop();
         }
+        pop();
+        
+        // Draw HUD on top of everything
+        this.fpsCounter.display();
     }
 
     drawPauseOverlay() {
-        push();
+        // Darken the background
         fill(0, 0, 0, 150);
         noStroke();
         rect(0, 0, width, height);
 
+        // Header Text
         fill(255);
         textAlign(CENTER, CENTER);
-        textSize(48);
-        text("PAUSED", width / 2, height / 2);
-        pop();
+        textSize(64);
+        text("PAUSED", width / 2, height / 2 - 120);
+
+        // Display p5-based buttons
+        this.resumeButton.display();
+        this.quitButton.display();
     }
 
     handleKeyPressed() {
         if (key === 'p' || key === 'P' || keyCode === ESCAPE) {
-            if (!this.isPaused) {
-                this.pauseGame();
-            } else {
-                this.resumeGame();
-            }
+            this.isPaused = !this.isPaused;
         }
     }
 
-    pauseGame() {
-        this.isPaused = true;
-        let overlay = document.getElementById('pause-overlay');
-        if (!overlay) return;
-
-        // 1. Force a clean render so capture is accurate
-        this.game.renderOnly();
-
-        // 2. Capture canvas
-        let canvasElt = document.querySelector('canvas');
-        if (canvasElt) {
-            let dataUrl = canvasElt.toDataURL('image/jpeg');
-            document.querySelectorAll('.split-image').forEach(el => {
-                el.style.backgroundImage = `url(${dataUrl})`;
-            });
-        }
-
-        overlay.classList.add('active');
-        setTimeout(() => {
-            overlay.classList.add('split');
-        }, 50);
-    }
-
-    resumeGame() {
-        let overlay = document.getElementById('pause-overlay');
-        if (!overlay) {
-            this.isPaused = false;
-            return;
-        }
-
-        overlay.classList.remove('split');
-        setTimeout(() => {
-            overlay.classList.remove('active');
-            this.isPaused = false;
-        }, 600);
-    }
-
-    quitToMenu() {
-        console.log("PlayScene: Quitting to menu");
-        let overlay = document.getElementById('pause-overlay');
-        if (overlay) {
-            overlay.classList.remove('split');
-            setTimeout(() => {
-                overlay.classList.remove('active');
+    handleMousePressed() {
+        if (this.isPaused) {
+            if (this.resumeButton.isClicked()) {
+                this.isPaused = false;
+            } else if (this.quitButton.isClicked()) {
                 sceneManager.switchScene(new MenuScene());
-            }, 600);
-        } else {
-            sceneManager.switchScene(new MenuScene());
+            }
         }
     }
 
     dispose() {
         console.log("PlayScene: Disposing");
-        // Clean up DOM listeners
-        const resumeBtn = document.getElementById('btn-resume');
-        const quitBtn = document.getElementById('btn-quit');
-        if (resumeBtn) resumeBtn.removeEventListener('click', this.boundResume);
-        if (quitBtn) quitBtn.removeEventListener('click', this.boundQuit);
-        
-        let overlay = document.getElementById('pause-overlay');
-        if (overlay) {
-            overlay.classList.remove('active', 'split');
-        }
     }
 }
