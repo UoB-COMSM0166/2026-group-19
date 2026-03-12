@@ -20,7 +20,6 @@ function setup() {
     frameRate(60);
     textFont(uiFont);
     game = new Game();
-    game.loadLevel(1);
     menuScene = new MenuScene();
     fps = new drawFps();
 }
@@ -70,7 +69,7 @@ function mousePressed() {
     if (gameState === "LANDING") {
         if (menuScene.checkClick()) {
 
-            game.loadLevel(1);
+            game.loadLevel(3);
             playBg = new ScrollingPlayBg(playBgImage, {
                 speedX: 0,
                 speedY: 0.6,
