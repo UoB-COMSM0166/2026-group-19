@@ -15,8 +15,8 @@ function preload() {
 }
 
 function setup() {
-//    setAttributes({ version: 1 });
-    createCanvas(windowWidth, windowHeight);
+    setAttributes({ version: 1 });
+    createCanvas(windowWidth, windowHeight, WEBGL);
     frameRate(60);
     textFont(uiFont);
     game = new Game();

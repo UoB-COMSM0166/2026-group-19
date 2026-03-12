@@ -60,7 +60,6 @@ class EntityFactory {
     // TODO: Refactor these create methods into something prettier
     createCharacter(center_x, center_y, charType) {
         const entity = this.ecs.createEntity();
-
         let width, height, color;
 
         if (charType === EntityType.PLAYER) {
@@ -72,13 +71,14 @@ class EntityFactory {
             this.ecs.addComponent(entity, new Character(10));
             this.ecs.addComponent(entity, new Velocity(0, 0));
             this.ecs.addComponent(entity, new Animation(
-                this.characterSpriteSheet, 24, 24, 1, PlayerAnimations
-            ));
+            this.characterSpriteSheet, 24, 24, 1, PlayerAnimations
+        ));
         } else {
             //all enemies will use Enemy component with type
             const config = EnemyConfig[charType];
             width = config.width;
             height = config.height;
+            let speed = config.speed;
             color = config.color;
             this.ecs.addComponent(entity, new Enemy(charType));
             this.ecs.addComponent(entity, new Character(config.health));
