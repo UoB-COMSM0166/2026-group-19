@@ -13,31 +13,18 @@ class MenuScene extends Scene {
         this.lastTypedTime = 0;
         this.typingInterval = 150; // in milliseconds
 
-        // Create buttons
-        this.startButton = new UIButton(
-            "Start", 
-            width * 0.75 - 55, 
-            height * 0.5 + 440 * 0.425, // Using approx base height for component
-            200, 
-            80, 
-            64
-        );
-
-        // Level Selection
+        // Keyboard Navigation
+        this.menuIndex = 0;
         this.selectedLevel = 1;
         this.maxLevel = 3;
-        this.leftArrow = new UIButton("<", 0, 0, 50, 50, 48);
-        this.rightArrow = new UIButton(">", 0, 0, 50, 50, 48);
-
-        // Settings Button
-        this.settingsButton = new UIButton("Settings", 0, 0, 200, 60, 32);
+        this.menuItems = ["START", "LEVEL", "SETTINGS"];
 
         // fps Display
         this.fpsCounter = new drawFps();
     }
 
     display() {
-        this.background.display();   //very heavy cloud generation currently commented out
+        this.background.display();
         push();
         translate(-width / 2, -height / 2);
 
@@ -46,16 +33,40 @@ class MenuScene extends Scene {
         this.drawAnimatedGameTitle();
         this.drawBaseImage(Math.max(Math.sin(t / 1000), 0.8) * 255);
         
-        // Use our new button class
-        this.startButton.display();
-        this.settingsButton.display();
+        // Menu Items - Vertically Stacked
+        let titleSize = min(width, height) * 0.1;
+        let fontSize = titleSize * 0.5;
+        let spacing = height * 0.1;
+        let startY = height * 0.55;
 
-        // Display Level Selector
-        this.leftArrow.display();
-        this.rightArrow.display();
+        for (let i = 0; i < this.menuItems.length; i++) {
+            let label = this.menuItems[i];
+            let isSelected = (i === this.menuIndex);
+            
+            let displayText = label;
+            if (label === "LEVEL") {
+                displayText = `LEVEL < ${this.selectedLevel} >`;
+            }
+            
+            if (isSelected) {
+                displayText = "> " + displayText + " <";
+            }
+            
+            let displayColor = isSelected ? color(255, 240, 120) : color(255);
+
+            new ShadowText(
+                displayText,
+                width / 2,
+                startY + (i * spacing),
+                fontSize,
+                displayColor,
+                color(0),
+                fontSize * 0.1
+            ).display();
+        }
         pop();
 
-        // Draw HUD on top of everything (already deals with WEBGL translation)
+        // Draw HUD on top of everything
         this.fpsCounter.display();
     }
 
@@ -67,64 +78,26 @@ class MenuScene extends Scene {
     drawBaseImage(dynamicAlpha) {
         if (this.menuImage.width > 0) {
             let ratio = this.menuImage.height / this.menuImage.width;
-            let newHeight = width * ratio;
-
-            // Calculate the exact scaled dimensions used for the image
             let scaledImageWidth = width * 0.65;
             let scaledImageHeight = (width * ratio) * 0.65;
 
             push();
             imageMode(CENTER);
-            tint(255, dynamicAlpha); 
+            tint(255, dynamicAlpha * 0.3); // Lower alpha for background graphic
             image(
                 this.menuImage,
                 width / 2,
-                height * 0.7, // Centered at 70% height
+                height * 0.6,
                 scaledImageWidth,
                 scaledImageHeight
             );
             pop();
-
-            // Refresh button position: use the SAME center as the image (width/2, height*0.7)
-            // Offset horizontally by a fixed factor of the scaled image's width
-            this.startButton.x = width / 2 + (scaledImageWidth * 0.33); 
-            this.startButton.y = height * 0.7 + (scaledImageHeight * 0.06); 
-            this.startButton.fontSize = width * 0.045; 
-
-            // Refresh settings button position: slightly below start button
-            this.settingsButton.x = this.startButton.x + (scaledImageWidth * 0.003);
-            this.settingsButton.y = this.startButton.y + (scaledImageHeight * 0.175);
-            this.settingsButton.fontSize = this.startButton.fontSize * 0.6;
-
-            // Position and scale the Level Selector
-            let labelX = width / 2 - (scaledImageWidth * 0.185);
-            let labelY = height * 0.7 - (scaledImageHeight * 0.04);
-
-            let levelText = new ShadowText(
-                "Level " + this.selectedLevel,
-                labelX,
-                labelY,
-                this.startButton.fontSize,
-                255,
-                color(50, 50, 50, 150),
-                3
-            );
-            levelText.display();
-
-            this.leftArrow.x = width / 2 + (scaledImageWidth * 0.044);
-            this.leftArrow.y = height * 0.7 - (scaledImageHeight * 0.012);
-            this.leftArrow.fontSize = this.startButton.fontSize;
-
-            this.rightArrow.x = width / 2 + (scaledImageWidth * 0.095);
-            this.rightArrow.y = height * 0.7 - (scaledImageHeight * 0.012);
-            this.rightArrow.fontSize = this.startButton.fontSize;
         }
     }
 
     drawAnimatedGameTitle() {
         let now = millis();
 
-        // control tying speed
         if (
             this.visibleCount < this.fullTitle.length &&
             now - this.lastTypedTime > this.typingInterval
@@ -134,24 +107,40 @@ class MenuScene extends Scene {
         }
 
         this.titleText.content = this.fullTitle.substring(0, this.visibleCount);
-        this.titleText.size = width * 0.10;
+        this.titleText.size = width * 0.12;
         this.titleText.x = width / 2;
-        this.titleText.y = height * 0.2;
+        this.titleText.y = height * 0.25;
         this.titleText.display();
     }
 
-    // -- game state function --
-    handleMousePressed() {
-        if (this.startButton.isClicked()) {
-            sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel));
-        } else if (this.settingsButton.isClicked()) {
-            sceneManager.pushScene(new SettingsScene(this));
-        } else if (this.leftArrow.isClicked()) {
-            this.selectedLevel--;
-            if (this.selectedLevel < 1) this.selectedLevel = this.maxLevel;
-        } else if (this.rightArrow.isClicked()) {
-            this.selectedLevel++;
-            if (this.selectedLevel > this.maxLevel) this.selectedLevel = 1;
+    handleKeyPressed() {
+        if (keyCode === UP_ARROW) {
+            this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+        } else if (keyCode === DOWN_ARROW) {
+            this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+        } else if (keyCode === LEFT_ARROW) {
+            if (this.menuItems[this.menuIndex] === "LEVEL") {
+                this.selectedLevel = (this.selectedLevel - 2 + this.maxLevel) % this.maxLevel + 1;
+            }
+        } else if (keyCode === RIGHT_ARROW) {
+            if (this.menuItems[this.menuIndex] === "LEVEL") {
+                this.selectedLevel = (this.selectedLevel % this.maxLevel) + 1;
+            }
+        } else if (keyCode === ENTER || key === ' ') {
+            this.activateSelectedOption();
         }
+    }
+
+    activateSelectedOption() {
+        let option = this.menuItems[this.menuIndex];
+        if (option === "START") {
+            sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel));
+        } else if (option === "SETTINGS") {
+            sceneManager.pushScene(new SettingsScene(this));
+        }
+    }
+
+    handleMousePressed() {
+        // Disabled for keyboard only navigation
     }
 }
