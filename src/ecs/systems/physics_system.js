@@ -100,36 +100,40 @@ class PhysicsSystem extends System {
             char.onGround = false;
         }
 
+        const originalVel = { vx: vel.vx, vy: vel.vy };
+
         this.forEachCollision(pos, [Position, Wall], wallId => {
             const wallPos = this.ecs.getComponent(wallId, Position);
-            this.resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos);
+            this.resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos, originalVel);
         })
     }
 
-    resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos) {
+    resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos, originalVel) {
         // Helper private method for resolveMovementCollisions
         const bb_a = pos.getBoundingBox();
         const bb_b = wallPos.getBoundingBox();
 
         if (axis === Axis.X) {
             // Resolve X: Push out and kill velocity
-            if (vel.vx > 0) {
-                pos.x = bb_b.left_x - bb_a.w / 2; // Hit left side of wall
-            } else if (vel.vx < 0) {
-                pos.x = bb_b.left_x + bb_b.w + bb_a.w / 2; // Hit right side of wall
+            if (originalVel.vx > 0) {
+                pos.x = Math.floor(bb_b.left_x - bb_a.w / 2); // Hit left side of wall
+            } else if (originalVel.vx < 0) {
+                pos.x = Math.ceil(bb_b.left_x + bb_b.w + bb_a.w / 2); // Hit right side of wall
             }
             
             if (player) { 
                 vel.vx = 0; 
             }
             else { 
-                vel.vx = -vel.vx; 
+                // Only flip velocity if it matches the original direction (avoid double flip)
+                if (originalVel.vx > 0 && vel.vx > 0) vel.vx = -vel.vx;
+                else if (originalVel.vx < 0 && vel.vx < 0) vel.vx = -vel.vx;
             }
         } 
         else {
             // Resolve Y: Push out and kill velocity
-            if (vel.vy > 0) {
-                pos.y = bb_b.top_y - bb_a.h / 2; // Hit top of floor
+            if (originalVel.vy > 0) {
+                pos.y = Math.floor(bb_b.top_y - bb_a.h / 2); // Hit top of floor
                 char.onGround = true;
 
                 if (floating) {
@@ -139,8 +143,8 @@ class PhysicsSystem extends System {
                     vel.vy = 0;
                 }
 
-            } else if (vel.vy < 0) {
-                pos.y = bb_b.top_y + bb_b.h + bb_a.h / 2; // Hit bottom of ceiling
+            } else if (originalVel.vy < 0) {
+                pos.y = Math.ceil(bb_b.top_y + bb_b.h + bb_a.h / 2); // Hit bottom of ceiling
                 vel.vy = 0;
             }
         }
