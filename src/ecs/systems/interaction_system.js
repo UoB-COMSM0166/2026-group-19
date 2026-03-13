@@ -34,8 +34,11 @@ class InteractionSystem extends System {
             console.log(char.health);
 
             if (char.health <= 0) {
-                // TODO: GAME OVER LOGIC HERE
+                // Trigger Game Over
                 console.log("Player dead");
+                if (sceneManager.currentScene instanceof PlayScene) {
+                    sceneManager.pushScene(new GameOverScene(sceneManager.currentScene));
+                }
             }
 
 
