@@ -2,9 +2,8 @@ class PauseScene extends Scene {
     constructor(playScene) {
         super();
         this.playScene = playScene;
-        this.resumeButton = new UIButton("RESUME", width / 2, height / 2, 240, 60, 32);
-        this.settingsButton = new UIButton("SETTINGS", width / 2, height / 2 + 80, 240, 60, 32);
-        this.quitButton = new UIButton("QUIT", width / 2, height / 2 + 160, 240, 60, 32);
+        this.menuIndex = 0;
+        this.menuItems = ["RESUME", "SETTINGS", "QUIT"];
     }
 
     display() {
@@ -32,41 +31,54 @@ class PauseScene extends Scene {
         );
         pausedText.display();
 
-        // Update button parameters
-        this.resumeButton.fontSize = titleSize * 0.5;
-        this.settingsButton.fontSize = titleSize * 0.5;
-        this.quitButton.fontSize = titleSize * 0.5;
-        
-        // Display buttons - Responsive positioning
-        this.resumeButton.x = width / 2;
-        this.resumeButton.y = height / 2;
+        // Menu Items
+        let fontSize = titleSize * 0.5;
+        let spacing = height * 0.12;
+        let startY = height * 0.55;
 
-        this.settingsButton.x = width / 2;
-        this.settingsButton.y = height / 2 + (titleSize * 0.8);
+        for (let i = 0; i < this.menuItems.length; i++) {
+            let label = this.menuItems[i];
+            let isSelected = (i === this.menuIndex);
+            let displayText = isSelected ? "> " + label + " <" : label;
+            let displayColor = isSelected ? color(255, 240, 120) : color(255);
 
-        this.quitButton.x = width / 2;
-        this.quitButton.y = height / 2 + (titleSize * 1.6);
-
-        this.resumeButton.display();
-        this.settingsButton.display();
-        this.quitButton.display();
+            new ShadowText(
+                displayText,
+                width / 2,
+                startY + (i * spacing),
+                fontSize,
+                displayColor,
+                color(0),
+                fontSize * 0.1
+            ).display();
+        }
         pop();
     }
 
     handleKeyPressed() {
-        if (key === 'p' || key === 'P' || keyCode === ESCAPE) {
+        if (keyCode === UP_ARROW) {
+            this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+        } else if (keyCode === DOWN_ARROW) {
+            this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+        } else if (keyCode === ENTER || key === ' ') {
+            this.activateSelectedOption();
+        } else if (key === 'p' || key === 'P' || keyCode === ESCAPE) {
             sceneManager.resumeScene(this.playScene);
         }
     }
 
-    handleMousePressed() {
-        if (this.resumeButton.isClicked()) {
+    activateSelectedOption() {
+        let option = this.menuItems[this.menuIndex];
+        if (option === "RESUME") {
             sceneManager.resumeScene(this.playScene);
-        } else if (this.settingsButton.isClicked()) {
-            // Display: PlayScene, Return: PauseScene (this)
+        } else if (option === "SETTINGS") {
             sceneManager.pushScene(new SettingsScene(this.playScene, this));
-        } else if (this.quitButton.isClicked()) {
+        } else if (option === "QUIT") {
             sceneManager.switchScene(new MenuScene());
         }
+    }
+
+    handleMousePressed() {
+        // Disabled
     }
 }
