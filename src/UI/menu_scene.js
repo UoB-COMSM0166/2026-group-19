@@ -28,6 +28,9 @@ class MenuScene extends Scene {
         this.leftArrow = new UIButton("<", 0, 0, 50, 50, 48);
         this.rightArrow = new UIButton(">", 0, 0, 50, 50, 48);
 
+        // Settings Button
+        this.settingsButton = new UIButton("Settings", 0, 0, 200, 60, 32);
+
         // fps Display
         this.fpsCounter = new drawFps();
     }
@@ -44,6 +47,7 @@ class MenuScene extends Scene {
         
         // Use our new button class
         this.startButton.display();
+        this.settingsButton.display();
 
         // Display Level Selector
         this.leftArrow.display();
@@ -85,6 +89,11 @@ class MenuScene extends Scene {
             this.startButton.x = width / 2 + (scaledImageWidth * 0.33); 
             this.startButton.y = height * 0.7 + (scaledImageHeight * 0.06); 
             this.startButton.fontSize = width * 0.045; 
+
+            // Refresh settings button position: slightly below start button
+            this.settingsButton.x = this.startButton.x + (scaledImageWidth * 0.003);
+            this.settingsButton.y = this.startButton.y + (scaledImageHeight * 0.175);
+            this.settingsButton.fontSize = this.startButton.fontSize * 0.6;
 
             // Position and scale the Level Selector
             let labelX = width / 2 - (scaledImageWidth * 0.185);
@@ -135,6 +144,8 @@ class MenuScene extends Scene {
     handleMousePressed() {
         if (this.startButton.isClicked()) {
             sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel));
+        } else if (this.settingsButton.isClicked()) {
+            sceneManager.pushScene(new SettingsScene(this));
         } else if (this.leftArrow.isClicked()) {
             this.selectedLevel--;
             if (this.selectedLevel < 1) this.selectedLevel = this.maxLevel;
