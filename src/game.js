@@ -55,6 +55,12 @@ class Game {
         this.ecs.getSystem(FloatingSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
 
+        // Build wall image
+        loadImage("src/assets/wall_texture.png", img => {
+            this.ecs.getSystem(RenderSystem).buildWallCache(img)
+        });
+        
+
         // Spawn initial entities (Currently Player and walls)
         this.spawnLevelEntities(this.levelConfig);
     }

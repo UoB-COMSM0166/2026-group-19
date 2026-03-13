@@ -4,6 +4,7 @@ class RenderSystem extends System {
     */
     constructor(ecs) {
         super(ecs);
+        this.wallCache = null;
     }
 
     update(dt) {
@@ -13,6 +14,13 @@ class RenderSystem extends System {
         components the entity has (animated, tiled wall, or plain image/rectangle).
         */
         const rend_ids = this.ecs.getEntitiesWith(Position, Renderable);
+
+        // Draw wall cache first as a single image call
+        if (this.wallCache) {
+            imageMode(CORNER);
+            image(this.wallCache, 0, 0);
+        }
+
         for (let id of rend_ids) {
             const pos    = this.ecs.getComponent(id, Position);
             const render = this.ecs.getComponent(id, Renderable);
@@ -32,13 +40,35 @@ class RenderSystem extends System {
                 this.drawAnimated(char, anim, pos, bb);
             }
             else if (wall) {
-                this.drawTiledImage(render.image, bb);
+                continue;
             }
             else {
                 imageMode(CENTER);
                 image(render.image, pos.x, pos.y, bb.w, bb.h);
             }
         }
+    }
+
+    buildWallCache(img) {
+        const buf = createGraphics(width, height);
+        buf.imageMode(CORNER);
+        buf.noSmooth();
+
+        const wallIds = this.ecs.getEntitiesWith(Position, Renderable, Wall);
+        for (let id of wallIds) {
+            const pos = this.ecs.getComponent(id, Position);
+            const bb  = pos.getBoundingBox();
+            const tileSize = Math.min(bb.w, bb.h);
+            if (tileSize < 1) continue;
+            for (let y = bb.top_y; y < bb.top_y + bb.h; y += tileSize) {
+                const drawH = Math.min(tileSize, bb.top_y + bb.h - y);
+                for (let x = bb.left_x; x < bb.left_x + bb.w; x += tileSize) {
+                    const drawW = Math.min(tileSize, bb.left_x + bb.w - x);
+                    buf.image(img, x, y, drawW, drawH);
+                }
+            }
+        }
+        this.wallCache = buf;
     }
 
     drawAnimated(char, anim, pos, bb) {
@@ -64,18 +94,5 @@ class RenderSystem extends System {
         imageMode(CENTER);
         image(anim.spriteSheet, 0, 0, bb.w, bb.h, sx, sy, anim.frameWidth, anim.frameHeight);
         pop();
-    }
-
-    drawTiledImage(img, bb) {
-        imageMode(CORNER);
-        const tileSize = Math.min(bb.w, bb.h);
-        if (tileSize < 1) return;
-        for (let y = bb.top_y; y < bb.top_y + bb.h; y += tileSize) {
-            const drawH = Math.min(tileSize, bb.top_y + bb.h - y);
-            for (let x = bb.left_x; x < bb.left_x + bb.w; x += tileSize) {
-                const drawW = Math.min(tileSize, bb.left_x + bb.w - x);
-                image(img, x, y, drawW, drawH);
-            }
-        }
     }
 }
