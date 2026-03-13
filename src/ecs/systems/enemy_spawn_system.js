@@ -29,10 +29,10 @@ class EnemySpawnSystem extends System {
             const enemyType = this.getRandomEnemyType();
             const config = EnemyConfig[enemyType];
             this.spawner.request(config.entityType, {
-                center_x: Math.round(window.innerWidth / 2),
+                center_x: Math.round(width / 2),
                 center_y: 0,
-                width: config.width,
-                height: config.height,
+                width: LevelFactory.scaleX(config.width, width),
+                height: LevelFactory.scaleY(config.height, height),
                 health: config.health,
                 color: config.color
             })

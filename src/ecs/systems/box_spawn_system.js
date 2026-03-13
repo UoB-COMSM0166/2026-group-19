@@ -21,11 +21,14 @@ class BoxSpawnSystem extends System {
 
             const bb = pos.getBoundingBox();
 
+            const boxW = LevelFactory.scaleX(DEFAULTS.sizes.box.width, width);
+            const boxH = LevelFactory.scaleY(DEFAULTS.sizes.box.height, height);
+
             this.spawner.request(EntityType.BOX, {
-                left_x: bb.left_x + this.getRandomPositionOnPlatform(bb),
-                top_y: bb.top_y - DEFAULTS.sizes.box.height,
-                width: DEFAULTS.sizes.box.width,
-                height: DEFAULTS.sizes.box.height
+                left_x: bb.left_x + this.getRandomPositionOnPlatform(bb, boxW),
+                top_y:  bb.top_y - boxH,
+                width:  boxW,
+                height: boxH
             });
         }
     }
@@ -37,10 +40,8 @@ class BoxSpawnSystem extends System {
         return platformIds[Math.floor(random(0, platformIds.length))];
     }
 
-    getRandomPositionOnPlatform(platformBoundingBox) {
-        // Returns a random left_x position on platform, relative to platform start
-        const min = 0;
-        const max = platformBoundingBox.w - DEFAULTS.sizes.box.width;
-        return Math.floor(random(min, max));
+    getRandomPositionOnPlatform(platformBoundingBox, boxW) {
+        const max = platformBoundingBox.w - boxW;
+        return Math.floor(random(0, max));
     }
 }
