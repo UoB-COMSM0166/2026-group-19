@@ -57,7 +57,8 @@ class PauseScene extends Scene {
         if (this.resumeButton.isClicked()) {
             sceneManager.resumeScene(this.playScene);
         } else if (this.settingsButton.isClicked()) {
-            sceneManager.pushScene(new SettingsScene(this));
+            // Display: PlayScene, Return: PauseScene (this)
+            sceneManager.pushScene(new SettingsScene(this.playScene, this));
         } else if (this.quitButton.isClicked()) {
             sceneManager.switchScene(new MenuScene());
         }

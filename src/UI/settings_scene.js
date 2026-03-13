@@ -1,7 +1,8 @@
 class SettingsScene extends Scene {
-    constructor(previousScene) {
+    constructor(sceneToDisplayUnderneath, sceneToReturnTo) {
         super();
-        this.previousScene = previousScene;
+        this.sceneToDisplayUnderneath = sceneToDisplayUnderneath;
+        this.sceneToReturnTo = sceneToReturnTo || sceneToDisplayUnderneath;
         this.backButton = new UIButton("BACK", width / 2, height * 0.8, 200, 60, 48);
         
         // Settings state (could be moved to a global config later)
@@ -10,13 +11,19 @@ class SettingsScene extends Scene {
     }
 
     display() {
-        // Dark background for settings
-        background(30); 
-        
+        // Draw the play scene or menu scene first so it's visible behind the settings menu
+        if (this.sceneToDisplayUnderneath) {
+            this.sceneToDisplayUnderneath.display();
+        }
+
         push();
         // Since other scenes use WEBGL translation, we need to handle it or match it
-        // The SceneManager usually handles the setup/display calls
         translate(-width / 2, -height / 2);
+
+        // Dark translucent overlay
+        fill(0, 0, 0, 180); 
+        noStroke();
+        rect(0, 0, width, height);
 
         fill(255);
         textAlign(CENTER, CENTER);
@@ -39,8 +46,8 @@ class SettingsScene extends Scene {
 
     handleMousePressed() {
         if (this.backButton.isClicked()) {
-            // Return to the scene we came from without re-running setup
-            sceneManager.resumeScene(this.previousScene);
+            // Return to the scene we actually want to show (like the Pause menu)
+            sceneManager.resumeScene(this.sceneToReturnTo);
         }
     }
 
