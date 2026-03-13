@@ -4,13 +4,27 @@ class SceneManager {
     }
 
     switchScene(newScene) {
-        if (this.currentScene) {
+        if (this.currentScene && this.currentScene.dispose) {
             this.currentScene.dispose(); // Clean up old scene
         }
         this.currentScene = newScene;
         if (this.currentScene && this.currentScene.setup) {
             this.currentScene.setup();
         }
+    }
+
+    // Move to a new scene WITHOUT disposing the current one
+    // (Used for overlays like Settings)
+    pushScene(newScene) {
+        this.currentScene = newScene;
+        if (this.currentScene && this.currentScene.setup) {
+            this.currentScene.setup();
+        }
+    }
+
+    // Set a scene without calling its setup (useful for returning to existing scenes)
+    resumeScene(existingScene) {
+        this.currentScene = existingScene;
     }
 
     update() { 
