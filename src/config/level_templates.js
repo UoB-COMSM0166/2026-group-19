@@ -1,55 +1,24 @@
-/*
- * Level Templates
- *
- * Format: Each level is an object with:
- *   - physics (optional): { ENEMY_SPEED, ... } — physics overrides for this level only
- *   - player: { x, y } — normalized position (0–1 range, resolved to pixels by LevelFactory)
- *   - platforms: array of { x, y, w, spawnable? } — normalized positions and widths
- *
- * Position format (normalized 0–1):
- *   x, y = horizontal and vertical position as fraction of canvas
- *   w    = platform width as fraction of canvas width
- *
- * The LevelFactory automatically:
- *   - Converts normalized coords to pixels
- *   - Generates outer boundary walls
- *   - Merges physics overrides with defaults
- */
-
 const LevelTemplates = {
     1: {
-        player: { x: 0.50, y: 0.08 },
+        player: { x: 15, y: 3 },
         platforms: [
-            { x: 0.25, y: 0.25, w: 0.50, spawnable: true },
-            { x: 0.25, y: 0.75, w: 0.50, spawnable: true },
-            { x: 0.00, y: 0.50, w: 0.25, spawnable: true },
-            { x: 0.75, y: 0.50, w: 0.25, spawnable: true },
+            { x0: 0, y0: 0, x1: 13, y1: 0, spawnable: false },
+            { x0: 18, y0: 0, x1: 31, y1: 0, spawnable: false },
+            { x0: 10, y0: 4, x1: 21, y1: 4, spawnable: true },
+            { x0: 0, y0: 0, x1: 0, y1: 17, spawnable: false },
+            { x0: 31, y0: 0, x1: 31, y1: 17, spawnable: false },
+            { x0: 1, y0: 7, x1: 5, y1: 7, spawnable: true },
+            { x0: 26, y0: 7, x1: 30, y1: 7, spawnable: true },
+            { x0: 8, y0: 10, x1: 12, y1: 10, spawnable: true },
+            { x0: 19, y0: 10, x1: 23, y1: 10, spawnable: true },
+            { x0: 1, y0: 14, x1: 5, y1: 14, spawnable: true },
+            { x0: 1, y0: 15, x1: 5, y1: 15, spawnable: false },
+            { x0: 1, y0: 16, x1: 9, y1: 16, spawnable: false },
+            { x0: 26, y0: 14, x1: 30, y1: 14, spawnable: true },
+            { x0: 26, y0: 15, x1: 30, y1: 15, spawnable: false },
+            { x0: 22, y0: 16, x1: 30, y1: 16, spawnable: false },
+            { x0: 0, y0: 17, x1: 13, y1: 17, spawnable: false },
+            { x0: 18, y0: 17, x1: 31, y1: 17, spawnable: false },
         ]
-    },
-
-    2: {
-        physics: { ENEMY_SPEED: 10 },
-        player: { x: 0.50, y: 0.08 },
-        platforms: [
-            { x: 0.44, y: 0.20, w: 0.12, spawnable: true },
-            { x: 0.12, y: 0.36, w: 0.25, spawnable: true },
-            { x: 0.62, y: 0.36, w: 0.25, spawnable: true },
-            { x: 0.31, y: 0.56, w: 0.38, spawnable: true },
-            { x: 0.015, y: 0.76, w: 0.25, spawnable: true },
-            { x: 0.72, y: 0.76, w: 0.25, spawnable: true },
-        ]
-    },
-
-    3: {
-        physics: { ENEMY_SPEED: 10, PLAYER_SPEED: 10 },
-        player: { x: 0.10, y: 0.85 },
-        platforms: [
-            { x: 0.05, y: 0.75, w: 0.22, spawnable: true },
-            { x: 0.30, y: 0.68, w: 0.20, spawnable: true },
-            { x: 0.55, y: 0.52, w: 0.20, spawnable: true },
-            { x: 0.72, y: 0.40, w: 0.18, spawnable: true },
-            { x: 0.40, y: 0.82, w: 0.18, spawnable: true },
-            { x: 0.18, y: 0.20, w: 0.22, spawnable: false },
-        ]
-    },
+    }
 };
