@@ -62,7 +62,8 @@ class Game {
     spawnLevelEntities(levelConfig) {
         this.spawner.request(EntityType.PLAYER, {
             ...levelConfig.player,
-            ...DEFAULTS.sizes.player
+            width: LevelFactory.scaleX(DEFAULTS.sizes.player.width, width),
+            height: LevelFactory.scaleY(DEFAULTS.sizes.player.height, height)
         });
 
         for (let wall of levelConfig.walls) {

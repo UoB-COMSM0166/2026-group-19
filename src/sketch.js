@@ -8,7 +8,7 @@ let wallTileImage;
 function preload() {
     uiFont = loadFont("src/assets/TaipeiSans-font-subset.ttf");
     playBgImage = loadImage("src/assets/gray_gameBg.png");
-    wallTileImage = loadImage("src/assets/Idle_block.png");
+    wallTileImage = loadImage("src/assets/wall_texture.png");
     characterSpriteSheet = loadImage("src/assets/main_characterSprites.png");
 }
 

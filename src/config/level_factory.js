@@ -1,50 +1,33 @@
-/*
- * LevelFactory converts normalized level templates into resolved game configs.
- *
- * Takes a template with 0–1 normalized coordinates and converts them to pixel
- * positions based on canvas size. Merges physics overrides with defaults and
- * generates boundary walls automatically.
- *
- * Public API:
- *   LevelFactory.build(template) → { physics, player, walls }
- */
+const GRID_COLS = 32; // 0–31
+const GRID_ROWS = 18; // 0–17
 
 class LevelFactory {
+    // Scales grid coordinates (or sizes) to pixel coordinates.
+    // Maps [0, GRID_COLS] -> [0, W]
+    static scaleX(col, W) { return Math.round((col / GRID_COLS) * W); }
+    static scaleY(row, H) { return Math.round((row / GRID_ROWS) * H); }
+
     static build(template) {
         const W = width;
         const H = height;
-        const T = DEFAULTS.wallThickness;
 
         return {
-            physics: { ...DEFAULTS.physics, ...(template.physics || {}) },
-            player:  { center_x: Math.round(template.player.x * W), center_y: Math.round(template.player.y * H)},
-            walls:   LevelFactory.buildWalls(template.platforms, W, H, T)
+            physics: { ...DEFAULTS.physics, ...(template.physics || {}) }, // Override default physics if desired
+            player: { 
+                center_x: LevelFactory.scaleX(template.player.x + 0.5, W),
+                center_y: LevelFactory.scaleY(template.player.y + 0.5, H)
+            },
+            walls: LevelFactory.buildWalls(template.platforms, W, H)
         };
     }
 
-    static buildWalls(platforms, W, H, T) {
-        const holeWidth = Math.round(W * 0.1);
-        const holeStart = Math.round((W - holeWidth) / 2);
-
-        // Define the boundary walls that go around the edges of the level
-        const boundaries = [
-            { left_x: 0, top_y: H - T, width: holeStart, height: T, spawnable: true }, // Bottom-Left
-            { left_x: holeStart + holeWidth, top_y: H - T, width: W - (holeStart + holeWidth), height: T, spawnable: true }, // Bottom-Right
-            { left_x: 0, top_y: 0, width: holeStart, height: T, spawnable: false }, // Top-Left
-            { left_x: holeStart + holeWidth, top_y: 0, width: W - (holeStart + holeWidth), height: T, spawnable: false  }, // Top-Right
-            { left_x: 0, top_y: 0, width: T, height: H, spawnable: false }, // Left
-            { left_x: W - T, top_y: 0, width: T, height: H, spawnable: false }, // Right
-        ];
-
-        // Define the level-specific walls that are within the level
-        const resolvedPlatforms = platforms.map(p => ({
-            left_x: Math.round(p.x * W),
-            top_y: Math.round(p.y * H),
-            width: Math.round(p.w * W),
-            height: T,
-            spawnable: p.spawnable
-        }));
-
-        return boundaries.concat(resolvedPlatforms);
+    static buildWalls(platforms, W, H) {
+        return platforms.map(p => {
+            const left_x = LevelFactory.scaleX(p.x0, W);
+            const top_y  = LevelFactory.scaleY(p.y0, H);
+            const width  = LevelFactory.scaleX(p.x1 + 1 - p.x0, W);
+            const height = LevelFactory.scaleY(p.y1 + 1 - p.y0, H);
+            return { left_x, top_y, width, height, spawnable: p.spawnable };
+        });
     }
 }
