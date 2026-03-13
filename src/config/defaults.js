@@ -1,8 +1,8 @@
 const DEFAULTS = {
     physics: {
-        GRAVITY: 0.5,
+        GRAVITY: 0.7,
         PLAYER_SPEED: 7,
-        ENEMY_SPEED: 3,
+        ENEMY_SPEED: 5,
         MAX_ENEMY_SPEED: 12,
         JUMP_SPEED: 15,
         SPAWN_RATE: 180,
