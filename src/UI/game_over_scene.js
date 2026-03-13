@@ -22,11 +22,16 @@ class GameOverScene extends Scene {
         rect(0, 0, width, height);
 
         // Header Text
-        fill(255);
-        textAlign(CENTER, CENTER);
         let titleSize = min(width, height) * 0.15;
-        textSize(titleSize);
-        text("GAME OVER", width / 2, height * 0.35);
+        new ShadowText(
+            "GAME OVER",
+            width / 2,
+            height * 0.35,
+            titleSize,
+            255,
+            color(0, 0, 0, 200),
+            titleSize * 0.1
+        ).display();
 
         // Display Buttons
         this.restartButton.display();

@@ -8,6 +8,7 @@ class MenuScene extends Scene {
 
         // animated Game title Setting
         this.fullTitle = "CRATE BOX";
+        this.titleText = new ShadowText(this.fullTitle, width / 2, height * 0.2, 0, 255, color(50, 50, 50), 5);
         this.visibleCount = 0;
         this.lastTypedTime = 0;
         this.typingInterval = 150; // in milliseconds
@@ -99,12 +100,16 @@ class MenuScene extends Scene {
             let labelX = width / 2 - (scaledImageWidth * 0.185);
             let labelY = height * 0.7 - (scaledImageHeight * 0.04);
 
-            push();
-            textAlign(CENTER, CENTER);
-            fill(255);
-            textSize(this.startButton.fontSize);
-            text("Level " + this.selectedLevel, labelX, labelY);
-            pop();
+            let levelText = new ShadowText(
+                "Level " + this.selectedLevel,
+                labelX,
+                labelY,
+                this.startButton.fontSize,
+                255,
+                color(50, 50, 50, 150),
+                3
+            );
+            levelText.display();
 
             this.leftArrow.x = width / 2 + (scaledImageWidth * 0.044);
             this.leftArrow.y = height * 0.7 - (scaledImageHeight * 0.012);
@@ -128,16 +133,11 @@ class MenuScene extends Scene {
             this.lastTypedTime = now;
         }
 
-        let currentText = this.fullTitle.substring(0, this.visibleCount);
-
-        push();
-        textAlign(CENTER, CENTER);
-        // Scale title dynamically: approx 15% of width
-        let dynamicFontSize = width * 0.15;
-        textSize(dynamicFontSize);
-        fill(255);
-        text(currentText, width / 2, height * 0.2); // Position at 20% height
-        pop();
+        this.titleText.content = this.fullTitle.substring(0, this.visibleCount);
+        this.titleText.size = width * 0.10;
+        this.titleText.x = width / 2;
+        this.titleText.y = height * 0.2;
+        this.titleText.display();
     }
 
     // -- game state function --

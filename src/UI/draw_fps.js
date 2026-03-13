@@ -8,11 +8,18 @@ class drawFps extends Scene{
         let fps = frameRate();
         push();
         translate(-width / 2, -height / 2);
-        fill(0);
-        noStroke();
-        textSize(16);
-        textAlign(LEFT, TOP);
-        text("FPS: " + fps.toFixed(2), 10, 20);
+        
+        let fpsText = new ShadowText(
+            "FPS " + Math.floor(fps),
+            10,
+            20,
+            24,
+            255,
+            color(0, 0, 0, 150),
+            2
+        );
+        fpsText.setAlignment(LEFT, TOP);
+        fpsText.display();
         pop();
     }
 }

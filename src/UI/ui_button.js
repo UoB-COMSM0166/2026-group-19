@@ -74,7 +74,19 @@ class UIButton {
         }
 
         textAlign(CENTER, CENTER);
-        textSize(this.fontSize);
+        
+        // Draw shadow using a similar shadow approach since UIButton manages its own state
+        let shadowOffset = this.fontSize * 0.08;
+        fill(0, 0, 0, 150);
+        text(this.label, this.x + shadowOffset, this.y + shadowOffset);
+
+        if (this.isHovered) {
+            cursor(HAND);
+            fill(255, 240, 120); // highlight
+        } else {
+            fill(255, 255, 255, 255); // opaque white text
+        }
+
         text(this.label, this.x, this.y);
         pop();
     }

@@ -6,7 +6,7 @@ let characterSpriteSheet;
 let wallTileImage;
 
 function preload() {
-    uiFont = loadFont("src/assets/TaipeiSans-font-subset.ttf");
+    uiFont = loadFont("src/assets/8-BIT WONDER.TTF");
     playBgImage = loadImage("src/assets/gray_gameBg.png");
     wallTileImage = loadImage("src/assets/wall_texture.png");
     characterSpriteSheet = loadImage("src/assets/main_characterSprites.png");
