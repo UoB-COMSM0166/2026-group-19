@@ -20,11 +20,17 @@ class PauseScene extends Scene {
         rect(0, 0, width, height);
 
         // Header Text - Responsive sizing
-        fill(255);
-        textAlign(CENTER, CENTER);
         let titleSize = min(width, height) * 0.12;
-        textSize(titleSize);
-        text("PAUSED", width / 2, height * 0.35);
+        let pausedText = new ShadowText(
+            "PAUSED",
+            width / 2,
+            height * 0.35,
+            titleSize,
+            255,
+            color(0, 0, 0, 200),
+            titleSize * 0.1
+        );
+        pausedText.display();
 
         // Update button parameters
         this.resumeButton.fontSize = titleSize * 0.5;

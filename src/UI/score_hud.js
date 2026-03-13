@@ -15,11 +15,18 @@ class ScoreHUD {
     display() {
         push();
         translate(-width / 2, -height / 2);
-        textAlign(CENTER, TOP);
-        textSize(48);
-        fill(255);
-        noStroke();
-        text(this.getScore(), width / 2, 16);
+        
+        let scoreText = new ShadowText(
+            this.getScore(),
+            width / 2,
+            16,
+            48,
+            255,
+            color(0, 0, 0, 150),
+            4
+        );
+        scoreText.setAlignment(CENTER, TOP);
+        scoreText.display();
         pop();
     }
 }

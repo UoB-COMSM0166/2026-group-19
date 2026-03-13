@@ -25,16 +25,14 @@ class SettingsScene extends Scene {
         noStroke();
         rect(0, 0, width, height);
 
-        fill(255);
-        textAlign(CENTER, CENTER);
         let titleSize = min(width, height) * 0.1;
-        textSize(titleSize);
-        text("SETTINGS", width / 2, height * 0.2);
 
-        // Placeholder for settings controls
-        textSize(titleSize * 0.4);
-        text("Volume: " + this.volume + "%", width / 2, height * 0.45);
-        text("Mute: " + (this.isMuted ? "ON" : "OFF"), width / 2, height * 0.55);
+        // Uses ShadowText for title
+        new ShadowText("SETTINGS", width/2, height*0.2, titleSize, 255, color(0), titleSize*0.1).display();
+
+        // Control texts with ShadowText
+        new ShadowText("Volume: " + this.volume + "%", width/2, height*0.45, titleSize*0.4, 255, color(0), titleSize*0.04).display();
+        new ShadowText("Mute: " + (this.isMuted ? "ON" : "OFF"), width/2, height*0.55, titleSize*0.4, 255, color(0), titleSize*0.04).display();
 
         // Update back button position if screen size changes
         this.backButton.x = width / 2;
