@@ -3,7 +3,7 @@ class PlayScene extends Scene {
         super();
         this.game = gameInstance;
         this.levelToLoad = levelNum;
-        this.playBg = null;
+        this.playBg = loadImage("src/assets/cave_background.jpg");
         this.fpsCounter = new drawFps();
     }
 
@@ -19,8 +19,7 @@ class PlayScene extends Scene {
     display() {
         push();
         translate(-width / 2, -height / 2);
-        
-        background(50); 
+        image(this.playBg, 0, 0, width, height);
         this.game.renderOnly(); 
         
         pop();

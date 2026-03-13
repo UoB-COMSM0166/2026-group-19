@@ -11,8 +11,8 @@
 
 class LevelFactory {
     static build(template) {
-        const W = window.innerWidth;
-        const H = window.innerHeight;
+        const W = width;
+        const H = height;
         const T = DEFAULTS.wallThickness;
 
         return {

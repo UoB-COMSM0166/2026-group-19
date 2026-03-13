@@ -16,13 +16,13 @@ const DEFAULTS = {
         player: { width: 40, height: 40 },
         enemy:  { width: 30, height: 30 },
         large_enemy: {width: 50, height: 50},
-        box:    { width: 20, height: 20 },
+        box:    { width: 40, height: 40 },
     },
     health: {
         player: 3,
         enemy: 2,
         large_enemy: 5
     },
-    wallThickness: 20,
+    wallThickness: 40,
     hurtTime: 280,
 };

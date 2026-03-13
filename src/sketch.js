@@ -14,7 +14,8 @@ function preload() {
 
 function setup() {
     setAttributes({ version: 1 });
-    createCanvas(windowWidth, windowHeight, WEBGL);
+    const { w, h } = getCanvasSize();
+    createCanvas(w, h, WEBGL);
     frameRate(60);
     textFont(uiFont);
     
@@ -23,8 +24,14 @@ function setup() {
     sceneManager.switchScene(new MenuScene());
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+function getCanvasSize() {
+    const targetRatio = 16.0 / 9.0;
+    const windowRatio = windowWidth / windowHeight;
+    if (windowRatio > targetRatio) {
+        return { w: windowHeight * targetRatio, h: windowHeight };
+    } else {
+        return { w: windowWidth, h: windowWidth / targetRatio };
+    }
 }
 
 function draw() {
