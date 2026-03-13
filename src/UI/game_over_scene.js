@@ -2,15 +2,12 @@ class GameOverScene extends Scene {
     constructor(playScene) {
         super();
         this.playScene = playScene;
-        this.restartButton = new UIButton("RESTART", width / 2, height / 2 + 50, 240, 60, 48);
-        this.menuButton = new UIButton("MENU", width / 2, height / 2 + 150, 240, 60, 48);
+        this.menuIndex = 0;
+        this.menuItems = ["RESTART", "MENU"];
     }
 
     display() {
         // Draw the play scene first so it's visible behind the game over menu
-        // We still call its display() but since we're not calling update(), 
-        // objects just won't move based on user input, however spawning systems
-        // might still run if they are part of the game.update()
         this.playScene.display();
 
         push();
@@ -33,19 +30,52 @@ class GameOverScene extends Scene {
             titleSize * 0.1
         ).display();
 
-        // Display Buttons
-        this.restartButton.display();
-        this.menuButton.display();
+        // Menu Items
+        let fontSize = titleSize * 0.4;
+        let spacing = height * 0.12;
+        let startY = height * 0.55;
+
+        for (let i = 0; i < this.menuItems.length; i++) {
+            let label = this.menuItems[i];
+            let isSelected = (i === this.menuIndex);
+            let displayText = isSelected ? "> " + label + " <" : label;
+            let displayColor = isSelected ? color(255, 240, 120) : color(255);
+
+            new ShadowText(
+                displayText,
+                width / 2,
+                startY + (i * spacing),
+                fontSize,
+                displayColor,
+                color(0),
+                fontSize * 0.1
+            ).display();
+        }
         pop();
     }
 
-    handleMousePressed() {
-        if (this.restartButton.isClicked()) {
+    handleKeyPressed() {
+        if (keyCode === UP_ARROW) {
+            this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+        } else if (keyCode === DOWN_ARROW) {
+            this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+        } else if (keyCode === ENTER || key === ' ') {
+            this.activateSelectedOption();
+        }
+    }
+
+    activateSelectedOption() {
+        let option = this.menuItems[this.menuIndex];
+        if (option === "RESTART") {
             // Restart the current level
             sceneManager.switchScene(new PlayScene(gameInstance, this.playScene.levelToLoad));
-        } else if (this.menuButton.isClicked()) {
+        } else if (option === "MENU") {
             // Return to main menu
             sceneManager.switchScene(new MenuScene());
         }
+    }
+
+    handleMousePressed() {
+        // Disabled
     }
 }

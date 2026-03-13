@@ -3,7 +3,9 @@ class SettingsScene extends Scene {
         super();
         this.sceneToDisplayUnderneath = sceneToDisplayUnderneath;
         this.sceneToReturnTo = sceneToReturnTo || sceneToDisplayUnderneath;
-        this.backButton = new UIButton("BACK", width / 2, height * 0.8, 200, 60, 48);
+        
+        this.menuIndex = 0;
+        this.menuItems = ["VOLUME", "MUTE", "BACK"];
         
         // Settings state (could be moved to a global config later)
         this.volume = 100;
@@ -31,22 +33,64 @@ class SettingsScene extends Scene {
         new ShadowText("SETTINGS", width/2, height*0.2, titleSize, 255, color(0), titleSize*0.1).display();
 
         // Control texts with ShadowText
-        new ShadowText("Volume: " + this.volume + "%", width/2, height*0.45, titleSize*0.4, 255, color(0), titleSize*0.04).display();
-        new ShadowText("Mute: " + (this.isMuted ? "ON" : "OFF"), width/2, height*0.55, titleSize*0.4, 255, color(0), titleSize*0.04).display();
+        let fontSize = titleSize * 0.4;
+        let spacing = height * 0.12;
+        let startY = height * 0.45;
 
-        // Update back button position if screen size changes
-        this.backButton.x = width / 2;
-        this.backButton.y = height * 0.8;
-        this.backButton.fontSize = titleSize * 0.5;
-        this.backButton.display();
+        for (let i = 0; i < this.menuItems.length; i++) {
+            let item = this.menuItems[i];
+            let label = item;
+            if (item === "VOLUME") label = "VOLUME " + this.volume + "%";
+            if (item === "MUTE") label = "MUTE " + (this.isMuted ? "ON" : "OFF");
+
+            let isSelected = (i === this.menuIndex);
+            let displayText = isSelected ? "> " + label + " <" : label;
+            let displayColor = isSelected ? color(255, 240, 120) : color(255);
+
+            new ShadowText(
+                displayText,
+                width / 2,
+                startY + (i * spacing),
+                fontSize,
+                displayColor,
+                color(0),
+                fontSize * 0.1
+            ).display();
+        }
         pop();
     }
 
-    handleMousePressed() {
-        if (this.backButton.isClicked()) {
-            // Return to the scene we actually want to show (like the Pause menu)
+    handleKeyPressed() {
+        if (keyCode === UP_ARROW) {
+            this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+        } else if (keyCode === DOWN_ARROW) {
+            this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+        } else if (keyCode === ENTER || key === ' ') {
+            this.handleSelection();
+        } else if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
+            this.handleHorizontal(keyCode === LEFT_ARROW ? -1 : 1);
+        } else if (keyCode === ESCAPE) {
             sceneManager.resumeScene(this.sceneToReturnTo);
         }
+    }
+
+    handleHorizontal(dir) {
+        let item = this.menuItems[this.menuIndex];
+        if (item === "VOLUME") {
+            this.volume = constrain(this.volume + dir * 5, 0, 100);
+        } else if (item === "MUTE") {
+            this.isMuted = !this.isMuted;
+        }
+    }
+
+    handleSelection() {
+        if (this.menuItems[this.menuIndex] === "BACK") {
+            sceneManager.resumeScene(this.sceneToReturnTo);
+        }
+    }
+
+    handleMousePressed() {
+        // Disabled
     }
 
     dispose() {
