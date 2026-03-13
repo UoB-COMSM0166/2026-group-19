@@ -36,6 +36,7 @@ class PlayScene extends Scene {
     }
 
     handleMousePressed() {
+        //currently no mousecontrols ingame
     }
 
     dispose() {
