@@ -1,8 +1,12 @@
 // src/ecs/systems/input_system.js
 
 const SPACE = 32;
+const KEY_A = 65;
+const KEY_D = 68;
+const KEY_W = 87;
 const DIR_LEFT = -1;
 const DIR_RIGHT = 1;
+const JUMP_BUFFER_MS = 150;
 
 class InputSystem extends System {
     /*
@@ -36,11 +40,11 @@ class InputSystem extends System {
             const isShootPressed = keyIsDown(SPACE) && !this.prev.get(SPACE);
 
             // --- SIDE-TO-SIDE MOVEMENT (Arrows + A/D keys) ---
-            if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) { // 65 is 'A'
+            if (keyIsDown(LEFT_ARROW) || keyIsDown(KEY_A)) {
                 vel.vx = -speed;
                 character.direction = DIR_LEFT;
             }
-            else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) { // 68 is 'D'
+            else if (keyIsDown(RIGHT_ARROW) || keyIsDown(KEY_D)) {
                 vel.vx = speed;
                 character.direction = DIR_RIGHT;
             }
@@ -50,15 +54,15 @@ class InputSystem extends System {
             }
 
             // --- THE JUMP BUFFER FIX ---
-            let upPressed = keyIsDown(UP_ARROW) || keyIsDown(87); // 87 is 'W'
+            let upPressed = keyIsDown(UP_ARROW) || keyIsDown(KEY_W);
 
-            // Record the exact time the jump key was pressed
+            // 1. Record the exact time the jump key was first pressed
             if (upPressed && !this.prev.get('upKey')) {
                 character.jumpBufferTime = now;
             }
 
-            // 2. If on the ground AND jump was pressed within the last 150ms, JUMP
-            if (character.onGround && character.jumpBufferTime && (now - character.jumpBufferTime < 150)) {
+            // 2. If on the ground AND jump was pressed within the last JUMP_BUFFER_MS, JUMP
+            if (character.onGround && character.jumpBufferTime && (now - character.jumpBufferTime < JUMP_BUFFER_MS)) {
                 vel.vy = -jumpSpeed;
                 character.jumpBufferTime = 0; // Clear buffer so we don't double jump
                 character.onGround = false;   // Instantly leave the ground
@@ -72,7 +76,6 @@ class InputSystem extends System {
             }
 
             // Update previous key-state
-            this.prev.set(UP_ARROW, keyIsDown(UP_ARROW));
             this.prev.set(SPACE, keyIsDown(SPACE));
         }
     }
