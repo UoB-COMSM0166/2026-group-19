@@ -1,3 +1,5 @@
+// src/ecs/systems/input_system.js
+
 const SPACE = 32;
 const DIR_LEFT = -1;
 const DIR_RIGHT = 1;
@@ -10,6 +12,8 @@ class InputSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.prev = new Map();
+
+        // Use the default physics config
         this.physics = DEFAULTS.physics;
     }
 
@@ -18,22 +22,26 @@ class InputSystem extends System {
     }
 
     update(dt) {
+        const now = millis(); // Needed for the jump buffer timer
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
+
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
             const weapon = this.ecs.getComponent(id, Weapon);
             const vel = this.ecs.getComponent(id, Velocity);
+
+            // Correctly access physics constants
             const speed = this.physics.PLAYER_SPEED;
             const jumpSpeed = this.physics.JUMP_SPEED;
             const isShootPressed = keyIsDown(SPACE) && !this.prev.get(SPACE);
 
-            // Side-to-side
-            if (keyIsDown(LEFT_ARROW)) { 
-                vel.vx = -speed; 
+            // --- SIDE-TO-SIDE MOVEMENT (Arrows + A/D keys) ---
+            if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) { // 65 is 'A'
+                vel.vx = -speed;
                 character.direction = DIR_LEFT;
             }
-            else if (keyIsDown(RIGHT_ARROW)) { 
-                vel.vx = speed; 
+            else if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) { // 68 is 'D'
+                vel.vx = speed;
                 character.direction = DIR_RIGHT;
             }
             else {
@@ -41,22 +49,31 @@ class InputSystem extends System {
                 if (Math.abs(vel.vx) < 0.01) { vel.vx = 0; }
             }
 
-            // Jump
-            if (character.onGround && !this.prev.get(UP_ARROW) && keyIsDown(UP_ARROW)) {
-                vel.vy = -jumpSpeed;
+            // --- THE JUMP BUFFER FIX ---
+            let upPressed = keyIsDown(UP_ARROW) || keyIsDown(87); // 87 is 'W'
+
+            // Record the exact time the jump key was pressed
+            if (upPressed && !this.prev.get('upKey')) {
+                character.jumpBufferTime = now;
             }
 
-            // Spawn Projectile
+            // 2. If on the ground AND jump was pressed within the last 150ms, JUMP
+            if (character.onGround && character.jumpBufferTime && (now - character.jumpBufferTime < 150)) {
+                vel.vy = -jumpSpeed;
+                character.jumpBufferTime = 0; // Clear buffer so we don't double jump
+                character.onGround = false;   // Instantly leave the ground
+            }
+
+            // Save jump key state for next frame
+            this.prev.set('upKey', upPressed);
+
             if (isShootPressed && weapon) {
                 this.ecs.addComponent(id, new FireRequest());
-
-                
             }
 
             // Update previous key-state
             this.prev.set(UP_ARROW, keyIsDown(UP_ARROW));
             this.prev.set(SPACE, keyIsDown(SPACE));
-
         }
     }
 }
