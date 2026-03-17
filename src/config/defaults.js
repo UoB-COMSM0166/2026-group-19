@@ -13,10 +13,10 @@ const DEFAULTS = {
         FLOATING_ENEMY_BOUNCE: 2
     },
     sizes: {
-        player:      { width: 1.5, height: 1.5 },
-        enemy:       { width: 1, height: 1 },
-        large_enemy: { width: 2, height: 2 },
-        box:         { width: 1, height: 1 },
+        player: { width: 1.5, height: 1.5 },
+        enemy: { width: 1, height: 1 },
+        large_enemy: { width: 1.9, height: 1.9 },
+        box: { width: 1, height: 1 },
     },
     health: {
         player: 3,
