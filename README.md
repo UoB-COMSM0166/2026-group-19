@@ -209,9 +209,11 @@ Key Issues Identified:
 
 ### Process 
 
-- 15% ~750 words
+Our team employed Agile methodologies to effectively manage our project development. We used **Jira** to manage our **Kanban** board and run **Scrum** sprints, ensuring that our development process was iterative and well-organized. 
 
-- Teamwork. How did you work together, what tools and methods did you use? Did you define team roles? Reflection on how you worked together. Be honest, we want to hear about what didn't work as well as what did work, and importantly how your team adapted throughout the project.
+For the visual aspect of the game, we used **Miro** to brainstorm and share frontend design ideas collaboratively. Additionally, during team discussions and meetings, we utilized **Google Docs** to outline and list everyone's tasks, keeping the whole team aligned on responsibilities and progress.
+
+![Jira Kanban Board](./image/jira_kanban.png)
 
 ### Conclusion
 
