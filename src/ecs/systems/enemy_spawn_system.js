@@ -7,7 +7,7 @@ const EnemyType = Object.freeze({
 const EnemyConfig = Object.freeze({
     [EnemyType.NORMAL]: { entityType: EntityType.GROUND_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, health: DEFAULTS.health.enemy, color: [100, 10, 200] },
     [EnemyType.LARGE]: { entityType: EntityType.GROUND_ENEMY, width: DEFAULTS.sizes.large_enemy.width, height: DEFAULTS.sizes.large_enemy.height, health: DEFAULTS.health.large_enemy, color: [80, 5, 160] },
-    [EnemyType.FLOATING]: { entityType: EntityType.FLOATING_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, health: DEFAULTS.health.enemy, color: [10, 200, 255]},
+    [EnemyType.FLOATING]: { entityType: EntityType.FLOATING_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, health: DEFAULTS.health.enemy, color: [10, 200, 255] },
 });
 
 class EnemySpawnSystem extends System {
@@ -41,7 +41,21 @@ class EnemySpawnSystem extends System {
     }
 
     getRandomEnemyType() {
-        const enemyTypes = [EnemyType.NORMAL, EnemyType.LARGE, EnemyType.FLOATING];
-        return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+        const weights = this.physics.SPAWN_WEIGHTS;
+
+        // Fallback to equal chance if weights aren't defined in the template
+        if (!weights) {
+            const types = [EnemyType.NORMAL, EnemyType.LARGE, EnemyType.FLOATING];
+            return types[Math.floor(Math.random() * types.length)];
+        }
+
+        const rand = Math.random();
+        let cumulativeWeight = 0;
+
+        // Iterate through the types and check against the random roll
+        if (rand < (cumulativeWeight += weights.NORMAL)) return EnemyType.NORMAL;
+        if (rand < (cumulativeWeight += weights.LARGE)) return EnemyType.LARGE;
+
+        return EnemyType.FLOATING;
     }
 }
