@@ -1,22 +1,22 @@
 const DEFAULTS = {
     physics: {
-        GRAVITY: 0.5,
-        PLAYER_SPEED: 5,
-        ENEMY_SPEED: 3,
-        MAX_ENEMY_SPEED: 12,
-        JUMP_SPEED: 16,
+        GRAVITY: 0.01,
+        PLAYER_SPEED: 0.1,
+        ENEMY_SPEED: 0.06,
+        MAX_ENEMY_SPEED: 0.24,
+        JUMP_SPEED: 0.32,
         SPAWN_RATE: 180,
         ENEMY_SPEED_MULTIPLIER: 2,
-        TERMINAL_VELOCITY: 12,
+        TERMINAL_VELOCITY: 0.24,
         PLAYER_DAMPING_MULTIPLIER: 0.8,
-        FLOATING_ENEMY_ACCEL: 0.1,
-        FLOATING_ENEMY_BOUNCE: 2
+        FLOATING_ENEMY_ACCEL: 0.002,
+        FLOATING_ENEMY_BOUNCE: 0.04
     },
     sizes: {
-        player: { width: 1.5, height: 1.5 },
-        enemy: { width: 1, height: 1 },
-        large_enemy: { width: 1.9, height: 1.9 },
-        box: { width: 1, height: 1 },
+        player:      { width: 1.5, height: 1.5 },
+        enemy:       { width: 1, height: 1 },
+        large_enemy: { width: 2, height: 2 },
+        box:         { width: 1, height: 1 },
     },
     health: {
         player: 3,

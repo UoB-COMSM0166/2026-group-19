@@ -4,15 +4,31 @@ const GRID_ROWS = 18; // 0–17
 class LevelFactory {
     // Scales grid coordinates (or sizes) to pixel coordinates.
     // Maps [0, GRID_COLS] -> [0, W]
-    static scaleX(col, W) { return Math.round((col / GRID_COLS) * W); }
-    static scaleY(row, H) { return Math.round((row / GRID_ROWS) * H); }
+    //      [0, GRID_ROWS] -> [0, H]
+    static scaleX(col, W) { return (col / GRID_COLS) * W; }
+    static scaleY(row, H) { return (row / GRID_ROWS) * H; }
 
     static build(template) {
         const W = width;
         const H = height;
 
+        const physics = {
+            ...DEFAULTS.physics, ...(template.physics || {})
+        };
+                
+        // Scale physics properties
+        physics.GRAVITY = LevelFactory.scaleY(physics.GRAVITY, H);
+        physics.PLAYER_SPEED = LevelFactory.scaleX(physics.PLAYER_SPEED, W);
+        physics.ENEMY_SPEED = LevelFactory.scaleX(physics.ENEMY_SPEED, W);
+        physics.MAX_ENEMY_SPEED = LevelFactory.scaleX(physics.MAX_ENEMY_SPEED, W);
+        physics.JUMP_SPEED = LevelFactory.scaleY(physics.JUMP_SPEED, H);
+        physics.TERMINAL_VELOCITY = LevelFactory.scaleY(physics.TERMINAL_VELOCITY, H);
+        physics.FLOATING_ENEMY_ACCEL = LevelFactory.scaleY(physics.FLOATING_ENEMY_ACCEL, H);
+        physics.FLOATING_ENEMY_BOUNCE = LevelFactory.scaleY(physics.FLOATING_ENEMY_BOUNCE, H);
+
+
         return {
-            physics: { ...DEFAULTS.physics, ...(template.physics || {}) }, // Override default physics if desired
+            physics: physics,
             player: { 
                 center_x: LevelFactory.scaleX(template.player.x + 0.5, W),
                 center_y: LevelFactory.scaleY(template.player.y + 0.5, H)
@@ -23,10 +39,10 @@ class LevelFactory {
 
     static buildWalls(platforms, W, H) {
         return platforms.map(p => {
-            const left_x = LevelFactory.scaleX(p.x0, W);
-            const top_y  = LevelFactory.scaleY(p.y0, H);
-            const width  = LevelFactory.scaleX(p.x1 + 1 - p.x0, W);
-            const height = LevelFactory.scaleY(p.y1 + 1 - p.y0, H);
+            const left_x = Math.round(LevelFactory.scaleX(p.x0, W));
+            const top_y  = Math.round(LevelFactory.scaleY(p.y0, H));
+            const width  = Math.round(LevelFactory.scaleX(p.x1 + 1 - p.x0, W));
+            const height = Math.round(LevelFactory.scaleY(p.y1 + 1 - p.y0, H));
             return { left_x, top_y, width, height, spawnable: p.spawnable };
         });
     }
