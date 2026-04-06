@@ -2,8 +2,6 @@ const LevelTemplates = {
     1: {
         player: { x: 15, y: 3 },
         physics: {
-            SPAWN_RATE: 300,
-            ENEMY_SPEED: 0.5,
             SPAWN_WEIGHTS: {
                 NORMAL: 0.7,   // 70% chance
                 LARGE: 0.2,    // 20% chance
@@ -30,8 +28,6 @@ const LevelTemplates = {
         player: { x: 15, y: 3 },
         physics: {
             SPAWN_RATE: 250,
-            ENEMY_SPEED: 2,
-            MAX_ENEMY_SPEED: 4,
             SPAWN_WEIGHTS: {
                 NORMAL: 0.5,   // 50% chance
                 LARGE: 0.3,    // 30% chance
@@ -59,8 +55,6 @@ const LevelTemplates = {
         player: { x: 15, y: 3 },
         physics: {
             SPAWN_RATE: 250,
-            ENEMY_SPEED: 3,
-            MAX_ENEMY_SPEED: 5,
             SPAWN_WEIGHTS: {
                 NORMAL: 0.4,   // 40% chance
                 LARGE: 0.4,    // 40% chance
