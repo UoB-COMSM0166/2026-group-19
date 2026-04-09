@@ -53,6 +53,7 @@ class Game {
         this.ecs.getSystem(EnemySpawnSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(FloatingSystem).applyPhysics(this.levelConfig.physics);
+        this.ecs.getSystem(InteractionSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
 
         // Build wall image

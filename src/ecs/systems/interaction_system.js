@@ -3,6 +3,7 @@ class InteractionSystem extends System {
         super(ecs);
         this.ecs = ecs;
         this.spawner = spawner;
+        this.physics = DEFAULTS.physics;
     }
 
     update(dt) {
@@ -19,6 +20,12 @@ class InteractionSystem extends System {
             this.handleProjectileEnemy(projectileId);
             this.handleProjectileWall(projectileId);
         }
+
+        const droplets = this.ecs.getEntitiesWith(BloodDroplet, Position);
+    }
+
+    applyPhysics(physics) {
+        this.physics = physics;
     }
 
     handlePlayerEnemy(playerId) {
@@ -78,6 +85,8 @@ class InteractionSystem extends System {
             this.ecs.removeEntity(projectileId);
 
             if (enemyChar.health <= 0) {
+                const enemyPos = this.ecs.getComponent(enemyId, Position);
+                this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
                 this.ecs.removeEntity(enemyId);
             }
         })
@@ -87,8 +96,27 @@ class InteractionSystem extends System {
         const pos = this.ecs.getComponent(projectileId, Position);
         if (!pos) return;
         this.forEachCollision(pos, [Wall, Position], (wallId) => {
-            // TODO: Implement logic
             this.ecs.removeEntity(projectileId);
         })
+    }
+
+    // Blood Splatter
+    spawnDeathDroplets(x, y) {
+        for (let i = 0; i < this.physics.DROPLETS_PER_DEATH; i++) {
+            const angle = Math.random() * Math.PI * 2; // radians
+            const speed = this.physics.MIN_BLOOD_SPEED + Math.random() * (this.physics.MAX_BLOOD_SPEED - this.physics.MIN_BLOOD_SPEED);
+            const bloodWidth = LevelFactory.scaleX(DEFAULTS.sizes.blood.width, width);
+            const bloodHeight = LevelFactory.scaleY(DEFAULTS.sizes.blood.height, height);
+
+            const id = this.ecs.createEntity();
+            this.ecs.addComponent(id, new Position(x, y, bloodWidth, bloodHeight));
+            this.ecs.addComponent(id, new Velocity(
+                Math.cos(angle) * speed,
+                Math.sin(angle) * speed - this.physics.MIN_BLOOD_SPEED  // upward bias so they arc
+            ));
+            this.ecs.addComponent(id, new Acceleration(0, this.physics.GRAVITY));
+            this.ecs.addComponent(id, new Renderable([230, 46, 0, 200], null));
+            this.ecs.addComponent(id, new BloodDroplet());
+        }
     }
 }
