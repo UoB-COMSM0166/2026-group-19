@@ -27,6 +27,7 @@ class LevelFactory {
         physics.FLOATING_ENEMY_BOUNCE = LevelFactory.scaleY(physics.FLOATING_ENEMY_BOUNCE, H);
         physics.MIN_BLOOD_SPEED = LevelFactory.scaleY(physics.MIN_BLOOD_SPEED, H);
         physics.MAX_BLOOD_SPEED = LevelFactory.scaleY(physics.MAX_BLOOD_SPEED, H);
+        physics.PROJECTILE_KNOCKBACK = LevelFactory.scaleX(physics.PROJECTILE_KNOCKBACK, W);
 
 
         return {
