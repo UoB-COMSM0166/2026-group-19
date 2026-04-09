@@ -9,7 +9,7 @@ const BASICRIFLE = {
     bulletDamage: 1, 
     bulletSpeed: 0.2, 
     bulletSize: {w: 0.12, h: 0.08},
-    recoilKick: 0.00006,
+    recoilKick: 0.3,
     maxRange: 0.3,
 
 }
@@ -21,7 +21,7 @@ const WEAPON_CONFIGS = {
                         bulletDamage: 3, 
                         bulletSpeed: 0.4, 
                         bulletSize: {w:0.36, h:0.24},
-                        recoilKick: 0.00018,
+                        recoilKick: 0.6,
                         maxRange: 0.7,
                       },
 }

@@ -46,9 +46,7 @@ class WeaponSystem extends System {
     }
 
     applyRecoil(vel, weapon, character) {
-        const isMoving = keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW);
-        if (!isMoving && weapon.type !== WeaponType.TWOWAYRIFLE) {
-            vel.vx = -character.direction * weapon.recoilKick;
-        }
+        if (weapon.type === WeaponType.TWOWAYRIFLE) return;
+        vel.vx += -character.direction * weapon.recoilKick;
     }
 }

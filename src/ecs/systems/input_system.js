@@ -33,22 +33,24 @@ class InputSystem extends System {
             const character = this.ecs.getComponent(id, Character);
             const weapon = this.ecs.getComponent(id, Weapon);
             const vel = this.ecs.getComponent(id, Velocity);
+            const accel = this.ecs.getComponent(id, Acceleration);
 
             // Correctly access physics constants
-            const speed = this.physics.PLAYER_SPEED;
+            const moveAccel = this.physics.PLAYER_ACCELERATION;
             const jumpSpeed = this.physics.JUMP_SPEED;
             const isShootPressed = keyIsDown(SPACE) && !this.prev.get(SPACE);
 
             // --- SIDE-TO-SIDE MOVEMENT (Arrows + A/D keys) ---
             if (keyIsDown(LEFT_ARROW) || keyIsDown(KEY_A)) {
-                vel.vx = -speed;
+                accel.ax = -moveAccel;
                 character.direction = DIR_LEFT;
             }
             else if (keyIsDown(RIGHT_ARROW) || keyIsDown(KEY_D)) {
-                vel.vx = speed;
+                accel.ax = moveAccel;
                 character.direction = DIR_RIGHT;
             }
             else {
+                accel.ax = 0;
                 vel.vx *= Math.pow(this.physics.PLAYER_DAMPING_MULTIPLIER, dt);
                 if (Math.abs(vel.vx) < 0.01) { vel.vx = 0; }
             }
