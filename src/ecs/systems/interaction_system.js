@@ -20,8 +20,6 @@ class InteractionSystem extends System {
             this.handleProjectileEnemy(projectileId);
             this.handleProjectileWall(projectileId);
         }
-
-        const droplets = this.ecs.getEntitiesWith(BloodDroplet, Position);
     }
 
     applyPhysics(physics) {
@@ -98,7 +96,6 @@ class InteractionSystem extends System {
             this.ecs.removeEntity(projectileId);
 
             if (enemyChar.health <= 0) {
-                const enemyPos = this.ecs.getComponent(enemyId, Position);
                 this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
                 this.ecs.removeEntity(enemyId);
             }
