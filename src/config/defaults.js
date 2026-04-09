@@ -15,13 +15,17 @@ const DEFAULTS = {
             NORMAL: 0.7,   // 70% chance
             LARGE: 0.2,    // 20% chance
             FLOATING: 0.1  // 10% chance
-        }
+        },
+        DROPLETS_PER_DEATH: 12,
+        MIN_BLOOD_SPEED: 0.2,
+        MAX_BLOOD_SPEED: 0.6
     },
     sizes: {
         player:      { width: 1.5, height: 1.5 },
         enemy:       { width: 1, height: 1 },
         large_enemy: { width: 2, height: 2 },
         box:         { width: 1, height: 1 },
+        blood:       { width: 0.2, height: 0.2 }
     },
     health: {
         player: 3,

@@ -44,6 +44,7 @@ class PhysicsSystem extends System {
             const vel = this.ecs.getComponent(id, Velocity);
             const accel = this.ecs.getComponent(id, Acceleration);
             const enemy = this.ecs.getComponent(id, Enemy);
+            const droplet = this.ecs.getComponent(id, BloodDroplet);
 
             // Apply Gravity
             if (accel) {
@@ -58,6 +59,11 @@ class PhysicsSystem extends System {
             this.resolveMovementCollisions(id, Axis.X);
             
             if (pos.y > height) {
+                if (droplet) {
+                    this.ecs.removeEntity(id);
+                    continue;
+                }
+
                 pos.y = 0;
                 if (enemy) {
                     enemy.powerful = true;

@@ -27,25 +27,30 @@ class RenderSystem extends System {
             const anim   = this.ecs.getComponent(id, Animation);
             const char   = this.ecs.getComponent(id, Character);
             const wall   = this.ecs.getComponent(id, Wall);
-            const bb     = pos.getBoundingBox();
-            // Fallback: If no image or animation, draw a rectangle
-            if (!render.image && !anim) {
-                fill(...render.color);
-                noStroke();
-                rect(bb.left_x, bb.top_y, bb.w, bb.h);
+
+            if (!pos || !render) continue;
+            const bb = pos.getBoundingBox();
+
+            // Wall tiles are rendered through cache
+            if (wall) continue;
+
+            // Animated draw only when sprite sheet is valid
+            if (anim && anim.spriteSheet && anim.spriteSheet.width !== undefined) {
+                this.drawAnimated(char, anim, pos, bb);
                 continue;
             }
 
-            if (anim) {
-                this.drawAnimated(char, anim, pos, bb);
-            }
-            else if (wall) {
-                continue;
-            }
-            else {
+            // Plain image draw only when image is valid
+            if (render.image && render.image.width !== undefined) {
                 imageMode(CENTER);
                 image(render.image, pos.x, pos.y, bb.w, bb.h);
+                continue;
             }
+
+            // Fallback rectangle (prevents WEBGL image(undefined) crash)
+            fill(...render.color);
+            noStroke();
+            rect(bb.left_x, bb.top_y, bb.w, bb.h);
         }
     }
 
