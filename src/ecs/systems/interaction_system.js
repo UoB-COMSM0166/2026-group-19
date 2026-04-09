@@ -73,6 +73,7 @@ class InteractionSystem extends System {
     handleProjectileEnemy(projectileId) {
         const pos = this.ecs.getComponent(projectileId, Position);
         const projectile = this.ecs.getComponent(projectileId, Projectile);
+        const projectileVel = this.ecs.getComponent(projectileId, Velocity);
         if (!pos) return;
         let hit = false;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
@@ -80,8 +81,20 @@ class InteractionSystem extends System {
             if (hit) return;
             hit = true;
 
+            const enemyVel = this.ecs.getComponent(enemyId, Velocity);
             const enemyChar = this.ecs.getComponent(enemyId, Character);
+            const enemyPos = this.ecs.getComponent(enemyId, Position);
+
+            // Damage
             enemyChar.health -= projectile.damage;
+
+            // Enemy Knockback
+            if (enemyVel && projectileVel) {
+                const knockback = this.physics.PROJECTILE_KNOCKBACK;
+                const dirX = projectileVel.vx >= 0 ? 1 : -1;
+                enemyVel.vx += dirX * pos.width / (enemyPos.width / 1.5) * knockback;
+            }
+
             this.ecs.removeEntity(projectileId);
 
             if (enemyChar.health <= 0) {
