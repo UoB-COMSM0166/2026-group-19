@@ -19,6 +19,7 @@ class LevelFactory {
         // Scale physics properties
         physics.GRAVITY = LevelFactory.scaleY(physics.GRAVITY, H);
         physics.PLAYER_SPEED = LevelFactory.scaleX(physics.PLAYER_SPEED, W);
+        physics.PLAYER_ACCELERATION = LevelFactory.scaleX(physics.PLAYER_ACCELERATION, W);
         physics.ENEMY_SPEED = LevelFactory.scaleX(physics.ENEMY_SPEED, W);
         physics.MAX_ENEMY_SPEED = LevelFactory.scaleX(physics.MAX_ENEMY_SPEED, W);
         physics.JUMP_SPEED = LevelFactory.scaleY(physics.JUMP_SPEED, H);

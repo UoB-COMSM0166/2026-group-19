@@ -45,6 +45,7 @@ class PhysicsSystem extends System {
             const accel = this.ecs.getComponent(id, Acceleration);
             const enemy = this.ecs.getComponent(id, Enemy);
             const droplet = this.ecs.getComponent(id, BloodDroplet);
+            const player = this.ecs.getComponent(id, Player);
 
             // Apply Gravity
             if (accel) {
@@ -52,6 +53,11 @@ class PhysicsSystem extends System {
 
                 // Terminal velocity only applies in downward direction (for gravity)
                 vel.vy = Math.min(vel.vy + accel.ay * dt, this.physics.TERMINAL_VELOCITY);
+            }
+
+            // Clamp player horizontal speed
+            if (player) {
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx), this.physics.PLAYER_SPEED);
             }
 
             // Movement phase (axis-dependent)
