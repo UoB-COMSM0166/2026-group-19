@@ -35,4 +35,38 @@ const DEFAULTS = {
         large_enemy: 5
     },
     hurtTime: 280,
+    difficulty: {
+        EASY: {
+            SPAWN_RATE: 240,
+            ENEMY_SPEED_MULTIPLIER: 0.8,
+            MAX_ENEMY_SPEED_MULTIPLIER: 0.8,
+            PLAYER_HEALTH: 5
+        },
+        NORMAL: {
+            SPAWN_RATE: 180,
+            ENEMY_SPEED_MULTIPLIER: 1.0,
+            MAX_ENEMY_SPEED_MULTIPLIER: 1.0,
+            PLAYER_HEALTH: 3
+        },
+        HARD: {
+            SPAWN_RATE: 120,
+            ENEMY_SPEED_MULTIPLIER: 1.3,
+            MAX_ENEMY_SPEED_MULTIPLIER: 1.5,
+            PLAYER_HEALTH: 1
+        }
+    },
+    controls: {
+        ARROWS: {
+            LEFT: 37,  // LEFT_ARROW
+            RIGHT: 39, // RIGHT_ARROW
+            UP: 38,    // UP_ARROW
+            SHOOT: 32  // SPACE
+        },
+        WASD: {
+            LEFT: 65,  // A
+            RIGHT: 68, // D
+            UP: 87,    // W
+            SHOOT: 13  // ENTER
+        }
+    }
 };

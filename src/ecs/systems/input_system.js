@@ -19,15 +19,25 @@ class InputSystem extends System {
 
         // Use the default physics config
         this.physics = DEFAULTS.physics;
+        
+        // Default control scheme
+        this.currentScheme = "ARROWS";
     }
 
     applyPhysics(physics) {
         this.physics = physics;
     }
 
+    setControlScheme(schemeName) {
+        if (DEFAULTS.controls[schemeName]) {
+            this.currentScheme = schemeName;
+        }
+    }
+
     update(dt) {
         const now = millis(); // Needed for the jump buffer timer
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
+        const controls = DEFAULTS.controls[this.currentScheme];
 
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
@@ -38,14 +48,16 @@ class InputSystem extends System {
             // Correctly access physics constants
             const moveAccel = this.physics.PLAYER_ACCELERATION;
             const jumpSpeed = this.physics.JUMP_SPEED;
-            const isShootPressed = keyIsDown(SPACE) && !this.prev.get(SPACE);
+            
+            const shootKey = controls.SHOOT;
+            const isShootPressed = keyIsDown(shootKey) && !this.prev.get(shootKey);
 
-            // --- SIDE-TO-SIDE MOVEMENT (Arrows + A/D keys) ---
-            if (keyIsDown(LEFT_ARROW) || keyIsDown(KEY_A)) {
+            // --- SIDE-TO-SIDE MOVEMENT ---
+            if (keyIsDown(controls.LEFT)) {
                 accel.ax = -moveAccel;
                 character.direction = DIR_LEFT;
             }
-            else if (keyIsDown(RIGHT_ARROW) || keyIsDown(KEY_D)) {
+            else if (keyIsDown(controls.RIGHT)) {
                 accel.ax = moveAccel;
                 character.direction = DIR_RIGHT;
             }
@@ -56,7 +68,7 @@ class InputSystem extends System {
             }
 
             // --- THE JUMP BUFFER FIX ---
-            let upPressed = keyIsDown(UP_ARROW) || keyIsDown(KEY_W);
+            let upPressed = keyIsDown(controls.UP);
 
             // 1. Record the exact time the jump key was first pressed
             if (upPressed && !this.prev.get('upKey')) {
@@ -78,7 +90,7 @@ class InputSystem extends System {
             }
 
             // Update previous key-state
-            this.prev.set(SPACE, keyIsDown(SPACE));
+            this.prev.set(shootKey, keyIsDown(shootKey));
         }
     }
 }
