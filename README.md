@@ -209,11 +209,23 @@ Key Issues Identified:
 
 ### Process 
 
-Our team employed Agile methodologies to effectively manage our project development. We used **Jira** to manage our **Kanban** board and run **Scrum** sprints, ensuring that our development process was iterative and well-organized. 
+Our team employed **Agile methodologies** to effectively manage our project development. We used **Jira** to manage our **Kanban** board and run **Scrum** sprints, ensuring that our development process was iterative and well-organized. 
 
-For the visual aspect of the game, we used **Miro** to brainstorm and share frontend design ideas collaboratively. Additionally, during team discussions and meetings, we utilized **Google Docs** to outline and list everyone's tasks, keeping the whole team aligned on responsibilities and progress.
+For the visual aspect of the game, 
+- **Miro** to brainstorm and share frontend design ideas collaboratively. Additionally, during team discussions and meetings.
+- **Google Docs** to outline and list everyone's tasks, keeping the whole team aligned on responsibilities and progress.
 
 ![Jira Kanban Board](./image/jira_kanban.png)
+
+To maintain a high standard of code quality and a clean project history, we implemented a rigorous Git strategy:
+
+- Feature & Fix Branches: Work was assigned via dedicated feature branches, while fix branches were used to address errors discovered after the main branch had been deployed.
+
+- Linear History: We prioritized rebasing over merging to ensure the Git history remained linear and easy to audit as different systems (like ProjectileSystem and WeaponSystem) were integrated.
+
+- Mandatory Peer Review: Each **Pull Request** required approval from other teammates before it could be merged into the main branch. This practice ensured that every team member was aware of recent updates and could provide feedback on modular components like the EntityFactory.
+
+![Git flow](./image/gitflow.png)
 
 ### Conclusion
 
