@@ -39,7 +39,7 @@ class PauseScene extends Scene {
         for (let i = 0; i < this.menuItems.length; i++) {
             let label = this.menuItems[i];
             let isSelected = (i === this.menuIndex);
-            let displayText = isSelected ? "> " + label + " <" : label;
+            let displayText = label;
             let displayColor = isSelected ? color(255, 240, 120) : color(255);
 
             new ShadowText(
@@ -56,9 +56,9 @@ class PauseScene extends Scene {
     }
 
     handleKeyPressed() {
-        if (keyCode === UP_ARROW) {
+        if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
-        } else if (keyCode === DOWN_ARROW) {
+        } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
         } else if (keyCode === ENTER || key === ' ') {
             this.activateSelectedOption();

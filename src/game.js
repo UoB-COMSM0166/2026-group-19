@@ -40,11 +40,11 @@ class Game {
         this.ecs.update(dt);
     }
 
-    loadLevel(levelNumber) {
+    loadLevel(levelNumber, difficulty = "NORMAL") {
         const template = LevelTemplates[levelNumber]
         if (!template) throw new Error(`Unknown level: ${levelNumber}`);
 
-        this.levelConfig = LevelFactory.build(template);
+        this.levelConfig = LevelFactory.build(template, difficulty);
         this.ecs.clear();
 
         // The level configurations can modify the physics constants to alter difficulty
@@ -79,6 +79,9 @@ class Game {
 
         // Immediately update the spawner so entities appear on frame 1
         this.spawner.update();
+
+        // Apply current control scheme from global settings
+        this.ecs.getSystem(InputSystem).setControlScheme(GameSettings.controlScheme);
     }
 
     renderOnly() {

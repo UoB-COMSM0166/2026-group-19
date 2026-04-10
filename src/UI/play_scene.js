@@ -1,16 +1,17 @@
 class PlayScene extends Scene {
-    constructor(gameInstance, levelNum = 1) {
+    constructor(gameInstance, levelNum = 1, difficulty = "NORMAL") {
         super();
         this.game = gameInstance;
         this.levelToLoad = levelNum;
+        this.difficulty = difficulty;
         this.playBg = loadImage("src/assets/cave_background.jpg");
         this.fpsCounter = new drawFps();
         this.scoreHUD = new ScoreHUD(this.game.ecs);
     }
 
     setup() {
-        console.log("PlayScene setup: loading level " + this.levelToLoad);
-        this.game.loadLevel(this.levelToLoad);
+        console.log("PlayScene setup: loading level " + this.levelToLoad + " with difficulty " + this.difficulty);
+        this.game.loadLevel(this.levelToLoad, this.difficulty);
     }
 
     update() {

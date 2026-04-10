@@ -5,6 +5,11 @@ let playBgImage;
 let characterSpriteSheet;
 let wallTileImage;
 
+// Global settings manager
+const GameSettings = {
+    controlScheme: "ARROWS"
+};
+
 function preload() {
     uiFont = loadFont("src/assets/8-BIT WONDER.TTF");
     playBgImage = loadImage("src/assets/gray_gameBg.png");

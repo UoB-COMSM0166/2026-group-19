@@ -5,7 +5,11 @@ class SettingsScene extends Scene {
         this.sceneToReturnTo = sceneToReturnTo || sceneToDisplayUnderneath;
         
         this.menuIndex = 0;
-        this.menuItems = ["VOLUME", "MUTE", "BACK"];
+        this.controlSchemes = Object.keys(DEFAULTS.controls);
+        this.controlIndex = this.controlSchemes.indexOf(GameSettings.controlScheme);
+        if (this.controlIndex === -1) this.controlIndex = 0;
+
+        this.menuItems = ["CONTROLS", "VOLUME", "MUTE", "BACK"];
         
         // Settings state (could be moved to a global config later)
         this.volume = 100;
@@ -35,16 +39,17 @@ class SettingsScene extends Scene {
         // Control texts with ShadowText
         let fontSize = titleSize * 0.4;
         let spacing = height * 0.12;
-        let startY = height * 0.45;
+        let startY = height * 0.42;
 
         for (let i = 0; i < this.menuItems.length; i++) {
             let item = this.menuItems[i];
             let label = item;
-            if (item === "VOLUME") label = "VOLUME " + this.volume + "%";
-            if (item === "MUTE") label = "MUTE " + (this.isMuted ? "ON" : "OFF");
+            if (item === "CONTROLS") label = "CONTROLS [ " + this.controlSchemes[this.controlIndex] + " ]";
+            if (item === "VOLUME") label = "VOLUME [ " + this.volume + " ]";
+            if (item === "MUTE") label = "MUTE [ " + (this.isMuted ? "ON" : "OFF") + " ]";
 
             let isSelected = (i === this.menuIndex);
-            let displayText = isSelected ? "> " + label + " <" : label;
+            let displayText = label;
             let displayColor = isSelected ? color(255, 240, 120) : color(255);
 
             new ShadowText(
@@ -61,14 +66,16 @@ class SettingsScene extends Scene {
     }
 
     handleKeyPressed() {
-        if (keyCode === UP_ARROW) {
+        if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
-        } else if (keyCode === DOWN_ARROW) {
+        } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
         } else if (keyCode === ENTER || key === ' ') {
             this.handleSelection();
-        } else if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
-            this.handleHorizontal(keyCode === LEFT_ARROW ? -1 : 1);
+        } else if (keyCode === LEFT_ARROW || key === 'a' || key === 'A' || keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
+            this.handleHorizontal(
+                (keyCode === LEFT_ARROW || key === 'a' || key === 'A') ? -1 : 1
+            );
         } else if (keyCode === ESCAPE) {
             sceneManager.resumeScene(this.sceneToReturnTo);
         }
@@ -76,7 +83,15 @@ class SettingsScene extends Scene {
 
     handleHorizontal(dir) {
         let item = this.menuItems[this.menuIndex];
-        if (item === "VOLUME") {
+        if (item === "CONTROLS") {
+            this.controlIndex = (this.controlIndex + dir + this.controlSchemes.length) % this.controlSchemes.length;
+            GameSettings.controlScheme = this.controlSchemes[this.controlIndex];
+            // If we are currently in a game, update the system immediately
+            if (gameInstance && gameInstance.ecs) {
+                const inputSys = gameInstance.ecs.getSystem(InputSystem);
+                if (inputSys) inputSys.setControlScheme(GameSettings.controlScheme);
+            }
+        } else if (item === "VOLUME") {
             this.volume = constrain(this.volume + dir * 5, 0, 100);
         } else if (item === "MUTE") {
             this.isMuted = !this.isMuted;

@@ -17,7 +17,9 @@ class MenuScene extends Scene {
         this.menuIndex = 0;
         this.selectedLevel = 1;
         this.maxLevel = 3;
-        this.menuItems = ["START", "LEVEL", "SETTINGS"];
+        this.difficultyOptions = ["EASY", "NORMAL", "HARD"];
+        this.difficultyIndex = 1; // Default to NORMAL
+        this.menuItems = ["START", "LEVEL", "DIFFICULTY", "SETTINGS"];
 
         // fps Display
         this.fpsCounter = new drawFps();
@@ -34,10 +36,11 @@ class MenuScene extends Scene {
         this.drawBaseImage(Math.max(Math.sin(t / 1000), 0.8) * 255);
         
         // Menu Items - Vertically Stacked
-        let titleSize = min(width, height) * 0.1;
-        let fontSize = titleSize * 0.5;
-        let spacing = height * 0.1;
-        let startY = height * 0.55;
+        let baseScale = min(width, height);
+        let titleSize = baseScale * 0.1;
+        let fontSize = baseScale * 0.05;
+        let spacing = height * 0.08;
+        let startY = height * 0.58;
 
         for (let i = 0; i < this.menuItems.length; i++) {
             let label = this.menuItems[i];
@@ -45,11 +48,9 @@ class MenuScene extends Scene {
             
             let displayText = label;
             if (label === "LEVEL") {
-                displayText = `LEVEL < ${this.selectedLevel} >`;
-            }
-            
-            if (isSelected) {
-                displayText = "> " + displayText + " <";
+                displayText = `LEVEL [ ${this.selectedLevel} ]`;
+            } else if (label === "DIFFICULTY") {
+                displayText = `DIFFICULTY [ ${this.difficultyOptions[this.difficultyIndex]} ]`;
             }
             
             let displayColor = isSelected ? color(255, 240, 120) : color(255);
@@ -61,7 +62,7 @@ class MenuScene extends Scene {
                 fontSize,
                 displayColor,
                 color(0),
-                fontSize * 0.1
+                fontSize * 0.08
             ).display();
         }
         pop();
@@ -106,25 +107,33 @@ class MenuScene extends Scene {
             this.lastTypedTime = now;
         }
 
+        let baseScale = min(width, height);
+        let fontSize = baseScale * 0.15;
+
         this.titleText.content = this.fullTitle.substring(0, this.visibleCount);
-        this.titleText.size = width * 0.12;
+        this.titleText.size = fontSize;
         this.titleText.x = width / 2;
         this.titleText.y = height * 0.25;
+        this.titleText.offset = fontSize * 0.08;
         this.titleText.display();
     }
 
     handleKeyPressed() {
-        if (keyCode === UP_ARROW) {
+        if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
-        } else if (keyCode === DOWN_ARROW) {
+        } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
-        } else if (keyCode === LEFT_ARROW) {
+        } else if (keyCode === LEFT_ARROW || key === 'a' || key === 'A') {
             if (this.menuItems[this.menuIndex] === "LEVEL") {
                 this.selectedLevel = (this.selectedLevel - 2 + this.maxLevel) % this.maxLevel + 1;
+            } else if (this.menuItems[this.menuIndex] === "DIFFICULTY") {
+                this.difficultyIndex = (this.difficultyIndex - 1 + this.difficultyOptions.length) % this.difficultyOptions.length;
             }
-        } else if (keyCode === RIGHT_ARROW) {
+        } else if (keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
             if (this.menuItems[this.menuIndex] === "LEVEL") {
                 this.selectedLevel = (this.selectedLevel % this.maxLevel) + 1;
+            } else if (this.menuItems[this.menuIndex] === "DIFFICULTY") {
+                this.difficultyIndex = (this.difficultyIndex + 1) % this.difficultyOptions.length;
             }
         } else if (keyCode === ENTER || key === ' ') {
             this.activateSelectedOption();
@@ -134,7 +143,7 @@ class MenuScene extends Scene {
     activateSelectedOption() {
         let option = this.menuItems[this.menuIndex];
         if (option === "START") {
-            sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel));
+            sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel, this.difficultyOptions[this.difficultyIndex]));
         } else if (option === "SETTINGS") {
             sceneManager.pushScene(new SettingsScene(this));
         }

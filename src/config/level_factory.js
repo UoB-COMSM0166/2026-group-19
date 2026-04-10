@@ -8,12 +8,21 @@ class LevelFactory {
     static scaleX(col, W) { return (col / GRID_COLS) * W; }
     static scaleY(row, H) { return (row / GRID_ROWS) * H; }
 
-    static build(template) {
+    static build(template, difficultyKey = "NORMAL") {
         const W = width;
         const H = height;
 
+        const difficultySettings = DEFAULTS.difficulty[difficultyKey] || DEFAULTS.difficulty.NORMAL;
+
         const physics = {
-            ...DEFAULTS.physics, ...(template.physics || {})
+            ...DEFAULTS.physics, 
+            ...(template.physics || {}),
+            SPAWN_RATE: (template.physics?.SPAWN_RATE || DEFAULTS.physics.SPAWN_RATE) * 
+                        (difficultySettings.SPAWN_RATE / DEFAULTS.difficulty.NORMAL.SPAWN_RATE),
+            ENEMY_SPEED: (template.physics?.ENEMY_SPEED || DEFAULTS.physics.ENEMY_SPEED) * 
+                         difficultySettings.ENEMY_SPEED_MULTIPLIER,
+            MAX_ENEMY_SPEED: (template.physics?.MAX_ENEMY_SPEED || DEFAULTS.physics.MAX_ENEMY_SPEED) * 
+                             difficultySettings.MAX_ENEMY_SPEED_MULTIPLIER
         };
                 
         // Scale physics properties
@@ -30,12 +39,12 @@ class LevelFactory {
         physics.MAX_BLOOD_SPEED = LevelFactory.scaleY(physics.MAX_BLOOD_SPEED, H);
         physics.PROJECTILE_KNOCKBACK = LevelFactory.scaleX(physics.PROJECTILE_KNOCKBACK, W);
 
-
         return {
             physics: physics,
             player: { 
                 center_x: LevelFactory.scaleX(template.player.x + 0.5, W),
-                center_y: LevelFactory.scaleY(template.player.y + 0.5, H)
+                center_y: LevelFactory.scaleY(template.player.y + 0.5, H),
+                health: difficultySettings.PLAYER_HEALTH
             },
             walls: LevelFactory.buildWalls(template.platforms, W, H)
         };
