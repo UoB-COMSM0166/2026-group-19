@@ -209,23 +209,45 @@ Key Issues Identified:
 
 ### Process 
 
-Our team employed **Agile methodologies** to effectively manage our project development. We used **Jira** to manage our **Kanban** board and run **Scrum** sprints, ensuring that our development process was iterative and well-organized. 
+#### Team Roles & Division of Labor
+To manage the complexity of building a game in p5.js from scratch, we divided our team into two primary domains: **Frontend** and **Backend**. 
+* **Frontend:** Focused on the visual layer, including character animations, environment rendering (backgrounds and platforms), and UI elements.
+* **Backend:** Handled the game logic and mathematical constraints, including character and enemy movement physics, collision detection, and weapon shooting mechanisms.
 
-For the visual aspect of the game, 
-- **Miro** to brainstorm and share frontend design ideas collaboratively. Additionally, during team discussions and meetings.
-- **Google Docs** to outline and list everyone's tasks, keeping the whole team aligned on responsibilities and progress.
+#### Methodology & Collaborative Tools
+* **Agile Development:** We employed Agile methodologies to keep our iterative development organized. Using **Jira**, we maintained a **Kanban** board and managed our sprints. During our weekly Tuesday planning sessions, we brainstormed objectives and created Jira tickets. To prevent task overlap, team members estimated time limits for their assigned cards, helping us gauge the complexity of each sprint. We also used **Google Docs** to document sprint goals, ensuring the entire team remained aligned on individual responsibilities.
+    
+    ![Jira Kanban Board](./image/jira_kanban.png)
 
-![Jira Kanban Board](./image/jira_kanban.png)
+* **Visual Prototyping:** For the frontend design, we utilized **Miro** as a collaborative whiteboard. This allowed all team members, regardless of their technical role, to sketch out visual concepts and iterate on UI/UX ideas freely during discussions.
 
-To maintain a high standard of code quality and a clean project history, we implemented a rigorous Git strategy:
+    ![Miro Visualization](./image/miro.png)
 
-- Feature & Fix Branches: Work was assigned via dedicated feature branches, while fix branches were used to address errors discovered after the main branch had been deployed.
+#### Technical Workflow
+To maintain a high standard of code quality and a clean project history, we implemented a rigorous version control strategy:
+* **Git Flow:** Work was strictly assigned via dedicated `feature/` branches. We also utilized `fix/` branches to address bugs discovered after a feature had been merged.
+* **Commit Message Style:** We defined a standardized commit message style to maintain a clear, readable, and highly organized version history. By categorizing our updates with semantic prefixes such as `feat:` (for new features), `fix:` (for bug resolutions), and `chore:` (for maintenance or configuration updates), team members could instantly understand the purpose of a change at a glance. This practice significantly streamlined our code reviews and made tracking down specific updates during debugging much easier.
+* **Linear History:** We prioritized rebasing over merging to ensure our Git history remained linear. This made it much easier to audit and track changes as complex modular systems (like the `ProjectileSystem` and `WeaponSystem`) were integrated.
+    
+    ![Git flow](./image/gitflow.png)
+    ![Git Commit Message](./image/commit_style.png)
 
-- Linear History: We prioritized rebasing over merging to ensure the Git history remained linear and easy to audit as different systems (like ProjectileSystem and WeaponSystem) were integrated.
+* **Code Review:** Every Pull Request required at least one approval from a teammate before merging into the main branch. This ensured that everyone stayed informed about recent updates and could provide feedback on core components like the `EntityFactory`. We also utilized **GitHub Copilot** as an AI assistant to help identify edge cases during code reviews.
 
-- Mandatory Peer Review: Each **Pull Request** required approval from other teammates before it could be merged into the main branch. This practice ensured that every team member was aware of recent updates and could provide feedback on modular components like the EntityFactory.
+#### Reflections & Adaptations
+While our Agile framework provided a strong foundation, the reality of development presented several challenges that required us to adapt our working style:
 
-![Git flow](./image/gitflow.png)
+* **Challenge: Task Overlap & Ambiguity**
+    * **What Didn't Work:** Because we were all navigating game development and p5.js for the first time, initial task boundaries were blurry. Teammates occasionally modified shared files independently, leading to divergent logic and confusion.
+    * **How We Adapted:** We shifted to a more immediate communication style using our **WhatsApp Group** to flag file modifications in real-time. More importantly, we introduced **pair programming** sessions. This not only prevented overlapping work but also allowed us to share ideas and standardize our coding styles across the frontend and backend boundaries.
+
+* **Challenge: Feature Creep & Idea Convergence**
+    * **What Didn't Work:** During brainstorming, our team tended to be overly ambitious. We frequently proposed complex mechanics without knowing if they were technically viable, which stalled early prototyping.
+    * **How We Adapted:** We implemented a "verify early" rule. Instead of debating complex ideas abstractly, we forced ourselves to either draw a simplified, structural flow on **Miro** or build a bare-bones code proof-of-concept. This grounded our creativity in technical reality.
+
+* **Challenge: Git Conflicts**
+    * **What Didn't Work:** Frequent rebasing initially resulted in overwhelming merge conflicts, as isolated tasks ended up interacting with the same core game loops. 
+    * **How We Adapted:** We learned that working in silos is dangerous in game development. When a conflict arose, we stopped resolving them in isolation and immediately initiated quick sync calls with the involved teammates to negotiate the merge. This fundamentally changed our mindset: we learned to constantly read each other's code to anticipate integration points *before* pushing our branches, drastically reducing integration risks later in the project.
 
 ### Conclusion
 
