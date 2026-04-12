@@ -1,50 +1,84 @@
 const WeaponType = Object.freeze({
-    RIFLE: "RIFLE",
+    SHOTGUN: "SHOTGUN",
     TWOWAYRIFLE: "TWOWAYRIFLE",
-    ROCKET: "ROCKET"
+    ROCKET: "ROCKET",
+    DISC: "DISC",
+    LASER: "LASER"
 })
 
-const BASICRIFLE = {
-    fireRate: 100, 
-    bulletDamage: 1, 
-    bulletSpeed: 0.2, 
-    bulletSize: {w: 0.12, h: 0.08},
-    recoilKick: 0.3,
-    maxRange: 0.3,
-
-}
 
 const WEAPON_CONFIGS = {
-  [WeaponType.RIFLE]: BASICRIFLE,
-  [WeaponType.TWOWAYRIFLE]: BASICRIFLE,
-  [WeaponType.ROCKET]: {fireRate: 500, 
-                        bulletDamage: 3, 
-                        bulletSpeed: 0.4, 
-                        bulletSize: {w:0.36, h:0.24},
-                        recoilKick: 0.6,
-                        maxRange: 0.7,
-                      },
+  [WeaponType.SHOTGUN]: {
+    fireRate: 250,
+    bulletDamage: 1,
+    bulletSpeed: 10,
+    bulletSize: {w: 16, h: 10},
+    recoilKick: 0.005,
+    maxRange: 0.3,
+    pellets: [
+      { angle: 0, offsetY: -8},
+      { angle: 0, offsetY: 8},
+      { angle: 15, offsetY: 0},
+      { angle: -15, offsetY: 0},
+    ],
+    bounce: 0,
+  },
+  [WeaponType.TWOWAYRIFLE]: {
+      fireRate: 100,
+      bulletDamage: 1,
+      bulletSpeed: 10,
+      bulletSize: {w: 12, h: 6},
+      recoilKick: 0.003,
+      maxRange: 0.3,
+      pellets: [{ angle: 0, offsetY: 0 }],
+      bounce: 0,
+  },
+
+  [WeaponType.DISC]:{
+    fireRate: 100,
+      bulletDamage: 1,
+      bulletSpeed: 15,
+      bulletSize: {w: 35, h: 8},
+      recoilKick: 0.003,
+      maxRange: 2,
+      pellets: [{ angle: 0, offsetY: 0 }],
+      bounce: 1,
+  },
+
+  [WeaponType.ROCKET]: {
+      fireRate: 500,
+      bulletDamage: 3,
+      bulletSpeed: 20,
+      bulletSize: {w:24, h:18},
+      recoilKick: 0.009,
+      maxRange: 0.7,
+      pellets: [{ angle: 0, offsetY: 0 }],
+      bounce: 0,
+  },
+
+  [WeaponType.LASER]: {
+    fireRate: 500,
+    bulletDamage: 2,
+    bulletSize: {h: 8},    // beam thickness
+    beamLength: 400,       // fixed beam length in pixels
+    recoilKick: 0,
+    duration: 120,         // ms the beam stays active/visible
+    pierce: true,
+  },
+
+
 }
 
 class Weapon {
-  constructor(type=null){
+  constructor(type = null) {
     this.type = type;
-    if (type){
-      const config = WEAPON_CONFIGS[type]
+    if (type) {
+      const config = WEAPON_CONFIGS[type];
+      // Copy all config fields onto this instance. Using Object.assign means
+      // new fields (e.g. pierce, duration, beamLength) are picked up automatically
+      // without having to update this list every time.
+      Object.assign(this, config);
       this.lastShotTime = 0;
-
-      // Map config data to the component instance
-      this.fireRate = config.fireRate;
-      this.bulletDamage = config.bulletDamage;
-      this.maxRange = config.maxRange;
-
-      this.bulletSpeed = LevelFactory.scaleX(config.bulletSpeed, width);
-      this.recoilKick  = LevelFactory.scaleX(config.recoilKick, width);
-
-      this.bulletSize = {
-          w: LevelFactory.scaleX(config.bulletSize.w, width),
-          h: LevelFactory.scaleY(config.bulletSize.h, height)
-      };
     }
   }
 }
