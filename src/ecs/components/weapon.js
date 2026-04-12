@@ -7,6 +7,14 @@ const WeaponType = Object.freeze({
 })
 
 
+const WEAPON_SPRITE_DATA = {
+  [WeaponType.SHOTGUN]:    { frameWidth: 64, frameHeight: 32 },
+  [WeaponType.TWOWAYRIFLE]:{ frameWidth: 77, frameHeight: 48 },
+  [WeaponType.DISC]:       { frameWidth: 77, frameHeight: 48 }, // shares TwoWayRifle image
+  [WeaponType.LASER]:      { frameWidth: 96, frameHeight: 48 },
+  [WeaponType.ROCKET]:     { frameWidth: 154, frameHeight: 32 },
+};
+
 const WEAPON_CONFIGS = {
   [WeaponType.SHOTGUN]: {
     fireRate: 250,

@@ -27,10 +27,25 @@ class WeaponSystem extends System {
         weapon.lastShotTime = now;
     }
 
+    getWeaponTip(id, pos, character) {
+        const bb = pos.getBoundingBox();
+        const weapSprite = this.ecs.getComponent(id, WeaponSprite);
+        if (weapSprite) {
+            const aspect = weapSprite.frameWidth / weapSprite.frameHeight;
+            const weaponH = bb.h * 0.6;
+            const weaponW = weaponH * aspect;
+            const tipX = pos.x + character.direction * (bb.w * 0.35 + weaponW / 2);
+            const tipY = pos.y + bb.h * 0.05;
+            return { x: tipX, y: tipY };
+        }
+        return { x: pos.x, y: pos.y };
+    }
+
     spawnProjectiles(id, pos, weapon, character) {
+        const tip = this.getWeaponTip(id, pos, character);
         const projectileData = {
-            center_x: pos.x,
-            center_y: pos.y,
+            center_x: tip.x,
+            center_y: tip.y,
             velocity_y: 0,
             width: weapon.bulletSize.w,
             height: weapon.bulletSize.h,
@@ -77,10 +92,11 @@ class WeaponSystem extends System {
     }
 
     fireLaser(id, pos, weapon, character) {
-        const beamX = pos.x + character.direction * weapon.beamLength / 2;
+        const tip = this.getWeaponTip(id, pos, character);
+        const beamX = tip.x + character.direction * weapon.beamLength / 2;
         this.spawner.request(EntityType.PROJECTILE, {
             center_x: beamX,
-            center_y: pos.y,
+            center_y: tip.y,
             width: weapon.beamLength,
             height: weapon.bulletSize.h,
             velocity_x: 0,

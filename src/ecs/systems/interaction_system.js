@@ -64,6 +64,16 @@ class InteractionSystem extends System {
             player.score++;
             box.pickUp();
             this.ecs.addComponent(playerId, new Weapon(box.weapon));
+            // Attach weapon sprite if sprite data exists
+            const spriteData = WEAPON_SPRITE_DATA[box.weapon];
+            const spriteSheet = weaponSpriteSheets[box.weapon];
+            if (spriteData && spriteSheet) {
+                this.ecs.addComponent(playerId, new WeaponSprite(
+                    spriteSheet, spriteData.frameWidth, spriteData.frameHeight
+                ));
+            } else {
+                this.ecs.removeComponent(playerId, WeaponSprite);
+            }
             this.ecs.removeEntity(boxId);
             console.log(player.score);
         })
