@@ -64,27 +64,6 @@ class PhysicsSystem extends System {
             pos.x += Math.round(vel.vx * dt);
             this.resolveMovementCollisions(id, Axis.X);
 
-            // Apply Wind Force in level 2
-            if (player && this.physics.WIND_FORCE) {
-                const windAmount = this.physics.WIND_FORCE * dt;
-
-                // Moving the player by the wind amount
-                pos.x += windAmount;
-
-                // Check if this wind-movement caused a collision
-                this.forEachCollision(pos, [Position, Wall], (wallId) => {
-                    const wallPos = this.ecs.getComponent(wallId, Position);
-                    const bb_a = pos.getBoundingBox();
-                    const bb_b = wallPos.getBoundingBox();
-
-                    // If wind pushed us into a wall, snap to wall edge and STOP
-                    if (this.physics.WIND_FORCE < 0) {
-                        pos.x = Math.ceil(bb_b.left_x + bb_b.w + bb_a.w / 2);
-                        vel.vx = Math.max(0, vel.vx); // Stop leftward momentum
-                    }
-                });
-            }
-
             if (pos.y > height) {
                 if (droplet) {
                     this.ecs.removeEntity(id);

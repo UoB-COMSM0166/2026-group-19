@@ -1,9 +1,6 @@
 const LevelTemplates = {
     1: {
         player: { x: 15, y: 3 },
-        physics: {
-            PLAYER_DAMPING_MULTIPLIER: 0.97
-        },
         platforms: [
             { x0: 0, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
             { x0: 18, y0: 0, x1: 31, y1: 0, spawnable: false }, // Boundary: Top-right
@@ -23,8 +20,7 @@ const LevelTemplates = {
     2: {
         player: { x: 15, y: 3 },
         physics: {
-            WIND_FORCE: -5,
-            SPAWN_RATE: 250
+            PLAYER_DAMPING_MULTIPLIER: 0.97
         },
         platforms: [
             { x0: 1, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
