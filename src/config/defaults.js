@@ -11,11 +11,11 @@ const DEFAULTS = {
         TERMINAL_VELOCITY: 0.35,
         PLAYER_DAMPING_MULTIPLIER: 0.87,
         FLOATING_ENEMY_ACCEL: 0.002,
-        FLOATING_ENEMY_BOUNCE: 0.04,
+        FLOATING_ENEMY_BOUNCE: 0.15,
         SPAWN_WEIGHTS: {
-            NORMAL: 0.7,   // 70% chance
-            LARGE: 0.2,    // 20% chance
-            FLOATING: 0.1  // 10% chance
+            NORMAL: 0.4,
+            LARGE: 0.3,
+            FLOATING: 0.3
         },
         DROPLETS_PER_DEATH: 12,
         MIN_BLOOD_SPEED: 0.2,
