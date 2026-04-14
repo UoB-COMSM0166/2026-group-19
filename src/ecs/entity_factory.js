@@ -100,12 +100,13 @@ class EntityFactory {
         const components = [
             this.centeredPosition(data),
             new Wall(),
-            //new Renderable([200, 0, 0], this.wallTileImage),
-            //...(data.spawnable ? [new SpawnablePlatform()] : []),
         ];
 
-        if (data.spawnable) {
+        if (data.spawnable || data.y0 === 17) {
             components.push(new Renderable([200, 0, 0], this.wallTileImage));
+        }
+
+        if (data.spawnable) {
             components.push(new SpawnablePlatform());
         }
 
