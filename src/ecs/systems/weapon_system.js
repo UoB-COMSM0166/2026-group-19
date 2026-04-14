@@ -66,8 +66,8 @@ class WeaponSystem extends System {
 
             for (let pellet of weapon.pellets){
                 const angle = baseAngle + pellet.angle * Math.PI / 180;
-                const vx = Math.cos(angle) * weapon.bulletSpeed;
-                const vy = Math.sin(angle) * weapon.bulletSpeed;
+                const vx = Math.cos(angle) * LevelFactory.scaleX(weapon.bulletSpeed, width);
+                const vy = Math.sin(angle) * LevelFactory.scaleY(weapon.bulletSpeed, height);
                 this.spawner.request(EntityType.PROJECTILE, {
                     ...projectileData,
                     center_y: pos.y - pellet.offsetY,
@@ -78,7 +78,7 @@ class WeaponSystem extends System {
     }
 
     fireBasic(weapon, character, projectileData){
-        const vx = character.direction * weapon.bulletSpeed;
+        const vx = character.direction * LevelFactory.scaleX(weapon.bulletSpeed, width);
         const vels = weapon.type === WeaponType.TWOWAYRIFLE ? [vx, -vx] : [vx];
 
         vels.forEach (vx => {

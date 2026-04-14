@@ -17,7 +17,7 @@ const WEAPON_CONFIGS = {
   [WeaponType.SHOTGUN]: {
     fireRate: 250,
     bulletDamage: 1,
-    bulletSpeed: 20,
+    bulletSpeed: 20.0 / 32.0,
     bulletSize: {w: 0.4, h: 0.25},
     recoilKick: 5,
     maxRange: 0.3,
@@ -32,7 +32,7 @@ const WEAPON_CONFIGS = {
   [WeaponType.TWOWAYRIFLE]: {
       fireRate: 100,
       bulletDamage: 1,
-      bulletSpeed: 20,
+      bulletSpeed: 20.0 / 32.0,
       bulletSize: {w: 0.3, h: 0.15},
       recoilKick: 3,
       maxRange: 0.3,
@@ -43,7 +43,7 @@ const WEAPON_CONFIGS = {
   [WeaponType.DISC]:{
     fireRate: 100,
       bulletDamage: 1,
-      bulletSpeed: 25,
+      bulletSpeed: 25.0 / 32.0,
       bulletSize: {w: 0.875, h: 0.2},
       recoilKick: 3,
       maxRange: 2,
@@ -53,8 +53,8 @@ const WEAPON_CONFIGS = {
 
   [WeaponType.ROCKET]: {
       fireRate: 500,
-      bulletDamage: 3,
-      bulletSpeed: 15,
+      bulletDamage: 10,
+      bulletSpeed: 15.0 / 32.0,
       bulletSize: {w: 0.6, h: 0.45},
       recoilKick: 9,
       maxRange: 0.7,
