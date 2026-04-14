@@ -37,7 +37,7 @@ class PhysicsSystem extends System {
         5. If entity fallen off bottom of screen, respawn at top
         */
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
-        
+
 
         for (let id of moving_ids) {
             const pos = this.ecs.getComponent(id, Position);
@@ -63,7 +63,28 @@ class PhysicsSystem extends System {
             // Movement phase (axis-dependent)
             pos.x += Math.round(vel.vx * dt);
             this.resolveMovementCollisions(id, Axis.X);
-            
+
+            // Apply Wind Force in level 2
+            if (player && this.physics.WIND_FORCE) {
+                const windAmount = this.physics.WIND_FORCE * dt;
+
+                // Moving the player by the wind amount
+                pos.x += windAmount;
+
+                // Check if this wind-movement caused a collision
+                this.forEachCollision(pos, [Position, Wall], (wallId) => {
+                    const wallPos = this.ecs.getComponent(wallId, Position);
+                    const bb_a = pos.getBoundingBox();
+                    const bb_b = wallPos.getBoundingBox();
+
+                    // If wind pushed us into a wall, snap to wall edge and STOP
+                    if (this.physics.WIND_FORCE < 0) {
+                        pos.x = Math.ceil(bb_b.left_x + bb_b.w + bb_a.w / 2);
+                        vel.vx = Math.max(0, vel.vx); // Stop leftward momentum
+                    }
+                });
+            }
+
             if (pos.y > height) {
                 if (droplet) {
                     this.ecs.removeEntity(id);
@@ -78,7 +99,7 @@ class PhysicsSystem extends System {
             }
             else {
                 pos.y = pos.y + vel.vy * dt;
-            }  
+            }
 
             // Clamp to max speed — magnified if enemy is in powerful state
             if (enemy) {
@@ -132,16 +153,16 @@ class PhysicsSystem extends System {
             } else if (originalVel.vx < 0) {
                 pos.x = Math.ceil(bb_b.left_x + bb_b.w + bb_a.w / 2); // Hit right side of wall
             }
-            
-            if (player) { 
-                vel.vx = 0; 
+
+            if (player) {
+                vel.vx = 0;
             }
-            else { 
+            else {
                 // Only flip velocity if it matches the original direction (avoid double flip)
                 if (originalVel.vx > 0 && vel.vx > 0) vel.vx = -vel.vx;
                 else if (originalVel.vx < 0 && vel.vx < 0) vel.vx = -vel.vx;
             }
-        } 
+        }
         else {
             // Resolve Y: Push out and kill velocity
             if (originalVel.vy > 0) {

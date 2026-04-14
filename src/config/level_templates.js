@@ -2,11 +2,7 @@ const LevelTemplates = {
     1: {
         player: { x: 15, y: 3 },
         physics: {
-            SPAWN_WEIGHTS: {
-                NORMAL: 0.7,   // 70% chance
-                LARGE: 0.2,    // 20% chance
-                FLOATING: 0.1  // 10% chance
-            }
+            PLAYER_DAMPING_MULTIPLIER: 0.97
         },
         platforms: [
             { x0: 0, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
@@ -27,12 +23,8 @@ const LevelTemplates = {
     2: {
         player: { x: 15, y: 3 },
         physics: {
-            SPAWN_RATE: 250,
-            SPAWN_WEIGHTS: {
-                NORMAL: 0.5,   // 50% chance
-                LARGE: 0.3,    // 30% chance
-                FLOATING: 0.2  // 20% chance
-            }
+            WIND_FORCE: -5,
+            SPAWN_RATE: 250
         },
         platforms: [
             { x0: 1, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
@@ -54,12 +46,8 @@ const LevelTemplates = {
     3: {
         player: { x: 15, y: 3 },
         physics: {
-            SPAWN_RATE: 250,
-            SPAWN_WEIGHTS: {
-                NORMAL: 0.4,   // 40% chance
-                LARGE: 0.4,    // 40% chance
-                FLOATING: 0.2  // 20% chance
-            }
+            JUMP_SPEED: 0.45,
+            GRAVITY: 0.01,
         },
         platforms: [
             { x0: 0, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
