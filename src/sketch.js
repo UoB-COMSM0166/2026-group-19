@@ -2,7 +2,7 @@ let gameInstance;
 let sceneManager;
 let uiFont;
 let playBgImage;
-let characterSpriteSheet;
+let characterSpriteSheet;;
 let wallTileImage;
 let weaponSpriteSheets = {};
 

@@ -1,10 +1,18 @@
 class PlayScene extends Scene {
-    constructor(gameInstance, levelNum = 1, difficulty = "NORMAL") {
+    constructor(gameInstance, level, difficulty = "NORMAL") {
         super();
+        this.level = level;
         this.game = gameInstance;
-        this.levelToLoad = levelNum;
+        this.levelToLoad = level;
         this.difficulty = difficulty;
-        this.playBg = loadImage("src/assets/cave_background.jpg");
+
+        let bgPath = "src/assets/cave_background.png";
+        if (this.level === 2) {
+            bgPath = "src/assets/ice_background.png";
+        } else if (this.level === 3) {
+            bgPath = "src/assets/space_background.png";
+        }
+        this.playBg = loadImage(bgPath);
         this.fpsCounter = new drawFps();
         this.scoreHUD = new ScoreHUD(this.game.ecs);
     }

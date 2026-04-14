@@ -82,8 +82,9 @@ class RenderSystem extends System {
         if (!animData) return;
 
         const frameNum = animData.frames[anim.frameIndex];
-        const sx = frameNum * anim.frameWidth;
-        const sy = 0;
+        const cols = 5;
+        const sx = frameNum* anim.frameWidth;
+        const sy = Math.floor(frameNum / cols) * anim.frameHeight;
 
         push();
         translate(pos.x, pos.y);
