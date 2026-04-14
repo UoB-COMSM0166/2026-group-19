@@ -56,7 +56,7 @@ class LevelFactory {
             const top_y  = Math.round(LevelFactory.scaleY(p.y0, H));
             const width  = Math.round(LevelFactory.scaleX(p.x1 + 1 - p.x0, W));
             const height = Math.round(LevelFactory.scaleY(p.y1 + 1 - p.y0, H));
-            return { left_x, top_y, width, height, spawnable: p.spawnable };
+            return { left_x, top_y, width, height, spawnable: p.spawnable, y0: p.y0 };
         });
     }
 }
