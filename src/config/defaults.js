@@ -3,10 +3,7 @@ const DEFAULTS = {
         GRAVITY: 0.035,
         PLAYER_SPEED: 0.2,
         PLAYER_ACCELERATION: 0.04,
-        ENEMY_SPEED: 0.1,
-        MAX_ENEMY_SPEED: 0.24,
         JUMP_SPEED: 0.65,
-        SPAWN_RATE: 180,
         ENEMY_SPEED_MULTIPLIER: 2,
         TERMINAL_VELOCITY: 0.35,
         PLAYER_DAMPING_MULTIPLIER: 0.87,
@@ -36,22 +33,21 @@ const DEFAULTS = {
     },
     hurtTime: 280,
     difficulty: {
-        EASY: {
-            SPAWN_RATE: 240,
-            ENEMY_SPEED_MULTIPLIER: 0.8,
-            MAX_ENEMY_SPEED_MULTIPLIER: 0.8,
-            PLAYER_HEALTH: 5
-        },
         NORMAL: {
-            SPAWN_RATE: 180,
-            ENEMY_SPEED_MULTIPLIER: 1.0,
-            MAX_ENEMY_SPEED_MULTIPLIER: 1.0,
+            physics: {
+                // Just use the defaults
+                SPAWN_RATE: 180,
+                ENEMY_SPEED: 0.08,
+                MAX_ENEMY_SPEED: 0.16
+            },
             PLAYER_HEALTH: 3
         },
         HARD: {
-            SPAWN_RATE: 120,
-            ENEMY_SPEED_MULTIPLIER: 1.3,
-            MAX_ENEMY_SPEED_MULTIPLIER: 1.5,
+            physics: {
+                SPAWN_RATE: 120,
+                ENEMY_SPEED: 0.1,
+                MAX_ENEMY_SPEED: 0.2,
+            },
             PLAYER_HEALTH: 1
         }
     },
