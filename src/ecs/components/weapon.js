@@ -21,7 +21,7 @@ const WEAPON_CONFIGS = {
     bulletDamage: 1,
     bulletSpeed: 10,
     bulletSize: {w: 16, h: 10},
-    recoilKick: 0.005,
+    recoilKick: 5,
     maxRange: 0.3,
     pellets: [
       { angle: 0, offsetY: -8},
@@ -36,7 +36,7 @@ const WEAPON_CONFIGS = {
       bulletDamage: 1,
       bulletSpeed: 10,
       bulletSize: {w: 12, h: 6},
-      recoilKick: 0.003,
+      recoilKick: 3,
       maxRange: 0.3,
       pellets: [{ angle: 0, offsetY: 0 }],
       bounce: 0,
@@ -47,7 +47,7 @@ const WEAPON_CONFIGS = {
       bulletDamage: 1,
       bulletSpeed: 15,
       bulletSize: {w: 35, h: 8},
-      recoilKick: 0.003,
+      recoilKick: 3,
       maxRange: 2,
       pellets: [{ angle: 0, offsetY: 0 }],
       bounce: 1,
@@ -58,7 +58,7 @@ const WEAPON_CONFIGS = {
       bulletDamage: 3,
       bulletSpeed: 20,
       bulletSize: {w:24, h:18},
-      recoilKick: 0.009,
+      recoilKick: 9,
       maxRange: 0.7,
       pellets: [{ angle: 0, offsetY: 0 }],
       bounce: 0,
@@ -66,7 +66,7 @@ const WEAPON_CONFIGS = {
 
   [WeaponType.LASER]: {
     fireRate: 500,
-    bulletDamage: 2,
+    bulletDamage: 1,
     bulletSize: {h: 8},    // beam thickness
     beamLength: 400,       // fixed beam length in pixels
     recoilKick: 0,
