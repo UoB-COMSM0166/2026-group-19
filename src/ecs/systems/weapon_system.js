@@ -114,6 +114,8 @@ class WeaponSystem extends System {
 
     applyRecoil(vel, weapon, character) {
         if (weapon.type === WeaponType.TWOWAYRIFLE) return;
-        vel.vx += -character.direction * weapon.recoilKick;
+        const speedThreshold = DEFAULTS.physics.PLAYER_SPEED / 4;
+        const multiplier = Math.abs(vel.vx) > speedThreshold ? 3 : 1;
+        vel.vx += -character.direction * weapon.recoilKick * multiplier;
     }
 }
