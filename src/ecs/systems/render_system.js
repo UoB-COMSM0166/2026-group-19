@@ -88,8 +88,9 @@ class RenderSystem extends System {
 
         // Calculate the top left coordinates of frame in sprite sheet image
         const frameNum = animData.frames[anim.frameIndex];
-        const sx = frameNum * anim.frameWidth;
-        const sy = 0;
+        const cols = 5;
+        const sx = frameNum* anim.frameWidth;
+        const sy = Math.floor(frameNum / cols) * anim.frameHeight;
 
         push();
         translate(pos.x, pos.y);

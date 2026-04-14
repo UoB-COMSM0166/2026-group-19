@@ -100,9 +100,15 @@ class EntityFactory {
         const components = [
             this.centeredPosition(data),
             new Wall(),
-            new Renderable([200, 0, 0], this.wallTileImage),
-            ...(data.spawnable ? [new SpawnablePlatform()] : []),
+            //new Renderable([200, 0, 0], this.wallTileImage),
+            //...(data.spawnable ? [new SpawnablePlatform()] : []),
         ];
+
+        if (data.spawnable) {
+            components.push(new Renderable([200, 0, 0], this.wallTileImage));
+            components.push(new SpawnablePlatform());
+        }
+
         this.addAll(entity, components);
         return entity;
     }

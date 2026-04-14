@@ -56,12 +56,21 @@ class Game {
         this.ecs.getSystem(InteractionSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
 
+        let wallTexturePath = "src/assets/cave_texture.png";
+        if (levelNumber === 2) {
+            wallTexturePath = "src/assets/ice_texture.png";
+        } else if (levelNumber === 3) {
+            wallTexturePath = "src/assets/space_texture.png";
+        }
+
         // Build wall image
-        loadImage("src/assets/wall_texture.png", img => {
-            this.ecs.getSystem(RenderSystem).buildWallCache(img)
+        loadImage(wallTexturePath, img => {
+            const renderSys = this.ecs.getSystem(RenderSystem);
+            if (renderSys) {
+                renderSys.buildWallCache(img);
+            }
         });
         
-
         // Spawn initial entities (Currently Player and walls)
         this.spawnLevelEntities(this.levelConfig);
     }
