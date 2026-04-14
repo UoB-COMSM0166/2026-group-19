@@ -47,16 +47,14 @@ class WeaponSystem extends System {
             center_x: tip.x,
             center_y: tip.y,
             velocity_y: 0,
-            width: weapon.bulletSize.w,
-            height: weapon.bulletSize.h,
+            width: LevelFactory.scaleX(weapon.bulletSize.w, width),
+            height: LevelFactory.scaleY(weapon.bulletSize.h, height),
             damage: weapon.bulletDamage,
             range: weapon.maxRange,
             bounce: weapon.bounce,
         };
 
-        if (weapon.type === WeaponType.LASER){
-            this.fireLaser(id, pos, weapon, character);
-        } else if (weapon.type === WeaponType.SHOTGUN){
+        if (weapon.type === WeaponType.SHOTGUN){
             this.fireShotgun(pos, weapon, character, projectileData);
         } else {
             this.fireBasic(weapon, character, projectileData);
@@ -89,27 +87,6 @@ class WeaponSystem extends System {
                 velocity_x: vx,
             })
         })
-    }
-
-    fireLaser(id, pos, weapon, character) {
-        const tip = this.getWeaponTip(id, pos, character);
-        const beamX = tip.x + character.direction * weapon.beamLength / 2;
-        this.spawner.request(EntityType.PROJECTILE, {
-            center_x: beamX,
-            center_y: tip.y,
-            width: weapon.beamLength,
-            height: weapon.bulletSize.h,
-            velocity_x: 0,
-            velocity_y: 0,
-            damage: weapon.bulletDamage,
-            range: Infinity,
-            bounce: 0,
-            pierce: true,
-            duration: weapon.duration,
-            followEntity: id,
-            followDirection: character.direction,
-            followOffset: weapon.beamLength / 2,
-        });
     }
 
     applyRecoil(vel, weapon, character) {

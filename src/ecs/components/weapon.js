@@ -3,7 +3,6 @@ const WeaponType = Object.freeze({
     TWOWAYRIFLE: "TWOWAYRIFLE",
     ROCKET: "ROCKET",
     DISC: "DISC",
-    LASER: "LASER"
 })
 
 
@@ -11,7 +10,6 @@ const WEAPON_SPRITE_DATA = {
   [WeaponType.SHOTGUN]:    { frameWidth: 64, frameHeight: 32 },
   [WeaponType.TWOWAYRIFLE]:{ frameWidth: 77, frameHeight: 48 },
   [WeaponType.DISC]:       { frameWidth: 77, frameHeight: 48 }, // shares TwoWayRifle image
-  [WeaponType.LASER]:      { frameWidth: 96, frameHeight: 48 },
   [WeaponType.ROCKET]:     { frameWidth: 154, frameHeight: 32 },
 };
 
@@ -19,8 +17,8 @@ const WEAPON_CONFIGS = {
   [WeaponType.SHOTGUN]: {
     fireRate: 250,
     bulletDamage: 1,
-    bulletSpeed: 10,
-    bulletSize: {w: 16, h: 10},
+    bulletSpeed: 20,
+    bulletSize: {w: 0.4, h: 0.25},
     recoilKick: 5,
     maxRange: 0.3,
     pellets: [
@@ -34,8 +32,8 @@ const WEAPON_CONFIGS = {
   [WeaponType.TWOWAYRIFLE]: {
       fireRate: 100,
       bulletDamage: 1,
-      bulletSpeed: 10,
-      bulletSize: {w: 12, h: 6},
+      bulletSpeed: 20,
+      bulletSize: {w: 0.3, h: 0.15},
       recoilKick: 3,
       maxRange: 0.3,
       pellets: [{ angle: 0, offsetY: 0 }],
@@ -45,8 +43,8 @@ const WEAPON_CONFIGS = {
   [WeaponType.DISC]:{
     fireRate: 100,
       bulletDamage: 1,
-      bulletSpeed: 15,
-      bulletSize: {w: 35, h: 8},
+      bulletSpeed: 25,
+      bulletSize: {w: 0.875, h: 0.2},
       recoilKick: 3,
       maxRange: 2,
       pellets: [{ angle: 0, offsetY: 0 }],
@@ -56,24 +54,13 @@ const WEAPON_CONFIGS = {
   [WeaponType.ROCKET]: {
       fireRate: 500,
       bulletDamage: 3,
-      bulletSpeed: 20,
-      bulletSize: {w:24, h:18},
+      bulletSpeed: 15,
+      bulletSize: {w: 0.6, h: 0.45},
       recoilKick: 9,
       maxRange: 0.7,
       pellets: [{ angle: 0, offsetY: 0 }],
       bounce: 0,
   },
-
-  [WeaponType.LASER]: {
-    fireRate: 500,
-    bulletDamage: 1,
-    bulletSize: {h: 8},    // beam thickness
-    beamLength: 400,       // fixed beam length in pixels
-    recoilKick: 0,
-    duration: 120,         // ms the beam stays active/visible
-    pierce: true,
-  },
-
 
 }
 
