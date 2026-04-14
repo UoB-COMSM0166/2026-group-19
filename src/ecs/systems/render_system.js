@@ -27,6 +27,7 @@ class RenderSystem extends System {
             const anim   = this.ecs.getComponent(id, Animation);
             const char   = this.ecs.getComponent(id, Character);
             const wall   = this.ecs.getComponent(id, Wall);
+            const weapSprite = this.ecs.getComponent(id, WeaponSprite);
 
             if (!pos || !render) continue;
             const bb = pos.getBoundingBox();
@@ -36,7 +37,7 @@ class RenderSystem extends System {
 
             // Animated draw only when sprite sheet is valid
             if (anim && anim.spriteSheet && anim.spriteSheet.width !== undefined) {
-                this.drawAnimated(char, anim, pos, bb);
+                this.drawAnimated(id, char, anim, pos, bb, weapSprite);
                 continue;
             }
 
@@ -76,17 +77,10 @@ class RenderSystem extends System {
         this.wallCache = buf;
     }
 
-    drawAnimated(char, anim, pos, bb) {
-        /*
-        Draws the current frame of a sprite sheet animation for an entity.
-        Handles horizontal flipping based on the character's facing direction.
-        The correct frame and its position on the sprite sheet are determined
-        by the Animation component's current state, which is managed by AnimationSystem.
-        */
+    drawAnimated(id, char, anim, pos, bb, weapSprite) {
         const animData = anim.animations[anim.current];
         if (!animData) return;
 
-        // Calculate the top left coordinates of frame in sprite sheet image
         const frameNum = animData.frames[anim.frameIndex];
         const cols = 5;
         const sx = frameNum* anim.frameWidth;
@@ -99,6 +93,32 @@ class RenderSystem extends System {
         }
         imageMode(CENTER);
         image(anim.spriteSheet, 0, 0, bb.w, bb.h, sx, sy, anim.frameWidth, anim.frameHeight);
+
+        // Draw weapon sprite (frame 0 only) on character's hand
+        if (weapSprite && weapSprite.spriteSheet) {
+            const aspect = weapSprite.frameWidth / weapSprite.frameHeight;
+            const weaponH = bb.h * 0.6;
+            const weaponW = weaponH * aspect;
+            const weaponOffsetX = bb.w * 0.35;
+            // Adjust Y offset based on animation — move animation lowers the head
+            const isMoving = anim.current === AnimationType.MOVE;
+            const weaponOffsetY = isMoving ? bb.h * 0.15 : bb.h * 0.05;
+
+            // Front-facing weapon
+            image(weapSprite.spriteSheet, weaponOffsetX, weaponOffsetY, weaponW, weaponH,
+                  0, 0, weapSprite.frameWidth, weapSprite.frameHeight);
+
+            // TwoWayRifle: draw a second gun on the opposite side (mirrored)
+            const weapon = this.ecs.getComponent(id, Weapon);
+            if (weapon && weapon.type === WeaponType.TWOWAYRIFLE) {
+                push();
+                scale(-1, 1); // flip horizontally
+                image(weapSprite.spriteSheet, weaponOffsetX, weaponOffsetY, weaponW, weaponH,
+                      0, 0, weapSprite.frameWidth, weapSprite.frameHeight);
+                pop();
+            }
+        }
+
         pop();
     }
 }

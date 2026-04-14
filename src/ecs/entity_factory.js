@@ -140,14 +140,22 @@ class EntityFactory {
          *   - width: number
          *   - height: number
          *   - velocity_x: number
+         *   - velocity_y: number
          *   - damage: number
          *   - range: number
+         *   - bounce: number
          */
         const entity = this.ecs.createEntity();
+        const projectile = new Projectile(data.damage, data.range, data.bounce, data.pierce, data.duration);
+        if (data.followEntity !== undefined) {
+            projectile.followEntity = data.followEntity;
+            projectile.followDirection = data.followDirection;
+            projectile.followOffset = data.followOffset;
+        }
         this.addAll(entity, [
             new Position(data.center_x, data.center_y, data.width, data.height),
-            new Velocity(data.velocity_x, 0),
-            new Projectile(data.damage, data.range),
+            new Velocity(data.velocity_x, data.velocity_y),
+            projectile,
             new Renderable([255, 255, 0]),
         ]);
         return entity;

@@ -62,7 +62,18 @@ class InteractionSystem extends System {
             const box = this.ecs.getComponent(boxId, Box);
             const player = this.ecs.getComponent(playerId, Player);
             player.score++;
+            box.pickUp();
             this.ecs.addComponent(playerId, new Weapon(box.weapon));
+            // Attach weapon sprite if sprite data exists
+            const spriteData = WEAPON_SPRITE_DATA[box.weapon];
+            const spriteSheet = weaponSpriteSheets[box.weapon];
+            if (spriteData && spriteSheet) {
+                this.ecs.addComponent(playerId, new WeaponSprite(
+                    spriteSheet, spriteData.frameWidth, spriteData.frameHeight
+                ));
+            } else {
+                this.ecs.removeComponent(playerId, WeaponSprite);
+            }
             this.ecs.removeEntity(boxId);
             console.log(player.score);
         })
@@ -70,41 +81,63 @@ class InteractionSystem extends System {
 
     handleProjectileEnemy(projectileId) {
         const pos = this.ecs.getComponent(projectileId, Position);
+        const vel = this.ecs.getComponent(projectileId, Velocity);
         const projectile = this.ecs.getComponent(projectileId, Projectile);
-        const projectileVel = this.ecs.getComponent(projectileId, Velocity);
         if (!pos) return;
         let hit = false;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            // Only let projectile hit one enemy
-            if (hit) return;
-            hit = true;
+            if (projectile.pierce) {
+                // Pierce: hit all enemies along the beam, but only once each
+                if (projectile.hitEnemies.has(enemyId)) return;
 
-            const enemyVel = this.ecs.getComponent(enemyId, Velocity);
-            const enemyChar = this.ecs.getComponent(enemyId, Character);
-            const enemyPos = this.ecs.getComponent(enemyId, Position);
+                const enemyChar = this.ecs.getComponent(enemyId, Character);
+                const enemyPos = this.ecs.getComponent(enemyId, Position);
+                enemyChar.health -= projectile.damage;
+                projectile.hitEnemies.add(enemyId);
 
-            // Damage
-            enemyChar.health -= projectile.damage;
+                if (enemyChar.health <= 0) {
+                    this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
+                    this.ecs.removeEntity(enemyId);
+                }
+            } else {
+                // Normal: one enemy per frame
+                if (hit) return;
+                if (projectile.lastHitEnemy === enemyId) return;
+                hit = true;
 
-            // Enemy Knockback
-            if (enemyVel && projectileVel) {
-                const knockback = this.physics.PROJECTILE_KNOCKBACK;
-                const dirX = projectileVel.vx >= 0 ? 1 : -1;
-                enemyVel.vx += dirX * pos.width / (enemyPos.width / 1.5) * knockback;
-            }
+                const enemyVel = this.ecs.getComponent(enemyId, Velocity);
+                const enemyChar = this.ecs.getComponent(enemyId, Character);
+                const enemyPos = this.ecs.getComponent(enemyId, Position);
+                enemyChar.health -= projectile.damage;
+                projectile.lastHitEnemy = enemyId;
 
-            this.ecs.removeEntity(projectileId);
+                // Enemy Knockback
+                if (enemyVel && vel) {
+                    const knockback = this.physics.PROJECTILE_KNOCKBACK;
+                    const dirX = vel.vx >= 0 ? 1 : -1;
+                    enemyVel.vx += dirX * pos.width / (enemyPos.width / 1.5) * knockback;
+                }
 
-            if (enemyChar.health <= 0) {
-                this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
-                this.ecs.removeEntity(enemyId);
+                if (projectile.bounce > 0) {
+                    vel.vx = -vel.vx;
+                    projectile.bounce -= 1;
+                } else {
+                    this.ecs.removeEntity(projectileId);
+                }
+
+                if (enemyChar.health <= 0) {
+                    this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
+                    this.ecs.removeEntity(enemyId);
+                }
             }
         })
     }
 
     handleProjectileWall(projectileId) {
         const pos = this.ecs.getComponent(projectileId, Position);
+        const projectile = this.ecs.getComponent(projectileId, Projectile);
         if (!pos) return;
+        if (projectile.pierce) return; // Beams ignore walls
         this.forEachCollision(pos, [Wall, Position], (wallId) => {
             this.ecs.removeEntity(projectileId);
         })
