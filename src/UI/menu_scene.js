@@ -17,8 +17,8 @@ class MenuScene extends Scene {
         this.menuIndex = 0;
         this.selectedLevel = 1;
         this.maxLevel = 3;
-        this.difficultyOptions = ["EASY", "NORMAL", "HARD"];
-        this.difficultyIndex = 1; // Default to NORMAL
+        this.difficultyOptions = ["NORMAL", "HARD"];
+        this.difficultyIndex = 0; // Default to NORMAL
         this.menuItems = ["START", "LEVEL", "DIFFICULTY", "SETTINGS"];
 
         // fps Display

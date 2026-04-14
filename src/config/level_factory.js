@@ -15,14 +15,9 @@ class LevelFactory {
         const difficultySettings = DEFAULTS.difficulty[difficultyKey] || DEFAULTS.difficulty.NORMAL;
 
         const physics = {
-            ...DEFAULTS.physics, 
+            ...DEFAULTS.physics,
             ...(template.physics || {}),
-            SPAWN_RATE: (template.physics?.SPAWN_RATE || DEFAULTS.physics.SPAWN_RATE) * 
-                        (difficultySettings.SPAWN_RATE / DEFAULTS.difficulty.NORMAL.SPAWN_RATE),
-            ENEMY_SPEED: (template.physics?.ENEMY_SPEED || DEFAULTS.physics.ENEMY_SPEED) * 
-                         difficultySettings.ENEMY_SPEED_MULTIPLIER,
-            MAX_ENEMY_SPEED: (template.physics?.MAX_ENEMY_SPEED || DEFAULTS.physics.MAX_ENEMY_SPEED) * 
-                             difficultySettings.MAX_ENEMY_SPEED_MULTIPLIER
+            ...difficultySettings.physics,
         };
                 
         // Scale physics properties
