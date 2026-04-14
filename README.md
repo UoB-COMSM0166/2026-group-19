@@ -252,6 +252,7 @@ While our Agile framework provided a strong foundation, the reality of developme
 ### Conclusion
 
 - 10% ~500 words
+The CrateBox project has been a massive undertaking, from the beginning, we decided to abandon the familiar comfort of deep inheritance hierarchies OOP strucutre, instead learning Entity-Component-System(ECS) design pattern, which gave us hardtime first but huge benefit during developing. ECS gave us a codebase where adding 
 
 - Reflect on the project as a whole. Lessons learnt. Reflect on challenges. Future work, describe both immediate next steps for your current game and also what you would potentially do if you had chance to develop a sequel.
 
