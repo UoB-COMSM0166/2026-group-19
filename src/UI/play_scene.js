@@ -39,7 +39,7 @@ class PlayScene extends Scene {
 
         let gradient = ctx.createRadialGradient(dim / 2, dim / 2, innerRadius, dim / 2, dim / 2, outerRadius);
         gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');    // Inner
-        gradient.addColorStop(1, 'rgba(9, 9, 9, 0.75)'); // Outer
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 0.75)'); // Outer
 
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, dim, dim);
