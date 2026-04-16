@@ -11,6 +11,7 @@ class EntityFactory {
     constructor(ecs, assets) {
         this.ecs = ecs;
         this.bulletImage = assets.bulletImage;
+        this.rocketImage = assets.rocketImage;
         this.characterSpriteSheet = assets.characterSpriteSheet;
         this.enemySpriteSheet = assets.enemySpriteSheet;
         this.enemyAngrySpriteSheet = assets.enemyAngrySpriteSheet;
