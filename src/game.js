@@ -52,6 +52,7 @@ class Game {
         this.ecs.getSystem(PhysicsSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(EnemySpawnSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(EnemySpawnSystem).applyHealth(this.levelConfig.health);
+        this.ecs.getSystem(EnemySpawnSystem).resetSpawnState();
         this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(FloatingSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(InteractionSystem).applyPhysics(this.levelConfig.physics);

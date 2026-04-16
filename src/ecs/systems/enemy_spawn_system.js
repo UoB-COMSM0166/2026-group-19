@@ -15,6 +15,7 @@ class EnemySpawnSystem extends System {
         super(ecs);
         this.spawner = spawner;
         this.spawnTimer = 0;
+        this.startDelay = DEFAULTS.SPAWN_START_DELAY;
         this.physics = DEFAULTS.physics;
         this.health = DEFAULTS.difficulty.NORMAL;
     }
@@ -27,7 +28,17 @@ class EnemySpawnSystem extends System {
         this.health = health;
     }
 
+    resetSpawnState() {
+        this.spawnTimer = 0;
+        this.startDelay = DEFAULTS.SPAWN_START_DELAY;
+    }
+
     update(dt) {
+        if (this.startDelay > 0) {
+            this.startDelay -= dt;
+            return;
+        }
+
         this.spawnTimer += dt;
 
         if (this.spawnTimer >= this.physics.SPAWN_RATE) {
