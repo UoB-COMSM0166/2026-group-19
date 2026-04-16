@@ -26,29 +26,27 @@ const DEFAULTS = {
         box:         { width: 0.7, height: 0.7 },
         blood:       { width: 0.2, height: 0.2 }
     },
-    health: {
-        player: 3,
-        enemy: 2,
-        large_enemy: 5
-    },
     hurtTime: 280,
     difficulty: {
         NORMAL: {
             physics: {
-                // Just use the defaults
-                SPAWN_RATE: 180,
-                ENEMY_SPEED: 0.08,
-                MAX_ENEMY_SPEED: 0.16
+                SPAWN_RATE: 240,
+                ENEMY_SPEED: 0.07,
+                MAX_ENEMY_SPEED: 0.14
             },
-            PLAYER_HEALTH: 3
+            PLAYER_HEALTH: 5,
+            ENEMY_HEALTH: 1,
+            LARGE_ENEMY_HEALTH: 3
         },
         HARD: {
             physics: {
-                SPAWN_RATE: 120,
+                SPAWN_RATE: 160,
                 ENEMY_SPEED: 0.1,
                 MAX_ENEMY_SPEED: 0.2,
             },
-            PLAYER_HEALTH: 1
+            PLAYER_HEALTH: 3,
+            ENEMY_HEALTH: 2,
+            LARGE_ENEMY_HEALTH: 5
         }
     },
     controls: {

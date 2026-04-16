@@ -36,10 +36,14 @@ class LevelFactory {
 
         return {
             physics: physics,
-            player: { 
+            player: {
                 center_x: LevelFactory.scaleX(template.player.x + 0.5, W),
                 center_y: LevelFactory.scaleY(template.player.y + 0.5, H),
-                health: difficultySettings.PLAYER_HEALTH
+            },
+            health: {
+                player: difficultySettings.PLAYER_HEALTH,
+                enemy: difficultySettings.ENEMY_HEALTH,
+                large_enemy: difficultySettings.LARGE_ENEMY_HEALTH
             },
             walls: LevelFactory.buildWalls(template.platforms, W, H)
         };
