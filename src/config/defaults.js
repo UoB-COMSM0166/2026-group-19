@@ -40,7 +40,7 @@ const DEFAULTS = {
         },
         HARD: {
             physics: {
-                SPAWN_RATE: 160,
+                SPAWN_RATE: 180,
                 ENEMY_SPEED: 0.1,
                 MAX_ENEMY_SPEED: 0.2,
             },
