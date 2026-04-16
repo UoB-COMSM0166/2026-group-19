@@ -25,10 +25,6 @@ class EntityFactory {
         this.physics = physics;
     }
 
-    applyHealth(health) {
-        this.health = health;
-    }
-
     // Public Methods
 
     create(type, data) {
