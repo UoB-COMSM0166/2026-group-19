@@ -68,7 +68,7 @@ class GameOverScene extends Scene {
         let option = this.menuItems[this.menuIndex];
         if (option === "RESTART") {
             // Restart the current level
-            sceneManager.switchScene(new PlayScene(gameInstance, this.playScene.levelToLoad));
+            sceneManager.switchScene(new PlayScene(gameInstance, this.playScene.levelToLoad, this.playScene.difficulty));
         } else if (option === "MENU") {
             // Return to main menu
             sceneManager.switchScene(new MenuScene());
