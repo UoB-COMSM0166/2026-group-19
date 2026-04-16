@@ -56,6 +56,7 @@ class Game {
         this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(FloatingSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(InteractionSystem).applyPhysics(this.levelConfig.physics);
+        this.ecs.getSystem(WeaponSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
         this.factory.applyHealth(this.levelConfig.health);
 

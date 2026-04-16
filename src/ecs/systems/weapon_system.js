@@ -1,7 +1,12 @@
 class WeaponSystem extends System {
     constructor(ecs, spawner){
       super(ecs);
-      this.spawner = spawner
+      this.spawner = spawner;
+      this.physics = defaults.physics;
+    }
+
+    applyPhysics(physics) {
+        this.physics = physics;
     }
 
 
@@ -90,9 +95,8 @@ class WeaponSystem extends System {
     }
 
     applyRecoil(vel, weapon, character) {
-        // if (weapon.type === WeaponType.TWOWAYRIFLE) return;
-        const speedThreshold = defaults.physics.playerSpeed / 4;
-        const multiplier = Math.abs(vel.vx) > speedThreshold ? 3 : 1;
-        vel.recoilVx += -character.direction * weapon.recoilKick * multiplier;
+        // Damping factor is for ice level, otherwise recoil was too much with higher damping multiplier.
+        const dampingFactor = 1 - (this.physics.playerDampingMultiplier - defaults.physics.playerDampingMultiplier);
+        vel.recoilVx += -character.direction * weapon.recoilKick * dampingFactor;
     }
 }
