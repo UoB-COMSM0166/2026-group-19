@@ -48,7 +48,6 @@ class InteractionSystem extends System {
 
 
             if (anim) {
-                anim.setAnimation(AnimationType.HURT);
                 anim.hurtUntil = Math.max(anim.hurtUntil, now + defaults.hurtTime);
             }
         })
