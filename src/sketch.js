@@ -2,8 +2,14 @@ let gameInstance;
 let sceneManager;
 let uiFont;
 let playBgImage;
-let characterSpriteSheet;;
+let characterSpriteSheet;
+let enemySpriteSheet;
+let enemyAngrySpriteSheet;
+let enemyLargeSpriteSheet;
+let enemyLargeAngrySpriteSheet;
+let enemyFloatingImage;
 let wallTileImage;
+let boxImage;
 let weaponSpriteSheets = {};
 
 // Global settings manager
@@ -15,7 +21,14 @@ function preload() {
     uiFont = loadFont("src/assets/8-BIT WONDER.TTF");
     playBgImage = loadImage("src/assets/gray_gameBg.png");
     wallTileImage = loadImage("src/assets/wall_texture.png");
-    characterSpriteSheet = loadImage("src/assets/main_characterSprites.png");
+    characterSpriteSheet = loadImage("src/assets/testsprite.png");
+    enemySpriteSheet = loadImage("src/assets/spriteEnemy.png");
+    enemyAngrySpriteSheet = loadImage("src/assets/spriteEnemyAngry.png");
+    enemyLargeSpriteSheet = loadImage("src/assets/spriteEnemyLarge.png");
+    enemyLargeAngrySpriteSheet = loadImage("src/assets/spriteEnemyLargeAngry.png");
+
+    enemyFloatingImage = loadImage("src/assets/spriteEnemyFloating.png");
+    boxImage = loadImage("src/assets/crate2.png");
     weaponSpriteSheets[WeaponType.SHOTGUN] = loadImage("src/assets/Shotgun.png");
     weaponSpriteSheets[WeaponType.TWOWAYRIFLE] = loadImage("src/assets/TwoWayRifle.png");
     weaponSpriteSheets[WeaponType.ROCKET] = loadImage("src/assets/Rocket.png");
@@ -26,6 +39,7 @@ function setup() {
     setAttributes({ version: 1 });
     const { w, h } = getCanvasSize();
     createCanvas(w, h, WEBGL);
+    noSmooth();
     frameRate(60);
     textFont(uiFont);
 

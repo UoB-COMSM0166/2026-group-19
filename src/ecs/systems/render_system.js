@@ -43,8 +43,10 @@ class RenderSystem extends System {
 
             // Plain image draw only when image is valid
             if (render.image && render.image.width !== undefined) {
+                push();
                 imageMode(CENTER);
                 image(render.image, pos.x, pos.y, bb.w, bb.h);
+                pop();
                 continue;
             }
 
@@ -82,12 +84,19 @@ class RenderSystem extends System {
         if (!animData) return;
 
         const frameNum = animData.frames[anim.frameIndex];
-        const cols = 5;
-        const sx = frameNum* anim.frameWidth;
+        const cols = anim.columns;
+        const sx = (frameNum % cols) * anim.frameWidth;
         const sy = Math.floor(frameNum / cols) * anim.frameHeight;
 
         push();
         translate(pos.x, pos.y);
+
+        const now = millis();
+        if (anim.hurtUntil > now) {
+            tint(255, 0, 0); // Red tint when hurt
+        }
+
+
         if (char.direction !== DIR_RIGHT) {
             scale(-1, 1);
         }

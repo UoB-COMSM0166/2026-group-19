@@ -11,15 +11,24 @@ class AnimationSystem extends System {
         for (const id of entities) {
             const anim = this.ecs.getComponent(id, Animation);
             const vel = this.ecs.getComponent(id, Velocity);
+            const char = this.ecs.getComponent(id, Character);
 
-            this.selectAnimation(anim, vel, now);
+            if (char) {
+                this.selectAnimation(char, anim, vel, now);
+            }
             this.advanceFrame(anim, dt);
         }
     }
 
-    selectAnimation(anim, vel, now) {
+    selectAnimation(char, anim, vel, now) {
         const hurtEnded = (anim.current === AnimationType.HURT && now > anim.hurtUntil);
         if (anim.current === AnimationType.HURT && !hurtEnded) return; // locked in hurt
+
+        if (vel.vx > 0.05) {
+            char.direction = DIR_RIGHT;
+        } else if (vel.vx < -0.05) {
+            char.direction = DIR_LEFT;
+        }
 
         const isMoving = Math.abs(vel.vx) > 0.05;
         anim.setAnimation(isMoving ? AnimationType.MOVE : AnimationType.IDLE);
@@ -29,7 +38,7 @@ class AnimationSystem extends System {
         const animationData = anim.animations[anim.current];
         if (!animationData) return;
 
-        anim.timer += dt / 1000;
+        anim.timer += dt * 0.006;
         if (anim.timer < animationData.duration_s) return;
 
         // Increment frame index
