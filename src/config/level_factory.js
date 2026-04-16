@@ -8,31 +8,31 @@ class LevelFactory {
     static scaleX(col, W) { return (col / GRID_COLS) * W; }
     static scaleY(row, H) { return (row / GRID_ROWS) * H; }
 
-    static build(template, difficultyKey = "NORMAL") {
+    static build(template, difficultyKey = "normal") {
         const W = width;
         const H = height;
 
-        const difficultySettings = DEFAULTS.difficulty[difficultyKey] || DEFAULTS.difficulty.NORMAL;
+        const difficultySettings = defaults.difficulty[difficultyKey] || defaults.difficulty.normal;
 
         const physics = {
-            ...DEFAULTS.physics,
+            ...defaults.physics,
             ...(template.physics || {}),
             ...difficultySettings.physics,
         };
-                
+
         // Scale physics properties
-        physics.GRAVITY = LevelFactory.scaleY(physics.GRAVITY, H);
-        physics.PLAYER_SPEED = LevelFactory.scaleX(physics.PLAYER_SPEED, W);
-        physics.PLAYER_ACCELERATION = LevelFactory.scaleX(physics.PLAYER_ACCELERATION, W);
-        physics.ENEMY_SPEED = LevelFactory.scaleX(physics.ENEMY_SPEED, W);
-        physics.MAX_ENEMY_SPEED = LevelFactory.scaleX(physics.MAX_ENEMY_SPEED, W);
-        physics.JUMP_SPEED = LevelFactory.scaleY(physics.JUMP_SPEED, H);
-        physics.TERMINAL_VELOCITY = LevelFactory.scaleY(physics.TERMINAL_VELOCITY, H);
-        physics.FLOATING_ENEMY_ACCEL = LevelFactory.scaleY(physics.FLOATING_ENEMY_ACCEL, H);
-        physics.FLOATING_ENEMY_BOUNCE = LevelFactory.scaleY(physics.FLOATING_ENEMY_BOUNCE, H);
-        physics.MIN_BLOOD_SPEED = LevelFactory.scaleY(physics.MIN_BLOOD_SPEED, H);
-        physics.MAX_BLOOD_SPEED = LevelFactory.scaleY(physics.MAX_BLOOD_SPEED, H);
-        physics.PROJECTILE_KNOCKBACK = LevelFactory.scaleX(physics.PROJECTILE_KNOCKBACK, W);
+        physics.gravity              = LevelFactory.scaleY(physics.gravity, H);
+        physics.playerSpeed          = LevelFactory.scaleX(physics.playerSpeed, W);
+        physics.playerAcceleration   = LevelFactory.scaleX(physics.playerAcceleration, W);
+        physics.enemySpeed           = LevelFactory.scaleX(physics.enemySpeed, W);
+        physics.maxEnemySpeed        = LevelFactory.scaleX(physics.maxEnemySpeed, W);
+        physics.jumpSpeed            = LevelFactory.scaleY(physics.jumpSpeed, H);
+        physics.terminalVelocity     = LevelFactory.scaleY(physics.terminalVelocity, H);
+        physics.floatingEnemyAccel   = LevelFactory.scaleY(physics.floatingEnemyAccel, H);
+        physics.floatingEnemyBounce  = LevelFactory.scaleY(physics.floatingEnemyBounce, H);
+        physics.minBloodSpeed        = LevelFactory.scaleY(physics.minBloodSpeed, H);
+        physics.maxBloodSpeed        = LevelFactory.scaleY(physics.maxBloodSpeed, H);
+        physics.projectileKnockback  = LevelFactory.scaleX(physics.projectileKnockback, W);
 
         return {
             physics: physics,
@@ -41,9 +41,9 @@ class LevelFactory {
                 center_y: LevelFactory.scaleY(template.player.y + 0.5, H),
             },
             health: {
-                player: difficultySettings.PLAYER_HEALTH,
-                enemy: difficultySettings.ENEMY_HEALTH,
-                large_enemy: difficultySettings.LARGE_ENEMY_HEALTH
+                player:     difficultySettings.playerHealth,
+                enemy:      difficultySettings.enemyHealth,
+                largeEnemy: difficultySettings.largeEnemyHealth
             },
             walls: LevelFactory.buildWalls(template.platforms, W, H)
         };

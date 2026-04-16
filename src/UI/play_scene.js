@@ -1,5 +1,5 @@
 class PlayScene extends Scene {
-    constructor(gameInstance, level, difficulty = "NORMAL") {
+    constructor(gameInstance, level, difficulty = "normal") {
         super();
         this.level = level;
         this.game = gameInstance;

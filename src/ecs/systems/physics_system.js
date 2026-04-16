@@ -19,7 +19,7 @@ class PhysicsSystem extends System {
     constructor(ecs, spawner) {
         super(ecs);
         this.spawner = spawner;
-        this.physics = DEFAULTS.physics; // Terminal velocity
+        this.physics = defaults.physics; // Terminal velocity
     }
 
     applyPhysics(physics) {
@@ -52,13 +52,13 @@ class PhysicsSystem extends System {
                 vel.vx = vel.vx + accel.ax * dt;
 
                 // Terminal velocity only applies in downward direction (for gravity)
-                vel.vy = Math.min(vel.vy + accel.ay * dt, this.physics.TERMINAL_VELOCITY);
+                vel.vy = Math.min(vel.vy + accel.ay * dt, this.physics.terminalVelocity);
             }
 
             // Clamp player horizontal speed
             if (player) {
-                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx), this.physics.PLAYER_SPEED);
-                vel.recoilVx *= Math.pow(this.physics.PLAYER_DAMPING_MULTIPLIER, dt);
+                vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx), this.physics.playerSpeed);
+                vel.recoilVx *= Math.pow(this.physics.playerDampingMultiplier, dt);
                 if (Math.abs(vel.recoilVx) < 0.001) vel.recoilVx = 0;
             }
 
@@ -75,7 +75,7 @@ class PhysicsSystem extends System {
                 pos.y = 0;
                 if (enemy) {
                     enemy.powerful = true;
-                    vel.vx *= this.physics.ENEMY_SPEED_MULTIPLIER;
+                    vel.vx *= this.physics.enemySpeedMultiplier;
 
                     const anim = this.ecs.getComponent(id, Animation);
                     if (anim) {
@@ -89,13 +89,13 @@ class PhysicsSystem extends System {
             }
             else {
                 pos.y = pos.y + vel.vy * dt;
-            }  
+            }
 
             // Clamp to max speed — magnified if enemy is in powerful state
             if (enemy) {
                 const maxSpeed = enemy.powerful
-                    ? this.physics.ENEMY_SPEED * this.physics.ENEMY_SPEED_MULTIPLIER
-                    : this.physics.ENEMY_SPEED;
+                    ? this.physics.enemySpeed * this.physics.enemySpeedMultiplier
+                    : this.physics.enemySpeed;
                 vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx), maxSpeed);
                 vel.vy = Math.sign(vel.vy) * Math.min(Math.abs(vel.vy), maxSpeed);
             }
@@ -161,7 +161,7 @@ class PhysicsSystem extends System {
                 char.onGround = true;
 
                 if (floating) {
-                    vel.vy = -this.physics.FLOATING_ENEMY_BOUNCE;
+                    vel.vy = -this.physics.floatingEnemyBounce;
                 }
                 else {
                     vel.vy = 0;

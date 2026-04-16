@@ -1,67 +1,67 @@
-const DEFAULTS = {
+const defaults = {
     physics: {
-        GRAVITY: 0.035,
-        PLAYER_SPEED: 0.2,
-        PLAYER_ACCELERATION: 0.04,
-        JUMP_SPEED: 0.65,
-        ENEMY_SPEED_MULTIPLIER: 2,
-        TERMINAL_VELOCITY: 0.35,
-        PLAYER_DAMPING_MULTIPLIER: 0.70,
-        FLOATING_ENEMY_ACCEL: 0.002,
-        FLOATING_ENEMY_BOUNCE: 0.15,
-        SPAWN_WEIGHTS: {
-            NORMAL: 0.4,
-            LARGE: 0.3,
-            FLOATING: 0.3
+        gravity: 0.035,
+        playerSpeed: 0.2,
+        playerAcceleration: 0.04,
+        jumpSpeed: 0.65,
+        enemySpeedMultiplier: 2,
+        terminalVelocity: 0.35,
+        playerDampingMultiplier: 0.70,
+        floatingEnemyAccel: 0.002,
+        floatingEnemyBounce: 0.15,
+        spawnWeights: {
+            normal: 0.4,
+            large: 0.3,
+            floating: 0.3
         },
-        DROPLETS_PER_DEATH: 12,
-        MIN_BLOOD_SPEED: 0.2,
-        MAX_BLOOD_SPEED: 0.6,
-        PROJECTILE_KNOCKBACK: 0.35
+        dropletsPerDeath: 12,
+        minBloodSpeed: 0.2,
+        maxBloodSpeed: 0.6,
+        projectileKnockback: 0.35
     },
     sizes: {
-        player:      { width: 0.8, height: 0.8 },
-        enemy:       { width: 0.7, height: 0.7 },
-        large_enemy: { width: 1.5, height: 1.5 },
-        box:         { width: 0.7, height: 0.7 },
-        blood:       { width: 0.2, height: 0.2 }
+        player:     { width: 0.8, height: 0.8 },
+        enemy:      { width: 0.7, height: 0.7 },
+        largeEnemy: { width: 1.5, height: 1.5 },
+        box:        { width: 0.7, height: 0.7 },
+        blood:      { width: 0.2, height: 0.2 }
     },
     hurtTime: 280,
-    SPAWN_START_DELAY: 5 * 60, // 5 seconds at 60 fps
+    spawnStartDelay: 3 * 60,
     difficulty: {
-        NORMAL: {
+        normal: {
             physics: {
-                SPAWN_RATE: 240,
-                ENEMY_SPEED: 0.07,
-                MAX_ENEMY_SPEED: 0.14
+                spawnRate: 240,
+                enemySpeed: 0.07,
+                maxEnemySpeed: 0.14
             },
-            PLAYER_HEALTH: 5,
-            ENEMY_HEALTH: 1,
-            LARGE_ENEMY_HEALTH: 3
+            playerHealth: 5,
+            enemyHealth: 1,
+            largeEnemyHealth: 3
         },
-        HARD: {
+        hard: {
             physics: {
-                SPAWN_RATE: 180,
-                ENEMY_SPEED: 0.1,
-                MAX_ENEMY_SPEED: 0.2,
+                spawnRate: 180,
+                enemySpeed: 0.1,
+                maxEnemySpeed: 0.2,
             },
-            PLAYER_HEALTH: 3,
-            ENEMY_HEALTH: 2,
-            LARGE_ENEMY_HEALTH: 5
+            playerHealth: 3,
+            enemyHealth: 2,
+            largeEnemyHealth: 5
         }
     },
     controls: {
-        ARROWS: {
-            LEFT: 37,  // LEFT_ARROW
-            RIGHT: 39, // RIGHT_ARROW
-            UP: 38,    // UP_ARROW
-            SHOOT: 32  // SPACE
+        arrows: {
+            left: 37,  // LEFT_ARROW
+            right: 39, // RIGHT_ARROW
+            up: 38,    // UP_ARROW
+            shoot: 32  // SPACE
         },
-        WASD: {
-            LEFT: 65,  // A
-            RIGHT: 68, // D
-            UP: 87,    // W
-            SHOOT: 13  // ENTER
+        wasd: {
+            left: 65,  // A
+            right: 68, // D
+            up: 87,    // W
+            shoot: 13  // ENTER
         }
     }
 };

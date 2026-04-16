@@ -1,5 +1,5 @@
 class Acceleration {
-    constructor(ax = 0, ay = DEFAULTS.phyiscs.GRAVITY) {
+    constructor(ax = 0, ay = defaults.phyiscs.GRAVITY) {
         this.ax = ax;
         this.ay = ay;
     }

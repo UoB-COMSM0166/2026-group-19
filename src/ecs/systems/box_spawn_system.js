@@ -21,8 +21,8 @@ class BoxSpawnSystem extends System {
 
             const bb = pos.getBoundingBox();
 
-            const boxW = LevelFactory.scaleX(DEFAULTS.sizes.box.width, width);
-            const boxH = LevelFactory.scaleY(DEFAULTS.sizes.box.height, height);
+            const boxW = LevelFactory.scaleX(defaults.sizes.box.width, width);
+            const boxH = LevelFactory.scaleY(defaults.sizes.box.height, height);
 
             this.spawner.request(EntityType.BOX, {
                 left_x: bb.left_x + this.getRandomPositionOnPlatform(bb, boxW),
