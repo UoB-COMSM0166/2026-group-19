@@ -6,7 +6,7 @@ const DEFAULTS = {
         JUMP_SPEED: 0.65,
         ENEMY_SPEED_MULTIPLIER: 2,
         TERMINAL_VELOCITY: 0.35,
-        PLAYER_DAMPING_MULTIPLIER: 0.87,
+        PLAYER_DAMPING_MULTIPLIER: 0.70,
         FLOATING_ENEMY_ACCEL: 0.002,
         FLOATING_ENEMY_BOUNCE: 0.15,
         SPAWN_WEIGHTS: {
@@ -27,6 +27,7 @@ const DEFAULTS = {
         blood:       { width: 0.2, height: 0.2 }
     },
     hurtTime: 280,
+    SPAWN_START_DELAY: 5 * 60, // 5 seconds at 60 fps
     difficulty: {
         NORMAL: {
             physics: {
