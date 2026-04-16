@@ -40,7 +40,7 @@ class Game {
         this.ecs.update(dt);
     }
 
-    loadLevel(levelNumber, difficulty = "NORMAL") {
+    loadLevel(levelNumber, difficulty = "normal") {
         const template = LevelTemplates[levelNumber]
         if (!template) throw new Error(`Unknown level: ${levelNumber}`);
 
@@ -81,8 +81,8 @@ class Game {
     spawnLevelEntities(levelConfig) {
         this.spawner.request(EntityType.PLAYER, {
             ...levelConfig.player,
-            width: LevelFactory.scaleX(DEFAULTS.sizes.player.width, width),
-            height: LevelFactory.scaleY(DEFAULTS.sizes.player.height, height),
+            width: LevelFactory.scaleX(defaults.sizes.player.width, width),
+            height: LevelFactory.scaleY(defaults.sizes.player.height, height),
             health: levelConfig.health.player
         });
 

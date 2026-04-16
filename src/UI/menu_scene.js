@@ -17,7 +17,7 @@ class MenuScene extends Scene {
         this.menuIndex = 0;
         this.selectedLevel = 1;
         this.maxLevel = 3;
-        this.difficultyOptions = ["NORMAL", "HARD"];
+        this.difficultyOptions = ["normal", "hard"];
         this.difficultyIndex = 0; // Default to NORMAL
         this.menuItems = ["START", "LEVEL", "DIFFICULTY", "SETTINGS"];
 
@@ -50,7 +50,7 @@ class MenuScene extends Scene {
             if (label === "LEVEL") {
                 displayText = `LEVEL [ ${this.selectedLevel} ]`;
             } else if (label === "DIFFICULTY") {
-                displayText = `DIFFICULTY [ ${this.difficultyOptions[this.difficultyIndex]} ]`;
+                displayText = `DIFFICULTY [ ${this.difficultyOptions[this.difficultyIndex].toUpperCase()} ]`;
             }
             
             let displayColor = isSelected ? color(255, 240, 120) : color(255);

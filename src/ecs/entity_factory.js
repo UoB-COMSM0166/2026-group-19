@@ -18,8 +18,7 @@ class EntityFactory {
         this.enemyFloatingImage = enemyFloatingImage;
         this.boxImage = boxImage;
         this.wallTileImage = wallTileImage;
-        this.physics = DEFAULTS.physics;
-
+        this.physics = defaults.physics;
     }
 
     applyPhysics(physics) {
@@ -73,7 +72,7 @@ class EntityFactory {
          */
         const entity = this.ecs.createEntity();
         const components = this.enemyComponents(data);
-        components.push(new Acceleration(0, this.physics.GRAVITY));
+        components.push(new Acceleration(0, this.physics.gravity));
         this.addAll(entity, components);
         return entity;
     }
@@ -90,7 +89,7 @@ class EntityFactory {
          *   - color: RGB
          */
         const entity = this.ecs.createEntity();
-        const speed = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1);
+        const speed = this.physics.enemySpeed * (Math.random() < 0.5 ? -1 : 1);
 
         const components = [
         new Position(data.center_x, data.center_y, data.width, data.height),
@@ -99,7 +98,7 @@ class EntityFactory {
         new Character(data.health),
         new Velocity(speed, 0),
         new Floating(),
-        new Acceleration(0, this.physics.GRAVITY / 5)
+        new Acceleration(0, this.physics.gravity / 5)
     ];
 
     this.addAll(entity, components);
@@ -187,7 +186,7 @@ class EntityFactory {
     playerComponents(data) {
         return [
             new Position(data.center_x, data.center_y, data.width, data.height),
-            new Acceleration(0, this.physics.GRAVITY),
+            new Acceleration(0, this.physics.gravity),
             new Renderable([255, 10, 155]),
             new Player(),
             new Velocity(0, 0),
@@ -197,12 +196,12 @@ class EntityFactory {
     }
 
     enemyComponents(data) {
-        const speed = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1);
+        const speed = this.physics.enemySpeed * (Math.random() < 0.5 ? -1 : 1);
 
         const sheet = data.isLarge ? this.enemyLargeSpriteSheet : this.enemySpriteSheet;
         const anims = data.isLarge ? LargeEnemyAnimations : EnemyAnimations;
         const pixelSize = data.isLarge ? 160 : 80;
-        
+
         return [
             new Position(data.center_x, data.center_y, data.width, data.height),
             new Renderable(data.color),

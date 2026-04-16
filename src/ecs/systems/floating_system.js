@@ -1,7 +1,7 @@
 class FloatingSystem extends System {
     constructor(ecs) {
         super(ecs);
-        this.physics = DEFAULTS.physics;
+        this.physics = defaults.physics;
     }
 
     applyPhysics(physics) {
@@ -28,14 +28,14 @@ class FloatingSystem extends System {
             if (dist === 0) continue;
 
             if (dist <= window.innerHeight / 2) {
-                enemyAcc.ax = (dx / dist) * this.physics.FLOATING_ENEMY_ACCEL;
-                enemyAcc.ay = (dy / dist) * this.physics.FLOATING_ENEMY_ACCEL;
+                enemyAcc.ax = (dx / dist) * this.physics.floatingEnemyAccel;
+                enemyAcc.ay = (dy / dist) * this.physics.floatingEnemyAccel;
                 float.wasInRange = true;
             }
             else if (float.wasInRange) {
                 enemyAcc.ax = 0;
-                enemyAcc.ay = this.physics.GRAVITY / 5;
-                enemyVel.vx = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1)
+                enemyAcc.ay = this.physics.gravity / 5;
+                enemyVel.vx = this.physics.enemySpeed * (Math.random() < 0.5 ? -1 : 1)
                 float.wasInRange = false;
             }
         }

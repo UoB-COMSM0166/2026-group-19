@@ -18,10 +18,10 @@ class InputSystem extends System {
         this.prev = new Map();
 
         // Use the default physics config
-        this.physics = DEFAULTS.physics;
+        this.physics = defaults.physics;
         
         // Default control scheme
-        this.currentScheme = "ARROWS";
+        this.currentScheme = "arrows";
     }
 
     applyPhysics(physics) {
@@ -29,7 +29,7 @@ class InputSystem extends System {
     }
 
     setControlScheme(schemeName) {
-        if (DEFAULTS.controls[schemeName]) {
+        if (defaults.controls[schemeName]) {
             this.currentScheme = schemeName;
         }
     }
@@ -37,7 +37,7 @@ class InputSystem extends System {
     update(dt) {
         const now = millis(); // Needed for the jump buffer timer
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
-        const controls = DEFAULTS.controls[this.currentScheme];
+        const controls = defaults.controls[this.currentScheme];
 
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
@@ -46,29 +46,29 @@ class InputSystem extends System {
             const accel = this.ecs.getComponent(id, Acceleration);
 
             // Correctly access physics constants
-            const moveAccel = this.physics.PLAYER_ACCELERATION;
-            const jumpSpeed = this.physics.JUMP_SPEED;
-            
-            const shootKey = controls.SHOOT;
+            const moveAccel = this.physics.playerAcceleration;
+            const jumpSpeed = this.physics.jumpSpeed;
+
+            const shootKey = controls.shoot;
             const isShootPressed = keyIsDown(shootKey) && !this.prev.get(shootKey);
 
             // --- SIDE-TO-SIDE MOVEMENT ---
-            if (keyIsDown(controls.LEFT)) {
+            if (keyIsDown(controls.left)) {
                 accel.ax = -moveAccel;
                 character.direction = DIR_LEFT;
             }
-            else if (keyIsDown(controls.RIGHT)) {
+            else if (keyIsDown(controls.right)) {
                 accel.ax = moveAccel;
                 character.direction = DIR_RIGHT;
             }
             else {
                 accel.ax = 0;
-                vel.vx *= Math.pow(this.physics.PLAYER_DAMPING_MULTIPLIER, dt);
+                vel.vx *= Math.pow(this.physics.playerDampingMultiplier, dt);
                 if (Math.abs(vel.vx) < 0.01) { vel.vx = 0; }
             }
 
             // --- THE JUMP BUFFER FIX ---
-            let upPressed = keyIsDown(controls.UP);
+            let upPressed = keyIsDown(controls.up);
 
             // 1. Record the exact time the jump key was first pressed
             if (upPressed && !this.prev.get('upKey')) {

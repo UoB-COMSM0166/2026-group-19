@@ -20,7 +20,7 @@ const LevelTemplates = {
     2: {
         player: { x: 15, y: 3 },
         physics: {
-            PLAYER_DAMPING_MULTIPLIER: 0.97
+            playerDampingMultiplier: 0.97
         },
         platforms: [
             { x0: 1, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
@@ -42,8 +42,8 @@ const LevelTemplates = {
     3: {
         player: { x: 15, y: 3 },
         physics: {
-            JUMP_SPEED: 0.45,
-            GRAVITY: 0.01,
+            jumpSpeed: 0.45,
+            gravity: 0.01,
         },
         platforms: [
             { x0: 0, y0: 0, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left

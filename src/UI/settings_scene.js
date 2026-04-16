@@ -5,7 +5,7 @@ class SettingsScene extends Scene {
         this.sceneToReturnTo = sceneToReturnTo || sceneToDisplayUnderneath;
         
         this.menuIndex = 0;
-        this.controlSchemes = Object.keys(DEFAULTS.controls);
+        this.controlSchemes = Object.keys(defaults.controls);
         this.controlIndex = this.controlSchemes.indexOf(GameSettings.controlScheme);
         if (this.controlIndex === -1) this.controlIndex = 0;
 
@@ -44,7 +44,7 @@ class SettingsScene extends Scene {
         for (let i = 0; i < this.menuItems.length; i++) {
             let item = this.menuItems[i];
             let label = item;
-            if (item === "CONTROLS") label = "CONTROLS [ " + this.controlSchemes[this.controlIndex] + " ]";
+            if (item === "CONTROLS") label = "CONTROLS [ " + this.controlSchemes[this.controlIndex].toUpperCase() + " ]";
             if (item === "VOLUME") label = "VOLUME [ " + this.volume + " ]";
             if (item === "MUTE") label = "MUTE [ " + (this.isMuted ? "ON" : "OFF") + " ]";
 
