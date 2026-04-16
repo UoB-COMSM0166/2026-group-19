@@ -8,16 +8,17 @@ const EntityType = Object.freeze({
 })
 
 class EntityFactory {
-    constructor(ecs) {
+    constructor(ecs, assets) {
         this.ecs = ecs;
-        this.characterSpriteSheet = characterSpriteSheet;
-        this.enemySpriteSheet = enemySpriteSheet;
-        this.enemyAngrySpriteSheet = enemyAngrySpriteSheet;
-        this.enemyLargeSpriteSheet = enemyLargeSpriteSheet;
-        this.enemyLargeAngrySpriteSheet = enemyLargeAngrySpriteSheet;
-        this.enemyFloatingImage = enemyFloatingImage;
-        this.boxImage = boxImage;
-        this.wallTileImage = wallTileImage;
+        this.bulletImage = assets.bulletImage;
+        this.characterSpriteSheet = assets.characterSpriteSheet;
+        this.enemySpriteSheet = assets.enemySpriteSheet;
+        this.enemyAngrySpriteSheet = assets.enemyAngrySpriteSheet;
+        this.enemyLargeSpriteSheet = assets.enemyLargeSpriteSheet;
+        this.enemyLargeAngrySpriteSheet = assets.enemyLargeAngrySpriteSheet;
+        this.enemyFloatingImage = assets.enemyFloatingImage;
+        this.boxImage = assets.boxImage;
+        this.wallTileImage = assets.wallTileImage;
         this.physics = defaults.physics;
     }
 
@@ -168,11 +169,12 @@ class EntityFactory {
             projectile.followDirection = data.followDirection;
             projectile.followOffset = data.followOffset;
         }
+        const img = data.isRocket ? this.rocketImage : this.bulletImage;
         this.addAll(entity, [
             new Position(data.center_x, data.center_y, data.width, data.height),
             new Velocity(data.velocity_x, data.velocity_y),
             projectile,
-            new Renderable([255, 255, 0]),
+            new Renderable(null, img),
         ]);
         return entity;
     }

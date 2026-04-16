@@ -11,6 +11,8 @@ let enemyFloatingImage;
 let wallTileImage;
 let boxImage;
 let weaponSpriteSheets = {};
+let bulletImage;
+let rocketImage;
 
 // Global settings manager
 const GameSettings = {
@@ -33,6 +35,8 @@ function preload() {
     weaponSpriteSheets[WeaponType.SHOTGUN] = loadImage("src/assets/Shotgun.png");
     weaponSpriteSheets[WeaponType.TWOWAYRIFLE] = loadImage("src/assets/TwoWayRifle.png");
     weaponSpriteSheets[WeaponType.ROCKET] = loadImage("src/assets/Rocket.png");
+    bulletImage = loadImage("src/assets/bullet.png");
+    rocketImage = loadImage("src/assets/rocket.png");
     // DISC shares TwoWayRifle — assigned after preload in setup()
 }
 
@@ -46,7 +50,20 @@ function setup() {
 
     weaponSpriteSheets[WeaponType.DISC] = weaponSpriteSheets[WeaponType.TWOWAYRIFLE];
 
-    gameInstance = new Game();
+    const assets = {
+        bulletImage,
+        rocketImage,
+        characterSpriteSheet,
+        enemySpriteSheet,
+        enemyAngrySpriteSheet,
+        enemyLargeSpriteSheet,
+        enemyLargeAngrySpriteSheet,
+        enemyFloatingImage,
+        boxImage,
+        wallTileImage
+    };
+
+    gameInstance = new Game(assets);
     sceneManager = new SceneManager();
     sceneManager.switchScene(new MenuScene());
 }
