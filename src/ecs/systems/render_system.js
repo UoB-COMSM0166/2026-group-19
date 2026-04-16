@@ -22,18 +22,17 @@ class RenderSystem extends System {
         }
 
         for (let id of rend_ids) {
+            // Wall tiles are rendered through cache
+            if (this.ecs.getComponent(id, Wall)) continue;
+
             const pos    = this.ecs.getComponent(id, Position);
             const render = this.ecs.getComponent(id, Renderable);
-            const anim   = this.ecs.getComponent(id, Animation);
-            const char   = this.ecs.getComponent(id, Character);
-            const wall   = this.ecs.getComponent(id, Wall);
-            const weapSprite = this.ecs.getComponent(id, WeaponSprite);
-
             if (!pos || !render) continue;
             const bb = pos.getBoundingBox();
 
-            // Wall tiles are rendered through cache
-            if (wall) continue;
+            const anim   = this.ecs.getComponent(id, Animation);
+            const char   = this.ecs.getComponent(id, Character);
+            const weapSprite = this.ecs.getComponent(id, WeaponSprite);
 
             // Animated draw only when sprite sheet is valid
             if (anim && anim.spriteSheet && anim.spriteSheet.width !== undefined) {
