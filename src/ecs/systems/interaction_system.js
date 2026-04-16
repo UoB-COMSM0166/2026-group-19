@@ -128,6 +128,11 @@ class InteractionSystem extends System {
                     this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
                     this.ecs.removeEntity(enemyId);
                 }
+
+                const enemyAnim = this.ecs.getComponent(enemyId, Animation);
+                if (enemyAnim) {
+                    enemyAnim.hurtUntil = Math.max(enemyAnim.hurtUntil, millis() + DEFAULTS.hurtTime);
+                }
             }
         })
     }
