@@ -11,8 +11,15 @@ class EntityFactory {
     constructor(ecs) {
         this.ecs = ecs;
         this.characterSpriteSheet = characterSpriteSheet;
+        this.enemySpriteSheet = enemySpriteSheet;
+        this.enemyAngrySpriteSheet = enemyAngrySpriteSheet;
+        this.enemyLargeSpriteSheet = enemyLargeSpriteSheet;
+        this.enemyLargeAngrySpriteSheet = enemyLargeAngrySpriteSheet;
+        this.enemyFloatingImage = enemyFloatingImage;
+        this.boxImage = boxImage;
         this.wallTileImage = wallTileImage;
         this.physics = DEFAULTS.physics;
+
     }
 
     applyPhysics(physics) {
@@ -79,11 +86,20 @@ class EntityFactory {
          *   - color: RGB
          */
         const entity = this.ecs.createEntity();
-        const components = this.enemyComponents(data);
-        components.push(new Floating());
-        components.push(new Acceleration(0, this.physics.GRAVITY / 5));
-        this.addAll(entity, components);
-        return entity;
+        const speed = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1);
+
+        const components = [
+        new Position(data.center_x, data.center_y, data.width, data.height),
+        new Renderable(data.color, this.enemyFloatingImage),
+        new Enemy(),
+        new Character(data.health),
+        new Velocity(speed, 0),
+        new Floating(),
+        new Acceleration(0, this.physics.GRAVITY / 5)
+    ];
+
+    this.addAll(entity, components);
+    return entity;
     }
 
     createWall(data) {
@@ -127,7 +143,7 @@ class EntityFactory {
         this.addAll(entity, [
             this.centeredPosition(data),
             new Box(),
-            new Renderable([82, 51, 45]),
+            new Renderable([82, 51, 45], this.boxImage),
         ]);
         return entity;
     }
@@ -172,18 +188,24 @@ class EntityFactory {
             new Player(),
             new Velocity(0, 0),
             new Character(DEFAULTS.health.player),
-            new Animation(this.characterSpriteSheet, 24, 24, 1, PlayerAnimations),
+            new Animation(this.characterSpriteSheet, 32, 32, 5, PlayerAnimations),
         ];
     }
 
     enemyComponents(data) {
         const speed = this.physics.ENEMY_SPEED * (Math.random() < 0.5 ? -1 : 1);
+
+        const sheet = data.isLarge ? this.enemyLargeSpriteSheet : this.enemySpriteSheet;
+        const anims = data.isLarge ? LargeEnemyAnimations : EnemyAnimations;
+        const pixelSize = data.isLarge ? 160 : 80;
+        
         return [
             new Position(data.center_x, data.center_y, data.width, data.height),
             new Renderable(data.color),
             new Enemy(),
             new Character(data.health),
             new Velocity(speed, 0),
+            new Animation(sheet, pixelSize, pixelSize, 11, anims)
         ];
     }
 

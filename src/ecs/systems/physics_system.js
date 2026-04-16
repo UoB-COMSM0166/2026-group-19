@@ -74,6 +74,15 @@ class PhysicsSystem extends System {
                 if (enemy) {
                     enemy.powerful = true;
                     vel.vx *= this.physics.ENEMY_SPEED_MULTIPLIER;
+
+                    const anim = this.ecs.getComponent(id, Animation);
+                    if (anim) {
+                        if (anim.spriteSheet === enemySpriteSheet) {
+                            anim.setSpriteSheet(enemyAngrySpriteSheet, 7, EnemyAngryAnimations);
+                        } else if (anim.spriteSheet === enemyLargeSpriteSheet) {
+                            anim.setSpriteSheet(enemyLargeAngrySpriteSheet, 5, LargeEnemyAngryAnimations);
+                        }
+                    }
                 }
             }
             else {

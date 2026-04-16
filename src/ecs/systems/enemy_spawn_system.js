@@ -34,8 +34,9 @@ class EnemySpawnSystem extends System {
                 width: LevelFactory.scaleX(config.width, width),
                 height: LevelFactory.scaleY(config.height, height),
                 health: config.health,
-                color: config.color
-            })
+                color: config.color,
+                isLarge: (enemyType === EnemyType.LARGE)
+            });
             this.spawnTimer = 0;
         }
     }

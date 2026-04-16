@@ -6,21 +6,21 @@ const AnimationType = Object.freeze({
 
 const PlayerAnimations = {
     [AnimationType.IDLE]: {
-        frames: [0, 1, 2, 3],
-        duration_s: 8,
+        frames: [0, 1, 2, 3, 4],
+        duration_s: 0.15,
         loop: true
     },
 
     [AnimationType.MOVE]: {
-        frames: [17, 18, 19, 20, 21, 22, 23],
-        duration_s: 10,
+        frames: [5, 6, 7, 8, 9],
+        duration_s: 0.02,
         loop: true
     },
 
     [AnimationType.JUMP]: {
-        frames: [15, 16, 17],
-        duration_s: 8,
-        loop: false
+        frames: [10, 11, 12],
+        duration_s: 0.15,
+        loop: true
     },
 
     [AnimationType.HURT]: {
@@ -30,6 +30,61 @@ const PlayerAnimations = {
     }
 };
 
+const EnemyAnimations = {
+    [AnimationType.IDLE]: {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        duration_s: 0.03,
+        loop: true
+    },
+    
+    [AnimationType.MOVE]: {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        duration_s: 0.03,
+        loop: true
+    },
+}
+
+const LargeEnemyAnimations = {
+    [AnimationType.IDLE]: {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        duration_s: 0.2,
+        loop: true
+    },
+    
+    [AnimationType.MOVE]: {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        duration_s: 0.03,
+        loop: true
+    },
+}
+
+const EnemyAngryAnimations = {
+    [AnimationType.IDLE]: {
+        frames: [0, 1, 2, 3, 4, 5, 6],
+        duration_s: 0.03,
+        loop: true
+    },
+    
+    [AnimationType.MOVE]: {
+        frames: [0, 1, 2, 3, 4, 5, 6],
+        duration_s: 0.03,
+        loop: true
+    },
+}
+
+const LargeEnemyAngryAnimations = {
+    [AnimationType.IDLE]: {
+        frames: [0, 1, 2, 3, 4],
+        duration_s: 0.2,
+        loop: true
+    },
+    
+    [AnimationType.MOVE]: {
+        frames: [0, 1, 2, 3, 4],
+        duration_s: 0.03,
+        loop: true
+    },
+}
 
 class Animation {
     constructor(spriteSheet, frameWidth, frameHeight, columns, animations, initial = AnimationType.IDLE) {
@@ -37,6 +92,7 @@ class Animation {
         this.spriteSheet = spriteSheet;   // Image that contains animation frames for character, assumed to be in single row
         this.frameWidth = frameWidth;     // Width of individual frame within sheet
         this.frameHeight = frameHeight;   // Height of individual frame within sheet
+        this.columns = columns;
 
         // --- Animation definitions (static data) ---
         /*
@@ -63,5 +119,16 @@ class Animation {
         this.current = type;
         this.frameIndex = 0;
         this.timer = 0;
+    }
+
+    setSpriteSheet(spriteSheet, newColumns, newAnimations) {
+        if (this.spriteSheet === spriteSheet) return;
+        this.spriteSheet = spriteSheet;
+        this.columns = newColumns;
+
+        if (newAnimations) {
+            this.animations = newAnimations
+            this.frameIndex = 0;
+        }
     }
 }
