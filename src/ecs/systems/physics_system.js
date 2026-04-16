@@ -58,10 +58,12 @@ class PhysicsSystem extends System {
             // Clamp player horizontal speed
             if (player) {
                 vel.vx = Math.sign(vel.vx) * Math.min(Math.abs(vel.vx), this.physics.PLAYER_SPEED);
+                vel.recoilVx *= Math.pow(this.physics.PLAYER_DAMPING_MULTIPLIER, dt);
+                if (Math.abs(vel.recoilVx) < 0.001) vel.recoilVx = 0;
             }
 
             // Movement phase (axis-dependent)
-            pos.x += Math.round(vel.vx * dt);
+            pos.x += Math.round((vel.vx + vel.recoilVx) * dt);
             this.resolveMovementCollisions(id, Axis.X);
             
             if (pos.y > height) {
@@ -121,7 +123,7 @@ class PhysicsSystem extends System {
             char.onGround = false;
         }
 
-        const originalVel = { vx: vel.vx, vy: vel.vy };
+        const originalVel = { vx: vel.vx + (vel.recoilVx ?? 0), vy: vel.vy };
 
         this.forEachCollision(pos, [Position, Wall], wallId => {
             const wallPos = this.ecs.getComponent(wallId, Position);
@@ -142,8 +144,9 @@ class PhysicsSystem extends System {
                 pos.x = Math.ceil(bb_b.left_x + bb_b.w + bb_a.w / 2); // Hit right side of wall
             }
             
-            if (player) { 
-                vel.vx = 0; 
+            if (player) {
+                vel.vx = 0;
+                vel.recoilVx = 0;
             }
             else { 
                 // Only flip velocity if it matches the original direction (avoid double flip)
