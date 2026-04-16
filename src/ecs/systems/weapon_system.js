@@ -57,6 +57,7 @@ class WeaponSystem extends System {
             damage: weapon.bulletDamage,
             range: weapon.maxRange,
             bounce: weapon.bounce,
+            isRocket: weapon.type === WeaponType.ROCKET,
         };
 
         if (weapon.type === WeaponType.SHOTGUN){

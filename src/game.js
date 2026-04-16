@@ -15,11 +15,15 @@
  */
 
 class Game {
-    constructor() {
+    constructor(assets) {
         this.ecs = new ECS();
-        this.factory = new EntityFactory(this.ecs);
+
+        this.factory = new EntityFactory(this.ecs, assets);
+
         this.spawner = new SpawningSystem(this.ecs, this.factory);
+
         this.levelConfig = null;
+        
         this.ecs.systems = [
             new EnemySpawnSystem(this.ecs, this.spawner),
             new BoxSpawnSystem(this.ecs, this.spawner),
