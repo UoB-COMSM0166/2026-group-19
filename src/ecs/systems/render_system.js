@@ -50,9 +50,11 @@ class RenderSystem extends System {
             }
 
             // Fallback rectangle (prevents WEBGL image(undefined) crash)
+            if (render.color) {
             fill(...render.color);
             noStroke();
             rect(bb.left_x, bb.top_y, bb.w, bb.h);
+            }
         }
     }
 
