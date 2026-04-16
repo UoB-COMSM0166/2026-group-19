@@ -17,7 +17,11 @@ class EnemySpawnSystem extends System {
         this.spawnTimer = 0;
         this.startDelay = defaults.spawnStartDelay;
         this.physics = defaults.physics;
-        this.health = defaults.difficulty.normal;
+        this.health = {
+            player:     defaults.difficulty.normal.playerHealth,
+            enemy:      defaults.difficulty.normal.enemyHealth,
+            largeEnemy: defaults.difficulty.normal.largeEnemyHealth
+        };
     }
 
     applyPhysics(physics) {

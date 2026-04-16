@@ -96,7 +96,7 @@ class WeaponSystem extends System {
 
     applyRecoil(vel, weapon, character) {
         // Damping factor is for ice level, otherwise recoil was too much with higher damping multiplier.
-        const dampingFactor = 1 - (this.physics.playerDampingMultiplier - defaults.physics.playerDampingMultiplier);
+        const dampingFactor = (1 - 0.9 * this.physics.playerDampingMultiplier) / (1 - 0.9 * defaults.physics.playerDampingMultiplier);;
         vel.recoilVx += -character.direction * weapon.recoilKick * dampingFactor;
     }
 }

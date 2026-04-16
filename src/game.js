@@ -58,7 +58,6 @@ class Game {
         this.ecs.getSystem(InteractionSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(WeaponSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
-        this.factory.applyHealth(this.levelConfig.health);
 
         let wallTexturePath = "src/assets/cave_texture.png";
         if (levelNumber === 2) {
