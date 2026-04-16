@@ -26,6 +26,10 @@ class EntityFactory {
         this.physics = physics;
     }
 
+    applyHealth(health) {
+        this.health = health;
+    }
+
     // Public Methods
 
     create(type, data) {
@@ -187,7 +191,7 @@ class EntityFactory {
             new Renderable([255, 10, 155]),
             new Player(),
             new Velocity(0, 0),
-            new Character(DEFAULTS.health.player),
+            new Character(data.health),
             new Animation(this.characterSpriteSheet, 32, 32, 5, PlayerAnimations),
         ];
     }

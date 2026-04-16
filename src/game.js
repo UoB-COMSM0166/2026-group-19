@@ -51,10 +51,12 @@ class Game {
         // Any systems or classes that use these physics constants must be able to receive the new values upon level load
         this.ecs.getSystem(PhysicsSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(EnemySpawnSystem).applyPhysics(this.levelConfig.physics);
+        this.ecs.getSystem(EnemySpawnSystem).applyHealth(this.levelConfig.health);
         this.ecs.getSystem(InputSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(FloatingSystem).applyPhysics(this.levelConfig.physics);
         this.ecs.getSystem(InteractionSystem).applyPhysics(this.levelConfig.physics);
         this.factory.applyPhysics(this.levelConfig.physics);
+        this.factory.applyHealth(this.levelConfig.health);
 
         let wallTexturePath = "src/assets/cave_texture.png";
         if (levelNumber === 2) {
@@ -79,7 +81,8 @@ class Game {
         this.spawner.request(EntityType.PLAYER, {
             ...levelConfig.player,
             width: LevelFactory.scaleX(DEFAULTS.sizes.player.width, width),
-            height: LevelFactory.scaleY(DEFAULTS.sizes.player.height, height)
+            height: LevelFactory.scaleY(DEFAULTS.sizes.player.height, height),
+            health: levelConfig.health.player
         });
 
         for (let wall of levelConfig.walls) {

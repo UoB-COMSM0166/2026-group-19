@@ -5,9 +5,9 @@ const EnemyType = Object.freeze({
 })
 
 const EnemyConfig = Object.freeze({
-    [EnemyType.NORMAL]: { entityType: EntityType.GROUND_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, health: DEFAULTS.health.enemy, color: [100, 10, 200] },
-    [EnemyType.LARGE]: { entityType: EntityType.GROUND_ENEMY, width: DEFAULTS.sizes.large_enemy.width, height: DEFAULTS.sizes.large_enemy.height, health: DEFAULTS.health.large_enemy, color: [80, 5, 160] },
-    [EnemyType.FLOATING]: { entityType: EntityType.FLOATING_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, health: DEFAULTS.health.enemy, color: [10, 200, 255] },
+    [EnemyType.NORMAL]: { entityType: EntityType.GROUND_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, healthKey: 'enemy', color: [100, 10, 200] },
+    [EnemyType.LARGE]: { entityType: EntityType.GROUND_ENEMY, width: DEFAULTS.sizes.large_enemy.width, height: DEFAULTS.sizes.large_enemy.height, healthKey: 'large_enemy', color: [80, 5, 160] },
+    [EnemyType.FLOATING]: { entityType: EntityType.FLOATING_ENEMY, width: DEFAULTS.sizes.enemy.width, height: DEFAULTS.sizes.enemy.height, healthKey: 'enemy', color: [10, 200, 255] },
 });
 
 class EnemySpawnSystem extends System {
@@ -16,10 +16,15 @@ class EnemySpawnSystem extends System {
         this.spawner = spawner;
         this.spawnTimer = 0;
         this.physics = DEFAULTS.physics;
+        this.health = DEFAULTS.difficulty.NORMAL;
     }
 
     applyPhysics(physics) {
         this.physics = physics;
+    }
+
+    applyHealth(health) {
+        this.health = health;
     }
 
     update(dt) {
@@ -33,7 +38,7 @@ class EnemySpawnSystem extends System {
                 center_y: 0,
                 width: LevelFactory.scaleX(config.width, width),
                 height: LevelFactory.scaleY(config.height, height),
-                health: config.health,
+                health: this.health[config.healthKey],
                 color: config.color,
                 isLarge: (enemyType === EnemyType.LARGE)
             });
