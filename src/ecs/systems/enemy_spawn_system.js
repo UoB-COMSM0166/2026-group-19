@@ -51,7 +51,6 @@ class EnemySpawnSystem extends System {
         const SCORE_SCALE = 5;
         const MIN_SPAWN_RATE = 100;
         const effSpawnRate = Math.max(MIN_SPAWN_RATE, this.physics.spawnRate - player.score * SCORE_SCALE);
-        console.log(effSpawnRate);
         if (this.spawnTimer >= effSpawnRate) {
             const enemyType = this.getRandomEnemyType();
             const config = EnemyConfig[enemyType];
