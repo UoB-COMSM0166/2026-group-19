@@ -93,11 +93,13 @@ class PlayScene extends Scene {
         let alpha = map(millis() - this.pickupTextTimer, 0, this.pickupDuration, 255, 0);
         let floatY = map(millis() - this.pickupTextTimer, 0, this.pickupDuration, 0, -40);
 
+        const dynamicSize = width * 0.01;
+
         new ShadowText(
             this.pickupText,
             pos.x,
             pos.y - pos.height - 20 + floatY,
-            24,
+            dynamicSize,
             color(255, 255, 255, alpha),
             color(0, 0, 0, alpha * 0.5)
         ).display();
