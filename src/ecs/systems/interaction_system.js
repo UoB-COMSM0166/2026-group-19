@@ -101,8 +101,7 @@ class InteractionSystem extends System {
                 projectile.hitEnemies.add(enemyId);
 
                 if (enemyChar.health <= 0) {
-                    this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
-                    this.ecs.removeEntity(enemyId);
+                    this.handleDeath(enemyId, enemyPos);
                 }
             } else {
                 // Normal: one enemy per frame
@@ -131,8 +130,7 @@ class InteractionSystem extends System {
                 }
 
                 if (enemyChar.health <= 0) {
-                    this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
-                    this.ecs.removeEntity(enemyId);
+                    this.handleDeath(enemyId, enemyPos);
                 }
 
                 const enemyAnim = this.ecs.getComponent(enemyId, Animation);
@@ -171,5 +169,18 @@ class InteractionSystem extends System {
             this.ecs.addComponent(id, new Renderable([230, 46, 0, 200], null));
             this.ecs.addComponent(id, new BloodDroplet());
         }
+    }
+
+    handleDeath(enemyId, enemyPos) {
+        const vel = this.ecs.getComponent(enemyId, Velocity);
+        if (vel) {
+            vel.vy = -18; //knock upwards and to the side
+            vel.vx = (Math.random() - 0.5) * 15; //allow to tumble to the side
+        }
+        this.ecs.removeComponent(enemyId, Enemy);
+        this.ecs.removeComponent(enemyId, Character);
+
+        this.ecs.addComponent(enemyId, new Dying());
+        this.spawnDeathDroplets(enemyPos.x, enemyPos.y);
     }
 }

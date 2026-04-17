@@ -92,13 +92,20 @@ class RenderSystem extends System {
         push();
         translate(pos.x, pos.y);
 
+        const dying = this.ecs.getComponent(id, Dying);
+        if (dying) {
+            // Apply rotation based on dying state
+            dying.rotation += dying.rotationSpeed;
+            rotate(dying.rotation);
+        }
+
         const now = millis();
         if (anim.hurtUntil > now) {
             tint(255, 0, 0); // Red tint when hurt
         }
 
 
-        if (char.direction !== DIR_RIGHT) {
+        if (char && char.direction !== DIR_RIGHT) {
             scale(-1, 1);
         }
         imageMode(CENTER);
