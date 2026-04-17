@@ -21,7 +21,7 @@ const defaults = {
     },
     sizes: {
         player:     { width: 0.8, height: 0.8 },
-        enemy:      { width: 0.7, height: 0.7 },
+        enemy:      { width: 1.0, height: 1.0 },
         largeEnemy: { width: 1.5, height: 1.5 },
         box:        { width: 0.7, height: 0.7 },
         blood:      { width: 0.2, height: 0.2 }

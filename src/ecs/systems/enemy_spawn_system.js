@@ -45,7 +45,14 @@ class EnemySpawnSystem extends System {
 
         this.spawnTimer += dt;
 
-        if (this.spawnTimer >= this.physics.spawnRate) {
+        const playerId = this.ecs.getEntitiesWith(Player)[0];
+        const player = this.ecs.getComponent(playerId, Player);
+
+        const SCORE_SCALE = 5;
+        const MIN_SPAWN_RATE = 100;
+        const effSpawnRate = Math.max(MIN_SPAWN_RATE, this.physics.spawnRate - player.score * SCORE_SCALE);
+        console.log(effSpawnRate);
+        if (this.spawnTimer >= effSpawnRate) {
             const enemyType = this.getRandomEnemyType();
             const config = EnemyConfig[enemyType];
             this.spawner.request(config.entityType, {
