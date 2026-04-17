@@ -5,8 +5,8 @@ const LevelTemplates = {
             { x0: 0, y0: -20, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
             { x0: 18, y0: -20, x1: 31, y1: 0, spawnable: false }, // Boundary: Top-right
             { x0: 11, y0: 4, x1: 20, y1: 4, spawnable: true },
-            { x0: 0, y0: -20, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
-            { x0: 18, y0: -20, x1: 31, y1: 0, spawnable: false }, // Boundary: Right edge
+            { x0: 0, y0: -20, x1: 0, y1: 17, spawnable: false }, // Boundary: Left edge
+            { x0: 31, y0: -20, x1: 31, y1: 17, spawnable: false }, // Boundary: Right edge
             { x0: 3, y0: 7, x1: 6, y1: 7, spawnable: true },
             { x0: 25, y0: 7, x1: 28, y1: 7, spawnable: true },
             { x0: 9, y0: 11, x1: 12, y1: 11, spawnable: true },
@@ -25,8 +25,8 @@ const LevelTemplates = {
         platforms: [
             { x0: 0, y0: -20, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
             { x0: 18, y0: -20, x1: 31, y1: 0, spawnable: false }, // Boundary: Top-right
-            { x0: 0, y0: -20, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
-            { x0: 18, y0: -20, x1: 31, y1: 0, spawnable: false }, // Boundary: Right edge
+            { x0: 0, y0: -20, x1: 0, y1: 17, spawnable: false }, // Boundary: Left edge
+            { x0: 31, y0: -20, x1: 31, y1: 17, spawnable: false }, // Boundary: Right edge
             { x0: 12, y0: 4, x1: 22, y1: 4, spawnable: true },
             { x0: 9, y0: 7, x1: 13, y1: 7, spawnable: true },
             { x0: 30, y0: 7, x1: 30, y1: 7, spawnable: true },
@@ -48,8 +48,8 @@ const LevelTemplates = {
         platforms: [
             { x0: 0, y0: -20, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
             { x0: 18, y0: -20, x1: 31, y1: 0, spawnable: false }, // Boundary: Top-right
-            { x0: 0, y0: -20, x1: 13, y1: 0, spawnable: false }, // Boundary: Top-left
-            { x0: 18, y0: -20, x1: 31, y1: 0, spawnable: false }, // Boundary: Right edge
+            { x0: 0, y0: -20, x1: 0, y1: 17, spawnable: false }, // Boundary: Left edge
+            { x0: 31, y0: -20, x1: 31, y1: 17, spawnable: false }, // Boundary: Right edge
             { x0: 8, y0: 6, x1: 8, y1: 6, spawnable: true },
             { x0: 12, y0: 6, x1: 12, y1: 6, spawnable: true },
             { x0: 16, y0: 6, x1: 16, y1: 6, spawnable: true },
