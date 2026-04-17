@@ -34,7 +34,7 @@ function preload() {
     boxImage = loadImage("src/assets/crate2.png");
     weaponSpriteSheets[WeaponType.SHOTGUN] = loadImage("src/assets/Shotgun.png");
     weaponSpriteSheets[WeaponType.TWOWAYRIFLE] = loadImage("src/assets/TwoWayRifle.png");
-    weaponSpriteSheets[WeaponType.ROCKET] = loadImage("src/assets/Rocket.png");
+    weaponSpriteSheets[WeaponType.ROCKET] = loadImage("src/assets/rocketlauncher.png");
     bulletImage = loadImage("src/assets/bullet.png");
     rocketImage = loadImage("src/assets/rocket.png");
     // DISC shares TwoWayRifle — assigned after preload in setup()

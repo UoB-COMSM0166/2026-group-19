@@ -4,8 +4,6 @@ const SPACE = 32;
 const KEY_A = 65;
 const KEY_D = 68;
 const KEY_W = 87;
-const DIR_LEFT = -1;
-const DIR_RIGHT = 1;
 const JUMP_BUFFER_MS = 150;
 
 class InputSystem extends System {

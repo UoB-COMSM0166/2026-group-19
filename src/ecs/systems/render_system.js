@@ -35,7 +35,7 @@ class RenderSystem extends System {
             const weapSprite = this.ecs.getComponent(id, WeaponSprite);
 
             // Animated draw only when sprite sheet is valid
-            if (anim && anim.spriteSheet && anim.spriteSheet.width !== undefined) {
+            if (anim && anim.spriteSheet && anim.spriteSheet.width > 0) {
                 this.drawAnimated(id, char, anim, pos, bb, weapSprite);
                 continue;
             }

@@ -1,3 +1,6 @@
+const DIR_LEFT = -1;
+const DIR_RIGHT = 1;
+
 const defaults = {
     physics: {
         gravity: 0.035,

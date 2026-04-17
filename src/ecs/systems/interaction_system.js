@@ -135,7 +135,7 @@ class InteractionSystem extends System {
 
                 const enemyAnim = this.ecs.getComponent(enemyId, Animation);
                 if (enemyAnim) {
-                    enemyAnim.hurtUntil = Math.max(enemyAnim.hurtUntil, millis() + DEFAULTS.hurtTime);
+                    enemyAnim.hurtUntil = Math.max(enemyAnim.hurtUntil, millis() + defaults.hurtTime);
                 }
             }
         })
