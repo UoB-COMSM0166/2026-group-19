@@ -14,7 +14,8 @@ let weaponSpriteSheets = {};
 
 // Global settings manager
 const GameSettings = {
-    controlScheme: "arrows"
+    controlScheme: "arrows",
+    hasSeenInstructions: false
 };
 
 function preload() {

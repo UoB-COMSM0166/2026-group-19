@@ -3,7 +3,7 @@ class PauseScene extends Scene {
         super();
         this.playScene = playScene;
         this.menuIndex = 0;
-        this.menuItems = ["RESUME", "SETTINGS", "QUIT"];
+        this.menuItems = ["RESUME", "SETTINGS", "HOW TO PLAY", "QUIT"];
     }
 
     display() {
@@ -73,6 +73,8 @@ class PauseScene extends Scene {
             sceneManager.resumeScene(this.playScene);
         } else if (option === "SETTINGS") {
             sceneManager.pushScene(new SettingsScene(this.playScene, this));
+        } else if (option === "HOW TO PLAY") {
+            sceneManager.pushScene(new InstructionsScene(this.playScene, this));
         } else if (option === "QUIT") {
             sceneManager.switchScene(new MenuScene());
         }
