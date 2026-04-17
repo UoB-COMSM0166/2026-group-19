@@ -49,10 +49,12 @@ class PhysicsSystem extends System {
 
             // Apply Gravity
             if (accel) {
+                const dying = this.ecs.getComponent(id, Dying);
+                const gravityScale = dying ? 0.5 : 1;
                 vel.vx = vel.vx + accel.ax * dt;
 
                 // Terminal velocity only applies in downward direction (for gravity)
-                vel.vy = Math.min(vel.vy + accel.ay * dt, this.physics.terminalVelocity);
+                vel.vy = Math.min(vel.vy + (accel.ay * gravityScale) * dt, this.physics.terminalVelocity);
             }
 
             // Clamp player horizontal speed
@@ -65,30 +67,33 @@ class PhysicsSystem extends System {
             // Movement phase (axis-dependent)
             pos.x += Math.round((vel.vx + vel.recoilVx) * dt);
             this.resolveMovementCollisions(id, Axis.X);
-            
-            if (pos.y > height) {
-                if (droplet) {
+
+            let nextY = pos.y + vel.vy * dt;
+            if (nextY > height) {
+                const dying = this.ecs.getComponent(id, Dying);
+                const droplet = this.ecs.getComponent(id, BloodDroplet);
+
+                if (dying || droplet) {
                     this.ecs.removeEntity(id);
                     continue;
-                }
+                } else {
+                    pos.y = 0;
+                    if (enemy) {
+                        enemy.powerful = true;
+                        vel.vx *= this.physics.enemySpeedMultiplier; // Enemies gain speed boost after falling
 
-                pos.y = 0;
-                if (enemy) {
-                    enemy.powerful = true;
-                    vel.vx *= this.physics.enemySpeedMultiplier;
-
-                    const anim = this.ecs.getComponent(id, Animation);
-                    if (anim) {
-                        if (anim.spriteSheet === enemySpriteSheet) {
-                            anim.setSpriteSheet(enemyAngrySpriteSheet, 7, EnemyAngryAnimations);
-                        } else if (anim.spriteSheet === enemyLargeSpriteSheet) {
-                            anim.setSpriteSheet(enemyLargeAngrySpriteSheet, 5, LargeEnemyAngryAnimations);
+                        const anim = this.ecs.getComponent(id, Animation);
+                        if (anim) {
+                            if (anim.spriteSheet === enemySpriteSheet) {
+                                anim.setSpriteSheet(enemyAngrySpriteSheet, 7, EnemyAngryAnimations);
+                            } else if (anim.spriteSheet === enemyLargeSpriteSheet) {
+                                anim.setSpriteSheet(enemyLargeAngrySpriteSheet, 5, LargeEnemyAngryAnimations);
+                            }
                         }
                     }
                 }
-            }
-            else {
-                pos.y = pos.y + vel.vy * dt;
+            } else {
+                pos.y = nextY;
             }
 
             // Clamp to max speed — magnified if enemy is in powerful state
