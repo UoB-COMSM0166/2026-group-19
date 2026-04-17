@@ -23,6 +23,7 @@ class MenuScene extends Scene {
 
         // fps Display
         this.fpsCounter = new drawFps();
+
     }
 
     display() {
@@ -65,10 +66,43 @@ class MenuScene extends Scene {
                 fontSize * 0.08
             ).display();
         }
+        this.drawControlBanner(fontSize);
         pop();
 
         // Draw HUD on top of everything
         this.fpsCounter.display();
+    }
+
+    drawControlBanner(menuFontSize) {
+        const scheme = GameSettings.controlScheme;
+        const isArrows = scheme === "arrows";
+
+        const navLine = isArrows
+            ? "ARROW KEYS and SPACEBAR to use menu"
+            : "WASD and SPACEBAR to use menu";
+
+        const bannerY = height * 0.94;
+        const labelSize = menuFontSize * 0.38;
+        const bannerH = labelSize * 2.2;
+
+        textSize(labelSize);
+        const bannerW = textWidth(navLine) + labelSize * 4;
+
+        // Background pill
+        fill(0, 0, 0, 100);
+        noStroke();
+        rectMode(CENTER);
+        rect(width / 2, bannerY, bannerW, bannerH, bannerH / 2);
+
+        new ShadowText(
+            navLine,
+            width / 2,
+            bannerY,
+            labelSize,
+            color(200, 200, 200),
+            color(0),
+            labelSize * 0.08
+        ).display();
     }
 
     dispose() {
@@ -143,7 +177,16 @@ class MenuScene extends Scene {
     activateSelectedOption() {
         let option = this.menuItems[this.menuIndex];
         if (option === "START") {
-            sceneManager.switchScene(new PlayScene(gameInstance, this.selectedLevel, this.difficultyOptions[this.difficultyIndex]));
+            const level      = this.selectedLevel;
+            const difficulty = this.difficultyOptions[this.difficultyIndex];
+            const playScene  = new PlayScene(gameInstance, level, difficulty);
+            playScene.setup();
+            if (!GameSettings.hasSeenInstructions) {
+                GameSettings.hasSeenInstructions = true;
+                sceneManager.pushScene(new InstructionsScene(playScene));
+            } else {
+                sceneManager.resumeScene(playScene);
+            }
         } else if (option === "SETTINGS") {
             sceneManager.pushScene(new SettingsScene(this));
         }
