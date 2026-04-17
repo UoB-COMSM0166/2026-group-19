@@ -66,6 +66,12 @@ class InteractionSystem extends System {
             // Attach weapon sprite if sprite data exists
             const spriteData = WEAPON_SPRITE_DATA[box.weapon];
             const spriteSheet = weaponSpriteSheets[box.weapon];
+
+            if(sceneManager.currentScene instanceof PlayScene){
+                const displayName = WEAPON_NAMES[box.weapon] || box.weapon;
+                sceneManager.currentScene.showPickup(displayName);
+            }
+
             if (spriteData && spriteSheet) {
                 this.ecs.addComponent(playerId, new WeaponSprite(
                     spriteSheet, spriteData.frameWidth, spriteData.frameHeight
