@@ -6,6 +6,10 @@ class PlayScene extends Scene {
         this.levelToLoad = level;
         this.difficulty = difficulty;
 
+        this.pickupText = "";
+        this.pickupTextTimer = 0;
+        this.pickupDuration = 1500; // in ms
+
         let bgPath = "src/assets/cave_background.png";
         if (this.level === 2) {
             bgPath = "src/assets/ice_background.png";
@@ -18,6 +22,11 @@ class PlayScene extends Scene {
 
         this.spotlightGraphic = null;
     }
+
+        showPickup(name) {
+            this.pickupText = name;
+            this.pickupTextTimer = millis();
+        }
 
     setup() {
         console.log("PlayScene setup: loading level " + this.levelToLoad + " with difficulty " + this.difficulty);
@@ -62,12 +71,36 @@ class PlayScene extends Scene {
             this.drawSpotlight();
         }
 
+        const now = millis();
+        if (now - this.pickupTextTimer < this.pickupDuration) {
+            this.drawPickupText();
+        }
+
+
         pop();
 
         // Draw HUD on top of everything
         // this.drawGrid();
         this.scoreHUD.display();
         this.fpsCounter.display();
+    }
+
+    drawPickupText() {
+        const playerIds = this.game.ecs.getEntitiesWith(Player, Position);
+        if (playerIds.length === 0) return;
+        const pos = this.game.ecs.getComponent(playerIds[0], Position);
+        
+        let alpha = map(millis() - this.pickupTextTimer, 0, this.pickupDuration, 255, 0);
+        let floatY = map(millis() - this.pickupTextTimer, 0, this.pickupDuration, 0, -40);
+
+        new ShadowText(
+            this.pickupText,
+            pos.x,
+            pos.y - pos.height - 20 + floatY,
+            24,
+            color(255, 255, 255, alpha),
+            color(0, 0, 0, alpha * 0.5)
+        ).display();
     }
 
     handleKeyPressed() {

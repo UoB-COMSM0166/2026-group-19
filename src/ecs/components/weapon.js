@@ -64,6 +64,13 @@ const WEAPON_CONFIGS = {
 
 }
 
+const WEAPON_NAMES = {
+    [WeaponType.SHOTGUN]: "Shotgun",
+    [WeaponType.TWOWAYRIFLE]: "Dual Pistols",
+    [WeaponType.DISC]: "Disc Gun",
+    [WeaponType.ROCKET]: "Bazooka",
+}
+
 class Weapon {
   constructor(type = null) {
     this.type = type;
