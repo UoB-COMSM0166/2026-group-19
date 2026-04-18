@@ -98,7 +98,7 @@ class Game {
         this.spawner.update();
 
         // Apply current control scheme from global settings
-        this.ecs.getSystem(InputSystem).setControlScheme(GameSettings.controlScheme);
+        this.ecs.getSystem(InputSystem).setControlScheme(GameSettings.moveScheme, GameSettings.shootScheme);
     }
 
     renderOnly() {

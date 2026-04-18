@@ -54,17 +54,13 @@ const defaults = {
         }
     },
     controls: {
-        arrows: {
-            left: 37,  // LEFT_ARROW
-            right: 39, // RIGHT_ARROW
-            up: 38,    // UP_ARROW
-            shoot: 32  // SPACE
+        movement: {
+            arrows: { left: 37, right: 39, up: 38 },
+            wasd:   { left: 65, right: 68, up: 87  }
         },
-        wasd: {
-            left: 65,  // A
-            right: 68, // D
-            up: 87,    // W
-            shoot: 13  // ENTER
+        shoot: {
+            space: 32,
+            enter: 13
         }
     }
 };

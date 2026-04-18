@@ -16,7 +16,8 @@ let rocketImage;
 
 // Global settings manager
 const GameSettings = {
-    controlScheme: "arrows",
+    moveScheme:  "arrows",
+    shootScheme: "space",
     hasSeenInstructions: false
 };
 

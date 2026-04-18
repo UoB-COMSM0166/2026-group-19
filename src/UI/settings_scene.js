@@ -5,11 +5,15 @@ class SettingsScene extends Scene {
         this.sceneToReturnTo = sceneToReturnTo || sceneToDisplayUnderneath;
         
         this.menuIndex = 0;
-        this.controlSchemes = Object.keys(defaults.controls);
-        this.controlIndex = this.controlSchemes.indexOf(GameSettings.controlScheme);
-        if (this.controlIndex === -1) this.controlIndex = 0;
 
-        this.menuItems = ["CONTROLS", "VOLUME", "MUTE", "BACK"];
+        this.moveSchemes  = Object.keys(defaults.controls.movement);
+        this.shootSchemes = Object.keys(defaults.controls.shoot);
+        this.moveIndex  = this.moveSchemes.indexOf(GameSettings.moveScheme);
+        this.shootIndex = this.shootSchemes.indexOf(GameSettings.shootScheme);
+        if (this.moveIndex  === -1) this.moveIndex  = 0;
+        if (this.shootIndex === -1) this.shootIndex = 0;
+
+        this.menuItems = ["MOVEMENT", "SHOOT KEY", "VOLUME", "MUTE", "BACK"];
         
         // Settings state (could be moved to a global config later)
         this.volume = 100;
@@ -44,7 +48,8 @@ class SettingsScene extends Scene {
         for (let i = 0; i < this.menuItems.length; i++) {
             let item = this.menuItems[i];
             let label = item;
-            if (item === "CONTROLS") label = "CONTROLS [ " + this.controlSchemes[this.controlIndex].toUpperCase() + " ]";
+            if (item === "MOVEMENT")  label = "MOVEMENT [ "  + this.moveSchemes[this.moveIndex].toUpperCase()   + " ]";
+            if (item === "SHOOT KEY") label = "SHOOT KEY [ " + this.shootSchemes[this.shootIndex].toUpperCase() + " ]";
             if (item === "VOLUME") label = "VOLUME [ " + this.volume + " ]";
             if (item === "MUTE") label = "MUTE [ " + (this.isMuted ? "ON" : "OFF") + " ]";
 
@@ -83,13 +88,19 @@ class SettingsScene extends Scene {
 
     handleHorizontal(dir) {
         let item = this.menuItems[this.menuIndex];
-        if (item === "CONTROLS") {
-            this.controlIndex = (this.controlIndex + dir + this.controlSchemes.length) % this.controlSchemes.length;
-            GameSettings.controlScheme = this.controlSchemes[this.controlIndex];
-            // If we are currently in a game, update the system immediately
+        if (item === "MOVEMENT") {
+            this.moveIndex = (this.moveIndex + dir + this.moveSchemes.length) % this.moveSchemes.length;
+            GameSettings.moveScheme = this.moveSchemes[this.moveIndex];
             if (gameInstance && gameInstance.ecs) {
                 const inputSys = gameInstance.ecs.getSystem(InputSystem);
-                if (inputSys) inputSys.setControlScheme(GameSettings.controlScheme);
+                if (inputSys) inputSys.setControlScheme(GameSettings.moveScheme, GameSettings.shootScheme);
+            }
+        } else if (item === "SHOOT KEY") {
+            this.shootIndex = (this.shootIndex + dir + this.shootSchemes.length) % this.shootSchemes.length;
+            GameSettings.shootScheme = this.shootSchemes[this.shootIndex];
+            if (gameInstance && gameInstance.ecs) {
+                const inputSys = gameInstance.ecs.getSystem(InputSystem);
+                if (inputSys) inputSys.setControlScheme(GameSettings.moveScheme, GameSettings.shootScheme);
             }
         } else if (item === "VOLUME") {
             this.volume = constrain(this.volume + dir * 5, 0, 100);

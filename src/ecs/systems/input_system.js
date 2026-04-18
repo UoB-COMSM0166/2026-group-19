@@ -18,24 +18,24 @@ class InputSystem extends System {
         // Use the default physics config
         this.physics = defaults.physics;
         
-        // Default control scheme
-        this.currentScheme = "arrows";
+        this.moveScheme  = "arrows";
+        this.shootScheme = "space";
     }
 
     applyPhysics(physics) {
         this.physics = physics;
     }
 
-    setControlScheme(schemeName) {
-        if (defaults.controls[schemeName]) {
-            this.currentScheme = schemeName;
-        }
+    setControlScheme(moveScheme, shootScheme) {
+        if (defaults.controls.movement[moveScheme])  this.moveScheme  = moveScheme;
+        if (defaults.controls.shoot[shootScheme])    this.shootScheme = shootScheme;
     }
 
     update(dt) {
-        const now = millis(); // Needed for the jump buffer timer
+        const now = millis();
         const players = this.ecs.getEntitiesWith(Player, Character, Velocity, Position);
-        const controls = defaults.controls[this.currentScheme];
+        const movement = defaults.controls.movement[this.moveScheme];
+        const controls = { ...movement, shoot: defaults.controls.shoot[this.shootScheme] };
 
         for (let id of players) {
             const character = this.ecs.getComponent(id, Character);
