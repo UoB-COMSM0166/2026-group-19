@@ -30,8 +30,9 @@ class SettingsScene extends Scene {
         // Since other scenes use WEBGL translation, we need to handle it or match it
         translate(-width / 2, -height / 2);
 
-        // Dark translucent overlay
-        fill(0, 0, 0, 180); 
+        // Dark translucent overlay — more opaque over the busy main menu
+        const overlayAlpha = (this.sceneToDisplayUnderneath instanceof MenuScene) ? 230 : 180;
+        fill(0, 0, 0, overlayAlpha);
         noStroke();
         rect(0, 0, width, height);
 
