@@ -74,12 +74,12 @@ class MenuScene extends Scene {
     }
 
     drawControlBanner(menuFontSize) {
-        const scheme = GameSettings.controlScheme;
-        const isArrows = scheme === "arrows";
+        const isArrows = GameSettings.moveScheme === "arrows";
+        const isSpace  = GameSettings.shootScheme === "space";
 
-        const navLine = isArrows
-            ? "ARROW KEYS and SPACEBAR to use menu"
-            : "WASD and SPACEBAR to use menu";
+        const navKeys  = isArrows ? "ARROW KEYS" : "WASD";
+        const selKey   = isSpace  ? "SPACEBAR"   : "ENTER";
+        const navLine  = `${navKeys} and ${selKey} to use menu`;
 
         const bannerY = height * 0.94;
         const labelSize = menuFontSize * 0.38;
