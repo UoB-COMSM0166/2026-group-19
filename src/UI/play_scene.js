@@ -8,7 +8,10 @@ class PlayScene extends Scene {
 
         this.pickupText = "";
         this.pickupTextTimer = 0;
-        this.pickupDuration = 1500; // in ms
+        this.pickupDuration = 1500;
+
+        this.controlsHintTimer = 0;
+        this.controlsHintDuration = 6000;
 
         let bgPath = "src/assets/cave_background.png";
         if (this.level === 2) {
@@ -28,9 +31,14 @@ class PlayScene extends Scene {
             this.pickupTextTimer = millis();
         }
 
+    startControlsHint() {
+        this.controlsHintTimer = millis();
+    }
+
     setup() {
         console.log("PlayScene setup: loading level " + this.levelToLoad + " with difficulty " + this.difficulty);
         this.game.loadLevel(this.levelToLoad, this.difficulty);
+        if (GameSettings.hasSeenInstructions) this.startControlsHint();
 
         if (this.level === 1) {
             this.generateSpotlight();
@@ -75,6 +83,9 @@ class PlayScene extends Scene {
         if (now - this.pickupTextTimer < this.pickupDuration) {
             this.drawPickupText();
         }
+        if (now - this.controlsHintTimer < this.controlsHintDuration) {
+            this.drawControlsHint(now);
+        }
 
 
         pop();
@@ -103,6 +114,27 @@ class PlayScene extends Scene {
             color(255, 255, 255, alpha),
             color(0, 0, 0, alpha * 0.5)
         ).display();
+    }
+
+    drawControlsHint(now) {
+        const elapsed = now - this.controlsHintTimer;
+        const alpha  = map(elapsed, 0, this.controlsHintDuration, 255, 0);
+        const floatY = map(elapsed, 0, this.controlsHintDuration, 0, -30);
+
+        const isArrows = GameSettings.moveScheme === "arrows";
+        const isSpace  = GameSettings.shootScheme === "space";
+        const moveKeys = isArrows ? "ARROW KEYS" : "WASD";
+        const shootKey = isSpace  ? "SPACE"       : "ENTER";
+
+        const line1 = `${moveKeys} TO MOVE`;
+        const line2 = `${shootKey} TO SHOOT`;
+
+        const sz = width * 0.022;
+        const cx = width / 2;
+        const cy = height * 0.84 + floatY;
+
+        new ShadowText(line1, cx, cy,          sz, color(255, 255, 255, alpha), color(0, 0, 0, alpha * 0.6), sz * 0.1).display();
+        new ShadowText(line2, cx, cy + sz * 2, sz, color(255, 255, 255, alpha), color(0, 0, 0, alpha * 0.6), sz * 0.1).display();
     }
 
     handleKeyPressed() {
