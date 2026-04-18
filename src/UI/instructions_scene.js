@@ -77,6 +77,7 @@ class InstructionsScene extends Scene {
 
     handleKeyPressed() {
         if (keyCode === ENTER || key === ' ') {
+            if (this.playScene.startControlsHint) this.playScene.startControlsHint();
             sceneManager.resumeScene(this.playScene);
         } else if (keyCode === ESCAPE) {
             if (this.returnScene) {
