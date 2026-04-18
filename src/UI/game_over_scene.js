@@ -1,9 +1,12 @@
 class GameOverScene extends Scene {
-    constructor(playScene) {
+    constructor(playScene, score = 0) {
         super();
         this.playScene = playScene;
+        this.playScene.hideHUD = true;
+        this.score = score;
         this.menuIndex = 0;
         this.menuItems = ["RESTART", "MENU"];
+        this.readyTime = millis() + 700;
     }
 
     display() {
@@ -23,17 +26,25 @@ class GameOverScene extends Scene {
         new ShadowText(
             "GAME OVER",
             width / 2,
-            height * 0.35,
+            height * 0.15,
             titleSize,
             255,
             color(0, 0, 0, 200),
             titleSize * 0.1
         ).display();
 
+        // Score
+        let scoreSize = titleSize * 0.6;
+        new ShadowText(
+            "SCORE " + this.score,
+            width / 2, height * 0.45,
+            scoreSize, color(255), color(0), scoreSize * 0.1
+        ).display();
+
         // Menu Items
         let fontSize = titleSize * 0.4;
         let spacing = height * 0.12;
-        let startY = height * 0.55;
+        let startY = height * 0.65;
 
         for (let i = 0; i < this.menuItems.length; i++) {
             let label = this.menuItems[i];
@@ -55,6 +66,7 @@ class GameOverScene extends Scene {
     }
 
     handleKeyPressed() {
+        if (millis() < this.readyTime) return;
         if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
         } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {

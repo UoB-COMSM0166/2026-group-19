@@ -81,7 +81,7 @@ class PlayScene extends Scene {
 
         // Draw HUD on top of everything
         // this.drawGrid();
-        this.scoreHUD.display();
+        if (!this.hideHUD) this.scoreHUD.display();
         this.fpsCounter.display();
     }
 
