@@ -42,7 +42,9 @@ class InteractionSystem extends System {
                 // Trigger Game Over
                 console.log("Player dead");
                 if (sceneManager.currentScene instanceof PlayScene) {
-                    sceneManager.pushScene(new GameOverScene(sceneManager.currentScene));
+                    const playerComp = this.ecs.getComponent(playerId, Player);
+                    const finalScore = playerComp ? playerComp.score : 0;
+                    sceneManager.pushScene(new GameOverScene(sceneManager.currentScene, finalScore));
                 }
             }
 
