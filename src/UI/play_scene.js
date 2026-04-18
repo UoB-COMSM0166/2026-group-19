@@ -10,8 +10,11 @@ class PlayScene extends Scene {
         this.pickupTextTimer = 0;
         this.pickupDuration = 1500;
 
-        this.controlsHintTimer = 0;
+        this.controlsHintTimer = -Infinity;
         this.controlsHintDuration = 6000;
+
+        this.healthHintTimer = -Infinity;
+        this.healthHintDuration = 9000;
 
         let bgPath = "src/assets/cave_background.png";
         if (this.level === 2) {
@@ -33,6 +36,7 @@ class PlayScene extends Scene {
 
     startControlsHint() {
         this.controlsHintTimer = millis();
+        this.healthHintTimer   = millis();
     }
 
     setup() {
@@ -86,6 +90,9 @@ class PlayScene extends Scene {
         if (now - this.controlsHintTimer < this.controlsHintDuration) {
             this.drawControlsHint(now);
         }
+        if (now - this.healthHintTimer < this.healthHintDuration) {
+            this.drawHealthHint(now);
+        }
 
 
         pop();
@@ -135,6 +142,33 @@ class PlayScene extends Scene {
 
         new ShadowText(line1, cx, cy,          sz, color(255, 255, 255, alpha), color(0, 0, 0, alpha * 0.6), sz * 0.1).display();
         new ShadowText(line2, cx, cy + sz * 2, sz, color(255, 255, 255, alpha), color(0, 0, 0, alpha * 0.6), sz * 0.1).display();
+    }
+
+    drawHealthHint(now) {
+        const elapsed = now - this.healthHintTimer;
+
+        let alpha;
+        if      (elapsed < 4000) alpha = 0;
+        else if (elapsed < 5000) alpha = map(elapsed, 4000, 5000, 0, 255);
+        else if (elapsed < 8000) alpha = 255;
+        else                     alpha = map(elapsed, 8000, 9000, 255, 0);
+
+        const floatY = map(elapsed, 4000, 9000, 0, -5);
+
+        const sz = width * 0.008;
+        const baseScale = min(width, height);
+        const marginTop = baseScale * 0.02;
+        const cx = width * 0.88;
+        const cy = marginTop + sz * 4.5 + floatY;
+
+        const lives = this.scoreHUD.getHealth();
+        const line1 = `YOU HAVE ${lives} LIVES`;
+        const line2 = "ENEMIES HURT YOU IF YOU COLLIDE";
+
+        new ShadowText(line1, cx, cy,          sz, color(255, 255, 255, alpha), color(0, 0, 0, alpha * 0.6), sz * 0.1)
+            .setAlignment(LEFT, CENTER).display();
+        new ShadowText(line2, cx + sz/4, cy + sz * 2, sz, color(255, 255, 255, alpha), color(0, 0, 0, alpha * 0.6), sz * 0.1)
+            .setAlignment(CENTER, CENTER).display();
     }
 
     handleKeyPressed() {
