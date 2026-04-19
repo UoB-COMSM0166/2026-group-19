@@ -16,9 +16,8 @@ class PhysicsSystem extends System {
     - Movement Phase: Apply velocity and gravity, resolve wall collisions (axis-by-axis to allow sliding)
     - Interaction Phase: Check for gameplay interactions (pickups, damage, etc.)
     */
-    constructor(ecs, spawner) {
+    constructor(ecs) {
         super(ecs);
-        this.spawner = spawner;
         this.physics = defaults.physics; // Terminal velocity
     }
 
