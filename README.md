@@ -164,7 +164,11 @@ GameObject → MovingEntity → Character → Player
 ```
 
 While this design works adequately for small projects, we found that it did not scale well. Managing deep inheritance trees quickly became difficult, and the structure made it harder to reason about the relationships between classes. Additionally, we encountered the “God Class” problem, where individual classes accumulated large amounts of logic within a single file, making the code harder to maintain and extend.
-For the development of our actual game, we therefore sought a design pattern that minimized inheritance, separated entity behaviour from the entities themselves, and remained conceptually simple. Based on these goals, we chose to implement an Entity–Component–System (ECS) architecture for the backend of our game. Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts.
+For the development of our actual game, we therefore sought a design pattern that minimized inheritance, separated entity behaviour from the entities themselves, and remained conceptually simple. Based on these goals, we chose to implement an Entity–Component–System (ECS) architecture for the backend of our game.
+
+#### Entity-Component-System (ECS)
+
+Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts. 
 
 - <strong>Entities:</strong>
 An entity is simply a unique integer identifier. By itself, an entity contains no data or behaviour.
@@ -175,7 +179,31 @@ Components store data but contain no logic. For example, a position component ma
 - <strong>Systems:</strong>
 Systems contain the game’s logic. Each system queries the ECS “database” for entities that possess a specific combination of components, then applies the relevant behaviour to those entities.
 
-This architecture also provides several additional benefits. The ECS database can be organized so that components are stored contiguously in memory, improving cache locality and overall performance. Achieving this level of memory efficiency is far more difficult with traditional object-oriented designs. Furthermore, ECS makes it easy to add new functionality. Rather than modifying existing class hierarchies, new behaviour can be introduced by defining a new component and system, then attaching the component to relevant entities. This modular structure enables rapid development of new features without requiring significant refactoring of existing code.
+The images below show this design pattern conceptually.
+
+*ECS Conceptual Class Diagram*
+
+![ECS](image/ecs-basic-classes.png)
+
+*Entity Component Database within ECS Class*
+
+![ECS](image/ecs.png)
+
+This architecture provides several additional benefits. The ECS database can be organized so that components are stored contiguously in memory, improving cache locality and overall performance. Achieving this level of memory efficiency is far more difficult with traditional object-oriented designs. Furthermore, ECS makes it easy to add new functionality. Rather than modifying existing class hierarchies, new behaviour can be introduced by defining a new component and system, then attaching the component to relevant entities. This modular structure enables rapid development of new features without requiring significant refactoring of existing code.
+
+#### Scene Manager (UI)
+
+The game uses a Scene Manager pattern to control which screen is shown at any time, such as the main menu, gameplay, or pause screen. Each screen is represented as a "Scene" object with a common set of methods: **setup** to initialise, **update** to run logic, **display** to render, and **dispose** to clean up. A central SceneManager holds a reference to whichever scene is currently active and forwards every frame update and input event to it, keeping the rest of the codebase decoupled from scene-specific logic. 
+
+Switching between scenes is handled via three methods: 
+
+- switchScene(newScene) for full transitions (disposing the old scene and setting up the new one)
+- pushScene(newScene) for overlays like the pause or settings screen (which preserve the underlying scene so it can still be rendered beneath)
+- resumeScene(existingScene) for returning to an existing scene without reinitialising it. 
+
+This approach makes it straightforward to add new screens independently and keeps each scene's logic self-contained.
+
+![ECS](image/scene-manager-diagram.png)
 
 ### Implementation
 
@@ -216,7 +244,7 @@ To manage the complexity of building a game in p5.js from scratch, we divided ou
 
 #### Methodology & Collaborative Tools
 * **Agile Development:** We employed Agile methodologies to keep our iterative development organized. Using **Jira**, we maintained a **Kanban** board and managed our sprints. During our weekly Tuesday planning sessions, we brainstormed objectives and created Jira tickets. To prevent task overlap, team members estimated time limits for their assigned cards, helping us gauge the complexity of each sprint. We also used **Google Docs** to document sprint goals, ensuring the entire team remained aligned on individual responsibilities.
-    
+  
     ![Jira Kanban Board](./image/jira_kanban.png)
 
 * **Visual Prototyping:** For the frontend design, we utilized **Miro** as a collaborative whiteboard. This allowed all team members, regardless of their technical role, to sketch out visual concepts and iterate on UI/UX ideas freely during discussions.
@@ -228,7 +256,7 @@ To maintain a high standard of code quality and a clean project history, we impl
 * **Git Flow:** Work was strictly assigned via dedicated `feature/` branches. We also utilized `fix/` branches to address bugs discovered after a feature had been merged.
 * **Commit Message Style:** We defined a standardized commit message style to maintain a clear, readable, and highly organized version history. By categorizing our updates with semantic prefixes such as `feat:` (for new features), `fix:` (for bug resolutions), and `chore:` (for maintenance or configuration updates), team members could instantly understand the purpose of a change at a glance. This practice significantly streamlined our code reviews and made tracking down specific updates during debugging much easier.
 * **Linear History:** We prioritized rebasing over merging to ensure our Git history remained linear. This made it much easier to audit and track changes as complex modular systems (like the `ProjectileSystem` and `WeaponSystem`) were integrated.
-    
+  
     ![Git flow](./image/gitflow.png)
     ![Git Commit Message](./image/commit_style.png)
 
