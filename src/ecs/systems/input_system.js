@@ -78,6 +78,7 @@ class InputSystem extends System {
                 vel.vy = -jumpSpeed;
                 character.jumpBufferTime = 0; // Clear buffer so we don't double jump
                 character.onGround = false;   // Instantly leave the ground
+                soundManager.play('jump');
             }
 
             // Save jump key state for next frame

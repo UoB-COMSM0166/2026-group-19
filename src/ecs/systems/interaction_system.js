@@ -35,12 +35,15 @@ class InteractionSystem extends System {
             const now = millis();
             if (anim.hurtUntil < now) {
                 char.health--; // Update health of player
+                soundManager.play('getting_hit');
             }
             console.log(char.health);
 
             if (char.health <= 0) {
                 // Trigger Game Over
                 console.log("Player dead");
+                soundManager.play('death');
+                soundManager.stopBg();
                 if (sceneManager.currentScene instanceof PlayScene) {
                     const playerComp = this.ecs.getComponent(playerId, Player);
                     const finalScore = playerComp ? playerComp.score : 0;
@@ -64,6 +67,7 @@ class InteractionSystem extends System {
             const player = this.ecs.getComponent(playerId, Player);
             player.score++;
             box.pickUp();
+            soundManager.play('weapon_pickup');
             this.ecs.addComponent(playerId, new Weapon(box.weapon));
             // Attach weapon sprite if sprite data exists
             const spriteData = WEAPON_SPRITE_DATA[box.weapon];
@@ -101,6 +105,7 @@ class InteractionSystem extends System {
                 const enemyPos = this.ecs.getComponent(enemyId, Position);
                 enemyChar.health -= projectile.damage;
                 projectile.hitEnemies.add(enemyId);
+                soundManager.play('hitting_enemy');
 
                 if (enemyChar.health <= 0) {
                     this.handleDeath(enemyId, enemyPos);
@@ -116,6 +121,7 @@ class InteractionSystem extends System {
                 const enemyPos = this.ecs.getComponent(enemyId, Position);
                 enemyChar.health -= projectile.damage;
                 projectile.lastHitEnemy = enemyId;
+                soundManager.play('hitting_enemy');
 
                 // Enemy Knockback
                 if (enemyVel && vel) {

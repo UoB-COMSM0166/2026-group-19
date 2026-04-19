@@ -30,6 +30,7 @@ class WeaponSystem extends System {
         this.spawnProjectiles(id, pos, weapon, character);
         this.applyRecoil(vel, weapon, character);
         weapon.lastShotTime = now;
+        soundManager.play(WeaponSystem.SOUNDS[weapon.type]);
     }
 
     getWeaponTip(id, pos, character) {
@@ -101,3 +102,10 @@ class WeaponSystem extends System {
         vel.recoilVx += -character.direction * weapon.recoilKick * dampingFactor;
     }
 }
+
+WeaponSystem.SOUNDS = {
+    [WeaponType.SHOTGUN]:     'shotgun',
+    [WeaponType.TWOWAYRIFLE]: 'dual_pistols',
+    [WeaponType.ROCKET]:      'rocket_launcher',
+    [WeaponType.DISC]:        'bouncing_disc',
+};

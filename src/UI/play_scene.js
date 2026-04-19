@@ -44,6 +44,9 @@ class PlayScene extends Scene {
         this.game.loadLevel(this.levelToLoad, this.difficulty);
         if (GameSettings.hasSeenInstructions) this.startControlsHint();
 
+        const bgMusicByLevel = { 1: 'cave_bgMusic', 2: 'ice_bgMusic', 3: 'space_bgMusic' };
+        soundManager.playBg(bgMusicByLevel[this.level] || 'cave_bgMusic');
+
         if (this.level === 1) {
             this.generateSpotlight();
         }

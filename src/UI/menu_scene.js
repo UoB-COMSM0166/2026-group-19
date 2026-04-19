@@ -24,6 +24,7 @@ class MenuScene extends Scene {
         // fps Display
         this.fpsCounter = new drawFps();
 
+        soundManager.playBg('menu_bgMusic');
     }
 
     display() {
@@ -155,21 +156,28 @@ class MenuScene extends Scene {
     handleKeyPressed() {
         if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+            soundManager.play('upSelection');
         } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+            soundManager.play('downSelection');
         } else if (keyCode === LEFT_ARROW || key === 'a' || key === 'A') {
             if (this.menuItems[this.menuIndex] === "LEVEL") {
                 this.selectedLevel = (this.selectedLevel - 2 + this.maxLevel) % this.maxLevel + 1;
+                soundManager.play('downSelection');
             } else if (this.menuItems[this.menuIndex] === "DIFFICULTY") {
                 this.difficultyIndex = (this.difficultyIndex - 1 + this.difficultyOptions.length) % this.difficultyOptions.length;
+                soundManager.play('downSelection');
             }
         } else if (keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
             if (this.menuItems[this.menuIndex] === "LEVEL") {
                 this.selectedLevel = (this.selectedLevel % this.maxLevel) + 1;
+                soundManager.play('upSelection');
             } else if (this.menuItems[this.menuIndex] === "DIFFICULTY") {
                 this.difficultyIndex = (this.difficultyIndex + 1) % this.difficultyOptions.length;
+                soundManager.play('upSelection');
             }
         } else if (keyCode === ENTER || key === ' ') {
+            soundManager.play('select');
             this.activateSelectedOption();
         }
     }
