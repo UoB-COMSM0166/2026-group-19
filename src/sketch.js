@@ -63,6 +63,28 @@ function setup() {
         wallTileImage
     };
 
+    const soundFiles = {
+        menu_bgMusic:    'src/assets/gameMusic/menu_bgMusic.mp3',
+        cave_bgMusic:    'src/assets/gameMusic/cave_bgMusic.mp3',
+        ice_bgMusic:     'src/assets/gameMusic/ice_bgMusic.mp3',
+        space_bgMusic:   'src/assets/gameMusic/space_bgMusic.mp3',
+        jump:            'src/assets/gameMusic/jump.mp3',
+        death:           'src/assets/gameMusic/death.mp3',
+        getting_hit:     'src/assets/gameMusic/getting_hit.mp3',
+        hitting_enemy:   'src/assets/gameMusic/hitting_enemy.mp3',
+        weapon_pickup:   'src/assets/gameMusic/weapon_pickup.mp3',
+        shotgun:         'src/assets/gameMusic/shotgun.mp3',
+        dual_pistols:    'src/assets/gameMusic/dual_pistols.mp3',
+        rocket_launcher: 'src/assets/gameMusic/rocket_launcher.mp3',
+        bouncing_disc:   'src/assets/gameMusic/bouncing_disc.mp3',
+        upSelection:     'src/assets/gameMusic/upSelection.mp3',
+        downSelection:   'src/assets/gameMusic/downSelection.mp3',
+        select:          'src/assets/gameMusic/select.mp3',
+    };
+    for (const [name, path] of Object.entries(soundFiles)) {
+        soundManager.register(name, path);
+    }
+
     gameInstance = new Game(assets);
     sceneManager = new SceneManager();
     sceneManager.switchScene(new MenuScene());
@@ -87,9 +109,11 @@ function draw() {
 }
 
 function mousePressed() {
+    soundManager.onUserInteraction();
     sceneManager.handleMousePressed();
 }
 
 function keyPressed() {
+    soundManager.onUserInteraction();
     sceneManager.handleKeyPressed();
 }

@@ -32,6 +32,9 @@ class PlayScene extends Scene {
         console.log("PlayScene setup: loading level " + this.levelToLoad + " with difficulty " + this.difficulty);
         this.game.loadLevel(this.levelToLoad, this.difficulty);
 
+        const bgMusicByLevel = { 1: 'cave_bgMusic', 2: 'ice_bgMusic', 3: 'space_bgMusic' };
+        soundManager.playBg(bgMusicByLevel[this.level] || 'cave_bgMusic');
+
         if (this.level === 1) {
             this.generateSpotlight();
         }
