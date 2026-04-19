@@ -209,9 +209,38 @@ The game uses a Scene Manager pattern to control which screen is shown at any ti
 
 ### Implementation
 
-- 15% ~750 words
+Our implementation of CrateBox is grounded in two key areas of technical challenge that shaped both the architecture and the development process: building a functional Entity–Component–System (ECS) engine from scratch, and ensuring the game maintains consistent visual and physical quality across different screen sizes and zoom levels.
 
-- Describe implementation of your game, in particular highlighting the TWO areas of *technical challenge* in developing your game. 
+#### Challenge 1: Implementing an Entity–Component–System (ECS) Architecture
+
+As described in the Design section, we adopted an ECS architecture to avoid the pitfalls of deep inheritance hierarchies. While the theory behind ECS is straightforward, translating it into a working game engine required careful design decisions and several rounds of iteration.
+
+Our ECS core (`src/ecs/ecs.js`) stores components in a two-level `Map`: the outer key is the component class itself, and the inner key is the integer entity ID. This allows systems to query the "ECS database" with `getEntitiesWith(...componentClasses)`, retrieving only entities that possess a specific combination of components — the fundamental operation that drives all game logic. For example, the `PhysicsSystem` queries for entities with `Position`, `Velocity`, and `Acceleration`, while the `RenderSystem` queries for entities with `Position` and `Renderable`. This separation means rendering logic has zero knowledge of physics, and physics logic has zero knowledge of input — each system is fully self-contained.
+
+Components themselves are plain data holders with no logic: `Position` stores `x`, `y`, `width`, and `height`; `Velocity` stores `vx` and `vy`; `Animation` holds sprite sheet metadata and runtime playback state. New game behaviours are introduced not by modifying existing classes, but by defining a new component and system. For instance, adding the death tumble effect for enemies only required a `Dying` component to store rotation state, and a few lines in the `RenderSystem` to handle entities that carry that component — no existing code was touched.
+
+The biggest practical challenge was managing entity lifecycle safely. Removing an entity or adding components mid-update could corrupt the very collections being iterated by a system. We resolved this with a `SpawningSystem`: instead of creating or destroying entities directly, systems post a `SpawnRequest` component onto a staging entity, and the `SpawningSystem` flushes all pending requests at the start of each frame before any game logic runs. This guarantees that entity creation and destruction never interfere with an in-progress system update.
+
+Systems are executed in a deliberate fixed order each frame: enemy and box spawning → input → weapons → spawning flush → interactions → floating enemy AI → physics → animation → projectiles → rendering. This ordering ensures, for example, that newly spawned entities are fully initialised before the physics or render systems process them.
+
+A further benefit that emerged during development was rapid prototyping. Adding the blood droplet particle effect, the weapon pickup HUD notification, and the floating enemy seek behaviour each took less than a day, because each required only a new component and a small system or an addition to an existing one — no class hierarchies needed refactoring.
+
+#### Challenge 2: Maintaining Game Quality When Zooming In and Out
+
+A core requirement was that the game should feel identical regardless of the player's browser window size. With a purely pixel-based approach, shrinking the window would slow the physics or distort level geometry; enlarging it would cause entities to behave differently. We addressed this through a unified coordinate scaling system.
+
+The canvas is sized to fill the viewport while preserving a fixed 16:9 aspect ratio (`src/sketch.js`). If the window is too wide, the canvas height fills the screen and the width is computed from the ratio; if the window is too tall, the reverse applies. Letterboxing fills the remaining space with a dark background, keeping the game area consistently proportioned.
+
+All game positions and sizes are defined in normalised grid units on a 32×18 grid (`src/config/level_factory.js`). The conversion from grid to pixels is:
+
+```
+pixelX = (gridCol / 32) × canvasWidth
+pixelY = (gridRow / 18) × canvasHeight
+```
+
+Critically, this same scaling is applied to every physics constant at level load time (`src/game.js`): gravity, player speed, jump velocity, terminal velocity, projectile speed, and enemy speed are all multiplied by the corresponding canvas dimension before being passed to the systems. Entity sizes stored in `src/config/defaults.js` as fractional grid units (e.g. player width = 0.8 grid units) are similarly converted to pixels on spawn. As a result, a player moving at 0.2 grid units per frame will cover the same fraction of the screen regardless of whether the canvas is 960×540 or 1920×1080 — the game feels identical at any resolution.
+
+On the rendering side, `noSmooth()` is called on canvas creation to prevent sub-pixel blurring of sprite art when scaling. The wall texture tiling is pre-rendered into a single off-screen graphics buffer sized to the current canvas, so wall geometry is always crisp and never re-computed per frame. Sprite sheet frames scale proportionally with entity dimensions, maintaining visual fidelity without requiring multiple asset resolutions.
 
 ### Evaluation
 
