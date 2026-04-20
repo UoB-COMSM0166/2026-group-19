@@ -37,13 +37,14 @@ Not wanting to pick a focus immediately, we explored a range of games from each 
 
 
 During user testing, users much preferred the Super Crate Box style game, noting that it had clearer objectives and more intuitive game mechanics. Our group was also more motivated to pursue this direction, as the Super Crate Box concept offered greater potential for expansion beyond the original, such as introducing new enemies, items, and additional gameplay features.
+The 'lights out!' feature was liked a lot by playtesters and made its way to our final game, in the form of the dark mine area in level 1.
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
 
 
 ### Epics and User Stories
 
-We categorized our requirements into four primary Epics to ensure all stakeholder needs from our Onion Model were addressed.
+We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
 
 #### Epic 1: Core Combat & Arcade Physics
 * **User Story 1.1:** As a Player, I want responsive gravity and platform collision, so that movement feels precise and fair.
@@ -56,10 +57,10 @@ We categorized our requirements into four primary Epics to ensure all stakeholde
 #### Epic 3: Inclusive Design (Accessibility)
 * **User Story 3.1:** As a Player with motor impairments, I want to choose different parts of the control scheme independently from each other, so that I can play comfortably.
 
-    * **Acceptance Criteria 2.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
+    * **Acceptance Criteria 3.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
 * **User Story 3.2:** As a Player with hearing impairments, I want visual feedback for health loss, so that I don't miss critical game-state changes.
 
-    * **Acceptance Criteria 1.2:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
+    * **Acceptance Criteria 3.2:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
 
 ###  Project Prioritization (MoSCoW Matrix)
 
@@ -72,7 +73,6 @@ We categorized our requirements into four primary Epics to ensure all stakeholde
 | **Pause Menu & State Control** | Low | Medium | Should Have | Important for user control and allowing breaks without losing progress. |
 | **Local High Score Saving** | Medium | Medium | Could Have | This would encourage replayability but is not required for an early game iteration. |
 | **Online Global Leaderboard** | High | Medium | Won't Have | Leads to high server-side complexity and data protection considerations, with limited interest from playtesters. |
----
 
 ### Use Case Diagram
 ![Use Case Diagram](./image/use_case_diagram.jpg)
