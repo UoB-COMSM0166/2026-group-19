@@ -62,94 +62,99 @@ Possible Twists:
 Main twists would be changes to the environment in which the map is played. Adding wind which would affect bullet trajectory and physics as well as potentially the player would be interesting, which would occur at random points within the game for a specified amount of time. Similarly, limiting the perspective that the player can see from, for example removing lighting would be another interesting mechanic. In this way, the entire map would no longer be able to be seen in its entirety as usual, and instead the player is limited to seeing based on proximity from their player entity and which way they are facing. Changing gravity conditions is also a good twist, where the entire map flips, and the player has to traverse the map upside-down, with the enemies moving in the opposite direction.
 
 ### Requirements 
-The first stage of our development process was to identify what type of game we wanted to make. To do this, we chose two games as inspiration: Super Crate Box and Learn 2 Fly.
+#### Genre Ideation & Investigation
 
-#### Idea Development
-| ![Game picture](./image/supercratebox.jpeg) | ![Game picture](./image/learn2fly.jpeg) |
-|---|---|
-| **Super Crate Box**<br>Fast-paced arcade platform shooter | **Learn 2 Fly 2**<br>Physics-based launch/upgrade game |
+The first stage of our development process was to identify what type of game we wanted to make.
+To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied first place.
 
-We began by brainstorming potential game genres to ensure our team shared a clear and unified vision for the type of game we wanted to create. Each team member then ranked their preferred genres, and Arcade-style and Platformer emerged as the clear favourites. With this focus established, we explored specific game ideas within these genres and ultimately selected Super Crate Box and Learn 2 Fly as our primary sources of inspiration. 
+| Genre | Total Votes | Status |
+| :--- | :---: | :--- |
+| **Launcher** | 4 | **Selected for Further Investigation** |
+| **Action-Arcade Platformer** | 4 | **Selected for Further Investigation** |
+| **"Cozy" Sims / Farming Sims** | 3 | High Interest |
+| **Roguelike (RPG)** | 3 | High Interest |
+| **Puzzles** | 3 | High Interest |
+| **Racing** | 2 | Low Interest |
+| **Fighting / Action** | 2 | Low Interest |
+| **Tower Defense** | 2 | Low Interest |
+| **Survival / Crafting** | 1 | Dropped |
+| ~~**Horror**~~ | - | Scratched |
+| ~~**Exploration**~~ | - | Scratched |
 
-We created paper prototypes for both game concepts and tested them with classmates to evaluate the user experience. Based on their feedback, users preferred the Super Crate Box–inspired version, noting that it had clearer objectives and more intuitive game mechanics. Our group was also more motivated to pursue this direction, as the Super Crate Box concept offered greater potential for expansion beyond the original, such as introducing new enemies, items, and additional gameplay features.
+Not wanting to pick a focus prematurely, we explored a range of games from each genre and, through another vote, selected Super Crate Box and Learn to Fly as the two that we would bring forward for user testing via a paper prototyping session.
 
-With the core gameplay inspiration established, we began identifying the key elements we wanted our game to inherit, as well as areas where we could expand and introduce new ideas. Several features stood out to us from the original game. In particular, the variety of weapon types helped ensure that each playthrough felt fresh and dynamic, while the mechanic of enemies becoming more powerful upon reaching the bottom added tension and encouraged players to act quickly. We also appreciated the smooth animations and camera shake effects, which made the gameplay feel responsive and impactful.
+By selecting the strongest archetype from each genre, we maximized the breadth of useful feedback we were able to get from our peers acting as surrogate stakeholders. This also allowed us to avoid asking leading questions and instead use comparative questions when eliciting users' preferences, in order to avoid confirmation bias.
 
-At the same time, we explored ways to extend and innovate on the original concept. One idea was to increase the difficulty and atmosphere by having the lights turn off partway through the game, limiting the player’s visibility to a small radius illuminated by a headlamp. We also considered introducing a jetpack obtained from crates, allowing the player greater mobility and vertical freedom. Additionally, we discussed expanding the combat system to include hand-to-hand or melee weapons alongside firearms, adding further variety and strategic options for the player.
+<table>
+  <tr>
+    <td><img src="image/action-arcade2.jpg" style="height:180; width:auto;"/></td>
+    <td><img src="image/launchers.jpg" style="height:180; width:auto;"/></td>
+  </tr>
+    <tr>
+    <td>Our favourite games with 'Arcade/Action platformer' elements </td>
+    <td>A range of beloved games from the 'Launcher' genre</td>
+  </tr>
+</table>
 
+#### Paper Prototyping Sessions
+<table>
+  <tr>
+    <td><img src="assets/crate_paper_prototype.gif" style="height:180; width:auto;"/></td>
+    <td><img src="assets/pingu_prototype-cropped.gif" style="height:180; width:auto;"/></td>
+      </tr>
+ <tr>
+    <td>Action-Arcade Platformer Prototype</td>
+    <td>Pingu's Day Out Prototype</td>
+</tr>
+</table>
 
-- 15% ~750 words
-- Early stages design. Ideation process. How did you decide as a team what to develop? Use case diagrams, user stories.
+These Paper Prototyping sessions provided critical data that shaped our final product. Users enjoyed the Super Crate Box concept, noting that it had clearer objectives and more intuitive game mechanics. This feedback, combined with the team's assessment of the project's Technical Scalability, led us to pivot away from the Launcher genre.
 
-### Stakeholders:
-![Group Photo](./image/Stakeholders.svg)
-### 1. Core Product
-The central software artifact being developed.  
-It represents the primary value delivered to users and the focus of all technical and design decisions.
+A standout success from the testing was the 'Lights Out!' mechanic seen above. Initially only a throwaway prototype, its popularity during user testing led us to prioritise it as a strong Should-Have requirement. It evolved into the 'Dark Mine' area in our final game, adding atmospheric depth and a unique challenge to the Level 1 environment.
 
-### 2. Implementation Team
-The developers and designers responsible for building, testing, and maintaining the product.  
-They translate requirements into a working system.
+#### Identification of Stakeholders
 
-### 3. Supervisory Body
-Professors, experts, or sponsors providing oversight and governance.  
-They ensure academic, technical, and strategic alignment.
+![Onion Model of Stakeholders](./image/OnionModel.jpg)
 
-### 4. Target Audience
-The end users of the product, such as casual and competitive gamers.  
-Their needs, behaviours, and feedback shape the product’s evolution.
+### Epics and User Stories
 
-Stakeholders
+We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
 
-Core: The game
+#### Epic 1: Core Combat & Arcade Physics
+* **User Story 1.1:** As a Player, I want responsive gravity and platform collision, so that movement feels precise and fair.
 
-Containing System - people benefitting from the system's results, primary users interacting with game
+    * **Acceptance Criteria 1.1.1:** Given the player is in mid-air (not touching a platform), When the game loop updates, Then the player’s vertical velocity must increase by the gravity constant.
+    * **Acceptance Criteria 1.1.2:** Given the player is moving upward during a jump, When they collide with the underside of a platform, Then their vertical velocity must instantly reset to zero to prevent "clipping."
+* **User Story 1.2:** As a Player, I want to collect crates that instantly swap my weapon, so that the gameplay remains dynamic and challenging.
 
-Support and Maintenance - technical staff keeping the game running and updated
-Group 19
-Student Volunteers & Game Testers
+    * **Acceptance Criteria 1.2.1:** Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player's currentWeapon variable must be updated.
+    * **Acceptance Criteria 1.2.2:** Given the player presses the 'Shoot' key, When the time since the last shot is less than that specific weapon's coolDown value, Then no new projectile should be spawned.
 
-Direct Users:
-Younger players
-Competitive players
-Casual Players
-Sensitive hearing users
-Visually impaired
+#### Epic 3: Inclusive Design (Accessibility)
+* **User Story 3.1:** As a Player with motor impairments, I want to choose different parts of the control scheme independently from each other, so that I can play comfortably.
 
-Immediate Beneficiaries:
-Unit lecturers and academic supervisors
+    * **Acceptance Criteria 3.1.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
+    * **Acceptance Criteria 3.1.2:** Given a specific control scheme has been selected and saved, When the player presses the designated keys in that scheme, Then the corresponding "Movement" or "Shoot" actions must trigger in-game.
+* **User Story 3.2:** As a Player with hearing impairments, I want visual feedback for key game events, so that I don't miss critical game-state changes.
 
-Academic Context:
-Computer Science course MSc
+    * **Acceptance Criteria 3.2.1:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
+    * **Acceptance Criteria 3.2.2:** Given the player collects a new weapon, When the crate is removed from the canvas, Then a text notification must appear in the UI.
 
+####  Project Prioritization - MoSCoW Analysis
 
-Wider Environment - stakeholders not touching the software but influence its requirements and are affected by it.
-Sponsors and purchasers, regulators, the public, negative stakeholders
+| Feature | Effort | Value | MoSCoW Bucket | Rationale |
+| :--- | :--- | :--- | :--- | :--- |
+| **Core Physics & Gravity** | High | Critical | Must Have | The game is unplayable without stable physics, thus this is required for even the MVP. |
+| **Randomized Weapon Crates** | Medium | High | Must Have | This is the main hook of the game, and forms the fundamental gameplay loop .|
+| **Light's out Envimonmental Effect** | Medium | High | Should Have | This was a highly favoured feature during user testing that adds a unique twist to the game. |
+| **Multiple Control Schemes** | Low | High | Should Have | Allows players with control related accessiblity needs to optimise their play. |
+| **Visual Hit-Flash Feedback** | Low | Medium | Should Have | Aids deaf players who cannot hear the 'hurt' sound effect to play easily. |
+| **Pause Menu & State Control** | Low | Medium | Should Have | Important for user control and allowing breaks without losing progress. |
+| **Local High Score Saving** | Medium | Medium | Could Have | This would encourage replayability but is not required for an early game iteration. |
+| **Online Global Leaderboard** | High | Medium | Won't Have | Leads to high server-side complexity and data protection considerations, with limited interest from playtesters. |
 
-External Influences from Tools used:
-p5.js (potential maintenance operator: handling hosting of code)
-Github (hosting and saving of repo)
-Web Browsers = Interfacing Systems
-
-Regulators:
-Games Rating Authority
-University of Bristol
-GDPR Advisors
-
-Indirect Stakeholders:
-Negative Stakeholders
-Wider Public
-
-
-
-EPICS:
- - as a competititive player i want to see my score and know my old high score so that i can see if i am improving at the game (competetive players)
- - as a casual gamer i would like to be able to unlock new weapons and things to progress in the game other than score, maybe from a shop screen with collectible coins (casual users)
- - as a casual gamer i want clear instrustions on how to play and options for difficulty levels so that the game isn't too hard (casual users)
- - as a user with sensitive hearing i would like to be able to control the volume of in-game sounds and music independently
- - as a user with 
-
-![Use Case Diagram](./image/use_case_diagram.png)
+#### Use Case Diagram
+![Use Case Diagram](./image/use_case_diagram.jpg)
 
 ### Design
 

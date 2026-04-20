@@ -48,7 +48,6 @@ These Paper Prototyping sessions provided critical data that shaped our final pr
 
 A standout success from the testing was the 'Lights Out!' mechanic seen above. Initially only a throwaway prototype, its popularity during user testing led us to prioritise it as a strong Should-Have requirement. It evolved into the 'Dark Mine' area in our final game, adding atmospheric depth and a unique challenge to the Level 1 environment.
 
-
 ### Identification of Stakeholders
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
@@ -57,28 +56,33 @@ A standout success from the testing was the 'Lights Out!' mechanic seen above. I
 
 We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
 
-#### Epic 1: Core Combat & Arcade Physics
+### Epic 1: Core Combat & Arcade Physics
 * **User Story 1.1:** As a Player, I want responsive gravity and platform collision, so that movement feels precise and fair.
 
-    * **Acceptance Criteria 1.1:** Given the player is in mid-air (not touching a platform), When the game loop updates, Then the player’s vertical velocity must increase by the gravity constant.
+    * **Acceptance Criteria 1.1.1:** Given the player is in mid-air (not touching a platform), When the game loop updates, Then the player’s vertical velocity must increase by the gravity constant.
+    * **Acceptance Criteria 1.1.2:** Given the player is moving upward during a jump, When they collide with the underside of a platform, Then their vertical velocity must instantly reset to zero to prevent "clipping."
 * **User Story 1.2:** As a Player, I want to collect crates that instantly swap my weapon, so that the gameplay remains dynamic and challenging.
 
-    * **Acceptance Criteria 1.2:** Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player's currentWeapon variable must be updated.
+    * **Acceptance Criteria 1.2.1:** Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player's currentWeapon variable must be updated.
+    * **Acceptance Criteria 1.2.2:** Given the player presses the 'Shoot' key, When the time since the last shot is less than that specific weapon's coolDown value, Then no new projectile should be spawned.
 
-#### Epic 3: Inclusive Design (Accessibility)
+### Epic 3: Inclusive Design (Accessibility)
 * **User Story 3.1:** As a Player with motor impairments, I want to choose different parts of the control scheme independently from each other, so that I can play comfortably.
 
-    * **Acceptance Criteria 3.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
-* **User Story 3.2:** As a Player with hearing impairments, I want visual feedback for health loss, so that I don't miss critical game-state changes.
+    * **Acceptance Criteria 3.1.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
+    * **Acceptance Criteria 3.1.2:** Given a specific control scheme has been selected and saved, When the player presses the designated keys in that scheme, Then the corresponding "Movement" or "Shoot" actions must trigger in-game.
+* **User Story 3.2:** As a Player with hearing impairments, I want visual feedback for key game events, so that I don't miss critical game-state changes.
 
-    * **Acceptance Criteria 3.2:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
+    * **Acceptance Criteria 3.2.1:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
+    * **Acceptance Criteria 3.2.2:** Given the player collects a new weapon, When the crate is removed from the canvas, Then a text notification must appear in the UI.
 
-###  Project Prioritization (MoSCoW Matrix)
+###  Project Prioritization - MoSCoW Analysis
 
 | Feature | Effort | Value | MoSCoW Bucket | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | **Core Physics & Gravity** | High | Critical | Must Have | The game is unplayable without stable physics, thus this is required for even the MVP. |
 | **Randomized Weapon Crates** | Medium | High | Must Have | This is the main hook of the game, and forms the fundamental gameplay loop .|
+| **Light's out Envimonmental Effect** | Medium | High | Should Have | This was a highly favoured feature during user testing that adds a unique twist to the game. |
 | **Multiple Control Schemes** | Low | High | Should Have | Allows players with control related accessiblity needs to optimise their play. |
 | **Visual Hit-Flash Feedback** | Low | Medium | Should Have | Aids deaf players who cannot hear the 'hurt' sound effect to play easily. |
 | **Pause Menu & State Control** | Low | Medium | Should Have | Important for user control and allowing breaks without losing progress. |
@@ -87,4 +91,3 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
 
 ### Use Case Diagram
 ![Use Case Diagram](./image/use_case_diagram.jpg)
-
