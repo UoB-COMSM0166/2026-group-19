@@ -74,7 +74,7 @@ class bgShader {
                 float active = step(0.0, tt);
 
                 p = .05*tt*d;
-                p.xz += u_time * 2.0;
+                p.xz += u_time * 0.5;
 
                 float s = 2.0;
 

@@ -3,9 +3,6 @@ class MenuScene extends Scene {
         super();
         this.background = new bgShader();
 
-        // Load the SVG images ONCE when the scene is created
-        this.menuImage = loadImage('src/assets/menu_component.svg');
-
         // animated Game title Setting
         this.fullTitle = "CRATE BOX";
         this.titleText = new ShadowText(this.fullTitle, width / 2, height * 0.2, 0, 255, color(50, 50, 50), 5);
@@ -35,7 +32,6 @@ class MenuScene extends Scene {
         // base image anomation
         let t = millis();
         this.drawAnimatedGameTitle();
-        this.drawBaseImage(Math.max(Math.sin(t / 1000), 0.8) * 255);
         
         // Menu Items - Vertically Stacked
         let baseScale = min(width, height);
@@ -108,27 +104,6 @@ class MenuScene extends Scene {
 
     dispose() {
         this.background.dispose();
-    }
-
-    // main components of the menu scene
-    drawBaseImage(dynamicAlpha) {
-        if (this.menuImage.width > 0) {
-            let ratio = this.menuImage.height / this.menuImage.width;
-            let scaledImageWidth = width * 0.65;
-            let scaledImageHeight = (width * ratio) * 0.65;
-
-            push();
-            imageMode(CENTER);
-            tint(255, dynamicAlpha * 0.3); // Lower alpha for background graphic
-            image(
-                this.menuImage,
-                width / 2,
-                height * 0.6,
-                scaledImageWidth,
-                scaledImageHeight
-            );
-            pop();
-        }
     }
 
     drawAnimatedGameTitle() {
