@@ -19,7 +19,6 @@ To begin, we discussed what types of games we enjoyed engaging with, and ended u
 | ~~**Horror**~~ | - | Scratched |
 | ~~**Exploration**~~ | - | Scratched |
 
-+++Pictures of games from each genre+++
 <table>
   <tr>
     <td><img src="image/launchers.jpg" style="height:180; width:auto;"/></td>
@@ -29,7 +28,6 @@ To begin, we discussed what types of games we enjoyed engaging with, and ended u
 
 Not wanting to pick a focus immediately, we explored a range of games from each genre and, through another vote, selected Super Crate Box and Learn 2 Fly as the two ideas that we would bring forward for user testing via a paper prototyping session.
 
-++VIDEOS FOR BOTH PAPER PROTOTYPES HERE++
 <table>
   <tr>
     <td><img src="assets/crate_paper_prototype.gif" style="height:180; width:auto;"/></td>
@@ -45,7 +43,23 @@ During user testing, users much preferred the Super Crate Box style game, noting
 
 ### Epics and User Stories
 
-to be filled
+We categorized our requirements into four primary Epics to ensure all stakeholder needs from our Onion Model were addressed.
+
+#### Epic 1: Core Combat & Arcade Physics
+* **User Story 1.1:** As a Player, I want responsive gravity and platform collision, so that movement feels precise and fair.
+
+    * **Acceptance Criteria 1.1:** Given the player is in mid-air (not touching a platform), When the game loop updates, Then the player’s vertical velocity must increase by the gravity constant.
+* **User Story 1.2:** As a Player, I want to collect crates that instantly swap my weapon, so that the gameplay remains dynamic and challenging.
+
+    * **Acceptance Criteria 1.2:** Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player's currentWeapon variable must be updated.
+
+#### Epic 3: Inclusive Design (Accessibility)
+* **User Story 3.1:** As a Player with motor impairments, I want to choose different parts of the control scheme independently from each other, so that I can play comfortably.
+
+    * **Acceptance Criteria 2.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
+* **User Story 3.2:** As a Player with hearing impairments, I want visual feedback for health loss, so that I don't miss critical game-state changes.
+
+    * **Acceptance Criteria 1.2:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
 
 ###  Project Prioritization (MoSCoW Matrix)
 
@@ -62,3 +76,4 @@ to be filled
 
 ### Use Case Diagram
 ![Use Case Diagram](./image/use_case_diagram.jpg)
+
