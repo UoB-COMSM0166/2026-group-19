@@ -13,11 +13,11 @@ class SettingsScene extends Scene {
         if (this.moveIndex  === -1) this.moveIndex  = 0;
         if (this.shootIndex === -1) this.shootIndex = 0;
 
-        this.menuItems = ["MOVEMENT", "SHOOT KEY", "VOLUME", "MUTE", "BACK"];
-        
-        // Settings state (could be moved to a global config later)
-        this.volume = 100;
-        this.isMuted = false;
+        this.menuItems = ["MOVEMENT", "SHOOT KEY", "SFX VOL", "MUSIC VOL", "MUTE", "BACK"];
+
+        this.sfxVolume = GameSettings.sfxVolume;
+        this.bgVolume = GameSettings.bgVolume;
+        this.isMuted = GameSettings.muted;
     }
 
     display() {
@@ -43,15 +43,18 @@ class SettingsScene extends Scene {
 
         // Control texts with ShadowText
         let fontSize = titleSize * 0.4;
-        let spacing = height * 0.12;
-        let startY = height * 0.42;
+        let listTop = height * 0.33;
+        let listBottom = height * 0.95;
+        let spacing = (listBottom - listTop) / this.menuItems.length;
+        let startY = listTop + spacing * 0.5;
 
         for (let i = 0; i < this.menuItems.length; i++) {
             let item = this.menuItems[i];
             let label = item;
             if (item === "MOVEMENT")  label = "MOVEMENT [ "  + this.moveSchemes[this.moveIndex].toUpperCase()   + " ]";
             if (item === "SHOOT KEY") label = "SHOOT KEY [ " + this.shootSchemes[this.shootIndex].toUpperCase() + " ]";
-            if (item === "VOLUME") label = "VOLUME [ " + this.volume + " ]";
+            if (item === "SFX VOL")   label = "SFX VOL [ "   + this.sfxVolume + " ]";
+            if (item === "MUSIC VOL") label = "MUSIC VOL [ " + this.bgVolume  + " ]";
             if (item === "MUTE") label = "MUTE [ " + (this.isMuted ? "ON" : "OFF") + " ]";
 
             let isSelected = (i === this.menuIndex);
@@ -103,10 +106,18 @@ class SettingsScene extends Scene {
                 const inputSys = gameInstance.ecs.getSystem(InputSystem);
                 if (inputSys) inputSys.setControlScheme(GameSettings.moveScheme, GameSettings.shootScheme);
             }
-        } else if (item === "VOLUME") {
-            this.volume = constrain(this.volume + dir * 5, 0, 100);
+        } else if (item === "SFX VOL") {
+            this.sfxVolume = constrain(this.sfxVolume + dir * 5, 0, 100);
+            GameSettings.sfxVolume = this.sfxVolume;
+            soundManager.setSfxVolume(this.sfxVolume);
+        } else if (item === "MUSIC VOL") {
+            this.bgVolume = constrain(this.bgVolume + dir * 5, 0, 100);
+            GameSettings.bgVolume = this.bgVolume;
+            soundManager.setBgVolume(this.bgVolume);
         } else if (item === "MUTE") {
             this.isMuted = !this.isMuted;
+            GameSettings.muted = this.isMuted;
+            soundManager.setMuted(this.isMuted);
         }
     }
 
