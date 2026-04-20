@@ -1,14 +1,12 @@
-### Initial Genre Brainstorming & Selection Tally
+### Initial Genre Brainstorming & Investigation
 
 The first stage of our development process was to identify what type of game we wanted to make.
 To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied first place.
 
-### Initial Genre Selection Results
-
 | Genre | Total Votes | Status |
 | :--- | :---: | :--- |
-| **Launcher** | 4 | **Provisionally Selected** |
-| **Action-Arcade Platformer** | 4 | **Provisionally Selected** |
+| **Launcher** | 4 | **Selected for Further Investigation** |
+| **Action-Arcade Platformer** | 4 | **Selected for Further Investigation** |
 | **"Cozy" Sims / Farming Sims** | 3 | High Interest |
 | **Roguelike (RPG)** | 3 | High Interest |
 | **Puzzles** | 3 | High Interest |
@@ -19,28 +17,41 @@ To begin, we discussed what types of games we enjoyed engaging with, and ended u
 | ~~**Horror**~~ | - | Scratched |
 | ~~**Exploration**~~ | - | Scratched |
 
+Not wanting to pick a focus prematurely, we explored a range of games from each genre and, through another vote, selected Super Crate Box and Learn to Fly as the two that we would bring forward for user testing via a paper prototyping session.
+
+By selecting the strongest archetype from each genre, we maximized the breadth of useful feedback we were able to get from our peers acting as surrogate stakeholders. This also allowed us to avoid asking leading questions and instead use comparative questions when eliciting users' preferences, in order to avoid confirmation bias.
+
 <table>
   <tr>
-    <td><img src="image/launchers.jpg" style="height:180; width:auto;"/></td>
     <td><img src="image/action-arcade2.jpg" style="height:180; width:auto;"/></td>
+    <td><img src="image/launchers.jpg" style="height:180; width:auto;"/></td>
+  </tr>
+    <tr>
+    <td>Our favourite games with 'Arcade/Action platformer' elements </td>
+    <td>A range of beloved games from the 'Launcher' genre</td>
   </tr>
 </table>
 
-Not wanting to pick a focus immediately, we explored a range of games from each genre and, through another vote, selected Super Crate Box and Learn 2 Fly as the two ideas that we would bring forward for user testing via a paper prototyping session.
-
+### Paper Prototyping Sessions
 <table>
   <tr>
     <td><img src="assets/crate_paper_prototype.gif" style="height:180; width:auto;"/></td>
     <td><img src="assets/pingu_prototype-cropped.gif" style="height:180; width:auto;"/></td>
-  </tr>
+      </tr>
+ <tr>
+    <td>Action-Arcade Platformer Prototype</td>
+    <td>Pingu's Day Out Prototype</td>
+</tr>
 </table>
 
+These Paper Prototyping sessions provided critical data that shaped our final product. Users enjoyed the Super Crate Box concept, noting that it had clearer objectives and more intuitive game mechanics. This feedback, combined with the team's assessment of the project's Technical Scalability, led us to pivot away from the Launcher genre.
 
-During user testing, users much preferred the Super Crate Box style game, noting that it had clearer objectives and more intuitive game mechanics. Our group was also more motivated to pursue this direction, as the Super Crate Box concept offered greater potential for expansion beyond the original, such as introducing new enemies, items, and additional gameplay features.
-The 'lights out!' feature was liked a lot by playtesters and made its way to our final game, in the form of the dark mine area in level 1.
+A standout success from the testing was the 'Lights Out!' mechanic seen above. Initially only a throwaway prototype, its popularity during user testing led us to prioritise it as a strong Should-Have requirement. It evolved into the 'Dark Mine' area in our final game, adding atmospheric depth and a unique challenge to the Level 1 environment.
+
+
+### Identification of Stakeholders
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
-
 
 ### Epics and User Stories
 
