@@ -4,6 +4,23 @@ class SoundManager {
         this.currentBg = null;
         this.pendingBg = null;
         this.userInteracted = false;
+        this.sfxVolume = 1.0;
+        this.bgVolume = 1.0;
+        this.muted = false;
+    }
+
+    setSfxVolume(percent) {
+        this.sfxVolume = constrain(percent, 0, 100) / 100;
+    }
+
+    setBgVolume(percent) {
+        this.bgVolume = constrain(percent, 0, 100) / 100;
+        if (this.currentBg) this.currentBg.volume = this.muted ? 0 : this.bgVolume;
+    }
+
+    setMuted(muted) {
+        this.muted = muted;
+        if (this.currentBg) this.currentBg.volume = this.muted ? 0 : this.bgVolume;
     }
 
     register(name, path) {
@@ -25,7 +42,9 @@ class SoundManager {
     play(name) {
         const src = this.sounds[name];
         if (!src) return;
-        src.cloneNode().play().catch(() => {});
+        const node = src.cloneNode();
+        node.volume = this.muted ? 0 : this.sfxVolume;
+        node.play().catch(() => {});
     }
 
     playBg(name) {
@@ -55,6 +74,7 @@ class SoundManager {
         const bg = src.cloneNode();
         bg.loop = true;
         bg._bgName = name;
+        bg.volume = this.muted ? 0 : this.bgVolume;
         bg.play().catch(() => {});
         this.currentBg = bg;
     }

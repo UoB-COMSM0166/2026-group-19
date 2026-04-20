@@ -18,7 +18,10 @@ let rocketImage;
 const GameSettings = {
     moveScheme:  "arrows",
     shootScheme: "space",
-    hasSeenInstructions: false
+    hasSeenInstructions: false,
+    sfxVolume: 100,
+    bgVolume: 100,
+    muted: false
 };
 
 function preload() {
