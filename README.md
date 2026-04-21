@@ -116,7 +116,7 @@ A standout success from the testing was the 'Lights Out!' mechanic seen above. I
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
 
-### Epics and User Stories
+#### Epics and User Stories
 
 We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
 
@@ -139,6 +139,16 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
 
     * **Acceptance Criteria 3.2.1:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
     * **Acceptance Criteria 3.2.2:** Given the player collects a new weapon, When the crate is removed from the canvas, Then a text notification must appear in the UI.
+
+
+#### User Personas
+
+In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
+
+This sped up development by allowing us to easily question what 'Sam the Sensitive Hearing Gamer' and other personas would think about a given change, and adjust accordingly. 
+
+
+![User Personas](./image/user_personas.png)
 
 ####  Project Prioritization - MoSCoW Analysis
 
