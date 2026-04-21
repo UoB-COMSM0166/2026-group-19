@@ -52,7 +52,7 @@ const WEAPON_CONFIGS = {
   },
 
   [WeaponType.ROCKET]: {
-      fireRate: 500,
+      fireRate: 700,
       bulletDamage: 10,
       bulletSpeed: 15.0 / 32.0,
       bulletSize: {w: 0.6, h: 0.45},

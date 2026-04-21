@@ -34,17 +34,17 @@ const defaults = {
     difficulty: {
         normal: {
             physics: {
-                spawnRate: 240,
+                spawnRate: 180,
                 enemySpeed: 0.07,
                 maxEnemySpeed: 0.14
             },
             playerHealth: 5,
-            enemyHealth: 1,
+            enemyHealth: 2,
             largeEnemyHealth: 3
         },
         hard: {
             physics: {
-                spawnRate: 180,
+                spawnRate: 140,
                 enemySpeed: 0.1,
                 maxEnemySpeed: 0.2,
             },
