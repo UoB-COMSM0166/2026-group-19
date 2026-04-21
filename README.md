@@ -135,27 +135,6 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
 ||As a Player with hearing impairments, I want visual feedback for key game events, so that I don't miss critical game-state changes. |Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.|
 |||Given the player collects a new weapon, When the crate is removed from the canvas, Then a text notification must appear in the UI.|
 
-#### Epic 1: Core Combat & Arcade Physics
-* **User Story 1.1:** As a Player, I want responsive gravity and platform collision, so that movement feels precise and fair.
-
-    * **Acceptance Criteria 1.1.1:** Given the player is in mid-air (not touching a platform), When the game loop updates, Then the player’s vertical velocity must increase by the gravity constant.
-    * **Acceptance Criteria 1.1.2:** Given the player is moving upward during a jump, When they collide with the underside of a platform, Then their vertical velocity must instantly reset to zero to prevent "clipping."
-* **User Story 1.2:** As a Player, I want to collect crates that instantly swap my weapon, so that the gameplay remains dynamic and challenging.
-
-    * **Acceptance Criteria 1.2.1:** Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player's currentWeapon variable must be updated.
-    * **Acceptance Criteria 1.2.2:** Given the player presses the 'Shoot' key, When the time since the last shot is less than that specific weapon's coolDown value, Then no new projectile should be spawned.
-
-#### Epic 3: Inclusive Design (Accessibility)
-* **User Story 3.1:** As a Player with motor impairments, I want to choose different parts of the control scheme independently from each other, so that I can play comfortably.
-
-    * **Acceptance Criteria 3.1.1:** Given the player is in the settings menu, When they interact with the key configuration options, Then they must be able to choose between specific preset key mappings independently of each other.
-    * **Acceptance Criteria 3.1.2:** Given a specific control scheme has been selected and saved, When the player presses the designated keys in that scheme, Then the corresponding "Movement" or "Shoot" actions must trigger in-game.
-* **User Story 3.2:** As a Player with hearing impairments, I want visual feedback for key game events, so that I don't miss critical game-state changes.
-
-    * **Acceptance Criteria 3.2.1:** Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.
-    * **Acceptance Criteria 3.2.2:** Given the player collects a new weapon, When the crate is removed from the canvas, Then a text notification must appear in the UI.
-
-
 #### User Personas
 
 In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
