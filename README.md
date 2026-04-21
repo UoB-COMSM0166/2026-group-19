@@ -259,27 +259,62 @@ On the rendering side, `noSmooth()` is called on canvas creation to prevent sub-
 
 ### Evaluation
 
-- 15% ~750 words
+As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. In order to do this effectively, we assessed the game using a variety of methods, both quantitative and qualitative, to give us the clearest picture possible of any potential usability issues whilst minimising the weaknesses that any one method may have in assessing such issues.
 
-- One qualitative evaluation (of your choice)
+#### Qualitative Evaluation: Think-Aloud
 
-Think-Aloud User Evaluation chosen:
-During the devlopment process, we employed an iterative design, whereby user testing consistently used to ensure our aims for the final product were well-met and intuitive. During this testing process, users were asked to verbalise their thought processes and opinions of the gaming experience.
+From early on in the development of the game, we began to use the **Think-Aloud** method. This was employed in an iterative manner, where changes were rolled out and then tested amongst users before making it into the final product. This ensured that the game remained consistently aligned with user requirements. Sixteen participants were gathered in total from workshops and a Testathon. During this evaluation, users were asked to navigate around the map, interact with enemy entities, and pick up crates that spawned around the map, whilst we recorded their verbalisations to the environment. Some of the verbalisations are listed as follows:
 
-For our first think-aloud evaluation, our main objectives were to ensure controls were intuitive and that the movement of the character and enemies were fluid and felt controllable.
-The user testing results were as follows:
+*   **Smooth Movement:** Most users found the player character movements to be smooth and enjoyable.
+*   **Threat Perception:** Some users found the enemy entities’ movements to be fluid; however, since player death was not yet implemented in early versions, some users questioned the threat level of the enemies.
+*   **Navigation:** Most users found it easy to navigate the map, pick up crates, and avoid enemies. There were no issues with identifying enemies vs. the player.
+*   **Difficulty Scaling:** The scaling of difficulty over time was contentious; some users liked the increasing enemy speed, while others felt more was needed to incite a real element of danger.
+*   **Goal Clarity:** Some users questioned the overall goals or win conditions. Without player death or a score tracker, there was little incentive to kill enemies or continue playing the game.
+*   **Map Bounds:** A few users were able to maneuver the player character out of the bounds of the map.
+*   **Pathing Exploits:** One user was able to avoid contacting any enemies by positioning the character in an area of the map where no enemies pathed to.
 
--User Controls: Players did not have an issue with the placement of the keys, nor was there an issue with the choice of the arrow keys to control movement, these were picked up quickly and easily by all users.
--Entity Movement: Users enjoyed the movement of the character; they felt that they were in control, and could easily traverse the platforms within the game. Any difficulty with speed and gravity was overcome easily with familiarity to the game. Enemy entities were smooth and the slow increase in enemy speed as the game progressed was seen positively as a way to increase difficulty. However, there were parts of the map where the enemies would not path/spawn to, therefore the player could stand there without fear of being hit.
+#### Quantitative Analysis: System Usability Scale (SUS)
 
-Key Issues Identified:
--At higher speeds, collisions between character projectiles and enemy entities were not always accurate, and would not result in proper collision detection.
--Without player health, collision detection between enemy and player entities, and a score counter, there was little to indicate what the objective of the game was. There is no incentive for the player to shoot or to try to prevent the enemies from reaching the bottom of the map, since the player was unkillable and there was no change in the enemies after having reached th bottom either. There was also no score tracker, so no way of giving an idea of the underlying goal of staying alive and killing enemies.
--An area was identified whereby the player could jump outside of the map and outside of view.
+After having gathered important data as to the user experience, and having ironed out issues highlighted by users in the qualitative evaluation, we sought to assess whether the user experience reflected these improvements. More specifically, whether our changes to the game had created an environment which successfuly reflected the sense of danger we wished to instill in the player, and a stronger sense of the overall win conditions. We also wanted to see if we had created a significant difference in the user workload as the difficulty changed. In order to test this, quantitative methods would be used to be able to measure the differences in difficulty in empirical terms, and reduce the subjectivity of testers. We chose to use the System Usability Scale (SUS) evaluation method. Whilst the NASA Task Load Index (TLX) is widely recognised as being an accurate measure of user workload between different difficulties, any conclusions gathered from the data would not be that relevant to us. We were aiming to improve overall usability between all difficulty levels instead, and the System Usability Scale is a much better method for this purpose.
 
-- One quantitative evaluation (of your choice) 
+System Usability Scale (SUS)
+Ten users were gathered at random to carry out two SUS questionnaires, comparing “Easy” and “Hard” difficulty levels. As outlined above, we were looking for high usability scores to highlight that users were finding the overall game intuitive, and that changes made had led to a positive user experience.
 
-- Description of how code was tested. 
+<div align="center">
+
+| User | Easy Difficulty | Hard Difficulty | Difference (Δ) |
+| :--- | :--- | :--- | :--- |
+| 1 | 67.5 | 65 | -2.5 |
+| 2 | 72.5 | 68.5 | -4 |
+| 3 | 62.5 | 61 | -1.5 |
+| 4 | 70 | 67 | -3 |
+| 5 | 65 | 62.5 | -2.5 |
+| 6 | 75 | 73 | -2 |
+| 7 | 60 | 58.5 | -1.5 |
+| 8 | 72.5 | 68.5 | -4 |
+| 9 | 67.5 | 66 | -1.5 |
+| 10 | 70 | 64 | -6 |
+| **Average** | **68.25** | **65.4** | **-2.85** |
+
+</div>
+
+
+<p align="center">
+    <img src="./image/sus_chart.png" alt="SUS Usability Chart">
+    <br>
+    <em> Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.</em>
+    </p>
+
+#### Performance Analysis & Interpretation
+
+Calculating the p-value with the **Mann-Whitney U Test** gave us a value of **0.1849**. Given that our threshold was 0.05, we determined that the change in difficulty did not result in a statistically significant change in the game’s usability. 
+
+**What does this mean?**
+The overall scores (68.25 and 65.4) place the game right at the industry average of 68. This told us:
+
+Overall, we had been successful in ensuring that our game was usable for users, and that we had fixed the previous issues with collisions and moving out of the map bounds. The small difference in usability between difficulties- despite the small drop for the hard difficulty- highlighted to us that difficulty was being implemented correctly. The game remained usable regardless of difficulty, users understood the danger posed by enemies, were not finding frustrating bugs within the game, and a harder difficulty did not lead to a worse user experience. Nevertheless, these middling scores did indicate to us some areas needing improvement. Users reported that the game could benefit from better accessibility, more specifically the ability to change controls according to user preference. Another user highlighted that the appearance of the game’s enemies and box assets could be improved to make it more intuitive what needed to be picked up and what needed to be avoided.
+
+Despite this, we considered our efforts a success since issues we had set out to solve had no longer become the bottleneck in the game’s development process. We were able to successfully instill a sense of danger within the player through enemies that now were considered threats, and, through the increased difficulty, users were more naturally inclined to pursue the win conditions and goals that we set out for the game. These evaluative methods and the user feedback within proved invaluable in helping to keep our game aligned with the user requirements.
 
 ### Process 
 
