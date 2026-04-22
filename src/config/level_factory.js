@@ -59,3 +59,5 @@ class LevelFactory {
         });
     }
 }
+
+if (typeof module !== 'undefined') module.exports = { LevelFactory, GRID_COLS, GRID_ROWS };

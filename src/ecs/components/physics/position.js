@@ -13,3 +13,5 @@ class Position {
         return {left_x: this.x - this.width / 2, top_y: this.y - this.height / 2, w: this.width, h: this.height };
     }
 }
+
+if (typeof module !== 'undefined') module.exports = { Position };

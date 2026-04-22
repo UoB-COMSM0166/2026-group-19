@@ -100,3 +100,5 @@ class ECS {
         this.nextEntityId = 0;
     }
 }
+
+if (typeof module !== 'undefined') module.exports = { ECS };

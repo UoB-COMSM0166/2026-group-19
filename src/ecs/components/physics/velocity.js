@@ -5,3 +5,5 @@ class Velocity {
         this.recoilVx = 0;
     }
 }
+
+if (typeof module !== 'undefined') module.exports = { Velocity };
