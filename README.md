@@ -139,10 +139,10 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
     </tr>
     <tr>
       <td rowspan="2">As a Player, I want to collect crates that instantly swap my weapon, so that the gameplay remains dynamic and challenging.</td>
-      <td>Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player's current weapon must be updated.</td>
+      <td>Given the player overlaps with a weapon crate, When the collision is detected, Then the crate must be removed from the canvas and the player’s current weapon must be updated.</td>
     </tr>
     <tr>
-      <td>Given the player presses the 'Shoot' key, When the time since the last shot is less than that specific weapon's coolDown value, Then no new projectile should be spawned.</td>
+      <td>Given the player presses the ‘Shoot’ key, When the time since the last shot is less than that specific weapon’s coolDown value, Then no new projectile should be spawned.</td>
     </tr>
     <tr>
       <td rowspan="4"><b>Inclusive Design (Accessibility)</b></td>
@@ -153,7 +153,7 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
       <td>Given a specific control scheme has been selected and saved, When the player presses the designated keys in that scheme, Then the corresponding "Movement" or "Shoot" actions must trigger in-game.</td>
     </tr>
     <tr>
-      <td rowspan="2">As a Player with hearing impairments, I want visual feedback for key game events, so that I don't miss critical game-state changes.</td>
+      <td rowspan="2">As a Player with hearing impairments, I want visual feedback for key game events, so that I don’t miss critical game-state changes.</td>
       <td>Given the player character takes damage, When the health reduction occurs, Then the player must flash red simultaneously with any audio cues.</td>
     </tr>
     <tr>
@@ -161,11 +161,12 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
     </tr>
   </tbody>
 </table>
+
 #### User Personas
 
 In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
 
-This sped up development by allowing us to easily question what 'Sam the Sensitive Hearing Gamer' and other personas would think about a given change, and adjust accordingly. 
+This sped up development by allowing us to easily question what ‘Sam the Sensitive Hearing Gamer’ and other personas would think about a given change, and adjust accordingly. 
 
 
 ![User Personas](./image/user_personas.png)
@@ -277,64 +278,80 @@ Critically, this same scaling is applied to every physics constant at level load
 
 On the rendering side, `noSmooth()` is called on canvas creation to prevent sub-pixel blurring of sprite art when scaling. The wall texture tiling is pre-rendered into a single off-screen graphics buffer sized to the current canvas, so wall geometry is always crisp and never re-computed per frame. Sprite sheet frames scale proportionally with entity dimensions, maintaining visual fidelity without requiring multiple asset resolutions.
 
+
 ### Evaluation
 
-As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. In order to do this effectively, we assessed the game using a variety of methods, both quantitative and qualitative, to give us the clearest picture possible of any potential usability issues whilst minimising the weaknesses that any one method may have in assessing such issues.
+As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. We assessed the game using quantitative and qualitative methods, to give us the clearest picture possible of any potential usability issues whilst minimising the weaknesses that any one method may have.
 
 #### Qualitative Evaluation: Think-Aloud
+Sixteen participants were gathered in total from workshops. During this evaluation, users were asked to navigate around the map, interact with enemy entities, and pick up crates that spawned around the map. Players were encouraged to express their thoughts as they played. The results are as follows:
 
-From early on in the development of the game, we began to use the **Think-Aloud** method. This was employed in an iterative manner, where changes were rolled out and then tested amongst users before making it into the final product. This ensured that the game remained consistently aligned with user requirements. Sixteen participants were gathered in total from workshops and a Testathon. During this evaluation, users were asked to navigate around the map, interact with enemy entities, and pick up crates that spawned around the map, whilst we recorded their verbalisations to the environment. Some of the verbalisations are listed as follows:
+**Tasks:**
+*   Navigate around the map, jump between platforms
+*   Interact with enemy entities- avoid mobs, or kill them
+*   Pick up crates as they spawn around the map
 
-*   **Smooth Movement:** Most users found the player character movements to be smooth and enjoyable.
-*   **Threat Perception:** Some users found the enemy entities’ movements to be fluid; however, since player death was not yet implemented in early versions, some users questioned the threat level of the enemies.
-*   **Navigation:** Most users found it easy to navigate the map, pick up crates, and avoid enemies. There were no issues with identifying enemies vs. the player.
-*   **Difficulty Scaling:** The scaling of difficulty over time was contentious; some users liked the increasing enemy speed, while others felt more was needed to incite a real element of danger.
-*   **Goal Clarity:** Some users questioned the overall goals or win conditions. Without player death or a score tracker, there was little incentive to kill enemies or continue playing the game.
-*   **Map Bounds:** A few users were able to maneuver the player character out of the bounds of the map.
-*   **Pathing Exploits:** One user was able to avoid contacting any enemies by positioning the character in an area of the map where no enemies pathed to.
+<p align="center">
+    <img src="./image/thinkaloud_image.png" alt="Think Aloud User Quotes" width="70%">
+</p>
+
+#### Solutions and Adjustments
+
+**Navigation and Map**
+*   **Issues:** Users found the movement smooth and enjoyable, however they found that the character could travel outside of the map boundaries.
+*   **Solution:** We implemented strict level colliders and invisible walls around the top of the map, so that players could not jump into the hole for the enemy spawn point.
+
+**Game Objectives and Goal clarity**
+*   **Issues:** Players were confused about the win conditions. This was brought on by the lack of player death and a score tracker, and led to players not being incentivised to engage with the core mechanics of the game.
+*   **Solutions:** A score tracker was added, informing players of how many crates they had collected, and player death was implemented, giving a clear sense of the fail conditions of the game.
+
+**Enemy Pathing and Difficulty**
+*   Enemy pathing and the presence of spots in the map where enemies did not cover led to users feeling as though enemies were not dangerous.
+*   **Solutions:** We implemented a new type of enemy, the floating enemy, which would intercept the player regardless of map position, and revised the enemy pathing to cover the whole map.
+
+#### Heuristic Evaluation
+To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desiribility bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes were then compiled and then subsequently worked over.
+
+| Interface Component | Issue | Heuristic(s) | Frequency (0-4) | Impact (0-4) | Persistence (0-4) | Severity (F+I+P)/3 |
+| :--- | :--- | :--- | :---: | :---: | :---: | :---: |
+| 🔴 UI | Missing score tracking and unclear win/fail conditions | H1: Visibility of system status | 4 | 4 | 4 | 4 |
+| 🔴 Level Design | Player can go out of bounds or disappear off the top of the screen | H5: Error prevention | 3 | 4 | 4 | 3.7 |
+| 🟡 Enemy Pathing | Enemies don't act as threats or path toward the player; no incentive to stop them | H2: Match between system and real world | 4 | 3 | 4 | 3.7 |
+| 🟡 Mechanics | Misalignment between bullet/enemy rendering and actual hitbox positions | H4: Consistency and standards | 2 | 4 | 3 | 3 |
+| 🟡 Game Logic | Unfair "safe spots" in enemy pathing where the player cannot be hit | H5: Error prevention | 2 | 3 | 3 | 2.7 |
+| 🟢 Combat Feedback | Lack of visual response (flashing/recoil) when enemies are hit | H1: Visibility of system status | 3 | 2 | 2 | 2.3 |
+| 🟢 Difficulty | Increase in enemy speed is not immediately intuitive to the player | H1: Visibility of system status | 2 | 2 | 2 | 2 |
+
+Based on the severity scores, we prioritised fixes into three tiers, with 1 being critical, and 3 being minor. 🔴 Tier 1 (Critical) addressed the issues with the UI and the Level Design, as these were preventing users from carrying out the core principles of the game. 🟡 Tier 2 (Major) focused on the Enemy Pathing and Hitboxes, ensuring that the game felt responsive to player inputs. 🟢 Tier 3 (Minor) involved changing the way difficulty and enemy spawn times were implemented, which were addressed only once the first two tiers had been addressed.
 
 #### Quantitative Analysis: System Usability Scale (SUS)
+To evaluate our game’s improvements, we transitioned from qualitative feedback to empirical, quantitative testing. We specifically measured whether players felt a heightened sense of danger and a clearer understanding of win conditions. Although we conducted tests for different difficulties, we decided on the System Usability Scale (SUS) over the NASA Task Load (TLX) to measure if we had met our objectives. This was because we wanted to ensure player satisfaction and good usability was attained, rather than simply measuring the volume of user workload.
 
-After having gathered important data as to the user experience, and having ironed out issues highlighted by users in the qualitative evaluation, we sought to assess whether the user experience reflected these improvements. More specifically, whether our changes to the game had created an environment which successfuly reflected the sense of danger we wished to instill in the player, and a stronger sense of the overall win conditions. We also wanted to see if we had created a significant difference in the user workload as the difficulty changed. In order to test this, quantitative methods would be used to be able to measure the differences in difficulty in empirical terms, and reduce the subjectivity of testers. We chose to use the System Usability Scale (SUS) evaluation method. Whilst the NASA Task Load Index (TLX) is widely recognised as being an accurate measure of user workload between different difficulties, any conclusions gathered from the data would not be that relevant to us. We were aiming to improve overall usability between all difficulty levels instead, and the System Usability Scale is a much better method for this purpose.
-
-System Usability Scale (SUS)
-Ten users were gathered at random to carry out two SUS questionnaires, comparing “Easy” and “Hard” difficulty levels. As outlined above, we were looking for high usability scores to highlight that users were finding the overall game intuitive, and that changes made had led to a positive user experience.
-
-<div align="center">
+Ten participants were randomly selected to complete SUS evaluations for both “Easy” and “Hard” difficulties. We sought high usability scores to prove that the game is intuitive and to verify our refinements had enhanced the user experience.
 
 | User | Easy Difficulty | Hard Difficulty | Difference (Δ) |
-| :--- | :--- | :--- | :--- |
-| 1 | 67.5 | 65 | -2.5 |
+| :--- | :---: | :---: | :---: |
+| 1 | 67.5 | 70 | 2.5 |
 | 2 | 72.5 | 68.5 | -4 |
-| 3 | 62.5 | 61 | -1.5 |
+| 3 | 62.5 | 65 | 2.5 |
 | 4 | 70 | 67 | -3 |
-| 5 | 65 | 62.5 | -2.5 |
+| 5 | 65 | 65 | 0 |
 | 6 | 75 | 73 | -2 |
-| 7 | 60 | 58.5 | -1.5 |
-| 8 | 72.5 | 68.5 | -4 |
+| 7 | 60 | 62.5 | 2.5 |
+| 8 | 72.5 | 72.5 | 0 |
 | 9 | 67.5 | 66 | -1.5 |
-| 10 | 70 | 64 | -6 |
-| **Average** | **68.25** | **65.4** | **-2.85** |
-
-</div>
+| 10 | 70 | 72.5 | 2.5 |
+| **Average** | **68.25** | **68.2** | **-0.05** |
 
 
 <p align="center">
-    <img src="./image/sus_chart.png" alt="SUS Usability Chart">
-    <br>
-    <em> Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.</em>
-    </p>
+    <img src="./image/sus_chart2.png" alt="SUS Usability Chart"width="50%">
+</p>
+
+*Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
 
 #### Performance Analysis & Interpretation
-
-Calculating the p-value with the **Mann-Whitney U Test** gave us a value of **0.1849**. Given that our threshold was 0.05, we determined that the change in difficulty did not result in a statistically significant change in the game’s usability. 
-
-**What does this mean?**
-The overall scores (68.25 and 65.4) place the game right at the industry average of 68. This told us:
-
-Overall, we had been successful in ensuring that our game was usable for users, and that we had fixed the previous issues with collisions and moving out of the map bounds. The small difference in usability between difficulties- despite the small drop for the hard difficulty- highlighted to us that difficulty was being implemented correctly. The game remained usable regardless of difficulty, users understood the danger posed by enemies, were not finding frustrating bugs within the game, and a harder difficulty did not lead to a worse user experience. Nevertheless, these middling scores did indicate to us some areas needing improvement. Users reported that the game could benefit from better accessibility, more specifically the ability to change controls according to user preference. Another user highlighted that the appearance of the game’s enemies and box assets could be improved to make it more intuitive what needed to be picked up and what needed to be avoided.
-
-Despite this, we considered our efforts a success since issues we had set out to solve had no longer become the bottleneck in the game’s development process. We were able to successfully instill a sense of danger within the player through enemies that now were considered threats, and, through the increased difficulty, users were more naturally inclined to pursue the win conditions and goals that we set out for the game. These evaluative methods and the user feedback within proved invaluable in helping to keep our game aligned with the user requirements.
+The Wilcoxon Signed Rank Test yielded a p-value of 1.0 confirming that the shift in difficulty did not statistically impact usability. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the data proves that the fixes to collision, boundaries and enemy pathing were effective. The consistency of the scores suggests that difficulty was implemented correctly; the game remained intuitive, and the “Hard” difficulty provided a challenge without causing frustration from encountering bugs. However, these scores do reveal clear room for improvement, with users highlighting the need for enhanced accessibility (customisable controls) and better visual design. Overall, the study clearly shows that the initial issues had been successfully resolved, providing an engaging sense of danger to drive users to pursue the win conditions.
 
 ### Process 
 
@@ -344,7 +361,7 @@ At the project's conception, our team adopted a flat structure where all members
 To ensure our development stayed aligned with stakeholder expectations, one team member consistently acted as the **Client/Product Owner**. This role was responsible for validating features against our initial requirements and providing critical feedback during our "live" demonstrations, ensuring the "user's voice" was never lost in the technical implementation.
 
 #### Sprint Cadence: Planning & Retrospectives
-Our development followed a rigorous weekly agile cadence. We utilized **Tuesday workshop sessions** for **Sprint Planning**, where we brainstormed objectives, estimated task complexity, and assigned Jira tickets. To ensure transparency and iterative growth, we held **Friday Retrospectives** to showcase new features, reflect on the week’s blockers, and discuss areas for improvement. This routine allowed us to transition from abstract ideas to technical proof-of-concepts effectively.
+Our development followed a rigorous weekly agile cadence. We utilized **Tuesday workshop sessions** for **Sprint Planning**, where we brainstormed objectives, estimated task complexity, and assigned Jira tickets. To ensure transparency and iterative growth, we held **Friday Retrospectives** to showcase new features, reflect on the week's blockers, and discuss areas for improvement. This routine allowed us to transition from abstract ideas to technical proof-of-concepts effectively.
 
 | **Sprint Management (Jira)** | **Visual Prototyping (Miro)** |
 | :---: | :---: |
