@@ -64,3 +64,5 @@ const defaults = {
         }
     }
 };
+
+if (typeof module !== 'undefined') module.exports = { defaults, DIR_LEFT, DIR_RIGHT };
