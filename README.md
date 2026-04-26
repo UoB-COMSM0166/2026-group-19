@@ -396,7 +396,7 @@ Each team member proposed potential impacts of our game prompted by questions re
 From these discussions, we developed a set of organised notes that describe the game’s sustainability impacts across the five dimensions.
 
 | Dimension     | Aspect                                | Description                                                  |
-| ------------- | ------------------------------------- | ------------------------------------------------------------ |
+| :------------ | :------------------------------------ | :----------------------------------------------------------- |
 | Social        | Sense of Community                    | The high score feature provides an opportunity for competitiveness amongst like-minded  people. |
 |               | Trust                                 | Our active and consistent development schedule builds trust with users, who can expect new features. |
 |               | Inclusiveness and  Diversity          | The game is designed with simple mechanics and minimal narrative barriers, making it  accessible to a wide variety of players regardless of educational background. |
@@ -423,25 +423,76 @@ From these discussions, we developed a set of organised notes that describe the 
 
 The insights from this framework were then used to construct a SusAF diagram, which visualises how the impacts of our game extend across the five sustainability dimensions over time. By mapping short, medium, and long-term effects, the diagram highlights how immediate design decisions can lead to broader systemic outcomes. 
 
-![ECS](image/SusAF-diagram.png)
+![SusAF](image/SusAF-diagram.png)
 
 #### Sustainability in Design
+
+To embed sustainability considerations into our design, we translated the insights from our earlier analysis into a set of user stories and acceptance criteria. These were again structured across the five sustainability dimensions. The table below shows how the earlier notes were translated into concrete design requirements, which we added to our project backlog.
 
 | Dimension     | User Story                                                   | Acceptance Criterion                                         |
 | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Social        | As a casual player, I want a fair and balanced game, so that I can enjoy it without feeling disadvantaged. | Given a user is playing, when they progress, then all gameplay features should be equally accessible with no pay-to-win mechanics making the game easier. |
-|               | As a competitive player, I want to compare my performance with others, so that I feel part of a wider community. | Given a user completes a run, when scores are displayed, then they should be able to view and compare high scores. |
-| Individual    | As a player, I want to customise controls, so that I can play comfortably regardless of my physical needs. | Given a user goes into settings menu, when they change controls, then the new configuration should be applied immediately and persist between screens. |
-|               |                                                              |                                                              |
+| Social        | As a competitive player, I want to compare my performance with others, so that I feel part of a wider community. | Given a user completes a run, when scores are displayed, then they should be able to view and compare high scores. |
+| Individual    | As a player with accessibility needs, I want to customise controls, so that I can play comfortably. | Given a user goes into settings menu, when they change controls, then the new configuration should be applied immediately and persist between screens. |
+| Individual    | As a player, I want my privacy to be protected, so that I can play without sharing personal data. | Given a user plays the game, no personal data should be required or stored. |
 | Environmental | As a sustainably-minded player, I want the game to run efficiently, so that it uses minimal system resources on my system. | Given a user is playing, when the game is running, then CPU and memory usage should remain low due to optimised assets. |
-|               | As a developer, I want to minimise unnecessary resource usage, so that the game has a lower environmental impact. | Given assets are loaded, when they are no longer needed, then they should be removed or reused efficiently. |
+| Environmental | As a developer, I want to minimise unnecessary resource usage, so that the game has a lower environmental impact. | Given assets are loaded, when they are no longer needed, then they should be removed or reused efficiently. |
 | Economic      | As a developer, I want the option to add future content, so that the game can remain financially sustainable. | Given new content is introduced, when additional levels or items are added, then they should integrate without affecting core gameplay balance. |
 | Technical     | As a regular player, I want the game to run smoothly over time, so that I can continue playing without performance issues. | Given a user is playing the game, when they play for extended periods, then the game should maintain stable performance without crashes or slowdowns. |
-|               | As a developer, I want the game to be easy to update and extend, so that new content can be added without breaking existing features. | Given the system is updated, when new levels or features are added, then existing functionality should remain unaffected. |
-
-
+| Technical     | As a developer, I want the game to be easy to update and extend, so that new content can be added without breaking existing features. | Given the system is updated, when new levels or features are added, then existing functionality should remain unaffected. |
 
 #### Green Software Design Patterns
+
+To improve the environmental sustainability of our game, we investigated several Green Software Design Patterns and chose three that were most applicable to our system and likely to have meaningful impact. These patterns consider trade-offs across environmental impact, system performance, and cost efficiency. We assessed their potential benefits using the Software Carbon Intensity (SCI) framework, defined as **SCI = (E × I) + M per R**. [1]
+
+Where:
+
+- **E** represents the energy consumed by the system during operation
+- **I** represents the carbon intensity of the electricity used
+- **M** represents the embodied carbon associated with hardware and infrastructure
+- **R** represents the functional unit of software usage being measured (e.g. per game session)
+
+**1. Deprecate GIFs for Animated Content [2]** 
+
+The GIF format has become technically obsolete with the adoption of newer technologies. To reduce the inefficiencies associated with GIF-based animation, we replaced all GIF assets with sprite sheets for in-game animations. In contrast to GIFs, sprite sheets consolidate all animation frames into a single image, which can then be rendered by selectively displaying regions of the sheet.
+
+By storing animation frames in one compact resource, we reduce bandwidth usage and improve rendering efficiency. This lowers processing overhead on the client side, contributing to reduced energy consumption **(E)** .
+
+![SpriteSheet](src/assets/spriteEnemy.png)
+
+**2.  Optimising Image Size for Display [3]**
+
+To improve performance and reduce unnecessary resource usage, we optimised all in-game images so that their stored pixel dimensions more closely match their actual display size on the lab machines. Previously, some assets were significantly larger than required and were being scaled down in the browser, which resulted in wasted memory, bandwidth, and processing effort.
+
+Overall, this change reduces energy usage **(E)** by lowering rendering overhead and memory demand, while also minimising wasted storage from oversized assets **(M)**.
+
+![ImageResizing](image/image-resizing.png)
+
+**3. Caching Static Data [4]**
+
+Repeatedly recomputing and redrawing static assets introduces unnecessary CPU work and increases rendering overhead. Even if the underlying data does not change between frames, it may still be re-processed and re-rendered every update cycle, wasting energy. A more efficient approach is to cache the rendered output of static data so it can be reused without re-computation.
+
+We made use of this design pattern in our rendering system. Instead of iterating over wall entities and drawing them each frame, the system pre-renders them once into an off-screen buffer and reuses the resulting image. Pseudocode of this implementation is included below.
+
+```pseudocode
+wallCache ← empty
+
+function buildWallCache():
+    create offscreen buffer
+
+    for each wall entity:
+        get position and size
+        render wall tiles into buffer
+
+    store result in wallCache
+
+
+render loop:
+    if wallCache exists:
+        draw wallCache to screen
+```
+
+Caching static data reduces SCI by lowering repeated computation and rendering. By reusing pre-rendered content instead of recalculating it each frame, less energy is consumed on the client device, reducing energy use **(E)**. It also reduces the amount of work performed across the rendering pipeline over time, which decreases overall hardware utilisation and therefore lowers embodied carbon **(M)**.
 
 ### Conclusion
 
@@ -458,12 +509,12 @@ These all helped us collaborate more easily and smoothly.
 
 - Provide a table of everyone's contribution, which *may* be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Please let us know as soon as possible if there are any issues with teamwork as soon as they are apparent and we will do our best to help your team work harmoniously together.
 
-### Additional Marks
+### References
 
-You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
+[1] Green Software Foundation, *Software Carbon Intensity (SCI) Specification*, Green Software Foundation. [Online]. Available: https://sci.greensoftware.foundation/. [Accessed: 26-Apr-2026].
 
-- **Quality** of report writing, presentation, use of figures and visual material (5% of report grade) 
-  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available.
-- **Documentation** of code (5% of report grade)
-  - Organise your code so that it could easily be picked up by another team in the future and developed further.
-  - Is your repo clearly organised? Is code well commented throughout?
+[2] Green Software Foundation, “Deprecate GIFs for animated content,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/deprecate-gifs/](https://patterns.greensoftware.foundation/catalog/web/deprecate-gifs/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
+
+[3] Green Software Foundation, “Properly sized images,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/](https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
+
+[4] Green Software Foundation, “Cache static data,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/](https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
