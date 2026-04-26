@@ -383,7 +383,68 @@ While our Agile framework provided a strong foundation, the reality of developme
     **What Didn't Work:** Frequent rebasing initially resulted in overwhelming merge conflicts, as isolated tasks ended up interacting with the same core game loops. 
     **How We Adapted:** We learned that working in silos is dangerous in game development. When a conflict arose, we stopped resolving them in isolation and immediately initiated quick sync calls with the involved teammates to negotiate the merge. This fundamentally changed our mindset: we learned to constantly read each other's code to anticipate integration points *before* pushing our branches, drastically reducing integration risks later in the project.
 
+### Sustainability
+
+Sustainability was a key consideration throughout our development process, influencing both our design decisions and the themes presented in the game. To ensure a structured approach, we integrated sustainability principles into our workflow using the **Sustainability Awareness Framework**.
+
+#### Sustainability Awareness Framework (SusAF)
+
+**Questions and Discussion**
+Each team member proposed potential impacts of our game prompted by questions relating to five key sustainability dimensions: social, individual, environmental, economic, and technical. This encouraged us to reflect on our own perspectives and consider different viewpoints, helping us think more critically about sustainability in our project. 
+
+**Analysis**
+From these discussions, we developed a set of organised notes that describe the game’s sustainability impacts across the five dimensions.
+
+| Dimension     | Aspect                                | Description                                                  |
+| ------------- | ------------------------------------- | ------------------------------------------------------------ |
+| Social        | Sense of Community                    | The high score feature provides an opportunity for competitiveness amongst like-minded  people. |
+|               | Trust                                 | Our active and consistent development schedule builds trust with users, who can expect new features. |
+|               | Inclusiveness and  Diversity          | The game is designed with simple mechanics and minimal narrative barriers, making it  accessible to a wide variety of players regardless of educational background. |
+|               | Equity                                | All players have equal access to gameplay features. We implemented no pay-to-win mechanics or locked content to ensure fairness. |
+| Individual    | Health                                | The game supports adjustable control schemes, allowing players to choose input methods that minimise strain and improve comfort during extended play sessions. |
+|               | Lifelong Learning                     | Players can  develop reflexes, coordination, and strategic thinking through repeated play. |
+|               | Privacy                               | The game does not collect any personal data.                 |
+|               | Safety                                | Content is designed to be non-realistic and stylised, reducing exposure to harmful or distressing material. |
+|               | Agency                                | Players can customise control schemes and choose difficulty levels, giving them control over how they interact with the game. |
+| Environmental | Materials and Resources               | The use of  lightweight pixel-art assets and simple animations reduces memory usage and limits the computational resources required to run the game. |
+|               | Soil, Atmospheric and Water Pollution | While our game has no direct physical pollution, reducing energy consumption through optimisations indirectly lowers electricity usage. |
+|               | Biodiversity and Land Use             | The game’s themed environments (space, cave, ice) are fictional and do not promote harmful real-world land use. |
+|               | Energy                                | Efficient asset loading and lightweight graphics reduce CPU and GPU usage, lowering overall energy consumption during gameplay. |
+|               | Logistics and Transport               | As a digital-only  product, the game avoids physical distribution, eliminating emissions associated with manufacturing and shipping. |
+| Economic      | Value                                 | Potential for paid levels and weapons in future.             |
+|               | Customer Relations  Management        | Simple gameplay, high scores, and regular improvements encourage engagement and build a positive relationship with players. |
+|               | Supply Chain                          | Uses a minimal, fully digital supply chains, reducing cost, complexity, and reliance on external providers. |
+|               | Innovation,  Research and Development | Iterative design of themed levels and adaptable controls supports ongoing improvements, including potential accessibility features like high-contrast mode. |
+| Technical     | Maintainability                       | Modular structure separates core systems, making bugs easier to fix and updates easier to implement. |
+|               | Usability                             | Simple controls  and clear feedback make the game easy to learn, with customisable inputs  improving accessibility. |
+|               | Extensibility and  Adaptability       | New levels, mechanics, and features (e.g. accessibility modes) can be added with minimal changes. |
+|               | Security                              | Minimal data collection reduces risk, with no sensitive user information stored. |
+|               | Scalability                           | Lightweight design supports additional content and increased usage without major performance impact. |
+
+The insights from this framework were then used to construct a SusAF diagram, which visualises how the impacts of our game extend across the five sustainability dimensions over time. By mapping short, medium, and long-term effects, the diagram highlights how immediate design decisions can lead to broader systemic outcomes. 
+
+![ECS](image/SusAF-diagram.png)
+
+#### Sustainability in Design
+
+| Dimension     | User Story                                                   | Acceptance Criterion                                         |
+| ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Social        | As a casual player, I want a fair and balanced game, so that I can enjoy it without feeling disadvantaged. | Given a user is playing, when they progress, then all gameplay features should be equally accessible with no pay-to-win mechanics making the game easier. |
+|               | As a competitive player, I want to compare my performance with others, so that I feel part of a wider community. | Given a user completes a run, when scores are displayed, then they should be able to view and compare high scores. |
+| Individual    | As a player, I want to customise controls, so that I can play comfortably regardless of my physical needs. | Given a user goes into settings menu, when they change controls, then the new configuration should be applied immediately and persist between screens. |
+|               |                                                              |                                                              |
+| Environmental | As a sustainably-minded player, I want the game to run efficiently, so that it uses minimal system resources on my system. | Given a user is playing, when the game is running, then CPU and memory usage should remain low due to optimised assets. |
+|               | As a developer, I want to minimise unnecessary resource usage, so that the game has a lower environmental impact. | Given assets are loaded, when they are no longer needed, then they should be removed or reused efficiently. |
+| Economic      | As a developer, I want the option to add future content, so that the game can remain financially sustainable. | Given new content is introduced, when additional levels or items are added, then they should integrate without affecting core gameplay balance. |
+| Technical     | As a regular player, I want the game to run smoothly over time, so that I can continue playing without performance issues. | Given a user is playing the game, when they play for extended periods, then the game should maintain stable performance without crashes or slowdowns. |
+|               | As a developer, I want the game to be easy to update and extend, so that new content can be added without breaking existing features. | Given the system is updated, when new levels or features are added, then existing functionality should remain unaffected. |
+
+
+
+#### Green Software Design Patterns
+
 ### Conclusion
+
 - The CrateBox project has been a massive undertaking. At the early stage, we discussed and set the tone of the whole development process. Instead of using the heavily inherited Object-Oriented-Programming structure, we adopted an unfamiliar design pattern - Entity-Component-System (ECS), which gave us a hard time to learn it in the beginning, but huge development benefits later down the road. Moreover, we implemented change control policies for our Github repo, which meant someone needed to review the code before any pull-request being merged or rebased into the main branch, and had standard formatting for the commit messages. 
 These all helped us collaborate more easily and smoothly. 
 
