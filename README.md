@@ -283,8 +283,6 @@ classDiagram
 
   class System {
 
-​    <<abstract>>
-
 ​    +ecs
 
 ​    +update(dt)*
@@ -835,7 +833,6 @@ classDiagram
 
   class LevelFactory {
 
-​    <<static>>
 
 ​    +scaleX(col, W)$
 
@@ -849,7 +846,6 @@ classDiagram
 
   class DEFAULTS {
 
-​    <<config>>
 
 ​    +physics
 
