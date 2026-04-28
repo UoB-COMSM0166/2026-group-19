@@ -356,7 +356,7 @@ Our development followed a rigorous weekly agile cadence. We utilized **Tuesday 
 | **Sprint Management (Jira)** | **Visual Prototyping (Miro)** |
 | :---: | :---: |
 | <img src="./image/jira_kanban.png" width="400"> | <img src="./image/miro.png" width="400"> |
-| *Figure 17: Weekly task tracking and sprint progress.* | *Figure 18: Collaborative design and UI/UX sketching.* |
+
 
 During the early stages, we also utilized physical **Paper Prototyping** (see Figure 19) to validate our mechanics before writing a single line of code. This "low-fidelity" approach was instrumental in deciding to prioritize the "Lights Out" mechanic, which eventually became a core feature of the game.
 
@@ -366,7 +366,7 @@ To maintain high code quality and a clean project history, we implemented a stri
 | **Commit Standards** | **Git Flow Architecture** |
 | :---: | :---: |
 | <img src="./image/commit_style.png" width="400"> | <img src="./image/gitflow.png" width="400"> |
-| *Figure 20: Standardized prefixes for a clear version history.* | *Figure 21: Branching strategy for modular development.* |
+
 
 #### Reflections & Adaptations
 While our Agile framework provided a strong foundation, the reality of development presented several challenges that required us to adapt our working style:
