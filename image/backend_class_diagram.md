@@ -221,8 +221,6 @@ classDiagram
         +rotation
         +rotationSpeed
     }
-    class BloodDroplet
-    class FireRequest
 
     %% ─────────────────────────────────────────────
     %% COMPONENTS — Combat
