@@ -1,45 +1,41 @@
-# 2026-group-19
-2026 COMSM0166 group 19
-Play Our Game!
->>  https://uob-comsm0166.github.io/2026-group-19/  <<
+![Banner](image/banner.png)
 
-# COMSM0166 Project Template
-A project template for the Software Engineering Discipline and Practice module (COMSM0166).
+**Outrun, outshoot, and outlast the growing chaos!**
 
-## Info
-
-This is the template for your group project repo/report. We'll be setting up your repo and assigning you to it after the group forming activity. You can delete this info section, but please keep the rest of the repo structure intact.
-
-You will be developing your game using [P5.js](https://p5js.org) a javascript library that provides you will all the tools you need to make your game. However, we won't be teaching you javascript, this is a chance for you and your team to learn a (friendly) new language and framework quickly, something you will almost certainly have to do with your summer project and in future. There is a lot of documentation online, you can start with:
-
-- [P5.js tutorials](https://p5js.org/tutorials/) 
-- [Coding Train P5.js](https://thecodingtrain.com/tracks/code-programming-with-p5-js) course - go here for enthusiastic video tutorials from Dan Shiffman (recommended!)
-
-## Your Game (change to title of your game)
-
-STRAPLINE. Add an exciting one sentence description of your game here.
-
-IMAGE. Add an image of your game here, keep this updated with a snapshot of your latest development.
-
-LINK. Add a link here to your deployed game, you can also make the image above link to your game if you wish. Your game lives in the [/docs](/docs) folder, and is published using Github pages. 
+[CLICK HERE TO PLAY!](https://uob-comsm0166.github.io/2026-group-19/)
 
 VIDEO. Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
 
-## Your Group
+# Table of Contents
+1. [Development Team](#1-development-team)
+2. [Introduction](#2-introduction)
+3. [Requirements](#3-requirements)
+4. [Design](#4-design)
+5. [Implementation](#5-implementation)
+6. [Evaluation](#6-evaluation)
+7. [Process](#7-process)
+8. [Sustainability](#8-sustainability)
+9. [Conclusion](#9-conclusion)
+10. [Contribution Statement](#10-contribution-statement)
+11. [References](#11-references)
+
+
+
+# 1. Development Team
 
 ![Group Photo](./image/group-photo.JPG)
 
-- Alexander Hoover, lv25122@bristol.ac.uk, ROLE
-- Jui Cheng Ho, ax25117@bristol.ac.uk, ROLE
-- Wei Lun Chang, jb25862@bristol.ac.uk, ROLE
-- Chi-Wei Feng, yx25778@bristol.ac.uk, ROLE
-- Johnny Fraser, qk18837@bristol.ac.uk, ROLE
-- Oliver Parry, nf25715@bristol.ac.uk, ROLE 
+| Name          | Email                 | Primary Roles                          |
+| ------------- | --------------------- | -------------------------------------- |
+| Alex Hoover   | lv25122@bristol.ac.uk | Backend, ECS Framework, Physics System |
+| Jui Cheng Ho  | ax25117@bristol.ac.uk |                                        |
+| Wei Lun Chang | jb25862@bristol.ac.uk |                                        |
+| Chi-Wei Feng  | yx25778@bristol.ac.uk |                                        |
+| Johnny Fraser | qk18837@bristol.ac.uk |                                        |
+| Oliver Parry  | nf25715@bristol.ac.uk |                                        |
 
-## Project Report
 
-
-### Introduction
+# 2. Introduction
 
 - 5% ~250 words 
 - Describe your game, what is based on, what makes it novel? (what's the "twist"?)
@@ -61,11 +57,10 @@ The core game mechanics are relatively simple, so there won't be the case of bit
 Possible Twists:
 Main twists would be changes to the environment in which the map is played. Adding wind which would affect bullet trajectory and physics as well as potentially the player would be interesting, which would occur at random points within the game for a specified amount of time. Similarly, limiting the perspective that the player can see from, for example removing lighting would be another interesting mechanic. In this way, the entire map would no longer be able to be seen in its entirety as usual, and instead the player is limited to seeing based on proximity from their player entity and which way they are facing. Changing gravity conditions is also a good twist, where the entire map flips, and the player has to traverse the map upside-down, with the enemies moving in the opposite direction.
 
-### Requirements 
-#### Genre Ideation & Investigation
+# 3. Requirements 
+## Genre Ideation & Investigation
 
-The first stage of our development process was to identify what type of game we wanted to make.
-To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied first place.
+The first stage of our development process was to identify what type of game we wanted to make. To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied first place.
 
 | Genre | Total Votes | Status |
 | :--- | :---: | :--- |
@@ -96,7 +91,7 @@ By selecting the strongest archetype from each genre, we maximized the breadth o
   </tr>
 </table>
 
-#### Paper Prototyping Sessions
+## Paper Prototyping Sessions
 <table>
   <tr>
     <td><img src="assets/crate_paper_prototype.gif" style="height:180; width:auto;"/></td>
@@ -112,11 +107,11 @@ These Paper Prototyping sessions provided critical data that shaped our final pr
 
 A standout success from the testing was the 'Lights Out!' mechanic seen above. Initially only a throwaway prototype, its popularity during user testing led us to prioritise it as a strong Should-Have requirement. It evolved into the 'Dark Mine' area in our final game, adding atmospheric depth and a unique challenge to the Level 1 environment.
 
-#### Identification of Stakeholders
+## Identification of Stakeholders
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
 
-#### Epics and User Stories
+## Epics and User Stories
 
 We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
 
@@ -162,7 +157,7 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
   </tbody>
 </table>
 
-#### User Personas
+## User Personas
 
 In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
 
@@ -171,23 +166,23 @@ This sped up development by allowing us to easily question what ‘Sam the Sensi
 
 ![User Personas](./image/user_personas.png)
 
-####  Project Prioritization - MoSCoW Analysis
+##  Project Prioritization - MoSCoW Analysis
 
 | Feature | Effort | Value | MoSCoW Bucket | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | **Core Physics & Gravity** | High | Critical | Must Have | The game is unplayable without stable physics, thus this is required for even the MVP. |
 | **Randomized Weapon Crates** | Medium | High | Must Have | This is the main hook of the game, and forms the fundamental gameplay loop .|
 | **Light's out Envimonmental Effect** | Medium | High | Should Have | This was a highly favoured feature during user testing that adds a unique twist to the game. |
-| **Multiple Control Schemes** | Low | High | Should Have | Allows players with control related accessiblity needs to optimise their play. |
+| **Multiple Control Schemes** | Low | High | Should Have | Allows players with control related accessibility needs to optimise their play. |
 | **Visual Hit-Flash Feedback** | Low | Medium | Should Have | Aids deaf players who cannot hear the 'hurt' sound effect to play easily. |
 | **Pause Menu & State Control** | Low | Medium | Should Have | Important for user control and allowing breaks without losing progress. |
 | **Local High Score Saving** | Medium | Medium | Could Have | This would encourage replayability but is not required for an early game iteration. |
-| **Online Global Leaderboard** | High | Medium | Won't Have | Leads to high server-side complexity and data protection considerations, with limited interest from playtesters. |
+| **Online Global Leaderboard** | High | Medium | Won't Have | Leads to high server-side complexity and data protection considerations, with limited interest from play testers. |
 
-#### Use Case Diagram
+## Use Case Diagram
 ![Use Case Diagram](./image/use_case_diagram.jpg)
 
-### Design
+# 4. Design
 
 With a set of preliminary requirements established for our game, we next turned to designing its architecture. During the 2026 BrisHack hackathon, our team experimented with a traditional object-oriented design using deep inheritance hierarchies. In this approach, a typical class structure might resemble:
 
@@ -196,11 +191,12 @@ GameObject → MovingEntity → Character → Player
 ```
 
 While this design works adequately for small projects, we found that it did not scale well. Managing deep inheritance trees quickly became difficult, and the structure made it harder to reason about the relationships between classes. Additionally, we encountered the “God Class” problem, where individual classes accumulated large amounts of logic within a single file, making the code harder to maintain and extend.
+
 For the development of our actual game, we therefore sought a design pattern that minimized inheritance, separated entity behaviour from the entities themselves, and remained conceptually simple. Based on these goals, we chose to implement an Entity–Component–System (ECS) architecture for the backend of our game.
 
-#### Backend (Entity-Component-System)
+## Backend (Entity-Component-System)
 
-Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts. 
+Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts. ECS also prioritises composition over inheritance.
 
 - <strong>Entities:</strong>
 An entity is simply a unique integer identifier. By itself, an entity contains no data or behaviour.
@@ -224,10 +220,9 @@ The images below show this design pattern conceptually.
 This architecture provides several additional benefits. The ECS database can be organized so that components are stored contiguously in memory, improving cache locality and overall performance. Achieving this level of memory efficiency is far more difficult with traditional object-oriented designs. Furthermore, ECS makes it easy to add new functionality. Rather than modifying existing class hierarchies, new behaviour can be introduced by defining a new component and system, then attaching the component to relevant entities. This modular structure enables rapid development of new features without requiring significant refactoring of existing code. The complete backend class diagram can be seen below.
 
 *Backend Class Diagram*
+[![ECS](image/full-class-diagram.png)](image/full-class-diagram.png)
 
-![ECS](image/full-class-diagram.png)
-
-#### Front End
+## Front End
 
 Early in the design process, we used sequence diagrams to conceptualise how the menu system should function, mapping out transitions between screens before any code was written. The diagram below illustrates a typical user journey through the game, from the title screen to gameplay and back again. By tracing the player’s path across different scenes, we identified which state needed to be preserved and chose an appropriate design pattern to support these transitions.
 
@@ -243,38 +238,46 @@ The game uses a Scene Manager pattern to control which screen is shown at any ti
 
 ![ECS](image/scene-manager-diagram.png)
 
-### Implementation
+# 5. Implementation
 
 Our implementation of CrateBox is grounded in two key areas of technical challenge that shaped both the architecture and the development process: building a functional Entity–Component–System (ECS) engine from scratch, and ensuring the game maintains consistent visual and physical quality across different screen sizes and zoom levels.
 
-#### Challenge 1: Implementing Floating Enemy
+## Challenge 1: Implementing Floating Enemy
 
-One of the most distinctive enemies in CrateBox is the floating enemy — a ghost-like entity that partially ignores gravity and actively hunts the player through the air. Designing its movement behaviour proved to be one of the more nuanced implementation challenges: a direct pursuit strategy from the moment of spawn caused enemies to lock onto the player immediately and press straight into walls, where they would become permanently stuck rather than posing any real threat.
+One of the most distinctive enemies in CrateBox is the floating enemy, a ghost-like entity that partially ignores gravity and actively hunts the player through the air. Designing its movement behaviour proved to be one of the more difficult implementation challenges: a direct pursuit strategy from the moment of spawn caused enemies to lock onto the player immediately and press straight into walls, where they would become permanently stuck.
 
-The naive approach — computing a unit vector from the enemy's position to the player's position every frame and applying acceleration in that direction — worked in open space but failed whenever geometry intervened. An enemy spawned above a wall would accelerate horizontally into it and remain pinned there, because the target direction never changed. The result was cluttered, non-threatening enemies that degraded the gameplay experience.
+**Our Initial Approach**
 
-Our solution introduces a `Floating` component (`src/ecs/components/floating.js`) that carries a single boolean flag, `wasInRange`. When a floating enemy is created (`src/ecs/entity_factory.js`), it is assigned a random initial horizontal velocity and a vertical acceleration of only `gravity / 5` — a fraction of normal gravity — so that it drifts passively through the level rather than charging at the player from the outset.
+We initially computed a unit vector from the enemy's position to the player's position every frame and applied an acceleration in that direction. This worked in open space but failed whenever walls got in the way. This also caused enemies to cluster together, without posing any threat to the player. 
 
-The `FloatingSystem` (`src/ecs/systems/floating_system.js`) runs each frame on every entity that carries both `Floating` and `Enemy` components. It computes the Euclidean distance from the enemy to the player via `Math.hypot`. If that distance falls within half the screen height, the system sets `wasInRange` to `true` and replaces the enemy's acceleration with a vector pointing directly toward the player, scaled by `floatingEnemyAccel`. This makes the enemy accelerate smoothly toward the player only once it is genuinely close.
+**Our Solution**
 
-When the enemy subsequently drifts back out of range, the `wasInRange` flag triggers a reset: acceleration reverts to the reduced-gravity constant, and horizontal velocity is reassigned a random direction. This return to drift behaviour is the key insight — instead of continuing to press against whatever geometry blocked the pursuit, the enemy re-enters a natural floating state and eventually drifts back into range from a different angle, maintaining the sense of an eerie, persistent threat without the wall-stuck pathology.
+To address this, we updated the floating enemy’s pathfinding to use two distinct modes based on its distance from the player. When far away, it drifts downward through the level using behaviour similar to other enemies. Once it enters a defined radius, it begins accelerating smoothly toward the player by applying force in the direction of the unit vector between them. This ensures the enemy only actively pursues the player at close range, preventing it from getting stuck on walls. If it moves out of range again, it returns to its natural drifting behaviour.
 
-#### Challenge 2: Maintaining Game Quality And Performance
+## Challenge 2: Maintaining Game Quality And Performance
 
-The game needed to look and feel identical across different machines — and that turned out to be harder than expected. Mac users saw the animated background running smoothly, while teammates on lower-end Windows laptops experienced severe frame-rate drops. The culprit was the animated background shader in `src/UI/draw_background.js`, a GLSL fragment shader adapted from Shadertoy that executes a 200-iteration raymarching loop for every pixel it draws. At full canvas resolution on an integrated GPU, that volume of fragment shader work was simply too much.
+**Animated Background Optimisation**
 
-The fix was a render-scale offscreen buffer. Rather than running the shader at full canvas resolution, `bgShader` creates an offscreen `createGraphics` buffer at 40% of the canvas size (`_renderScale = 0.4`), runs the shader there, then upscales the result to fill the canvas via a single `image()` call. Because fragment shader cost scales with pixel count, dropping to 40% in each dimension reduces GPU work to roughly 16% of what full resolution would require — enough to make the background runnable on weak hardware. `pixelDensity(1)` is also set on the offscreen buffer to prevent HiDPI displays from silently doubling the internal resolution and erasing the saving. If the window is resized, `_ensureOffscreen` detects the dimension change and recreates the buffer at the new scaled size, so the optimisation holds at any window size.
+The game needed to look and feel consistent across different machines, which proved more challenging than expected. While it ran smoothly on some systems, lower-end devices experienced significant frame-rate drops due to the cost of rendering a complex animated background, which required intensive per-pixel calculations.
 
-A second cross-device problem was physics consistency across different display refresh rates. P5.js calls `draw()` once per display frame, so on a 120 Hz monitor physics would run twice as fast as on a 60 Hz screen. We resolved this in `src/game.js` with `const dt = deltaTime / (1000 / 60)`, which normalises P5's built-in `deltaTime` to a 60 fps baseline — yielding `dt = 1.0` at 60 Hz, `dt = 0.5` at 120 Hz, and `dt = 2.0` at 30 Hz. Every physics integration in the `PhysicsSystem` and `FloatingSystem` multiplies by `dt`, so gravity, velocity, and acceleration advance by the correct amount regardless of the hardware.
+To address this, we introduced a scaled offscreen rendering approach. The background is first rendered at a reduced resolution and then upscaled to fit the screen. Since rendering cost scales with pixel count, this significantly lowers GPU workload, reducing it to a fraction of the original, while maintaining acceptable visual quality. We also ensured that display scaling did not undo these performance gains, and made the buffer automatically adjust to window size changes to maintain consistent efficiency.
 
-For geometry and layout, all positions and sizes are defined on a 32×18 normalised grid (`src/config/level_factory.js`). 32 and 18 are exact multiples of the 16:9 aspect ratio (32 = 2×16, 18 = 2×9), so each cell maps cleanly to pixels at any resolution, and a single grid cell produced a wall and box width that felt right for gameplay without manual tuning. Every physics constant is converted from grid-relative values to pixels once at level load in `LevelFactory.build()` — gravity, player speed, jump velocity, terminal velocity, enemy speed, and floating enemy acceleration are all pre-scaled before being passed to the systems, so at runtime no per-frame conversion is needed and the update loop stays lean on any device.
+**Consistent Physics Across Framerates**
+
+A second cross-device issue was inconsistent game speed caused by varying frame rates. Because the game updates once per rendered frame, higher refresh rates caused physics to run faster, while lower frame rates slowed everything down. To fix this, we scaled all physics updates using a time factor based on the elapsed time between frames, normalised to a 60 fps baseline. This ensures that movement, gravity, and other physics behaviours progress at a consistent rate, regardless of the hardware or display refresh rate.
+
+**Maintaining Layouts Across Resolutions and Aspect Ratios**
+
+A further issue arose from differences in screen aspect ratios, which caused levels to appear and play differently across devices. To address this, we based all geometry and layout on a fixed 32×18 grid aligned to a 16:9 aspect ratio. This grid was then scaled to the user's screen at runtime (with padding to maintain aspect ratio). This ensured that the relative positioning and proportions of platforms, walls, and entities remained consistent, regardless of screen dimensions. An additional benefit of this approach was that levels could be easily designed and iterated on using simple tools like Excel, before being translated directly into the game.
+
+![Excel Level Design](image/excel-design.png)
 
 
-### Evaluation
+# 6. Evaluation
 
 As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. We assessed the game using quantitative and qualitative methods, to give us the clearest picture possible of any potential usability issues whilst minimising the weaknesses that any one method may have.
 
-#### Qualitative Evaluation: Think-Aloud
+## Qualitative Evaluation: Think-Aloud
 Sixteen participants were gathered in total from workshops. During this evaluation, users were asked to navigate around the map, interact with enemy entities, and pick up crates that spawned around the map. Players were encouraged to express their thoughts as they played. The results are as follows:
 
 **Tasks:**
@@ -286,9 +289,10 @@ Sixteen participants were gathered in total from workshops. During this evaluati
     <img src="./image/thinkaloud_image.png" alt="Think Aloud User Quotes" width="70%">
 </p>
 
-#### Solutions and Adjustments
+## Solutions and Adjustments
 
 **Navigation and Map**
+
 *   **Issues:** Users found the movement smooth and enjoyable, however they found that the character could travel outside of the map boundaries.
 *   **Solution:** We implemented strict level colliders and invisible walls around the top of the map, so that players could not jump into the hole for the enemy spawn point.
 
@@ -300,7 +304,7 @@ Sixteen participants were gathered in total from workshops. During this evaluati
 *   Enemy pathing and the presence of spots in the map where enemies did not cover led to users feeling as though enemies were not dangerous.
 *   **Solutions:** We implemented a new type of enemy, the floating enemy, which would intercept the player regardless of map position, and revised the enemy pathing to cover the whole map.
 
-#### Heuristic Evaluation
+## Heuristic Evaluation
 To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desiribility bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes were then compiled and then subsequently worked over.
 
 | Interface Component | Issue | Heuristic(s) | Frequency (0-4) | Impact (0-4) | Persistence (0-4) | Severity (F+I+P)/3 |
@@ -315,7 +319,7 @@ To complement the Think-Aloud method, and to make up for the tendency of its res
 
 Based on the severity scores, we prioritised fixes into three tiers, with 1 being critical, and 3 being minor. 🔴 Tier 1 (Critical) addressed the issues with the UI and the Level Design, as these were preventing users from carrying out the core principles of the game. 🟡 Tier 2 (Major) focused on the Enemy Pathing and Hitboxes, ensuring that the game felt responsive to player inputs. 🟢 Tier 3 (Minor) involved changing the way difficulty and enemy spawn times were implemented, which were addressed only once the first two tiers had been addressed.
 
-#### Quantitative Analysis: System Usability Scale (SUS)
+## Quantitative Analysis: System Usability Scale (SUS)
 To evaluate our game’s improvements, we transitioned from qualitative feedback to empirical, quantitative testing. We specifically measured whether players felt a heightened sense of danger and a clearer understanding of win conditions. Although we conducted tests for different difficulties, we decided on the System Usability Scale (SUS) over the NASA Task Load (TLX) to measure if we had met our objectives. This was because we wanted to ensure player satisfaction and good usability was attained, rather than simply measuring the volume of user workload.
 
 Ten participants were randomly selected to complete SUS evaluations for both “Easy” and “Hard” difficulties. We sought high usability scores to prove that the game is intuitive and to verify our refinements had enhanced the user experience.
@@ -343,14 +347,14 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 
 **Performance Analysis & Interpretation:** The Wilcoxon Signed Rank Test yielded a p-value of 1.0 confirming that the shift in difficulty did not statistically impact usability. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the data proves that the fixes to collision, boundaries and enemy pathing were effective. The consistency of the scores suggests that difficulty was implemented correctly; the game remained intuitive, and the “Hard” difficulty provided a challenge without causing frustration from encountering bugs. However, these scores do reveal clear room for improvement, with users highlighting the need for enhanced accessibility (customisable controls) and better visual design. Overall, the study clearly shows that the initial issues had been successfully resolved, providing an engaging sense of danger to drive users to pursue the win conditions.
 
-### Process 
+# 7. Process 
 
-#### Team Structure & Shared Accountability
+## Team Structure & Shared Accountability
 At the project's conception, our team adopted a flat structure where all members contributed equally to decision-making while delegating tasks based on individual technical strengths. We divided the development into **Frontend** (animations, environment rendering, and UI) and **Backend** (ECS engine logic, physics, and weapon systems). 
 
 To ensure our development stayed aligned with stakeholder expectations, one team member consistently acted as the **Client/Product Owner**. This role was responsible for validating features against our initial requirements and providing critical feedback during our "live" demonstrations, ensuring the "user's voice" was never lost in the technical implementation.
 
-#### Sprint Cadence: Planning & Retrospectives
+## Sprint Cadence: Planning & Retrospectives
 Our development followed a rigorous weekly agile cadence. We utilized **Tuesday workshop sessions** for **Sprint Planning**, where we brainstormed objectives, estimated task complexity, and assigned Jira tickets. To ensure transparency and iterative growth, we held **Friday Retrospectives** to showcase new features, reflect on the week's blockers, and discuss areas for improvement. This routine allowed us to transition from abstract ideas to technical proof-of-concepts effectively.
 
 | **Sprint Management (Jira)** | **Visual Prototyping (Miro)** |
@@ -360,7 +364,7 @@ Our development followed a rigorous weekly agile cadence. We utilized **Tuesday 
 
 During the early stages, we also utilized physical **Paper Prototyping** (see Figure 19) to validate our mechanics before writing a single line of code. This "low-fidelity" approach was instrumental in deciding to prioritize the "Lights Out" mechanic, which eventually became a core feature of the game.
 
-#### Technical Workflow & Quality Control
+## Technical Workflow & Quality Control
 To maintain high code quality and a clean project history, we implemented a strict Git Flow strategy. Work was strictly isolated in `feature/` or `fix/` branches, requiring at least one peer code review and approval before merging into the main branch. We prioritized a **linear history** through rebasing to keep the integration of complex systems—like the Projectile and Weapon systems—auditable. Furthermore, we standardized our communication using a semantic commit message style (e.g., `feat:`, `fix:`, `chore:`), which allowed the team to track progress at a glance.
 
 | **Commit Standards** | **Git Flow Architecture** |
@@ -368,7 +372,7 @@ To maintain high code quality and a clean project history, we implemented a stri
 | <img src="./image/commit_style.png" width="400"> | <img src="./image/gitflow.png" width="400"> |
 
 
-#### Reflections & Adaptations
+## Reflections & Adaptations
 While our Agile framework provided a strong foundation, the reality of development presented several challenges that required us to adapt our working style:
 
 **Challenge 1: Task Overlap & Ambiguity**
@@ -383,11 +387,11 @@ While our Agile framework provided a strong foundation, the reality of developme
     **What Didn't Work:** Frequent rebasing initially resulted in overwhelming merge conflicts, as isolated tasks ended up interacting with the same core game loops. 
     **How We Adapted:** We learned that working in silos is dangerous in game development. When a conflict arose, we stopped resolving them in isolation and immediately initiated quick sync calls with the involved teammates to negotiate the merge. This fundamentally changed our mindset: we learned to constantly read each other's code to anticipate integration points *before* pushing our branches, drastically reducing integration risks later in the project.
 
-### Sustainability
+# 8. Sustainability
 
 Sustainability was a key consideration throughout our development process, influencing both our design decisions and the themes presented in the game. To ensure a structured approach, we integrated sustainability principles into our workflow using the **Sustainability Awareness Framework**.
 
-#### Sustainability Awareness Framework (SusAF)
+## Sustainability Awareness Framework (SusAF)
 
 **Questions and Discussion**
 Each team member proposed potential impacts of our game prompted by questions relating to five key sustainability dimensions: social, individual, environmental, economic, and technical. This encouraged us to reflect on our own perspectives and consider different viewpoints, helping us think more critically about sustainability in our project. 
@@ -425,7 +429,7 @@ The insights from this framework were then used to construct a SusAF diagram, wh
 
 ![SusAF](image/SusAF-diagram.png)
 
-#### Sustainability in Design
+## Sustainability in Design
 
 To embed sustainability considerations into our design, we translated the insights from our earlier analysis into a set of user stories and acceptance criteria. These were again structured across the five sustainability dimensions. The table below shows how the earlier notes were translated into concrete design requirements, which we added to our project backlog.
 
@@ -441,7 +445,7 @@ To embed sustainability considerations into our design, we translated the insigh
 | Technical     | As a regular player, I want the game to run smoothly over time, so that I can continue playing without performance issues. | Given a user is playing the game, when they play for extended periods, then the game should maintain stable performance without crashes or slowdowns. |
 | Technical     | As a developer, I want the game to be easy to update and extend, so that new content can be added without breaking existing features. | Given the system is updated, when new levels or features are added, then existing functionality should remain unaffected. |
 
-#### Green Software Design Patterns
+## Green Software Design Patterns
 
 To improve the environmental sustainability of our game, we investigated several Green Software Design Patterns and chose three that were most applicable to our system and likely to have meaningful impact. These patterns consider trade-offs across environmental impact, system performance, and cost efficiency. We assessed their potential benefits using the Software Carbon Intensity (SCI) framework, defined as **SCI = (E × I) + M per R**. [1]
 
@@ -494,7 +498,7 @@ render loop:
 
 Caching static data reduces SCI by lowering repeated computation and rendering. By reusing pre-rendered content instead of recalculating it each frame, less energy is consumed on the client device, reducing energy use **(E)**. It also reduces the amount of work performed across the rendering pipeline over time, which decreases overall hardware utilisation and therefore lowers embodied carbon **(M)**.
 
-### Conclusion
+# 9. Conclusion
 
 - The CrateBox project has been a massive undertaking. At the early stage, we discussed and set the tone of the whole development process. Instead of using the heavily inherited Object-Oriented-Programming structure, we adopted an unfamiliar design pattern - Entity-Component-System (ECS), which gave us a hard time to learn it in the beginning, but huge development benefits later down the road. Moreover, we implemented change control policies for our Github repo, which meant someone needed to review the code before any pull-request being merged or rebased into the main branch, and had standard formatting for the commit messages. 
 These all helped us collaborate more easily and smoothly. 
@@ -505,11 +509,11 @@ These all helped us collaborate more easily and smoothly.
 
 - To conclude, we greatly enjoyed working together to create CrateBox. None of us had prior experience of game development, so the whole journey was more like trial-and-error, but the design decisions we made early on, especially adopting ECS, proved to be the foundation that carried us through. Eventually, we understood a new design pattern, implemented what we had learnt in other courses, and strengthened Git and Github, which integrated the whole knowledge into one project. We are very proud of what we were able to deliver. It's a phenomenal experience.
 
-### Contribution Statement
+# 10. Contribution Statement
 
 - Provide a table of everyone's contribution, which *may* be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Please let us know as soon as possible if there are any issues with teamwork as soon as they are apparent and we will do our best to help your team work harmoniously together.
 
-### References
+# 11. References
 
 [1] Green Software Foundation, *Software Carbon Intensity (SCI) Specification*, Green Software Foundation. [Online]. Available: https://sci.greensoftware.foundation/. [Accessed: 26-Apr-2026].
 
