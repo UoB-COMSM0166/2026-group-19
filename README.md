@@ -628,3 +628,5 @@ These all helped us collaborate more easily and smoothly.
 [3] Green Software Foundation, “Properly sized images,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/](https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
 
 [4] Green Software Foundation, “Cache static data,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/](https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
+
+[5] "SH17A, "Tiny Clouds," *Shadertoy*. [Online]. Available: https://www.shadertoy.com/view/lsBfDz. [Accessed: 26-Apr-2026].
