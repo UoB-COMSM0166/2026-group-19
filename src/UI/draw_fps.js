@@ -1,4 +1,5 @@
 class drawFps extends Scene{
+    //used during testing, removed for final game demo
     constructor(){
         super();
     }

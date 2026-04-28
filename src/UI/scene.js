@@ -1,4 +1,5 @@
 class Scene {
+    //sets out functions that actual game scenes should implement
     setup() {
         // Optional: Initialize scene state
     }

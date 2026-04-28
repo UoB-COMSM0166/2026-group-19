@@ -6,7 +6,8 @@ class GameOverScene extends Scene {
         this.score = score;
         this.menuIndex = 0;
         this.menuItems = ["RESTART", "MENU"];
-        this.readyTime = millis() + 700;
+        //avoid accidentally entering another game immediately
+        this.readyTime = millis() + 500;
     }
 
     display() {
