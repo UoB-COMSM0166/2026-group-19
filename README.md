@@ -1,6 +1,6 @@
 ![Banner](image/banner.png)
 
-**Outrun, outshoot, and outlast the growing chaos!**
+<center><strong>Outrun, outshoot, and outlast the growing chaos!</strong></center>
 
 [CLICK HERE TO PLAY!](https://uob-comsm0166.github.io/2026-group-19/)
 
@@ -17,13 +17,16 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 8. [Sustainability](#8-sustainability)
 9. [Conclusion](#9-conclusion)
 10. [Contribution Statement](#10-contribution-statement)
-11. [References](#11-references)
+11. [AI Statement](#11-ai-statement)
+12. [References](#12-references)
 
 
 
 # 1. Development Team
 
-![Group Photo](./image/group-photo.JPG)
+![Group Photo](./image/group-photo-annotated.png)
+
+*Figure 1: Group Photo*
 
 | Name          | Email                 | Primary Roles                          |
 | ------------- | --------------------- | -------------------------------------- |
@@ -37,14 +40,21 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 
 # 2. Introduction
 
-Our game "Crate Expectations", followed by an astronaut who encountered an airplane crashed, being sended to different harsh terrains and various enemies. In order to survive, he has to fight against the evil aliens and collect as many boxes as possible.
+"Crate Expectations" follows a protagonist who is the sole survivor of a plane crash, emerging in different harsh terrains surrounded by enemies. In order to survive, our hero must fight against the evil creatures while collecting as many boxes as possible.
 
-Crate Expectations is based on "Super Crate Box", which is a fast-paced, 2D arcade shooting game, prioritizing picking up crates, and killing the aliens which get in the way. Scoring system is defined by picking up crates, which spawn randomly and periodically around the map. Picking up crates results in a counter incrementing. Crates also contain a random weapon within, Each weapon has their own unique attributes to fight against enemies. In our game, we introduced four types of weapons - Shotgun, DISC, TwoWayRifle, and Rocket. We added recoil value and cooling time, so player shouldn't trigger too happily, or they wouldn't be able to shot down the enemy. 
+Crate Expectations is based on "Super Crate Box", which is a fast-paced, 2D arcade shooting game, prioritizing picking up crates, and killing the enemies which get in the way. The scoring system is defined by picking up crates, which spawn randomly around the map; picking up crates results in the score counter incrementing. Crates also contain a random weapon within, each with their own unique attributes.
+
 <p align="center">
   <img src="assets/intro.gif" width="300">
 </p>
+*Figure 2: Overview of Basic Gameplay*
 
-Moreover, in "Crate Expectations" we added three special scenes, each scene has its own customized setting. The 'Cave Scene', which lower the visibility of surrounding, adding the difficulty on collecting boxes and seeing enemies. The 'Ice Scene', introducing sliding effect on the terrain, making player's movement harder. The 'Space Scene', we imitated the actual space environment, eliminating the gravity feature, for the better or worse, it's highly depended on the player's skill.
+Each level in Crate Expectations features a unique theme, each with a different twist.
+
+- **Level 1: Cave**:  I hope you're not scared of the dark! This level features reduced visibility, adding to the difficulty of collecting boxes and seeing enemies. 
+- **Level 2: Ice**: See if you can find your footing on this level, which features reduced friction on platforms, making movement harder and recoil more intense. 
+- **Level 3: Space**: How did a plane crash in space?! We don't have all the answers, all we know is that this level has significantly reduced gravity.
+
 <table width="100%">
   <tr>
     <td width="33.33%">
@@ -58,10 +68,12 @@ Moreover, in "Crate Expectations" we added three special scenes, each scene has 
     </td>
   </tr>
 </table>
+*Figures 3, 4, 5: Showcase of Different Level Themes*
 
-Along with many more of our own features such as adding live feature, customizing  environments settings, and user interface, we believe that Crate Expectations offers an advantuous and trilled experience to players of all ability levels. We hope that our game can be enjoyed by all.
 
-# 3. Requirements 
+How long will you survive the endless onslaught? Just remember, with Crate Expectations come Crate Responsibility (sequel coming soon).
+
+# 3. Requirements
 ## Genre Ideation & Investigation
 
 The first stage of our development process was to identify what type of game we wanted to make. To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied first place.
@@ -94,8 +106,10 @@ By selecting the strongest archetype from each genre, we maximized the breadth o
     <td>A range of beloved games from the 'Launcher' genre</td>
   </tr>
 </table>
+*Figures 6, 7: Game Inspiration*
 
 ## Paper Prototyping Sessions
+
 <table>
   <tr>
     <td><img src="assets/crate_paper_prototype.gif" style="height:180; width:auto;"/></td>
@@ -106,6 +120,7 @@ By selecting the strongest archetype from each genre, we maximized the breadth o
     <td>Pingu's Day Out Prototype</td>
 </tr>
 </table>
+*Figures 8, 9: Paper Prototyping*
 
 These Paper Prototyping sessions provided critical data that shaped our final product. Users enjoyed the Super Crate Box concept, noting that it had clearer objectives and more intuitive game mechanics. This feedback, combined with the team's assessment of the project's Technical Scalability, led us to pivot away from the Launcher genre.
 
@@ -114,6 +129,8 @@ A standout success from the testing was the 'Lights Out!' mechanic seen above. I
 ## Identification of Stakeholders
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
+
+*Figure 10: Onion Model*
 
 ## Epics and User Stories
 
@@ -170,6 +187,8 @@ This sped up development by allowing us to easily question what ‘Sam the Sensi
 
 ![User Personas](./image/user_personas.png)
 
+*Figure 11: User Personas*
+
 ##  Project Prioritization - MoSCoW Analysis
 
 | Feature | Effort | Value | MoSCoW Bucket | Rationale |
@@ -186,6 +205,8 @@ This sped up development by allowing us to easily question what ‘Sam the Sensi
 ## Use Case Diagram
 ![Use Case Diagram](./image/use_case_diagram.jpg)
 
+*Figure 12: Use Case Diagram*
+
 # 4. Design
 
 With a set of preliminary requirements established for our game, we next turned to designing its architecture. During the 2026 BrisHack hackathon, our team experimented with a traditional object-oriented design using deep inheritance hierarchies. In this approach, a typical class structure might resemble:
@@ -196,11 +217,11 @@ GameObject → MovingEntity → Character → Player
 
 While this design works adequately for small projects, we found that it did not scale well. Managing deep inheritance trees quickly became difficult, and the structure made it harder to reason about the relationships between classes. Additionally, we encountered the “God Class” problem, where individual classes accumulated large amounts of logic within a single file, making the code harder to maintain and extend.
 
-For the development of our actual game, we therefore sought a design pattern that minimized inheritance, separated entity behaviour from the entities themselves, and remained conceptually simple. Based on these goals, we chose to implement an Entity–Component–System (ECS) architecture for the backend of our game.
+For the development of our actual game, we therefore sought a design pattern that prioritised composition over inheritance, separated entity behaviour from the entities themselves, and remained conceptually simple. Based on these goals, we chose to implement an Entity–Component–System (ECS) architecture for the backend of our game.
 
 ## Backend (Entity-Component-System)
 
-Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts. ECS also prioritises composition over inheritance.
+Unlike the traditional object-oriented approach, where objects encapsulate both data and behaviour, ECS separates the game into three distinct and loosely coupled parts.
 
 - <strong>Entities:</strong>
 An entity is simply a unique integer identifier. By itself, an entity contains no data or behaviour.
@@ -213,18 +234,645 @@ Systems contain the game’s logic. Each system queries the ECS “database” f
 
 The images below show this design pattern conceptually.
 
-*ECS Conceptual Class Diagram*
-
 ![ECS](image/ecs-basic-classes.png)
 
-*Entity Component Database within ECS Class*
+*Figure 13: ECS Conceptual Class Diagram*
 
 ![ECS](image/ecs.png)
 
+*Figure 14: Entity Component Database within ECS Class*
+
 This architecture provides several additional benefits. The ECS database can be organized so that components are stored contiguously in memory, improving cache locality and overall performance. Achieving this level of memory efficiency is far more difficult with traditional object-oriented designs. Furthermore, ECS makes it easy to add new functionality. Rather than modifying existing class hierarchies, new behaviour can be introduced by defining a new component and system, then attaching the component to relevant entities. This modular structure enables rapid development of new features without requiring significant refactoring of existing code. The complete backend class diagram can be seen below.
 
-*Backend Class Diagram*
-[![ECS](image/full-class-diagram.png)](image/full-class-diagram.png)
+```mermaid
+classDiagram
+
+  %% ─────────────────────────────────────────────
+
+  %% ECS CORE
+
+  %% ─────────────────────────────────────────────
+
+  class ECS {
+
+​    +nextEntityId
+
+​    +components : Map
+
+​    +systems : Array
+
+​    +createEntity()
+
+​    +removeEntity(entityId)
+
+​    +addComponent(entityId, component)
+
+​    +removeComponent(entityId, compClass)
+
+​    +getComponent(entityId, compClass)
+
+​    +getEntitiesWith(...compClasses)
+
+​    +getSystem(systemClass)
+
+​    +update(dt)
+
+​    +clear()
+
+  }
+
+  class System {
+
+​    <<abstract>>
+
+​    +ecs
+
+​    +update(dt)*
+
+​    +forEachCollision(pos, components, cb)
+
+​    +collides(a, b)
+
+  }
+
+  ECS "1" o-- "many" System : manages
+
+  %% ─────────────────────────────────────────────
+
+  %% SYSTEMS
+
+  %% ─────────────────────────────────────────────
+
+  class PhysicsSystem {
+
+​    +spawner
+
+​    +physics
+
+​    +update(dt)
+
+​    +applyPhysics(physics)
+
+​    +resolveMovementCollisions(id, axis)
+
+​    +resolveWallPenetration(...)
+
+  }
+
+  class RenderSystem {
+
+​    +wallCache
+
+​    +update(dt)
+
+​    +buildWallCache(img)
+
+​    +drawAnimated(id, char, anim, pos, bb, weapSprite)
+
+  }
+
+  class InputSystem {
+
+​    +spawner
+
+​    +prev : Map
+
+​    +physics
+
+​    +currentScheme
+
+​    +update(dt)
+
+​    +applyPhysics(physics)
+
+​    +setControlScheme(schemeName)
+
+  }
+
+  class WeaponSystem {
+
+​    +spawner
+
+​    +physics
+
+​    +update(dt)
+
+​    +applyPhysics(physics)
+
+​    +processFireRequest(id, now)
+
+​    +getWeaponTip(id, pos, character)
+
+​    +spawnProjectiles(id, pos, weapon, char)
+
+​    +fireShotgun(pos, weapon, char, projectileData)
+
+​    +fireBasic(weapon, char, projectileData)
+
+​    +applyRecoil(vel, weapon, char)
+
+  }
+
+  class SpawningSystem {
+
+​    +factory : EntityFactory
+
+​    +queue
+
+​    +update(dt)
+
+​    +request(type, data)
+
+  }
+
+  class EnemySpawnSystem {
+
+​    +spawner
+
+​    +spawnTimer
+
+​    +startDelay
+
+​    +health
+
+​    +update(dt)
+
+​    +applyPhysics(physics)
+
+​    +applyHealth(health)
+
+​    +resetSpawnState()
+
+​    +getRandomEnemyType()
+
+  }
+
+  class BoxSpawnSystem {
+
+​    +spawner
+
+​    +update(dt)
+
+​    +getRandomPlatform()
+
+​    +getRandomPositionOnPlatform(bb, w)
+
+  }
+
+  class InteractionSystem {
+
+​    +spawner
+
+​    +physics
+
+​    +update(dt)
+
+​    +applyPhysics(physics)
+
+​    +handlePlayerEnemy(playerId)
+
+​    +handlePlayerBox(playerId)
+
+​    +handleProjectileEnemy(projectileId)
+
+​    +handleProjectileWall(projectileId)
+
+​    +spawnDeathDroplets(x, y)
+
+​    +handleDeath(enemyId, enemyPos)
+
+  }
+
+  class AnimationSystem {
+
+​    +update(dt)
+
+​    +selectAnimation(char, anim, vel, now, player)
+
+​    +advanceFrame(anim, dt)
+
+  }
+
+  class ProjectileSystem {
+
+​    +update(dt)
+
+  }
+
+  class FloatingSystem {
+
+​    +physics
+
+​    +update(dt)
+
+​    +applyPhysics(physics)
+
+  }
+
+  System <|-- PhysicsSystem
+
+  System <|-- RenderSystem
+
+  System <|-- InputSystem
+
+  System <|-- WeaponSystem
+
+  System <|-- SpawningSystem
+
+  System <|-- EnemySpawnSystem
+
+  System <|-- BoxSpawnSystem
+
+  System <|-- InteractionSystem
+
+  System <|-- AnimationSystem
+
+  System <|-- ProjectileSystem
+
+  System <|-- FloatingSystem
+
+  SpawningSystem --> EntityFactory : uses
+
+  %% ─────────────────────────────────────────────
+
+  %% ENTITY FACTORY
+
+  %% ─────────────────────────────────────────────
+
+  class EntityFactory {
+
+​    +ecs
+
+​    +physics
+
+​    +bulletImage
+
+​    +rocketImage
+
+​    +characterSpriteSheet
+
+​    +enemySpriteSheet
+
+​    +enemyAngrySpriteSheet
+
+​    +enemyLargeSpriteSheet
+
+​    +enemyLargeAngrySpriteSheet
+
+​    +enemyFloatingImage
+
+​    +boxImage
+
+​    +wallTileImage
+
+​    +create(type, data)
+
+​    +createPlayer(data)
+
+​    +createEnemy(data)
+
+​    +createFloatingEnemy(data)
+
+​    +createWall(data)
+
+​    +createBox(data)
+
+​    +createProjectile(data)
+
+​    +playerComponents(data)
+
+​    +enemyComponents(data)
+
+​    +centeredPosition(data)
+
+​    +addAll(entity, components)
+
+​    +applyPhysics(physics)
+
+  }
+
+  EntityFactory --> ECS : creates entities in
+
+  %% ─────────────────────────────────────────────
+
+  %% GAME COORDINATOR
+
+  %% ─────────────────────────────────────────────
+
+  class Game {
+
+​    +ecs : ECS
+
+​    +factory : EntityFactory
+
+​    +spawner : SpawningSystem
+
+​    +levelConfig
+
+​    +update()
+
+​    +loadLevel(levelNum, difficulty)
+
+​    +spawnLevelEntities(levelConfig)
+
+​    +renderOnly()
+
+  }
+
+  Game "1" *-- "1" ECS
+
+  Game "1" *-- "1" EntityFactory
+
+  Game "1" *-- "1" SpawningSystem
+
+  %% ─────────────────────────────────────────────
+
+  %% COMPONENTS — Physics
+
+  %% ─────────────────────────────────────────────
+
+  class Position {
+
+​    +x
+
+​    +y
+
+​    +width
+
+​    +height
+
+​    +getBoundingBox()
+
+  }
+
+  class Velocity {
+
+​    +vx
+
+​    +vy
+
+​    +recoilVx
+
+  }
+
+  class Acceleration {
+
+​    +ax
+
+​    +ay
+
+  }
+
+  %% ─────────────────────────────────────────────
+
+  %% COMPONENTS — Character / Entity
+
+  %% ─────────────────────────────────────────────
+
+  class Character {
+
+​    +onGround
+
+​    +health
+
+​    +direction
+
+​    +jumpBufferTime
+
+  }
+
+  class Player {
+
+​    +score
+
+  }
+
+  class Enemy {
+
+​    +powerful
+
+  }
+
+  class Floating {
+
+​    +wasInRange
+
+  }
+
+  class Dying {
+
+​    +rotation
+
+​    +rotationSpeed
+
+  }
+
+  %% ─────────────────────────────────────────────
+
+  %% COMPONENTS — Combat
+
+  %% ─────────────────────────────────────────────
+
+  class Weapon {
+
+​    +type
+
+​    +lastShotTime
+
+​    +fireRate
+
+​    +bulletDamage
+
+​    +bulletSpeed
+
+​    +bulletSize
+
+​    +recoilKick
+
+​    +maxRange
+
+​    +pellets
+
+​    +bounce
+
+  }
+
+  class Projectile {
+
+​    +damage
+
+​    +range
+
+​    +bounce
+
+​    +pierce
+
+​    +duration
+
+​    +spawnTime
+
+​    +lastHitEnemy
+
+​    +hitEnemies : Set
+
+​    +followEntity
+
+​    +followDirection
+
+​    +followOffset
+
+  }
+
+  %% ─────────────────────────────────────────────
+
+  %% COMPONENTS — Environment
+
+  %% ─────────────────────────────────────────────
+
+  class Wall
+
+  class Box {
+
+​    +weapon
+
+​    +lastWeapon$
+
+​    +pickUp()
+
+  }
+
+  class SpawnablePlatform
+
+  %% ─────────────────────────────────────────────
+
+  %% COMPONENTS — Rendering
+
+  %% ─────────────────────────────────────────────
+
+  class WeaponSprite {
+
+​    +spriteSheet
+
+​    +frameWidth
+
+​    +frameHeight
+
+  }
+
+  class Renderable {
+
+​    +color
+
+​    +image
+
+  }
+
+  class Animation {
+
+​    +spriteSheet
+
+​    +frameWidth
+
+​    +frameHeight
+
+​    +columns
+
+​    +animations
+
+​    +current
+
+​    +frameIndex
+
+​    +timer
+
+​    +hurtUntil
+
+​    +setAnimation(type)
+
+​    +setSpriteSheet(spriteSheet, newColumns, newAnimations)
+
+  }
+
+  %% Factory creates component compositions
+
+  EntityFactory ..> Position : creates
+
+  EntityFactory ..> Velocity : creates
+
+  EntityFactory ..> Acceleration : creates
+
+  EntityFactory ..> Character : creates
+
+  EntityFactory ..> Player : creates
+
+  EntityFactory ..> Enemy : creates
+
+  EntityFactory ..> Floating : creates
+
+  EntityFactory ..> Dying : creates
+
+  EntityFactory ..> Weapon : creates
+
+  EntityFactory ..> Projectile : creates
+
+  EntityFactory ..> Wall : creates
+
+  EntityFactory ..> Box : creates
+
+  EntityFactory ..> SpawnablePlatform : creates
+
+  EntityFactory ..> Renderable : creates
+
+  EntityFactory ..> Animation : creates
+
+  EntityFactory ..> WeaponSprite : creates
+
+  %% ─────────────────────────────────────────────
+
+  %% CONFIGURATION
+
+  %% ─────────────────────────────────────────────
+
+  class LevelFactory {
+
+​    <<static>>
+
+​    +scaleX(col, W)$
+
+​    +scaleY(row, H)$
+
+​    +build(template, difficultyKey)$
+
+​    +buildWalls(platforms, W, H)$
+
+  }
+
+  class DEFAULTS {
+
+​    <<config>>
+
+​    +physics
+
+​    +sizes
+
+​    +health
+
+​    +hurtTime
+
+​    +spawnStartDelay
+
+​    +difficulty
+
+​    +controls
+
+  }
+
+  Game ..> LevelFactory : uses
+
+  Game ..> DEFAULTS : uses
+```
+
+*Figure 15: Complete Backend Class Diagram*
 
 ## Front End
 
@@ -232,37 +880,35 @@ Early in the design process, we used sequence diagrams to conceptualise how the 
 
 This process informed key decisions—for example, overlaying the pause menu on top of the live game rather than replacing it, allowing for a seamless resume experience. During gameplay, the player interacts directly with the game world while the system responds in real time. If the player dies, a Game Over screen is displayed, offering the choice to retry the level or return to the main menu, thereby completing the loop. Overall, this approach provided a strong foundation to build upon as development progressed.
 
-*Frontend Example Sequence Diagram*
-
 ![ECS](image/frontend-sequence-diagram.png)
+
+*Figure 16: Example Frontend Sequence Diagram*
 
 The game uses a Scene Manager pattern to control which screen is shown at any time, such as the main menu, gameplay, or pause screen. Each screen is represented as a "Scene" object with a common set of methods: **setup** to initialise, **update** to run logic, **display** to render, and **dispose** to clean up. A central SceneManager holds a reference to whichever scene is currently active and forwards every frame update and input event to it, keeping the rest of the codebase decoupled from scene-specific logic. This approach makes it straightforward to add new screens independently and keeps each scene's logic self-contained.
 
-*Frontend Class Diagram*
-
 ![ECS](image/scene-manager-diagram.png)
+
+*Figure 17: Frontend Class Diagram*
 
 # 5. Implementation
 
-Our implementation of CrateBox is grounded in two key areas of technical challenge that shaped both the architecture and the development process: building a functional Entity–Component–System (ECS) engine from scratch, and ensuring the game maintains consistent visual and physical quality across different screen sizes and zoom levels.
-
 ## Challenge 1: Implementing Floating Enemy
 
-One of the most distinctive enemies in CrateBox is the floating enemy, a ghost-like entity that partially ignores gravity and actively hunts the player through the air. Designing its movement behaviour proved to be one of the more difficult implementation challenges: a direct pursuit strategy from the moment of spawn caused enemies to lock onto the player immediately and press straight into walls, where they would become permanently stuck.
+One of the most distinctive enemies in our game is the floating enemy, a ghost-like entity that partially ignores gravity and actively hunts the player through the air. This enemy type provides ensures that there are no safe locations where a player can avoid all enemies. However, designing its movement behaviour proved to be more difficult than initially anticipated.
 
 ### **Our Initial Approach**
 
-We initially computed a unit vector from the enemy's position to the player's position every frame and applied an acceleration in that direction. This worked in open space but failed whenever walls got in the way. This also caused enemies to cluster together, without posing any threat to the player. 
+We started by implementing a simple pathfinding algorithm which consistently applied a force in the direction of the player. This worked in open space but failed whenever walls got in the way, as the floating enemies would get stuck. This also caused enemies to cluster together, without posing any threat to the player. 
 
 ### **Our Solution**
 
-To address this, we updated the floating enemy’s pathfinding to use two distinct modes based on its distance from the player. When far away, it drifts downward through the level using behaviour similar to other enemies. Once it enters a defined radius, it begins accelerating smoothly toward the player by applying force in the direction of the unit vector between them. This ensures the enemy only actively pursues the player at close range, preventing it from getting stuck on walls. If it moves out of range again, it returns to its natural drifting behaviour.
-
-*Figure X: Floating Enemy Pathfinding With Acceleration Arrows*
+To address this, we updated the floating enemy’s pathfinding to use two distinct modes based on its distance from the player. When far away, it drifts downward through the level using behaviour similar to other enemies. Once it enters a defined radius around the player, it reverts to our initial approach and begins smoothly accelerating toward the player. This ensures the enemy only actively pursues the player at close range, preventing it from getting stuck on walls. If it moves out of range again, it returns to its natural drifting behaviour.
 
 ![](image/floating-enemy-tracking.gif)
 
-## Challenge 2: Maintaining Game Quality And Performance
+*Figure 18: Floating Enemy Pathfinding With Acceleration Arrows*
+
+## Challenge 2: Maintaining Gameplay and Performance Across Systems
 
 ### **Animated Background Optimisation**
 
@@ -279,6 +925,8 @@ A second cross-device issue was inconsistent game speed caused by varying frame 
 A further issue arose from differences in screen aspect ratios, which caused levels to appear and play differently across devices. To address this, we based all geometry and layout on a fixed 32×18 grid aligned to a 16:9 aspect ratio. This grid was then scaled to the user's screen at runtime (with padding to maintain aspect ratio). This ensured that the relative positioning and proportions of platforms, walls, and entities remained consistent, regardless of screen dimensions. An additional benefit of this approach was that levels could be easily designed and iterated on using simple tools like Excel, before being translated directly into the game.
 
 ![Excel Level Design](image/excel-design.png)
+
+*Figure 19: Excel Level Design vs. In-Game Space Level*
 
 
 # 6. Evaluation
@@ -297,6 +945,8 @@ Sixteen participants were gathered in total from workshops. During this evaluati
 <p align="center">
     <img src="./image/thinkaloud_image.png" alt="Think Aloud User Quotes" width="70%">
 </p>
+*Figure 20: Think-Aloud User Quotes*
+
 
 ## Solutions and Adjustments
 
@@ -353,8 +1003,7 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 <p align="center">
     <img src="./image/sus_chart2.png" alt="SUS Usability Chart"width="50%">
 </p>
-
-*Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
+*Figure 21: Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
 
 ### Performance Analysis & Interpretation
 
@@ -376,6 +1025,7 @@ Our development followed a rigorous weekly agile cadence. We utilized **Tuesday 
 | :---: | :---: |
 | <img src="./image/jira_kanban.png" width="400"> | <img src="./image/miro.png" width="400"> |
 
+*Figures 22, 23: Project Management Tools*
 
 During the early stages, we also utilized physical **Paper Prototyping** to validate our mechanics before writing a single line of code. This "low-fidelity" approach was instrumental in deciding to prioritize the "Lights Out" mechanic, which eventually became a core feature of the game.
 
@@ -386,8 +1036,10 @@ To maintain high code quality and a clean project history, we implemented a stri
 | :---: | :---: |
 | <img src="./image/commit_style.png" width="400"> | <img src="./image/gitflow.png" width="400"> |
 
+*Figures 24, 25: Git Quality Control*
 
 ## Reflections & Adaptations
+
 While our Agile framework provided a strong foundation, the reality of development presented several challenges that required us to adapt our working style:
 
 ### **Challenge 1: Task Overlap & Ambiguity**  
@@ -535,6 +1187,8 @@ The insights from this framework were then used to construct a SusAF diagram, wh
 
 ![SusAF](image/SusAF-diagram.png)
 
+*Figure 26: SusAF Diagram*
+
 ## Sustainability in Design
 
 To embed sustainability considerations into our design, we translated the insights from our earlier analysis into a set of user stories and acceptance criteria. These were again structured across the five sustainability dimensions. The table below shows how the earlier notes were translated into concrete design requirements, which we added to our project backlog.
@@ -570,6 +1224,8 @@ By storing animation frames in one compact resource, we reduce bandwidth usage a
 
 ![SpriteSheet](src/assets/spriteEnemy.png)
 
+*Figure 27: Sprite Sheet*
+
 **2.  Optimising Image Size for Display [3]**
 
 To improve performance and reduce unnecessary resource usage, we optimised all in-game images so that their stored pixel dimensions more closely match their actual display size on the lab machines. Previously, some assets were significantly larger than required and were being scaled down in the browser, which resulted in wasted memory, bandwidth, and processing effort.
@@ -577,6 +1233,8 @@ To improve performance and reduce unnecessary resource usage, we optimised all i
 Overall, this change reduces energy usage **(E)** by lowering rendering overhead and memory demand, while also minimising wasted storage from oversized assets **(M)**.
 
 ![ImageResizing](image/image-resizing.png)
+
+*Figure 28: Image Resizing*
 
 **3. Caching Static Data [4]**
 
@@ -606,20 +1264,38 @@ Caching static data reduces SCI by lowering repeated computation and rendering. 
 
 # 9. Conclusion
 
-- The CrateBox project has been a massive undertaking. At the early stage, we discussed and set the tone of the whole development process. Instead of using the heavily inherited Object-Oriented-Programming structure, we adopted an unfamiliar design pattern - Entity-Component-System (ECS), which gave us a hard time to learn it in the beginning, but huge development benefits later down the road. Moreover, we implemented change control policies for our Github repo, which meant someone needed to review the code before any pull-request being merged or rebased into the main branch, and had standard formatting for the commit messages. 
-These all helped us collaborate more easily and smoothly. 
+Reflecting on the development of *Crate Expectations*, we are proud of what we have achieved as a team. At the outset, creating a fully functional game felt ambitious, particularly given our limited prior experience with game development. Over time, through experimentation, iteration, and collaboration, we transformed an initial concept into a polished and engaging final product.
 
-- Throughout the project, we had regular meetings each week, using Jira to monitor the progress of the project, and Git to preserve the stages of code development. We followed the coding style we had been taught in C and Java - the importance of good code structure, well-designed classes, DRY code, descriptive variable and function names. We refactored the code frequently, which made it more succinct and easy to understand. Many challenges were overcome during the development. From the design of different scenes, to the logic of floating enemies, to maintaining the same game quality when zooming in and out the screen, etc. We grew and sharpened our coding skills along the way, and worked collaboratively through those bottlenecks. 
+A key aspect of our project was the decision to adopt an Entity-Component-System (ECS) architecture. While this approach was initially unfamiliar and challenging to implement, it ultimately provided a flexible and scalable foundation for our game. This decision, combined with our use of structured development practices such as sprint planning, task tracking, and version control, allowed us to manage complexity effectively as the project evolved.
 
-- For future design of the CrateBox, we would like to integrate some of features we discussed in the beginning, but assessed to be too complex to deliver in the limited timeframes. For instance, the multiplayer feature, which makes the game more interactive, or adding more weapon types like landmine, sword, and grenade, which brings more diversity into the game. Currently, The CrateBox has three types of scenes - cave, iced, and sea, each one has totally different environment settings, we can bring more themes like jungle, or urban into it. We believe those features with some special effects will be able to boost the enjoyment of the game. 
+Working as a team was central to our success. By holding regular meetings, working through problems together, and sharing equal ownership of the codebase, we established a workflow that kept development organised and effective. Practices such as code reviews, consistent commit standards, and frequent refactoring helped us maintain code quality and conform to agreed-upon design patterns. In addition, the team worked well on a personal level, our personalities aligned naturally, and we were open to each other’s ideas, which created a positive and collaborative environment. This made communication straightforward and allowed us to coordinate effectively throughout the project.
 
-- To conclude, we greatly enjoyed working together to create CrateBox. None of us had prior experience of game development, so the whole journey was more like trial-and-error, but the design decisions we made early on, especially adopting ECS, proved to be the foundation that carried us through. Eventually, we understood a new design pattern, implemented what we had learnt in other courses, and strengthened Git and Github, which integrated the whole knowledge into one project. We are very proud of what we were able to deliver. It's a phenomenal experience.
+Throughout the project, we encountered and overcame several key technical challenges, particularly in implementing the floating enemy’s behaviour and maintaining consistent performance across different systems. Both required careful iteration and refinement to ensure they worked reliably within the overall game. Addressing these challenges not only improved the quality and stability of the game, but also strengthened our technical and problem-solving skills. The iterative evaluation process further allowed us to refine the user experience and ensure that the game remained both intuitive and challenging.
+
+Despite meeting our core objectives, there are several areas where the game could be extended in **future work**. Features such as multiplayer functionality, additional weapons, and new themed levels would enhance both replayability and player engagement. A key priority moving forward would be expanding accessibility further, particularly through improved visual feedback such as clearer enemy health indicators and optional effects like screen shake to better communicate in-game events during fast-paced gameplay. We would also refine the visual design and overall polish of the game to improve consistency and usability across all gameplay situations.
+
+Overall, this project has been a wonderful learning experience. It has allowed us to develop new technical skills, gain first-hand experience of collaborative software development,  and apply our creativity during the design process. We are proud of the final product we have created and of the progress we have made as a team throughout the project.
 
 # 10. Contribution Statement
 
-- Provide a table of everyone's contribution, which *may* be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Please let us know as soon as possible if there are any issues with teamwork as soon as they are apparent and we will do our best to help your team work harmoniously together.
+| Team Member   | Contribution |
+| ------------- | ------------ |
+| Alex Hoover   | 1.0          |
+| Jui Cheng Ho  | 1.0          |
+| Wei Lun Chang | 1.0          |
+| Chi-Wei Feng  | 1.0          |
+| Johnny Fraser | 1.0          |
+| Oliver Parry  | 1.0          |
 
-# 11. References
+# 11. AI Statement
+
+We used AI tools in a limited way during the development of *Crate Expectations*. They were mainly used to help check grammar and improve figure style in our report. All technical content and analysis were written and checked by the team.
+
+We also used AI to help create some visual assets, such as background images and other artwork used in the game.
+
+AI was **not** used to design or build the game systems, write gameplay code, or produce evaluation results. All of the core development work was done by the team.
+
+# 12. References
 
 [1] Green Software Foundation, *Software Carbon Intensity (SCI) Specification*, Green Software Foundation. [Online]. Available: https://sci.greensoftware.foundation/. [Accessed: 26-Apr-2026].
 
