@@ -45,11 +45,17 @@ Crate Expectations is based on "Super Crate Box", which is a fast-paced, 2D arca
 </p>
 
 Moreover, in "Crate Expectations" we added three special scenes, each scene has its own customized setting. The 'Cave Scene', which lower the visibility of surrounding, adding the difficulty on collecting boxes and seeing enemies. The 'Ice Scene', introducing sliding effect on the terrain, making player's movement harder. The 'Space Scene', we imitated the actual space environment, eliminating the gravity feature, for the better or worse, it's highly depended on the player's skill.
-<table>
+<table width="100%">
   <tr>
-    <td><img src="assets/cave.gif" width="175"></td>
-    <td><img src="assets/ice.gif" width="175"></td>
-    <td><img src="assets/space.gif" width="175"></td>
+    <td width="33.33%">
+      <img src="assets/cave.gif" width="100%">
+    </td>
+    <td width="33.33%">
+      <img src="assets/ice.gif" width="100%">
+    </td>
+    <td width="33.33%">
+      <img src="assets/space.gif" width="100%">
+    </td>
   </tr>
 </table>
 
