@@ -1,4 +1,6 @@
 class PlayScene extends Scene {
+    //handles visual elements of playable screens, as well as music
+    //also deals with pause and changing scene as a result
     constructor(gameInstance, level, difficulty = "normal") {
         super();
         this.level = level;
@@ -23,7 +25,7 @@ class PlayScene extends Scene {
             bgPath = "src/assets/space_background.png";
         }
         this.playBg = loadImage(bgPath);
-        this.fpsCounter = new drawFps();
+        // this.fpsCounter = new drawFps();
         this.scoreHUD = new ScoreHUD(this.game.ecs);
 
         this.spotlightGraphic = null;
@@ -103,7 +105,7 @@ class PlayScene extends Scene {
         // Draw HUD on top of everything
         // this.drawGrid();
         if (!this.hideHUD) this.scoreHUD.display();
-        this.fpsCounter.display();
+        // this.fpsCounter.display();
     }
 
     drawPickupText() {

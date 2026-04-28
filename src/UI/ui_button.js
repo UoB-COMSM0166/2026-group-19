@@ -1,4 +1,7 @@
 class UIButton {
+    //no longer used anywhere in game!
+    // (as switched to keyboard only implementation)
+    // keeping temporarily in case of added functionality
     constructor(label, x, y, w, h, fontSize = 64) {
         this.label = label;
         this.x = x;

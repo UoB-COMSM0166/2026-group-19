@@ -4,7 +4,7 @@ class MenuScene extends Scene {
         this.background = new bgShader();
 
         // animated Game title Setting
-        this.fullTitle = "CRATE BOX";
+        this.fullTitle = "CRATE EXPECTATIONS";
         this.titleText = new ShadowText(this.fullTitle, width / 2, height * 0.2, 0, 255, color(50, 50, 50), 5);
         this.visibleCount = 0;
         this.lastTypedTime = 0;
@@ -19,7 +19,7 @@ class MenuScene extends Scene {
         this.menuItems = ["START", "LEVEL", "DIFFICULTY", "SETTINGS"];
 
         // fps Display
-        this.fpsCounter = new drawFps();
+        // this.fpsCounter = new drawFps();
 
         soundManager.playBg('menu_bgMusic');
     }
@@ -67,7 +67,7 @@ class MenuScene extends Scene {
         pop();
 
         // Draw HUD on top of everything
-        this.fpsCounter.display();
+        // this.fpsCounter.display();
     }
 
     drawControlBanner(menuFontSize) {

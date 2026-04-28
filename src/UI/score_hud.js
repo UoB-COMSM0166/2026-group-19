@@ -6,7 +6,7 @@ class ScoreHUD {
     getScore() {
         const ids = this.ecs.getEntitiesWith(Player);
 
-        // This code assumes only 1 player, change if we add players in future
+        // This code assumes only 1 player, change if we add multiplayer in future
         if (!ids || ids.length !== 1) return 0;
         const player = this.ecs.getComponent(ids[0], Player);
         return player.score;
@@ -40,7 +40,7 @@ class ScoreHUD {
         scoreText.setAlignment(CENTER, TOP);
         scoreText.display();
 
-        // Display Health (Lives) as Hearts (ASCII <3)
+        // Display Health as pink asterisks
         let health = this.getHealth();
         let heartSize = baseScale * 0.04;
         let heartMargin = baseScale * 0.02;
@@ -54,7 +54,7 @@ class ScoreHUD {
             width - heartMargin,
             marginTop,
             heartSize,
-            color(255, 100, 100), // Pink/Red hearts
+            color(255, 100, 100),
             color(0, 0, 0, 150),
             heartSize * 0.1
         );

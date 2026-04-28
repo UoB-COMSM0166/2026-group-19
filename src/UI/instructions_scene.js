@@ -1,4 +1,5 @@
 class InstructionsScene extends Scene {
+    //dynamically displays controls and game objective when play scene is first seen.
     constructor(playScene, returnScene) {
         super();
         this.playScene   = playScene;

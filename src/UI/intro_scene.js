@@ -1,4 +1,5 @@
 class IntroScene extends Scene {
+    //shows a small comicstrip for each level upon first entry
     constructor(level, playScene, returnScene) {
         super();
         this.level = level;
