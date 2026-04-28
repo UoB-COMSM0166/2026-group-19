@@ -19,6 +19,7 @@ const GameSettings = {
     moveScheme:  "arrows",
     shootScheme: "space",
     hasSeenInstructions: false,
+    seenIntros: {},
     sfxVolume: 100,
     bgVolume: 100,
     muted: false

@@ -164,7 +164,10 @@ class MenuScene extends Scene {
             const difficulty = this.difficultyOptions[this.difficultyIndex];
             const playScene  = new PlayScene(gameInstance, level, difficulty);
             playScene.setup();
-            if (!GameSettings.hasSeenInstructions) {
+            const lvl = playScene.levelToLoad || playScene.level;
+            if (!GameSettings.seenIntros || !GameSettings.seenIntros[lvl]) {
+                sceneManager.pushScene(new IntroScene(lvl, playScene));
+            } else if (!GameSettings.hasSeenInstructions) {
                 GameSettings.hasSeenInstructions = true;
                 sceneManager.pushScene(new InstructionsScene(playScene));
             } else {
