@@ -58,11 +58,15 @@ class PauseScene extends Scene {
     handleKeyPressed() {
         if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+            soundManager.play('upSelection');
         } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+            soundManager.play('downSelection');
         } else if (keyCode === ENTER || key === ' ') {
+            soundManager.play('select');
             this.activateSelectedOption();
         } else if (key === 'p' || key === 'P' || keyCode === ESCAPE) {
+            soundManager.play('select');
             sceneManager.resumeScene(this.playScene);
         }
     }
@@ -74,7 +78,12 @@ class PauseScene extends Scene {
         } else if (option === "SETTINGS") {
             sceneManager.pushScene(new SettingsScene(this.playScene, this));
         } else if (option === "HOW TO PLAY") {
-            sceneManager.pushScene(new InstructionsScene(this.playScene, this));
+            const lvl = this.playScene.level || this.playScene.levelToLoad;
+            if (!GameSettings.seenIntros || !GameSettings.seenIntros[lvl]) {
+                sceneManager.pushScene(new IntroScene(lvl, this.playScene, this));
+            } else {
+                sceneManager.pushScene(new InstructionsScene(this.playScene, this));
+            }
         } else if (option === "QUIT") {
             sceneManager.switchScene(new MenuScene());
         }
