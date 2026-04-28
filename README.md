@@ -250,27 +250,31 @@ Our implementation of CrateBox is grounded in two key areas of technical challen
 
 One of the most distinctive enemies in CrateBox is the floating enemy, a ghost-like entity that partially ignores gravity and actively hunts the player through the air. Designing its movement behaviour proved to be one of the more difficult implementation challenges: a direct pursuit strategy from the moment of spawn caused enemies to lock onto the player immediately and press straight into walls, where they would become permanently stuck.
 
-**Our Initial Approach**
+### **Our Initial Approach**
 
 We initially computed a unit vector from the enemy's position to the player's position every frame and applied an acceleration in that direction. This worked in open space but failed whenever walls got in the way. This also caused enemies to cluster together, without posing any threat to the player. 
 
-**Our Solution**
+### **Our Solution**
 
 To address this, we updated the floating enemy’s pathfinding to use two distinct modes based on its distance from the player. When far away, it drifts downward through the level using behaviour similar to other enemies. Once it enters a defined radius, it begins accelerating smoothly toward the player by applying force in the direction of the unit vector between them. This ensures the enemy only actively pursues the player at close range, preventing it from getting stuck on walls. If it moves out of range again, it returns to its natural drifting behaviour.
 
+*Figure X: Floating Enemy Pathfinding With Acceleration Arrows*
+
+![](image/floating-enemy-tracking.gif)
+
 ## Challenge 2: Maintaining Game Quality And Performance
 
-**Animated Background Optimisation**
+### **Animated Background Optimisation**
 
 The game needed to look and feel consistent across different machines, which proved more challenging than expected. While it ran smoothly on some systems, lower-end devices experienced significant frame-rate drops due to the cost of rendering a complex animated background, which required intensive per-pixel calculations.
 
 To address this, we introduced a scaled offscreen rendering approach. The background is first rendered at a reduced resolution and then upscaled to fit the screen. Since rendering cost scales with pixel count, this significantly lowers GPU workload, reducing it to a fraction of the original, while maintaining acceptable visual quality. We also ensured that display scaling did not undo these performance gains, and made the buffer automatically adjust to window size changes to maintain consistent efficiency.
 
-**Consistent Physics Across Framerates**
+### **Consistent Physics Across Framerates**
 
 A second cross-device issue was inconsistent game speed caused by varying frame rates. Because the game updates once per rendered frame, higher refresh rates caused physics to run faster, while lower frame rates slowed everything down. To fix this, we scaled all physics updates using a time factor based on the elapsed time between frames, normalised to a 60 fps baseline. This ensures that movement, gravity, and other physics behaviours progress at a consistent rate, regardless of the hardware or display refresh rate.
 
-**Maintaining Layouts Across Resolutions and Aspect Ratios**
+### **Maintaining Layouts Across Resolutions and Aspect Ratios**
 
 A further issue arose from differences in screen aspect ratios, which caused levels to appear and play differently across devices. To address this, we based all geometry and layout on a fixed 32×18 grid aligned to a 16:9 aspect ratio. This grid was then scaled to the user's screen at runtime (with padding to maintain aspect ratio). This ensured that the relative positioning and proportions of platforms, walls, and entities remained consistent, regardless of screen dimensions. An additional benefit of this approach was that levels could be easily designed and iterated on using simple tools like Excel, before being translated directly into the game.
 
@@ -279,14 +283,15 @@ A further issue arose from differences in screen aspect ratios, which caused lev
 
 # 6. Evaluation
 
-As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. We assessed the game using quantitative and qualitative methods, to give us the clearest picture possible of any potential usability issues whilst minimising the weaknesses that any one method may have.
+As part of development, the game underwent multiple evaluation cycles to verify that it met the user requirements defined earlier. We used a combination of quantitative and qualitative methods to build a clear understanding of potential usability issues while reducing the limitations associated with relying on a single evaluation approach.
 
 ## Qualitative Evaluation: Think-Aloud
 Sixteen participants were gathered in total from workshops. During this evaluation, users were asked to navigate around the map, interact with enemy entities, and pick up crates that spawned around the map. Players were encouraged to express their thoughts as they played. The results are as follows:
 
-**Tasks:**
+### Tasks
+
 *   Navigate around the map, jump between platforms
-*   Interact with enemy entities- avoid mobs, or kill them
+*   Interact with enemy entities by avoiding and killing them
 *   Pick up crates as they spawn around the map
 
 <p align="center">
@@ -295,21 +300,23 @@ Sixteen participants were gathered in total from workshops. During this evaluati
 
 ## Solutions and Adjustments
 
-**Navigation and Map**
+### **Navigation and Map**
 
 *   **Issues:** Users found the movement smooth and enjoyable, however they found that the character could travel outside of the map boundaries.
-*   **Solution:** We implemented strict level colliders and invisible walls around the top of the map, so that players could not jump into the hole for the enemy spawn point.
+*   **Solution:** We implemented strict level colliders and invisible walls around the top of the map, so that players could not jump out of the playing area.
 
-**Game Objectives and Goal clarity**
+### **Game Objectives and Goal clarity**
+
 *   **Issues:** Players were confused about the win conditions. This was brought on by the lack of player death and a score tracker, and led to players not being incentivised to engage with the core mechanics of the game.
-*   **Solutions:** A score tracker was added, informing players of how many crates they had collected, and player death was implemented, giving a clear sense of the fail conditions of the game.
+*   **Solutions:** We added a score tracker to inform players of how many crates they had collected, and we implemented player death to clearly communicate the game’s fail conditions.
 
-**Enemy Pathing and Difficulty**
-*   Enemy pathing and the presence of spots in the map where enemies did not cover led to users feeling as though enemies were not dangerous.
+### **Enemy Pathing and Difficulty**
+
+*   **Issues:** Enemy pathing and the presence of spots in the map where enemies did not cover led to users feeling as though enemies were not dangerous.
 *   **Solutions:** We implemented a new type of enemy, the floating enemy, which would intercept the player regardless of map position, and revised the enemy pathing to cover the whole map.
 
 ## Heuristic Evaluation
-To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desiribility bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes were then compiled and then subsequently worked over.
+To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desirability bias, we also utilised the Heuristic evaluation method. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes are compiled in the table below.
 
 | Interface Component | Issue | Heuristic(s) | Frequency (0-4) | Impact (0-4) | Persistence (0-4) | Severity (F+I+P)/3 |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
@@ -349,12 +356,16 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 
 *Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
 
-**Performance Analysis & Interpretation:** The Wilcoxon Signed Rank Test yielded a p-value of 1.0 confirming that the shift in difficulty did not statistically impact usability. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the data proves that the fixes to collision, boundaries and enemy pathing were effective. The consistency of the scores suggests that difficulty was implemented correctly; the game remained intuitive, and the “Hard” difficulty provided a challenge without causing frustration from encountering bugs. However, these scores do reveal clear room for improvement, with users highlighting the need for enhanced accessibility (customisable controls) and better visual design. Overall, the study clearly shows that the initial issues had been successfully resolved, providing an engaging sense of danger to drive users to pursue the win conditions.
+### Performance Analysis & Interpretation
+
+The Wilcoxon Signed Rank Test produced a very high p-value (p ≈ 1.0), indicating no statistically significant difference in usability following the shift in difficulty. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the results suggest that the fixes to collision, boundaries and enemy pathing were effective in maintaining a consistent user experience. The minimal variation in scores indicates that the difficulty adjustment was well balanced; the game remained intuitive, and the “Hard” mode introduced challenge without causing frustration from technical issues or unintended behaviour. 
+
+However, the findings also highlight areas for improvement, particularly in accessibility through customisable controls and enhanced visual design. Overall, the results indicate that the initial issues were successfully resolved, allowing the gameplay to deliver a consistent sense of challenge that supports engagement with the win conditions.
 
 # 7. Process 
 
 ## Team Structure & Shared Accountability
-At the project's conception, our team adopted a flat structure where all members contributed equally to decision-making while delegating tasks based on individual technical strengths. We divided the development into **Frontend** (animations, environment rendering, and UI) and **Backend** (ECS engine logic, physics, and weapon systems). 
+At project onset, our team adopted a flat structure where all members contributed equally to decision-making while delegating tasks based on individual technical strengths. We divided the development into **Frontend** (animations, environment rendering, and UI) and **Backend** (ECS engine logic, physics, and weapon systems). 
 
 To ensure our development stayed aligned with stakeholder expectations, one team member consistently acted as the **Client/Product Owner**. This role was responsible for validating features against our initial requirements and providing critical feedback during our "live" demonstrations, ensuring the "user's voice" was never lost in the technical implementation.
 
@@ -379,19 +390,19 @@ To maintain high code quality and a clean project history, we implemented a stri
 ## Reflections & Adaptations
 While our Agile framework provided a strong foundation, the reality of development presented several challenges that required us to adapt our working style:
 
-**Challenge 1: Task Overlap & Ambiguity**  
+### **Challenge 1: Task Overlap & Ambiguity**  
 
 **What Didn't Work:** Because we were all navigating game development and p5.js for the first time, initial task boundaries were blurry. Teammates occasionally modified shared files independently, leading to divergent logic and confusion.  
 
 **How We Adapted:** We shifted to a more immediate communication style using our **WhatsApp Group** to flag file modifications in real-time. More importantly, we introduced **pair programming** sessions. This not only prevented overlapping work but also allowed us to share ideas and standardize our coding styles across the frontend and backend boundaries.
 
-**Challenge 2: Feature Creep & Idea Convergence**  
+### **Challenge 2: Feature Creep & Idea Convergence**  
 
 **What Didn't Work:** During brainstorming, our team tended to be overly ambitious. We frequently proposed complex mechanics without knowing if they were technically viable, which stalled early prototyping.  
 
 **How We Adapted:** We implemented a "verify early" rule. Instead of debating complex ideas abstractly, we forced ourselves to either draw a simplified, structural flow on **Miro** or build a bare-bones code proof-of-concept. This grounded our creativity in technical reality.
 
-**Challenge 3: Git Conflicts**  
+### **Challenge 3: Git Conflicts**  
 
 **What Didn't Work:** Frequent rebasing initially resulted in overwhelming merge conflicts, as isolated tasks ended up interacting with the same core game loops.  
 
@@ -403,37 +414,122 @@ Sustainability was a key consideration throughout our development process, influ
 
 ## Sustainability Awareness Framework (SusAF)
 
-**Questions and Discussion**
+### **Questions and Discussion**
+
 Each team member proposed potential impacts of our game prompted by questions relating to five key sustainability dimensions: social, individual, environmental, economic, and technical. This encouraged us to reflect on our own perspectives and consider different viewpoints, helping us think more critically about sustainability in our project. 
 
-**Analysis**
+### **Analysis**
+
 From these discussions, we developed a set of organised notes that describe the game’s sustainability impacts across the five dimensions.
 
-| Dimension     | Aspect                                | Description                                                  |
-| :------------ | :------------------------------------ | :----------------------------------------------------------- |
-| Social        | Sense of Community                    | The high score feature provides an opportunity for competitiveness amongst like-minded  people. |
-|               | Trust                                 | Our active and consistent development schedule builds trust with users, who can expect new features. |
-|               | Inclusiveness and  Diversity          | The game is designed with simple mechanics and minimal narrative barriers, making it  accessible to a wide variety of players regardless of educational background. |
-|               | Equity                                | All players have equal access to gameplay features. We implemented no pay-to-win mechanics or locked content to ensure fairness. |
-| Individual    | Health                                | The game supports adjustable control schemes, allowing players to choose input methods that minimise strain and improve comfort during extended play sessions. |
-|               | Lifelong Learning                     | Players can  develop reflexes, coordination, and strategic thinking through repeated play. |
-|               | Privacy                               | The game does not collect any personal data.                 |
-|               | Safety                                | Content is designed to be non-realistic and stylised, reducing exposure to harmful or distressing material. |
-|               | Agency                                | Players can customise control schemes and choose difficulty levels, giving them control over how they interact with the game. |
-| Environmental | Materials and Resources               | The use of  lightweight pixel-art assets and simple animations reduces memory usage and limits the computational resources required to run the game. |
-|               | Soil, Atmospheric and Water Pollution | While our game has no direct physical pollution, reducing energy consumption through optimisations indirectly lowers electricity usage. |
-|               | Biodiversity and Land Use             | The game’s themed environments (space, cave, ice) are fictional and do not promote harmful real-world land use. |
-|               | Energy                                | Efficient asset loading and lightweight graphics reduce CPU and GPU usage, lowering overall energy consumption during gameplay. |
-|               | Logistics and Transport               | As a digital-only  product, the game avoids physical distribution, eliminating emissions associated with manufacturing and shipping. |
-| Economic      | Value                                 | Potential for paid levels and weapons in future.             |
-|               | Customer Relations  Management        | Simple gameplay, high scores, and regular improvements encourage engagement and build a positive relationship with players. |
-|               | Supply Chain                          | Uses a minimal, fully digital supply chains, reducing cost, complexity, and reliance on external providers. |
-|               | Innovation,  Research and Development | Iterative design of themed levels and adaptable controls supports ongoing improvements, including potential accessibility features like high-contrast mode. |
-| Technical     | Maintainability                       | Modular structure separates core systems, making bugs easier to fix and updates easier to implement. |
-|               | Usability                             | Simple controls  and clear feedback make the game easy to learn, with customisable inputs  improving accessibility. |
-|               | Extensibility and  Adaptability       | New levels, mechanics, and features (e.g. accessibility modes) can be added with minimal changes. |
-|               | Security                              | Minimal data collection reduces risk, with no sensitive user information stored. |
-|               | Scalability                           | Lightweight design supports additional content and increased usage without major performance impact. |
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>Aspect</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4">Social</td>
+      <td>Sense of Community</td>
+      <td>The high score feature provides an opportunity for competitiveness amongst like-minded people.</td>
+    </tr>
+    <tr>
+      <td>Trust</td>
+      <td>Our active and consistent development schedule builds trust with users, who can expect new features.</td>
+    </tr>
+    <tr>
+      <td>Inclusiveness and Diversity</td>
+      <td>The game is designed with simple mechanics and minimal narrative barriers, making it accessible to a wide variety of players regardless of educational background.</td>
+    </tr>
+    <tr>
+      <td>Equity</td>
+      <td>All players have equal access to gameplay features. We implemented no pay-to-win mechanics or locked content to ensure fairness.</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Individual</td>
+      <td>Health</td>
+      <td>The game supports adjustable control schemes, allowing players to choose input methods that minimise strain and improve comfort during extended play sessions.</td>
+    </tr>
+    <tr>
+      <td>Lifelong Learning</td>
+      <td>Players can develop reflexes, coordination, and strategic thinking through repeated play.</td>
+    </tr>
+    <tr>
+      <td>Privacy</td>
+      <td>The game does not collect any personal data.</td>
+    </tr>
+    <tr>
+      <td>Safety</td>
+      <td>Content is designed to be non-realistic and stylised, reducing exposure to harmful or distressing material.</td>
+    </tr>
+    <tr>
+      <td>Agency</td>
+      <td>Players can customise control schemes and choose difficulty levels, giving them control over how they interact with the game.</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Environmental</td>
+      <td>Materials and Resources</td>
+      <td>The use of lightweight pixel-art assets and simple animations reduces memory usage and limits the computational resources required to run the game.</td>
+    </tr>
+    <tr>
+      <td>Soil, Atmospheric and Water Pollution</td>
+      <td>While our game has no direct physical pollution, reducing energy consumption through optimisations indirectly lowers electricity usage.</td>
+    </tr>
+    <tr>
+      <td>Biodiversity and Land Use</td>
+      <td>The game’s themed environments (space, cave, ice) are fictional and do not promote harmful real-world land use.</td>
+    </tr>
+    <tr>
+      <td>Energy</td>
+      <td>Efficient asset loading and lightweight graphics reduce CPU and GPU usage, lowering overall energy consumption during gameplay.</td>
+    </tr>
+    <tr>
+      <td>Logistics and Transport</td>
+      <td>As a digital-only product, the game avoids physical distribution, eliminating emissions associated with manufacturing and shipping.</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Economic</td>
+      <td>Value</td>
+      <td>Potential for paid levels and weapons in future.</td>
+    </tr>
+    <tr>
+      <td>Customer Relations Management</td>
+      <td>Simple gameplay, high scores, and regular improvements encourage engagement and build a positive relationship with players.</td>
+    </tr>
+    <tr>
+      <td>Supply Chain</td>
+      <td>Uses a minimal, fully digital supply chain, reducing cost, complexity, and reliance on external providers.</td>
+    </tr>
+    <tr>
+      <td>Innovation, Research and Development</td>
+      <td>Iterative design of themed levels and adaptable controls supports ongoing improvements, including potential accessibility features like high-contrast mode.</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Technical</td>
+      <td>Maintainability</td>
+      <td>Modular structure separates core systems, making bugs easier to fix and updates easier to implement.</td>
+    </tr>
+    <tr>
+      <td>Usability</td>
+      <td>Simple controls and clear feedback make the game easy to learn, with customisable inputs improving accessibility.</td>
+    </tr>
+    <tr>
+      <td>Extensibility and Adaptability</td>
+      <td>New levels, mechanics, and features (e.g. accessibility modes) can be added with minimal changes.</td>
+    </tr>
+    <tr>
+      <td>Security</td>
+      <td>Minimal data collection reduces risk, with no sensitive user information stored.</td>
+    </tr>
+    <tr>
+      <td>Scalability</td>
+      <td>Lightweight design supports additional content and increased usage without major performance impact.</td>
+    </tr>
+  </tbody>
+</table>
 
 The insights from this framework were then used to construct a SusAF diagram, which visualises how the impacts of our game extend across the five sustainability dimensions over time. By mapping short, medium, and long-term effects, the diagram highlights how immediate design decisions can lead to broader systemic outcomes. 
 
