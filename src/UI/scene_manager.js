@@ -1,4 +1,6 @@
 class SceneManager {
+    //in charge of deciding which screen is showing, 
+    //  and of transitioning between screens.
     constructor() {
         this.currentScene = null;
     }
@@ -35,12 +37,14 @@ class SceneManager {
         if (this.currentScene) this.currentScene.display(); 
     }
 
+    //placeholder for future development (no muouseclicks in game currently)
     handleMousePressed() {
         if (this.currentScene && this.currentScene.handleMousePressed) {
             this.currentScene.handleMousePressed();
         }
     }
 
+    //handles all keyboard input, allows currentScene to decide behaviour
     handleKeyPressed() {
         if (this.currentScene && this.currentScene.handleKeyPressed) {
             this.currentScene.handleKeyPressed();

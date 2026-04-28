@@ -4,8 +4,8 @@ class MenuScene extends Scene {
         this.background = new bgShader();
 
         // animated Game title Setting
-        this.fullTitle = "CRATE BOX";
-        this.titleText = new ShadowText(this.fullTitle, width / 2, height * 0.2, 0, 255, color(50, 50, 50), 5);
+        this.titleLine1 = "CRATE";
+        this.titleLine2 = "EXPECTATIONS";
         this.visibleCount = 0;
         this.lastTypedTime = 0;
         this.typingInterval = 150; // in milliseconds
@@ -19,7 +19,7 @@ class MenuScene extends Scene {
         this.menuItems = ["START", "LEVEL", "DIFFICULTY", "SETTINGS"];
 
         // fps Display
-        this.fpsCounter = new drawFps();
+        // this.fpsCounter = new drawFps();
 
         soundManager.playBg('menu_bgMusic');
     }
@@ -67,7 +67,7 @@ class MenuScene extends Scene {
         pop();
 
         // Draw HUD on top of everything
-        this.fpsCounter.display();
+        // this.fpsCounter.display();
     }
 
     drawControlBanner(menuFontSize) {
@@ -110,7 +110,7 @@ class MenuScene extends Scene {
         let now = millis();
 
         if (
-            this.visibleCount < this.fullTitle.length &&
+            this.visibleCount < (this.titleLine1.length + this.titleLine2.length) &&
             now - this.lastTypedTime > this.typingInterval
         ) {
             this.visibleCount++;
@@ -118,14 +118,33 @@ class MenuScene extends Scene {
         }
 
         let baseScale = min(width, height);
-        let fontSize = baseScale * 0.15;
+        let fontSize = baseScale * 0.145;
+        let titleX = width / 2;
+        let titleY = height * 0.135;
+        let titleGap = fontSize * 1.28;
 
-        this.titleText.content = this.fullTitle.substring(0, this.visibleCount);
-        this.titleText.size = fontSize;
-        this.titleText.x = width / 2;
-        this.titleText.y = height * 0.25;
-        this.titleText.offset = fontSize * 0.08;
-        this.titleText.display();
+        const firstLineCount = Math.min(this.visibleCount, this.titleLine1.length);
+        const secondLineCount = Math.max(0, this.visibleCount - this.titleLine1.length);
+
+        new ShadowText(
+            this.titleLine1.substring(0, firstLineCount),
+            titleX,
+            titleY,
+            fontSize,
+            color(255, 255, 255, 250),
+            color(0, 0, 0, 220),
+            fontSize * 0.1
+        ).display();
+
+        new ShadowText(
+            this.titleLine2.substring(0, secondLineCount),
+            titleX,
+            titleY + titleGap,
+            fontSize,
+            color(255, 255, 255, 250),
+            color(0, 0, 0, 220),
+            fontSize * 0.1
+        ).display();
     }
 
     handleKeyPressed() {
@@ -164,7 +183,10 @@ class MenuScene extends Scene {
             const difficulty = this.difficultyOptions[this.difficultyIndex];
             const playScene  = new PlayScene(gameInstance, level, difficulty);
             playScene.setup();
-            if (!GameSettings.hasSeenInstructions) {
+            const lvl = playScene.levelToLoad || playScene.level;
+            if (!GameSettings.seenIntros || !GameSettings.seenIntros[lvl]) {
+                sceneManager.pushScene(new IntroScene(lvl, playScene));
+            } else if (!GameSettings.hasSeenInstructions) {
                 GameSettings.hasSeenInstructions = true;
                 sceneManager.pushScene(new InstructionsScene(playScene));
             } else {

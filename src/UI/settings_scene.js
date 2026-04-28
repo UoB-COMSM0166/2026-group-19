@@ -77,15 +77,19 @@ class SettingsScene extends Scene {
     handleKeyPressed() {
         if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+            soundManager.play('upSelection');
         } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+            soundManager.play('downSelection');
         } else if (keyCode === ENTER || key === ' ') {
+            soundManager.play('select');
             this.handleSelection();
         } else if (keyCode === LEFT_ARROW || key === 'a' || key === 'A' || keyCode === RIGHT_ARROW || key === 'd' || key === 'D') {
             this.handleHorizontal(
                 (keyCode === LEFT_ARROW || key === 'a' || key === 'A') ? -1 : 1
             );
         } else if (keyCode === ESCAPE) {
+            soundManager.play('select');
             sceneManager.resumeScene(this.sceneToReturnTo);
         }
     }
@@ -99,6 +103,7 @@ class SettingsScene extends Scene {
                 const inputSys = gameInstance.ecs.getSystem(InputSystem);
                 if (inputSys) inputSys.setControlScheme(GameSettings.moveScheme, GameSettings.shootScheme);
             }
+            if (dir > 0) soundManager.play('upSelection'); else soundManager.play('downSelection');
         } else if (item === "SHOOT KEY") {
             this.shootIndex = (this.shootIndex + dir + this.shootSchemes.length) % this.shootSchemes.length;
             GameSettings.shootScheme = this.shootSchemes[this.shootIndex];
@@ -106,23 +111,28 @@ class SettingsScene extends Scene {
                 const inputSys = gameInstance.ecs.getSystem(InputSystem);
                 if (inputSys) inputSys.setControlScheme(GameSettings.moveScheme, GameSettings.shootScheme);
             }
+            if (dir > 0) soundManager.play('upSelection'); else soundManager.play('downSelection');
         } else if (item === "SFX VOL") {
             this.sfxVolume = constrain(this.sfxVolume + dir * 5, 0, 100);
             GameSettings.sfxVolume = this.sfxVolume;
             soundManager.setSfxVolume(this.sfxVolume);
+            if (dir > 0) soundManager.play('upSelection'); else soundManager.play('downSelection');
         } else if (item === "MUSIC VOL") {
             this.bgVolume = constrain(this.bgVolume + dir * 5, 0, 100);
             GameSettings.bgVolume = this.bgVolume;
             soundManager.setBgVolume(this.bgVolume);
+            if (dir > 0) soundManager.play('upSelection'); else soundManager.play('downSelection');
         } else if (item === "MUTE") {
             this.isMuted = !this.isMuted;
             GameSettings.muted = this.isMuted;
             soundManager.setMuted(this.isMuted);
+            soundManager.play('select');
         }
     }
 
     handleSelection() {
         if (this.menuItems[this.menuIndex] === "BACK") {
+            soundManager.play('select');
             sceneManager.resumeScene(this.sceneToReturnTo);
         }
     }

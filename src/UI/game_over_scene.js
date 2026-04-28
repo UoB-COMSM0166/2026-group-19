@@ -6,7 +6,8 @@ class GameOverScene extends Scene {
         this.score = score;
         this.menuIndex = 0;
         this.menuItems = ["RESTART", "MENU"];
-        this.readyTime = millis() + 700;
+        //avoid accidentally entering another game immediately
+        this.readyTime = millis() + 500;
     }
 
     display() {
@@ -69,9 +70,12 @@ class GameOverScene extends Scene {
         if (millis() < this.readyTime) return;
         if (keyCode === UP_ARROW || key === 'w' || key === 'W') {
             this.menuIndex = (this.menuIndex - 1 + this.menuItems.length) % this.menuItems.length;
+            soundManager.play('upSelection');
         } else if (keyCode === DOWN_ARROW || key === 's' || key === 'S') {
             this.menuIndex = (this.menuIndex + 1) % this.menuItems.length;
+            soundManager.play('downSelection');
         } else if (keyCode === ENTER || key === ' ') {
+            soundManager.play('select');
             this.activateSelectedOption();
         }
     }
