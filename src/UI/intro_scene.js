@@ -44,10 +44,22 @@ class IntroScene extends Scene {
             ).display();
         }
 
-        const promptSize = min(width, height) * 0.032;
+        const promptSize = min(width, height) * 0.013;
+        const promptText = "Press ENTER or SPACE to continue";
+        const promptY = height * 0.975;
+
+        textSize(promptSize);
+        const promptW = textWidth(promptText) + promptSize * 2.2;
+        const promptH = promptSize * 2.1;
+
+        fill(0, 0, 0, 120);
+        noStroke();
+        rectMode(CENTER);
+        rect(width / 2, promptY, promptW, promptH, promptH / 2);
+
         new ShadowText(
-            "Press ENTER or SPACE to continue",
-            width / 2, height * 0.88,
+            promptText,
+            width / 2, promptY,
             promptSize, color(255), color(0), promptSize * 0.08
         ).display();
 
