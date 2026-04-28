@@ -83,3 +83,82 @@ describe('LevelFactory.buildWalls', () => {
         expect(walls).toHaveLength(2);
     });
 });
+
+describe('LevelFactory.build', () => {
+    const baseTemplate = {
+        player: { x: 4, y: 14 },
+        platforms: [{ x0: 0, y0: 17, x1: 31, y1: 17, spawnable: false }],
+    };
+
+    beforeEach(() => {
+        global.width = 640;
+        global.height = 360;
+        global.defaults = {
+            physics: {
+                gravity: 1, playerSpeed: 1, playerAcceleration: 1,
+                enemySpeed: 1, maxEnemySpeed: 1, jumpSpeed: 1,
+                terminalVelocity: 1, floatingEnemyAccel: 1,
+                floatingEnemyBounce: 1, minBloodSpeed: 1,
+                maxBloodSpeed: 1, projectileKnockback: 1,
+            },
+            difficulty: {
+                normal: { physics: {}, playerHealth: 100, enemyHealth: 50, largeEnemyHealth: 200 },
+                hard:   { physics: { gravity: 2 }, playerHealth: 75, enemyHealth: 75, largeEnemyHealth: 300 },
+            },
+        };
+    });
+
+    afterEach(() => {
+        delete global.width;
+        delete global.height;
+        delete global.defaults;
+    });
+
+    test('returns correct health values for normal difficulty', () => {
+        const level = LevelFactory.build(baseTemplate, 'normal');
+        expect(level.health.player).toBe(100);
+        expect(level.health.enemy).toBe(50);
+        expect(level.health.largeEnemy).toBe(200);
+    });
+
+    // Branch: default parameter — calling build() with no difficultyKey uses "normal"
+    test('defaults to normal difficulty when difficultyKey is omitted', () => {
+        const level = LevelFactory.build(baseTemplate);
+        expect(level.health.player).toBe(100);
+    });
+
+    // Branch 1 (false side of ||): unknown difficultyKey falls back to defaults.difficulty.normal
+    test('falls back to normal difficulty when difficultyKey is unrecognised', () => {
+        const level = LevelFactory.build(baseTemplate, 'unknown');
+        expect(level.health.player).toBe(100);
+    });
+
+    test('uses hard difficulty settings when difficultyKey is "hard"', () => {
+        const level = LevelFactory.build(baseTemplate, 'hard');
+        expect(level.health.player).toBe(75);
+    });
+
+    // Branch 2 (true side of ||): template.physics is provided and merges into physics
+    test('template.physics overrides default physics when provided', () => {
+        const templateWithPhysics = { ...baseTemplate, physics: { gravity: 5 } };
+        const level = LevelFactory.build(templateWithPhysics, 'normal');
+        expect(level.physics.gravity).toBe(LevelFactory.scaleY(5, 360));
+    });
+
+    // Branch 2 (false side of ||): template.physics is absent, uses {} so defaults are unchanged
+    test('default physics are used when template.physics is not provided', () => {
+        const level = LevelFactory.build(baseTemplate, 'normal');
+        expect(level.physics.gravity).toBe(LevelFactory.scaleY(1, 360));
+    });
+
+    test('player position is scaled from grid coordinates', () => {
+        const level = LevelFactory.build(baseTemplate, 'normal');
+        expect(level.player.center_x).toBe(LevelFactory.scaleX(4.5, 640));
+        expect(level.player.center_y).toBe(LevelFactory.scaleY(14.5, 360));
+    });
+
+    test('walls array matches the template platforms', () => {
+        const level = LevelFactory.build(baseTemplate, 'normal');
+        expect(level.walls).toHaveLength(1);
+    });
+});
