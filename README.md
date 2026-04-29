@@ -977,7 +977,7 @@ Sixteen participants were gathered in total from workshops. During this evaluati
 *   **Solutions:** We implemented a new type of enemy, the floating enemy, which would intercept the player regardless of map position, and revised the enemy pathing to cover the whole map.
 
 #### Heuristic Evaluation
-To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desiribility bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes are compiled in the table below.
+To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desirability bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes are compiled in the table below.
 
 | Interface Component | Issue | Heuristic(s) | Frequency (0-4) | Impact (0-4) | Persistence (0-4) | Severity (F+I+P)/3 |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
@@ -1006,7 +1006,7 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 | 6 | 75 | 73 | -2 |
 | 7 | 60 | 62.5 | 2.5 |
 | 8 | 72.5 | 72.5 | 0 |
-| 9 | 67.5 | 66 | -1.5 |
+| 9 | 67.5 | 65 | -2.5 |
 | 10 | 70 | 72.5 | 2.5 |
 | **Average** | **68.25** | **68.2** | **-0.05** |
 
@@ -1019,7 +1019,7 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 
 ### Performance Analysis & Interpretation: 
 
-The Wilcoxon Signed Rank Test produced a very high p-value (p ~ 1.0) , indicating no statistically significant difference in usability following the shift in difficulty. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the results suggest that the fixes to collision, boundaries and enemy pathing were effective in maintaining a consistent user experience. The minimal variation in scores indicates that the difficulty adjustment was well balanced; the game remained intuitive, and the “Hard” mode introduced challenge without causing frustration from technical issues or unintended behaviour.
+The Wilcoxon Signed Rank Test produced a high p-value of 0.8336 (p > 0.06) , indicating no statistically significant difference in usability following the shift in difficulty. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the results suggest that the fixes to collision, boundaries and enemy pathing were effective in maintaining a consistent user experience. The minimal variation in scores indicates that the difficulty adjustment was well balanced; the game remained intuitive, and the “Hard” mode introduced challenge without causing frustration from technical issues or unintended behaviour.
 
 However, the findings also highlight areas for improvement, particularly in accessibility through customisable controls and enhanced visual design. Overall, the results indicate that the initial issues were successfully resolved, allowing the gameplay to deliver a consistent sense of challenge that supports engagement with the win conditions.
 
