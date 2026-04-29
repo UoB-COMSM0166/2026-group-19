@@ -1031,7 +1031,7 @@ As part of fulfilling the black-box method, we utilised **Boundary Value Analysi
 
 We also adopted **white-box testing** to ensure core internal systems were running correctly. These tests were written using the Jest framework and organised into four suites. Contrary to the black-box testing, this allowed us to directly inspect internal implementation details and prioritise high code coverage across our most critical systems. Using the Jest framework, we were able to acheive a 94.36% Statement Coverage and an 82.6% Branch Coverage across our core logic. This ensured that we were not only executing the code but also validating nearly every logical path within the ECS and Physics components. These high metrics show that we were conforming to user requirements, and ensuring that internal events like player-death and collision handling were responding correctly to game data under a wide variety of conditions, thereby reducing potential maintenance costs and identifying defects early in the development cycle.
 
-<img src="./image/jest_coverage.png" alt="Jest Coverage Report" width="90%">
+<img src="./image/jest_coverage.png" alt="Jest Coverage Report" width="100%">
 
 
 # 7. Process 
