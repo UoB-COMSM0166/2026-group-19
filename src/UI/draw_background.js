@@ -1,45 +1,45 @@
-// p5.js (WEBGL) background shader drawn on a full-canvas rectangle at lower z depth.
-// The shader is based on a Shadertoy fragment shader and runs on a fullscreen plane.
-// JS updates uniforms each frame:
-//   u_time        -> animation time
-//   u_resolution  -> render resolution
-//   u_channel0    -> procedural noise texture (Shadertoy iChannel0 replacement)
-// The vertex shader passes geometry to the GPU, while the fragment shader
-// generates the animated visual effect per pixel.
-
+/**
+ * Renders an animated background using a GLSL shader in p5.js WEBGL mode.
+ *
+ * The vertex and fragment shader (this.vert, this.frag) were copied directly from Shadertoy and adapted
+ * for p5.js.
+ *
+ * The shader is rendered at a reduced resolution (_renderScale = 0.4) into an
+ * offscreen WEBGL buffer and then upscaled to the full canvas to improve performance.
+ */
 class bgShader {
     constructor() {
-      this._shaderInitFailed = false;
-      this._loggedShaderError = false;
-      this._renderScale = 0.4;
-      this._offscreen = null;
-      this._offscreenW = 0;
-      this._offscreenH = 0;
-      this._offscreenShader = null;
-      this._resolution = [0, 0];
-  
-      // iChannel0 stand-in texture (noise)
-      this._channel0 = null;
-      this._channel0InitFailed = false;
-  
-      // Shadertoy shader source
+      this.shaderInitFailed = false;
+      this.loggedShaderError = false;
+      this.renderScale = 0.4;
+      this.offscreen = null;
+      this.offscreenW = 0;
+      this.offscreenH = 0;
+      this.offscreenShader = null;
+      this.resolution = [0, 0];
+
+      this.channel0 = null;
+      this.channel0InitFailed = false;
+
+      // Standard pass-through vertex shader.
       this.vert = `
         precision highp float;
-  
+
         attribute vec3 aPosition;
         attribute vec2 aTexCoord;
-  
+
         varying vec2 vTexCoord;
-  
+
         uniform mat4 uModelViewMatrix;
         uniform mat4 uProjectionMatrix;
-  
+
         void main() {
           vTexCoord = aTexCoord;
           gl_Position = uProjectionMatrix * uModelViewMatrix * vec4(aPosition, 1.0);
         }
       `;
 
+      // Fragment shader copied from Shadertoy and adapted for p5.js (see class comment).
       this.frag = `
         precision mediump float;
 
@@ -90,12 +90,12 @@ class bgShader {
 
             O.a = 1.0;
             gl_FragColor = O;
-            
+
         }
       `;
     }
-  
-    _createNoiseTexture(p, size = 256) {
+
+    createNoiseTexture(p, size = 256) {
       const g = p.createGraphics(size, size);
       g.pixelDensity(1);
       g.loadPixels();
@@ -113,74 +113,74 @@ class bgShader {
       return g;
     }
 
-    _ensureOffscreen(p) {
-      if (this._shaderInitFailed) return;
+    ensureOffscreen(p) {
+      if (this.shaderInitFailed) return;
 
-      const targetW = Math.max(1, Math.floor(p.width * this._renderScale));
-      const targetH = Math.max(1, Math.floor(p.height * this._renderScale));
-      const sizeChanged = targetW !== this._offscreenW || targetH !== this._offscreenH;
+      const targetW = Math.max(1, Math.floor(p.width * this.renderScale));
+      const targetH = Math.max(1, Math.floor(p.height * this.renderScale));
+      const sizeChanged = targetW !== this.offscreenW || targetH !== this.offscreenH;
 
-      if (!this._offscreen || sizeChanged) {
-        if (this._offscreen) {
-          this._offscreen.remove();
+      if (!this.offscreen || sizeChanged) {
+        if (this.offscreen) {
+          this.offscreen.remove();
         }
-        this._offscreen = p.createGraphics(targetW, targetH, p.WEBGL);
-        this._offscreen.pixelDensity(1);
-        this._offscreen.textureWrap(this._offscreen.REPEAT);
-        this._offscreenW = targetW;
-        this._offscreenH = targetH;
-        this._offscreenShader = this._offscreen.createShader(this.vert, this.frag);
+        this.offscreen = p.createGraphics(targetW, targetH, p.WEBGL);
+        this.offscreen.pixelDensity(1);
+        this.offscreen.textureWrap(this.offscreen.REPEAT);
+        this.offscreenW = targetW;
+        this.offscreenH = targetH;
+        this.offscreenShader = this.offscreen.createShader(this.vert, this.frag);
       }
     }
-  
-    _ensureChannel0(p) {
-      if (this._channel0 || this._channel0InitFailed) return;
-  
+
+    ensureChannel0(p) {
+      if (this.channel0 || this.channel0InitFailed) return;
+
       try {
-        this._channel0 = this._createNoiseTexture(p);
+        this.channel0 = this.createNoiseTexture(p);
       } catch (err) {
         console.error("Failed to create iChannel0 texture:", err);
-        this._channel0InitFailed = true;
+        this.channel0InitFailed = true;
       }
     }
-  
-    // Call this every frame from your scene: background.display();
+
+    /** Call once per frame from the active scene to draw the background. */
     display() {
       const p = window;
-      this._ensureOffscreen(p);
-      this._ensureChannel0(p);
+      this.ensureOffscreen(p);
+      this.ensureChannel0(p);
 
-      if (!this._offscreen || !this._offscreenShader) return;
-  
-      const g = this._offscreen;
-      this._resolution[0] = g.width;
-      this._resolution[1] = g.height;
-  
-      // Render shader at scaled offscreen resolution.
+      if (!this.offscreen || !this.offscreenShader) return;
+
+      const g = this.offscreen;
+      this.resolution[0] = g.width;
+      this.resolution[1] = g.height;
+
+      // Render the Shadertoy fragment shader into the low-resolution offscreen buffer.
       g.push();
       g.noStroke();
       try {
-        g.shader(this._offscreenShader);
+        g.shader(this.offscreenShader);
       } catch (err) {
-        if (!this._loggedShaderError) {
+        if (!this.loggedShaderError) {
           console.error("Background shader failed to compile/link:", err);
-          this._loggedShaderError = true;
+          this.loggedShaderError = true;
         }
-        this._shaderInitFailed = true;
+        this.shaderInitFailed = true;
         g.pop();
         return;
       }
-  
-      this._offscreenShader.setUniform("u_time", p.millis() / 1000.0);
-      this._offscreenShader.setUniform("u_resolution", this._resolution);
-      if (this._channel0) this._offscreenShader.setUniform("u_channel0", this._channel0);
-  
+
+      this.offscreenShader.setUniform("u_time", p.millis() / 1000.0);
+      this.offscreenShader.setUniform("u_resolution", this.resolution);
+      if (this.channel0) this.offscreenShader.setUniform("u_channel0", this.channel0);
+
       g.rectMode(g.CENTER);
       g.plane(g.width, g.height);
       g.resetShader();
       g.pop();
 
-      // Upscale to full canvas and draw behind UI.
+      // Upscale the offscreen buffer to full canvas resolution and draw behind everything.
       p.push();
       p.translate(-p.width / 2, -p.height / 2, -10);
       p.imageMode(p.CORNER);
@@ -190,7 +190,7 @@ class bgShader {
     }
 
     dispose(){
-        this._offscreen.remove();
+        this.offscreen.remove();
     }
 
 }

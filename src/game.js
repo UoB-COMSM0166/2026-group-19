@@ -7,11 +7,6 @@
  *     the initial set of entities (player + walls)
  *   - Exposes update() for the main game loop and renderOnly() for frozen states
  *     (e.g. pause screen, game over)
- *
- * Usage:
- *   const game = new Game();
- *   game.loadLevel(1);   // build and spawn level 1
- *   game.update();       // call each frame in draw()
  */
 
 class Game {

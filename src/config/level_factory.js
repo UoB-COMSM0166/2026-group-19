@@ -1,10 +1,12 @@
-const GRID_COLS = 32; // 0–31
-const GRID_ROWS = 18; // 0–17
+const GRID_COLS = 32; // columns 0-31
+const GRID_ROWS = 18; // rows 0-17
 
+/**
+ * Converts a level template (defined in grid coordinates) into pixel-space
+ * data ready for the ECS. Merges default physics with any template overrides
+ * and difficulty settings, then scales all physics values to screen dimensions.
+ */
 class LevelFactory {
-    // Scales grid coordinates (or sizes) to pixel coordinates.
-    // Maps [0, GRID_COLS] -> [0, W]
-    //      [0, GRID_ROWS] -> [0, H]
     static scaleX(col, W) { return (col / GRID_COLS) * W; }
     static scaleY(row, H) { return (row / GRID_ROWS) * H; }
 
@@ -49,6 +51,10 @@ class LevelFactory {
         };
     }
 
+    /**
+     * Converts the platform list from a template into pixel-space wall descriptors.
+     * Grid coordinates are inclusive on both ends, so width spans x0 to x1+1.
+     */
     static buildWalls(platforms, W, H) {
         return platforms.map(p => {
             const left_x = Math.round(LevelFactory.scaleX(p.x0, W));
