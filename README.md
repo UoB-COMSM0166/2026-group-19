@@ -1008,7 +1008,7 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 | 8 | 72.5 | 72.5 | 0 |
 | 9 | 67.5 | 65 | -2.5 |
 | 10 | 70 | 72.5 | 2.5 |
-| **Average** | **68.25** | **68.2** | **-0.05** |
+| **Average** | **68.25** | **68.1** | **-0.15** |
 
 
 <p align="center">
