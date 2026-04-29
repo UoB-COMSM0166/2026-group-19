@@ -34,7 +34,7 @@ VIDEO. Include a demo video of your game here (you don't have to wait until the 
 | Jui Cheng Ho  | ax25117@bristol.ac.uk |                                          |
 | Wei Lun Chang | jb25862@bristol.ac.uk |                                          |
 | Chi-Wei Feng  | yx25778@bristol.ac.uk |                                          |
-| Johnny Fraser | qk18837@bristol.ac.uk |                                          |
+| Johnny Fraser | qk18837@bristol.ac.uk | Frontend, User Interfaces, Accessiblity  |
 | Oliver Parry  | nf25715@bristol.ac.uk | Frontend, Enemy Types, Entity Animations |
 
 
