@@ -1019,7 +1019,7 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 
 ### Performance Analysis & Interpretation: 
 
-The Wilcoxon Signed Rank Test produced a high p-value of 0.8336 (p > 0.06) , indicating no statistically significant difference in usability following the shift in difficulty. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the results suggest that the fixes to collision, boundaries and enemy pathing were effective in maintaining a consistent user experience. The minimal variation in scores indicates that the difficulty adjustment was well balanced; the game remained intuitive, and the “Hard” mode introduced challenge without causing frustration from technical issues or unintended behaviour.
+The Wilcoxon Signed Rank Test produced a high p-value of 0.8336 (p > 0.05) , indicating no statistically significant difference in usability following the shift in difficulty. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the results suggest that the fixes to collision, boundaries and enemy pathing were effective in maintaining a consistent user experience. The minimal variation in scores indicates that the difficulty adjustment was well balanced; the game remained intuitive, and the “Hard” mode introduced challenge without causing frustration from technical issues or unintended behaviour.
 
 However, the findings also highlight areas for improvement, particularly in accessibility through customisable controls and enhanced visual design. Overall, the results indicate that the initial issues were successfully resolved, allowing the gameplay to deliver a consistent sense of challenge that supports engagement with the win conditions.
 
