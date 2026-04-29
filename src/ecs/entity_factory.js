@@ -7,6 +7,11 @@ const EntityType = Object.freeze({
     BOX: 'BOX'
 })
 
+/**
+ * Constructs fully assembled ECS entities from a typed data descriptor.
+ * All entity creation in the game goes through this class so that component
+ * composition is centralised and other systems never build entities directly.
+ */
 class EntityFactory {
     constructor(ecs, assets) {
         this.ecs = ecs;
@@ -27,8 +32,11 @@ class EntityFactory {
         this.physics = physics;
     }
 
-    // Public Methods
-
+    /**
+     * Public entry point. Dispatches to the correct private creator based on type.
+     * @param {EntityType} type - The kind of entity to create.
+     * @param {Object} data - Spawn parameters; shape depends on the entity type.
+     */
     create(type, data) {
         switch (type) {
             case EntityType.PLAYER:         return this.createPlayer(data);
@@ -41,33 +49,22 @@ class EntityFactory {
         }
     }
 
-    // Private Methods
+    /**
+     * Creates the player entity with movement, animation, and health components.
+     * @param {{ center_x, center_y, width, height, health }} data
+     */
     createPlayer(data) {
-        /*
-         * createPlayer(data)
-         * data should contain:
-         *   - center_x: number  // center x position
-         *   - center_y: number  // center y position
-         *   - width: number
-         *   - height: number
-         */
         const entity = this.ecs.createEntity();
         const components = this.playerComponents(data);
         this.addAll(entity, components);
         return entity;
     }
 
+    /**
+     * Creates a ground enemy that walks and is affected by full gravity.
+     * @param {{ center_x, center_y, width, height, health, color, isLarge }} data
+     */
     createEnemy(data) {
-        /*
-         * createEnemy(data)
-         * data should contain:
-         *   - center_x: number
-         *   - center_y: number
-         *   - width: number
-         *   - height: number
-         *   - health: number
-         *   - color: RGB
-         */
         const entity = this.ecs.createEntity();
         const components = this.enemyComponents(data);
         components.push(new Acceleration(0, this.physics.gravity));
@@ -75,17 +72,12 @@ class EntityFactory {
         return entity;
     }
 
+    /**
+     * Creates a floating enemy that hovers under reduced gravity and steers
+     * toward the player. Starts moving in a random horizontal direction.
+     * @param {{ center_x, center_y, width, height, health, color }} data
+     */
     createFloatingEnemy(data) {
-        /*
-         * createFloatingEnemy(data)
-         * data should contain:
-         *   - center_x: number
-         *   - center_y: number
-         *   - width: number
-         *   - height: number
-         *   - health: number
-         *   - color: RGB
-         */
         const entity = this.ecs.createEntity();
         const speed = this.physics.enemySpeed * (Math.random() < 0.5 ? -1 : 1);
 
@@ -103,16 +95,12 @@ class EntityFactory {
     return entity;
     }
 
+    /**
+     * Creates a wall entity. Spawnable platforms get a tile image and a
+     * SpawnablePlatform component so BoxSpawnSystem can place boxes on them.
+     * @param {{ left_x, top_y, width, height, spawnable?: boolean }} data
+     */
     createWall(data) {
-        /*
-         * createWall(data)
-         * data should contain:
-         *   - left_x: number     // left/top coordinates (not center)
-         *   - top_y: number
-         *   - width: number
-         *   - height: number
-         *   - spawnable?: boolean (optional) // whether wall can spawn boxes on top
-         */
         const entity = this.ecs.createEntity();
         const components = [
             this.centeredPosition(data),
@@ -131,15 +119,11 @@ class EntityFactory {
         return entity;
     }
 
+    /**
+     * Creates a weapon box that the player can pick up.
+     * @param {{ left_x, top_y, width, height }} data
+     */
     createBox(data) {
-        /*
-         * createBox(data)
-         * data should contain:
-         *   - left_x: number
-         *   - top_y: number
-         *   - width: number
-         *   - height: number
-         */
         const entity = this.ecs.createEntity();
         this.addAll(entity, [
             this.centeredPosition(data),
@@ -149,20 +133,11 @@ class EntityFactory {
         return entity;
     }
 
+    /**
+     * Creates a projectile. Uses the rocket image for rockets, bullet image otherwise.
+     * @param {{ center_x, center_y, width, height, velocity_x, velocity_y, damage, range, bounce, isRocket }} data
+     */
     createProjectile(data) {
-        /*
-         * createProjectile(data)
-         * data should contain:
-         *   - center_x: number
-         *   - center_y: number
-         *   - width: number
-         *   - height: number
-         *   - velocity_x: number
-         *   - velocity_y: number
-         *   - damage: number
-         *   - range: number
-         *   - bounce: number
-         */
         const entity = this.ecs.createEntity();
         const projectile = new Projectile(data.damage, data.range, data.bounce);
         const img = data.isRocket ? this.rocketImage : this.bulletImage;
@@ -175,8 +150,10 @@ class EntityFactory {
         return entity;
     }
 
-    // Helpers
-
+    /**
+     * Returns the component list for a player entity. Split out so tests and
+     * other creators can reuse it without going through create().
+     */
     playerComponents(data) {
         return [
             new Position(data.center_x, data.center_y, data.width, data.height),
@@ -189,6 +166,10 @@ class EntityFactory {
         ];
     }
 
+    /**
+     * Returns the component list shared by all ground enemy variants. Selects
+     * the correct sprite sheet and frame size based on the isLarge flag.
+     */
     enemyComponents(data) {
         const speed = this.physics.enemySpeed * (Math.random() < 0.5 ? -1 : 1);
 
@@ -206,10 +187,16 @@ class EntityFactory {
         ];
     }
 
+    /**
+     * Converts a top-left-anchored rect into a center-anchored Position component.
+     */
     centeredPosition({ left_x, top_y, width, height }) {
         return new Position(left_x + width / 2, top_y + height / 2, width, height);
     }
 
+    /**
+     * Adds an array of components to an entity in one call.
+     */
     addAll(entity, components) {
         for (const component of components) {
             this.ecs.addComponent(entity, component);
