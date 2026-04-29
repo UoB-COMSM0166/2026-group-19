@@ -1,3 +1,7 @@
+/**
+ * Abstract base class for all ECS systems.
+ * Provides shared collision utilities used by multiple systems.
+ */
 class System {
     constructor(ecs) {
         this.ecs = ecs;
@@ -7,17 +11,14 @@ class System {
         throw new Error("System subclasses must implement update()");
     }
 
-    // Perhaps not the cleanest to have collision methods in base class when not all systems need it
-    // Maybe move to somewhere else later?
+    /**
+     * Iterates all entities matching the given components and invokes the callback
+     * for each one whose bounding box overlaps with pos's bounding box.
+     * @param {Position} pos - The position to test collisions against.
+     * @param {Function[]} components - Component types to filter candidate entities.
+     * @param {Function} callback - Called with the entity id for each overlapping entity.
+     */
     forEachCollision(pos, components, callback) {
-        /*
-        Iterates through all entities with the given components and calls the
-        callback for each entity whose bounding box collides with the given positition's bounding box.
-
-        Position pos - The position to check collisions against
-        Component[] components - Array of component types to query (e.g., [Enemy, Position])
-        Function callback - A function reference/pointer called with entity id for each collision found
-        */
         const ids = this.ecs.getEntitiesWith(...components);
         const bb_a = pos.getBoundingBox();
         for (let id of ids) {
@@ -30,11 +31,11 @@ class System {
         }
     }
 
+    /**
+     * AABB collision detection.
+     * Returns true if bounding box a and bounding box b are overlapping.
+     */
     collides(a, b) {
-        /*
-        AABB collision detection.
-        Returns true if bounding box a and bounding box b are overlapping.
-        */
         return a.left_x < b.left_x + b.w &&
             a.left_x + a.w > b.left_x &&
             a.top_y < b.top_y + b.h &&

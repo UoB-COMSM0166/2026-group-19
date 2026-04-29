@@ -1,10 +1,13 @@
+/**
+ * Drives sprite animation for all entities with Animation and Velocity components.
+ * Each tick it selects the appropriate clip based on entity state, then advances the frame.
+ */
 class AnimationSystem extends System {
     constructor(ecs) {
         super(ecs);
     }
 
     update(dt) {
-        // Update sets the correct frame to animate
         const now = millis();
         const entities = this.ecs.getEntitiesWith(Animation, Velocity);
 
@@ -21,12 +24,16 @@ class AnimationSystem extends System {
         }
     }
 
+    /**
+     * Chooses which animation clip should be playing based on movement and hurt state.
+     * While a HURT animation is active it is held until its timer expires, after which
+     * normal selection resumes. Facing direction is updated from velocity for non-player
+     * entities (enemies); the player's direction is managed by the input system instead.
+     */
     selectAnimation(char, anim, vel, now, player) {
         const hurtEnded = (anim.current === AnimationType.HURT && now > anim.hurtUntil);
-        if (anim.current === AnimationType.HURT && !hurtEnded) return; // locked in hurt
+        if (anim.current === AnimationType.HURT && !hurtEnded) return;
 
-        // Only update direction from velocity for non-players — player direction is
-        // set exclusively by input so recoil and other external forces don't flip the sprite.
         if (!player) {
             if (vel.vx > 0.05) {
                 char.direction = DIR_RIGHT;
@@ -39,6 +46,11 @@ class AnimationSystem extends System {
         anim.setAnimation(isMoving ? AnimationType.MOVE : AnimationType.IDLE);
     }
 
+    /**
+     * Advances the current clip by one frame when enough time has elapsed.
+     * Looping clips wrap back to frame 0; non-looping clips clamp at the last frame.
+     * The timer remainder is preserved across frame boundaries to keep cadence accurate.
+     */
     advanceFrame(anim, dt) {
         const animationData = anim.animations[anim.current];
         if (!animationData) return;
@@ -46,7 +58,6 @@ class AnimationSystem extends System {
         anim.timer += dt * 0.006;
         if (anim.timer < animationData.duration_s) return;
 
-        // Increment frame index
         const nextFrame = anim.frameIndex + 1;
         anim.frameIndex = animationData.loop
             ? nextFrame % animationData.frames.length               // Wrap-around

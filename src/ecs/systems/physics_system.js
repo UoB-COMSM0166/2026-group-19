@@ -3,38 +3,30 @@ const Axis = Object.freeze({
     Y: 'y'
 });
 
+/**
+ * Simulates physics for all entities with Position and Velocity components.
+ * Each frame it applies gravity, integrates velocity into position axis-by-axis,
+ * and resolves wall collisions to prevent penetration. Entities that fall below
+ * the screen are either removed (dying/droplets) or respawned at the top (enemies,
+ * who also gain a speed boost and switch to their angry sprite on respawn).
+ */
 class PhysicsSystem extends System {
-    /*
-    Handles all physics simulation for the game.
-
-    Responsibilities:
-    - Apply gravity
-    - Update entity positions based on velocity
-    - Resolve all collisions between entities
-
-    The system processes entities in two phases per frame:
-    - Movement Phase: Apply velocity and gravity, resolve wall collisions (axis-by-axis to allow sliding)
-    - Interaction Phase: Check for gameplay interactions (pickups, damage, etc.)
-    */
     constructor(ecs) {
         super(ecs);
-        this.physics = defaults.physics; // Terminal velocity
+        this.physics = defaults.physics;
     }
 
     applyPhysics(physics) {
         this.physics = physics;
     }
 
+    /**
+     * For each moving entity: applies acceleration (with gravity scaled down for dying
+     * entities), clamps player horizontal speed and decays recoil, moves along X then
+     * resolves wall collisions, moves along Y, handles screen-bottom exit, then resolves
+     * Y wall collisions. Enemy speed is capped and multiplied when in powerful state.
+     */
     update(dt) {
-        /*
-        Main update loop called each frame.
-        For each entity with Position and Velocity:
-        1. Apply gravity
-        2. Update X position and resolve wall collisions
-        3. Update Y position and resolve wall collisions
-        4. Check for interaction collisions (pickups, damage, etc.)
-        5. If entity fallen off bottom of screen, respawn at top
-        */
         const moving_ids = this.ecs.getEntitiesWith(Position, Velocity);
         
 
@@ -109,12 +101,12 @@ class PhysicsSystem extends System {
         }
     }
 
+    /**
+     * Pushes a character entity out of any overlapping walls along the given axis and
+     * stops the corresponding velocity component. Marks the character as onGround when
+     * a downward Y collision is resolved, which the InputSystem uses to gate jumping.
+     */
     resolveMovementCollisions(id, axis) {
-        /*
-        Resolves collsions between a character and walls for a specific axis.
-        Prevents characters from passing through walls by pushing them out and stopping velocity.
-        Also marks the character as "on ground" if they collide with a floor (for jumping logic in InputSystem)
-        */
         const char = this.ecs.getComponent(id, Character);
         if (!char) return;
         const pos = this.ecs.getComponent(id, Position);
@@ -135,8 +127,12 @@ class PhysicsSystem extends System {
         })
     }
 
+    /**
+     * Calculates and applies the positional correction and velocity cancellation for a
+     * single wall overlap detected along the given axis. Players stop dead on wall contact;
+     * enemies reverse direction. Floating enemies bounce vertically instead of stopping.
+     */
     resolveWallPenetration(pos, vel, char, player, floating, axis, wallPos, originalVel) {
-        // Helper private method for resolveMovementCollisions
         const bb_a = pos.getBoundingBox();
         const bb_b = wallPos.getBoundingBox();
 

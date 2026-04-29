@@ -10,7 +10,6 @@ class ProjectileSystem extends System {
             const projectile = this.ecs.getComponent(id, Projectile);
             const vel = this.ecs.getComponent(id, Velocity);
 
-            // Anchor beam to the player who fired it
             if (projectile.followEntity !== undefined) {
                 const ownerPos = this.ecs.getComponent(projectile.followEntity, Position);
                 if (ownerPos) {
@@ -20,13 +19,11 @@ class ProjectileSystem extends System {
                 }
             }
 
-            // Duration-based despawn (laser beams)
             if (projectile.duration > 0 && now - projectile.spawnTime >= projectile.duration) {
                 this.ecs.removeEntity(id);
                 continue;
             }
 
-            // Range-based despawn (regular projectiles)
             if (projectile.range > 0){
                 projectile.range -= Math.abs(vel.vx) * dt;
             }
