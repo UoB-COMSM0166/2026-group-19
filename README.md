@@ -136,7 +136,7 @@ In order to visualise our stakeholder relationships and begin to formalise requi
 
 ## Epics and User Stories
 
-We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. This characterisation of requirements Sections of two epics are displayed below as examples of this process.
+We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
 
 <table>
   <thead>
