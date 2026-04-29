@@ -76,9 +76,7 @@ class Weapon {
     this.type = type;
     if (type) {
       const config = WEAPON_CONFIGS[type];
-      // Copy all config fields onto this instance. Using Object.assign means
-      // new fields (e.g. pierce, duration, beamLength) are picked up automatically
-      // without having to update this list every time.
+      // Copy all config fields onto this instance.
       Object.assign(this, config);
       this.lastShotTime = 0;
     }
