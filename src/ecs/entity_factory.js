@@ -164,12 +164,7 @@ class EntityFactory {
          *   - bounce: number
          */
         const entity = this.ecs.createEntity();
-        const projectile = new Projectile(data.damage, data.range, data.bounce, data.pierce, data.duration);
-        if (data.followEntity !== undefined) {
-            projectile.followEntity = data.followEntity;
-            projectile.followDirection = data.followDirection;
-            projectile.followOffset = data.followOffset;
-        }
+        const projectile = new Projectile(data.damage, data.range, data.bounce);
         const img = data.isRocket ? this.rocketImage : this.bulletImage;
         this.addAll(entity, [
             new Position(data.center_x, data.center_y, data.width, data.height),

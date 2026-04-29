@@ -118,51 +118,37 @@ class InteractionSystem extends System {
         if (!pos) return;
         let hit = false;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
-            if (projectile.pierce) {
-                if (projectile.hitEnemies.has(enemyId)) return;
+            if (hit) return;
+            if (projectile.lastHitEnemy === enemyId) return;
+            hit = true;
 
-                const enemyChar = this.ecs.getComponent(enemyId, Character);
-                const enemyPos = this.ecs.getComponent(enemyId, Position);
-                enemyChar.health -= projectile.damage;
-                projectile.hitEnemies.add(enemyId);
-                soundManager.play('hitting_enemy');
+            const enemyVel = this.ecs.getComponent(enemyId, Velocity);
+            const enemyChar = this.ecs.getComponent(enemyId, Character);
+            const enemyPos = this.ecs.getComponent(enemyId, Position);
+            enemyChar.health -= projectile.damage;
+            projectile.lastHitEnemy = enemyId;
+            soundManager.play('hitting_enemy');
 
-                if (enemyChar.health <= 0) {
-                    this.handleDeath(enemyId, enemyPos);
-                }
+            if (enemyVel && vel) {
+                const knockback = this.physics.projectileKnockback;
+                const dirX = vel.vx >= 0 ? 1 : -1;
+                enemyVel.vx += dirX * pos.width / (enemyPos.width / 1.5) * knockback;
+            }
+
+            if (projectile.bounce > 0) {
+                vel.vx = -vel.vx;
+                projectile.bounce -= 1;
             } else {
-                if (hit) return;
-                if (projectile.lastHitEnemy === enemyId) return;
-                hit = true;
+                this.ecs.removeEntity(projectileId);
+            }
 
-                const enemyVel = this.ecs.getComponent(enemyId, Velocity);
-                const enemyChar = this.ecs.getComponent(enemyId, Character);
-                const enemyPos = this.ecs.getComponent(enemyId, Position);
-                enemyChar.health -= projectile.damage;
-                projectile.lastHitEnemy = enemyId;
-                soundManager.play('hitting_enemy');
+            if (enemyChar.health <= 0) {
+                this.handleDeath(enemyId, enemyPos);
+            }
 
-                if (enemyVel && vel) {
-                    const knockback = this.physics.projectileKnockback;
-                    const dirX = vel.vx >= 0 ? 1 : -1;
-                    enemyVel.vx += dirX * pos.width / (enemyPos.width / 1.5) * knockback;
-                }
-
-                if (projectile.bounce > 0) {
-                    vel.vx = -vel.vx;
-                    projectile.bounce -= 1;
-                } else {
-                    this.ecs.removeEntity(projectileId);
-                }
-
-                if (enemyChar.health <= 0) {
-                    this.handleDeath(enemyId, enemyPos);
-                }
-
-                const enemyAnim = this.ecs.getComponent(enemyId, Animation);
-                if (enemyAnim) {
-                    enemyAnim.hurtUntil = Math.max(enemyAnim.hurtUntil, millis() + defaults.hurtTime);
-                }
+            const enemyAnim = this.ecs.getComponent(enemyId, Animation);
+            if (enemyAnim) {
+                enemyAnim.hurtUntil = Math.max(enemyAnim.hurtUntil, millis() + defaults.hurtTime);
             }
         })
     }
@@ -174,7 +160,6 @@ class InteractionSystem extends System {
         const pos = this.ecs.getComponent(projectileId, Position);
         const projectile = this.ecs.getComponent(projectileId, Projectile);
         if (!pos) return;
-        if (projectile.pierce) return;
         this.forEachCollision(pos, [Wall, Position], (wallId) => {
             this.ecs.removeEntity(projectileId);
         })
