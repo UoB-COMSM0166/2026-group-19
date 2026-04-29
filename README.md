@@ -128,13 +128,15 @@ A standout success from the testing was the 'Lights Out!' mechanic seen above. I
 
 ## Identification of Stakeholders
 
+In order to visualise our stakeholder relationships and begin to formalise requirements, we created an onion model of Crate Expectations' stakeholders. This helped us to prioritize the needs of our core players and developers, while adhering to restrictions imposed by external platforms and regulators."
+
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
 
 *Figure 10: Onion Model*
 
 ## Epics and User Stories
 
-We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. Sections of two epics are displayed below as examples of this process.
+We categorized our requirements into a range of Epics to ensure all stakeholder needs from our Onion Model were addressed. This characterisation of requirements Sections of two epics are displayed below as examples of this process.
 
 <table>
   <thead>
@@ -180,7 +182,7 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
 
 ## User Personas
 
-In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
+In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we also developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
 
 This sped up development by allowing us to easily question what ‘Sam the Sensitive Hearing Gamer’ and other personas would think about a given change, and adjust accordingly. 
 
@@ -191,18 +193,27 @@ This sped up development by allowing us to easily question what ‘Sam the Sensi
 
 ##  Project Prioritization - MoSCoW Analysis
 
+In order to compare and prioritise our user stories, we used Moscow Analysis. We realised that this would allow us to complete the features with the highest 'value-to-effort' ratio possible before moving onto lower return tasks.
+
+We used Planning Poker to estimate the difficulty of each user story, deciding to keep our difficulty estimation categories limited to 'low', 'medium', and 'high'. We had limited game development experience at this point, and wanted only a rough estimate that we could reach a consensus on.
+
+Having already determined the value of each feature via our user testing and analysis, it was simple to assign each feature into the appropriate MoSCoW bucket. This process was vital in informing the order and focus of our sprints, and a subset of the decicions it helped us to make are displayed below.
+
 | Feature | Effort | Value | MoSCoW Bucket | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | **Core Physics & Gravity** | High | Critical | Must Have | The game is unplayable without stable physics, thus this is required for even the MVP. |
 | **Randomized Weapon Crates** | Medium | High | Must Have | This is the main hook of the game, and forms the fundamental gameplay loop .|
 | **Light's out Envimonmental Effect** | Medium | High | Should Have | This was a highly favoured feature during user testing that adds a unique twist to the game. |
-| **Multiple Control Schemes** | Low | High | Should Have | Allows players with control related accessibility needs to optimise their play. |
+| **Multiple Control Schemes** | Medium | High | Should Have | Allows players with control related accessibility needs to optimise their play. |
 | **Visual Hit-Flash Feedback** | Low | Medium | Should Have | Aids deaf players who cannot hear the 'hurt' sound effect to play easily. |
 | **Pause Menu & State Control** | Low | Medium | Should Have | Important for user control and allowing breaks without losing progress. |
 | **Local High Score Saving** | Medium | Medium | Could Have | This would encourage replayability but is not required for an early game iteration. |
 | **Online Global Leaderboard** | High | Medium | Won't Have | Leads to high server-side complexity and data protection considerations, with limited interest from play testers. |
 
 ## Use Case Diagram
+
+To illustrate system behaviour and user interaction, we developed a Use Case Diagram. This mapped out the different use cases prioritised in our MoSCoW analysis and was the final piece in visualising the complete user flows that would take place in Crate Expectations.
+
 ![Use Case Diagram](./image/use_case_diagram.jpg)
 
 *Figure 12: Use Case Diagram*
