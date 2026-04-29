@@ -47,6 +47,7 @@ Crate Expectations is based on "Super Crate Box", which is a fast-paced, 2D arca
 <p align="center">
   <img src="assets/intro.gif" width="300">
 </p>
+
 *Figure 2: Overview of Basic Gameplay*
 
 Each level in Crate Expectations features a unique theme, each with a different twist.
@@ -68,6 +69,7 @@ Each level in Crate Expectations features a unique theme, each with a different 
     </td>
   </tr>
 </table>
+
 *Figures 3, 4, 5: Showcase of Different Level Themes*
 
 
@@ -106,6 +108,7 @@ By selecting the strongest archetype from each genre, we maximised the breadth o
     <td>A range of beloved games from the 'Launcher' genre</td>
   </tr>
 </table>
+
 *Figures 6, 7: Game Inspiration*
 
 ## Paper Prototyping Sessions
@@ -120,6 +123,7 @@ By selecting the strongest archetype from each genre, we maximised the breadth o
     <td>Pingu's Day Out Prototype</td>
 </tr>
 </table>
+
 *Figures 8, 9: Paper Prototyping*
 
 These Paper Prototyping sessions provided critical data that shaped our final product. Users enjoyed the Super Crate Box concept, noting that it had clearer objectives and more intuitive game mechanics. This feedback, combined with the team's assessment of the project's Technical Scalability, led us to pivot away from the Launcher genre.
