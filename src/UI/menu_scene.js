@@ -19,7 +19,6 @@ class MenuScene extends Scene {
         this.menuItems = ["START", "LEVEL", "DIFFICULTY", "SETTINGS"];
 
         // fps Display
-        // this.fpsCounter = new drawFps();
 
         soundManager.playBg('menu_bgMusic');
     }
@@ -67,7 +66,6 @@ class MenuScene extends Scene {
         pop();
 
         // Draw HUD on top of everything
-        // this.fpsCounter.display();
     }
 
     drawControlBanner(menuFontSize) {

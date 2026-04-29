@@ -25,7 +25,6 @@ class PlayScene extends Scene {
             bgPath = "src/assets/space_background.png";
         }
         this.playBg = loadImage(bgPath);
-        // this.fpsCounter = new drawFps();
         this.scoreHUD = new ScoreHUD(this.game.ecs);
 
         this.spotlightGraphic = null;
@@ -105,7 +104,6 @@ class PlayScene extends Scene {
         // Draw HUD on top of everything
         // this.drawGrid();
         if (!this.hideHUD) this.scoreHUD.display();
-        // this.fpsCounter.display();
     }
 
     drawPickupText() {
