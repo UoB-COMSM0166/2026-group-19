@@ -1,3 +1,6 @@
+/**
+ * Manages loading, playing, and stopping all game audio, including background music and sound effects.
+ */
 class SoundManager {
     constructor() {
         this.sounds = {};
@@ -29,12 +32,11 @@ class SoundManager {
         this.sounds[name] = audio;
     }
 
-    // Call once on the first user gesture — browser blocks audio until then
     onUserInteraction() {
         if (this.userInteracted) return;
         this.userInteracted = true;
         if (this.pendingBg) {
-            this._startBg(this.pendingBg);
+            this.startBg(this.pendingBg);
             this.pendingBg = null;
         }
     }
@@ -57,7 +59,7 @@ class SoundManager {
             this.pendingBg = name;
             return;
         }
-        this._startBg(name);
+        this.startBg(name);
     }
 
     stopBg() {
@@ -68,7 +70,7 @@ class SoundManager {
         this.pendingBg = null;
     }
 
-    _startBg(name) {
+    startBg(name) {
         const src = this.sounds[name];
         if (!src) return;
         const bg = src.cloneNode();
