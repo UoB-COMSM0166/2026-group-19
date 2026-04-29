@@ -76,7 +76,7 @@ How long will you survive the endless onslaught? Just remember, with Crate Expec
 # 3. Requirements
 ## Genre Ideation & Investigation
 
-The first stage of our development process was to identify what type of game we wanted to make. To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied first place.
+The first stage of our development process was to identify what type of game we wanted to make. To begin, we discussed what types of games we enjoyed engaging with, and ended up with a list of genres that we all felt had potential. We used dot-voting to rank our preferences, allowing three votes per person. This allowed us to avoid anchoring onto one person's opinion and acted as a natural risk assessment, resulting in the ‘Action-Arcade Platformer’ and ‘Launcher’ genres tied for first place.
 
 | Genre | Total Votes | Status |
 | :--- | :---: | :--- |
@@ -94,7 +94,7 @@ The first stage of our development process was to identify what type of game we 
 
 Not wanting to pick a focus prematurely, we explored a range of games from each genre and, through another vote, selected Super Crate Box and Learn to Fly as the two that we would bring forward for user testing via a paper prototyping session.
 
-By selecting the strongest archetype from each genre, we maximized the breadth of useful feedback we were able to get from our peers acting as surrogate stakeholders. This also allowed us to avoid asking leading questions and instead use comparative questions when eliciting users' preferences, in order to avoid confirmation bias.
+By selecting the strongest archetype from each genre, we maximised the breadth of useful feedback we were able to get from our peers acting as surrogate stakeholders. This also allowed us to avoid asking leading questions and instead use comparative questions when eliciting users' preferences, in order to avoid confirmation bias.
 
 <table>
   <tr>
@@ -128,7 +128,7 @@ A standout success from the testing was the 'Lights Out!' mechanic seen above. I
 
 ## Identification of Stakeholders
 
-In order to visualise our stakeholder relationships and begin to formalise requirements, we created an onion model of Crate Expectations' stakeholders. This helped us to prioritize the needs of our core players and developers, while adhering to restrictions imposed by external platforms and regulators."
+In order to visualise our stakeholder relationships and specify requirements, we created an onion model of Crate Expectations' stakeholders. This helped us to prioritize the needs of our core players and developers, while adhering to restrictions imposed by external platforms and regulators.
 
 ![Onion Model of Stakeholders](./image/OnionModel.jpg)
 
@@ -191,19 +191,19 @@ This sped up development by allowing us to easily question what ‘Sam the Sensi
 
 *Figure 11: User Personas*
 
-##  Project Prioritization - MoSCoW Analysis
+## Project Prioritisation - MoSCoW Analysis
 
 In order to compare and prioritise our user stories, we used Moscow Analysis. We realised that this would allow us to complete the features with the highest 'value-to-effort' ratio possible before moving onto lower return tasks.
 
 We used Planning Poker to estimate the difficulty of each user story, deciding to keep our difficulty estimation categories limited to 'low', 'medium', and 'high'. We had limited game development experience at this point, and wanted only a rough estimate that we could reach a consensus on.
 
-Having already determined the value of each feature via our user testing and analysis, it was simple to assign each feature into the appropriate MoSCoW bucket. This process was vital in informing the order and focus of our sprints, and a subset of the decicions it helped us to make are displayed below.
+Having already determined the value of each feature via our user testing and analysis, it was simple to assign each feature into the appropriate MoSCoW bucket. This process was vital in informing the order and focus of our sprints, and a subset of the decisions it helped us to make are displayed below.
 
 | Feature | Effort | Value | MoSCoW Bucket | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
 | **Core Physics & Gravity** | High | Critical | Must Have | The game is unplayable without stable physics, thus this is required for even the MVP. |
-| **Randomized Weapon Crates** | Medium | High | Must Have | This is the main hook of the game, and forms the fundamental gameplay loop .|
-| **Light's out Envimonmental Effect** | Medium | High | Should Have | This was a highly favoured feature during user testing that adds a unique twist to the game. |
+| **Randomized Weapon Crates** | Medium | High | Must Have | This is the main hook of the game, and forms the fundamental gameplay loop.|
+| **Lights out Environmental Effect** | Medium | High | Should Have | This was a highly favoured feature during user testing that adds a unique twist to the game. |
 | **Multiple Control Schemes** | Medium | High | Should Have | Allows players with control related accessibility needs to optimise their play. |
 | **Visual Hit-Flash Feedback** | Low | Medium | Should Have | Aids deaf players who cannot hear the 'hurt' sound effect to play easily. |
 | **Pause Menu & State Control** | Low | Medium | Should Have | Important for user control and allowing breaks without losing progress. |
