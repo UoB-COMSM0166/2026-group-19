@@ -1,3 +1,7 @@
+/**
+ * Controls the movement of floating enemies, steering them toward the player
+ * when within range and reverting to passive drift when out of range.
+ */
 class FloatingSystem extends System {
     constructor(ecs) {
         super(ecs);
@@ -6,12 +10,17 @@ class FloatingSystem extends System {
 
     applyPhysics(physics) {
         this.physics = physics;
-    }  
+    }
 
+    /**
+     * For each floating enemy, applies directional acceleration toward the player when
+     * within half the screen height. When a previously in-range enemy moves out of range,
+     * acceleration is cleared and a random horizontal drift velocity is assigned.
+     */
     update(dt) {
         const player_ids = this.ecs.getEntitiesWith(Player, Position);
-        
-        // Assuming only 1 player now, if we add more players in future this will have to change
+
+        // Only supports a single player; behaviour is undefined with multiple players.
         if (player_ids.length !== 1) return;
         const playerPos = this.ecs.getComponent(player_ids[0], Position);
 

@@ -1,3 +1,9 @@
+/**
+ * Handles all gameplay-driven collisions: player-enemy contact, player-box pickups,
+ * projectile-enemy hits, and projectile-wall destruction. Also manages the consequences
+ * of those collisions: damage, knockback, score, weapon equipping, enemy death, and
+ * spawning blood-droplet particles.
+ */
 class InteractionSystem extends System {
     constructor(ecs, spawner) {
         super(ecs);
@@ -6,6 +12,10 @@ class InteractionSystem extends System {
         this.physics = defaults.physics;
     }
 
+    /**
+     * Checks all player-enemy, player-box, projectile-enemy, and projectile-wall
+     * collisions each frame and dispatches to the appropriate handler.
+     */
     update(dt) {
         const playerIds = this.ecs.getEntitiesWith(Player, Position);
 
@@ -26,6 +36,11 @@ class InteractionSystem extends System {
         this.physics = physics;
     }
 
+    /**
+     * Reduces player health on contact with an enemy, subject to an invincibility window
+     * set by hurtUntil. Triggers the Game Over scene when health reaches zero and
+     * starts the HURT animation timer on the player.
+     */
     handlePlayerEnemy(playerId) {
         const pos = this.ecs.getComponent(playerId, Position);
         const anim = this.ecs.getComponent(playerId, Animation);
@@ -34,13 +49,12 @@ class InteractionSystem extends System {
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
             const now = millis();
             if (anim.hurtUntil < now) {
-                char.health--; // Update health of player
+                char.health--;
                 soundManager.play('getting_hit');
             }
             console.log(char.health);
 
             if (char.health <= 0) {
-                // Trigger Game Over
                 console.log("Player dead");
                 soundManager.play('death');
                 soundManager.stopBg();
@@ -51,25 +65,27 @@ class InteractionSystem extends System {
                 }
             }
 
-
             if (anim) {
                 anim.hurtUntil = Math.max(anim.hurtUntil, now + defaults.hurtTime);
             }
         })
     }
 
+    /**
+     * Handles player contact with a weapon box: increments score, equips the weapon,
+     * attaches the weapon sprite if one exists, shows the pickup banner, and removes
+     * the box entity.
+     */
     handlePlayerBox(playerId) {
         const pos = this.ecs.getComponent(playerId, Position);
         if (!pos) return;
         this.forEachCollision(pos, [Box, Position], (boxId) => {
-            // Player gets weapon, box is removed, player score increments
             const box = this.ecs.getComponent(boxId, Box);
             const player = this.ecs.getComponent(playerId, Player);
             player.score++;
             box.pickUp();
             soundManager.play('weapon_pickup');
             this.ecs.addComponent(playerId, new Weapon(box.weapon));
-            // Attach weapon sprite if sprite data exists
             const spriteData = WEAPON_SPRITE_DATA[box.weapon];
             const spriteSheet = weaponSpriteSheets[box.weapon];
 
@@ -90,6 +106,11 @@ class InteractionSystem extends System {
         })
     }
 
+    /**
+     * Applies damage when a projectile overlaps an enemy. Projectiles hit one enemy per frame, 
+     * apply knockback, and are removed on impact unless they have remaining bounces. 
+     * Triggers handleDeath when an enemy's health reaches zero.
+     */
     handleProjectileEnemy(projectileId) {
         const pos = this.ecs.getComponent(projectileId, Position);
         const vel = this.ecs.getComponent(projectileId, Velocity);
@@ -98,7 +119,6 @@ class InteractionSystem extends System {
         let hit = false;
         this.forEachCollision(pos, [Enemy, Position], (enemyId) => {
             if (projectile.pierce) {
-                // Pierce: hit all enemies along the beam, but only once each
                 if (projectile.hitEnemies.has(enemyId)) return;
 
                 const enemyChar = this.ecs.getComponent(enemyId, Character);
@@ -111,7 +131,6 @@ class InteractionSystem extends System {
                     this.handleDeath(enemyId, enemyPos);
                 }
             } else {
-                // Normal: one enemy per frame
                 if (hit) return;
                 if (projectile.lastHitEnemy === enemyId) return;
                 hit = true;
@@ -123,7 +142,6 @@ class InteractionSystem extends System {
                 projectile.lastHitEnemy = enemyId;
                 soundManager.play('hitting_enemy');
 
-                // Enemy Knockback
                 if (enemyVel && vel) {
                     const knockback = this.physics.projectileKnockback;
                     const dirX = vel.vx >= 0 ? 1 : -1;
@@ -149,20 +167,26 @@ class InteractionSystem extends System {
         })
     }
 
+    /**
+     * Destroys a projectile when it contacts a wall.
+     */
     handleProjectileWall(projectileId) {
         const pos = this.ecs.getComponent(projectileId, Position);
         const projectile = this.ecs.getComponent(projectileId, Projectile);
         if (!pos) return;
-        if (projectile.pierce) return; // Beams ignore walls
+        if (projectile.pierce) return;
         this.forEachCollision(pos, [Wall, Position], (wallId) => {
             this.ecs.removeEntity(projectileId);
         })
     }
 
-    // Blood Splatter
+    /**
+     * Spawns blood-droplet particles that arc outward from the given position.
+     * Droplet count and speed are driven by the physics config.
+     */
     spawnDeathDroplets(x, y) {
         for (let i = 0; i < this.physics.dropletsPerDeath; i++) {
-            const angle = Math.random() * Math.PI * 2; // radians
+            const angle = Math.random() * Math.PI * 2;
             const speed = this.physics.minBloodSpeed + Math.random() * (this.physics.maxBloodSpeed - this.physics.minBloodSpeed);
             const bloodWidth = LevelFactory.scaleX(defaults.sizes.blood.width, width);
             const bloodHeight = LevelFactory.scaleY(defaults.sizes.blood.height, height);
@@ -179,11 +203,15 @@ class InteractionSystem extends System {
         }
     }
 
+    /**
+     * Transitions a killed enemy into the Dying state: strips Enemy/Character components,
+     * applies a random upward/sideways velocity, and spawns death droplets.
+     */
     handleDeath(enemyId, enemyPos) {
         const vel = this.ecs.getComponent(enemyId, Velocity);
         if (vel) {
-            vel.vy = -18; //knock upwards and to the side
-            vel.vx = (Math.random() - 0.5) * 15; //allow to tumble to the side
+            vel.vy = -18;
+            vel.vx = (Math.random() - 0.5) * 15;
         }
         this.ecs.removeComponent(enemyId, Enemy);
         this.ecs.removeComponent(enemyId, Character);

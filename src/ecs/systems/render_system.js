@@ -1,18 +1,20 @@
+/**
+ * Draws all renderable entities to the screen each frame.
+ * Wall tiles are rendered once into an offscreen buffer (wallCache) and stamped
+ * as a single image call for performance. All other entities are drawn individually,
+ * dispatching to an animated sprite path, a plain image path, or a fallback rectangle.
+ */
 class RenderSystem extends System {
-    /*
-    Handles drawing of all renderable entities to the screen
-    */
     constructor(ecs) {
         super(ecs);
         this.wallCache = null;
     }
 
+    /**
+     * Draws the wall cache first, then iterates all non-wall Position+Renderable entities,
+     * choosing the animated, plain-image, or rectangle draw path for each.
+     */
     update(dt) {
-        /*
-        Called every frame. Iterates over all entities with a Position and Renderable
-        component and dispatches to the correct drawing method based on what other
-        components the entity has (animated, tiled wall, or plain image/rectangle).
-        */
         const rend_ids = this.ecs.getEntitiesWith(Position, Renderable);
 
         // Draw wall cache first as a single image call
@@ -58,6 +60,10 @@ class RenderSystem extends System {
         }
     }
 
+    /**
+     * Renders all wall entities into an offscreen graphics buffer so they can be
+     * drawn as a single image call each frame instead of tile by tile.
+     */
     buildWallCache(img) {
         const buf = createGraphics(width, height);
         buf.imageMode(CORNER);
@@ -80,6 +86,11 @@ class RenderSystem extends System {
         this.wallCache = buf;
     }
 
+    /**
+     * Draws an entity using its sprite sheet animation. Applies rotation for dying entities,
+     * a red tint during the hurt window, and horizontal flipping based on facing direction.
+     * Also draws the held weapon sprite, mirrored on the opposite side for the two-way rifle.
+     */
     drawAnimated(id, char, anim, pos, bb, weapSprite) {
         const animData = anim.animations[anim.current];
         if (!animData) return;

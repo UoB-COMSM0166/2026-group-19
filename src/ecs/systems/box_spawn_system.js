@@ -1,3 +1,8 @@
+/**
+ * Ensures there is always exactly one weapon box present in the level.
+ * When no Box entities exist, it picks a random spawnable platform and
+ * places a new box on top of it at a random horizontal position.
+ */
 class BoxSpawnSystem extends System {
     constructor(ecs, spawner) {
         super(ecs);
@@ -5,14 +10,12 @@ class BoxSpawnSystem extends System {
         this.spawner = spawner;
     }
 
+    /**
+     * Checks each frame whether a box is present; spawns one if not.
+     */
     update(dt) {
-        /*
-        Update checks if there are currently no boxes in game.
-        If so, spawns a new box on a platform.
-        */
         const boxes = this.ecs.getEntitiesWith(Box);
         if (boxes.length === 0) {
-            // Spawn a new box
             const id = this.getRandomPlatform();
             if (!id) return;
 
@@ -33,13 +36,18 @@ class BoxSpawnSystem extends System {
         }
     }
 
+    /**
+     * Returns the entity ID of a randomly chosen platform that allows box spawning.
+     */
     getRandomPlatform() {
-        // Returns entity ID of random platform
         const platformIds = this.ecs.getEntitiesWith(SpawnablePlatform, Wall, Position);
         if (platformIds.length === 0) return;
         return platformIds[Math.floor(random(0, platformIds.length))];
     }
 
+    /**
+     * Returns a random X offset within the platform bounds that keeps the box fully on the platform.
+     */
     getRandomPositionOnPlatform(platformBoundingBox, boxW) {
         const max = platformBoundingBox.w - boxW;
         return Math.floor(random(0, max));

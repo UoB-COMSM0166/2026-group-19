@@ -10,6 +10,12 @@ const EnemyConfig = Object.freeze({
     [EnemyType.FLOATING]: { entityType: EntityType.FLOATING_ENEMY, width: defaults.sizes.enemy.width, height: defaults.sizes.enemy.height, healthKey: 'enemy', color: [10, 200, 255] },
 });
 
+/**
+ * Spawns enemies at a rate that scales with the player's score, making the game
+ * progressively harder over time. Supports three enemy types (NORMAL, LARGE, FLOATING)
+ * with configurable spawn weights per level. All enemies appear at the top-center of the
+ * screen and fall into the level.
+ */
 class EnemySpawnSystem extends System {
     constructor(ecs, spawner) {
         super(ecs);
@@ -32,11 +38,19 @@ class EnemySpawnSystem extends System {
         this.health = health;
     }
 
+    /**
+     * Resets the spawn timer and start delay, used when restarting a level.
+     */
     resetSpawnState() {
         this.spawnTimer = 0;
         this.startDelay = defaults.spawnStartDelay;
     }
 
+    /**
+     * Waits for the initial start delay, then fires a spawn request whenever
+     * the accumulated timer exceeds the effective spawn rate. The effective spawn
+     * rate decreases (faster spawning) as the player's score increases.
+     */
     update(dt) {
         if (this.startDelay > 0) {
             this.startDelay -= dt;
@@ -67,10 +81,13 @@ class EnemySpawnSystem extends System {
         }
     }
 
+    /**
+     * Picks a random enemy type using weighted probabilities from the physics config.
+     * Falls back to equal weighting if spawn weights are not defined in the level template.
+     */
     getRandomEnemyType() {
         const weights = this.physics.spawnWeights;
 
-        // Fallback to equal chance if weights aren't defined in the template
         if (!weights) {
             const types = [EnemyType.NORMAL, EnemyType.LARGE, EnemyType.FLOATING];
             return types[Math.floor(Math.random() * types.length)];
@@ -79,7 +96,6 @@ class EnemySpawnSystem extends System {
         const rand = Math.random();
         let cumulativeWeight = 0;
 
-        // Iterate through the types and check against the random roll
         if (rand < (cumulativeWeight += weights.normal)) return EnemyType.NORMAL;
         if (rand < (cumulativeWeight += weights.large)) return EnemyType.LARGE;
 
