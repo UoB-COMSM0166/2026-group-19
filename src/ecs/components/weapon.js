@@ -71,6 +71,12 @@ const WEAPON_NAMES = {
     [WeaponType.ROCKET]: "Bazooka",
 }
 
+/**
+ * Holds the active weapon state for an entity. All config fields from
+ * WEAPON_CONFIGS (fireRate, damage, speed, etc.) are copied directly onto the
+ * instance, so they can be read without an extra lookup. lastShotTime is used
+ * by WeaponSystem to enforce the fire-rate cooldown.
+ */
 class Weapon {
   constructor(type = null) {
     this.type = type;
