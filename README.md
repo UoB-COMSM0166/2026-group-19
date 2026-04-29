@@ -941,22 +941,28 @@ Sixteen participants were gathered in total from workshops. During this evaluati
     <img src="./image/thinkaloud_image.png" alt="Think Aloud User Quotes" width="70%">
 </p>
 
-#### Solutions and Adjustments
+*Figure 20: Think-Aloud User Quotes*
 
-**Navigation and Map**
+
+## Solutions and Adjustments
+
+### **Navigation and Map**
+
 *   **Issues:** Users found the movement smooth and enjoyable, however they found that the character could travel outside of the map boundaries.
-*   **Solution:** We implemented strict level colliders and invisible walls around the top of the map, so that players could not jump into the hole for the enemy spawn point.
+*   **Solution:** We implemented strict level colliders and invisible walls around the top of the map, so that players could not jump out of the playing area.
 
-**Game Objectives and Goal clarity**
+### **Game Objectives and Goal clarity**
+
 *   **Issues:** Players were confused about the win conditions. This was brought on by the lack of player death and a score tracker, and led to players not being incentivised to engage with the core mechanics of the game.
-*   **Solutions:** A score tracker was added, informing players of how many crates they had collected, and player death was implemented, giving a clear sense of the fail conditions of the game.
+*   **Solutions:** We added a score tracker to informe players of how many crates they had collected, and we implemented player death, to clearly communicate the game’s fail conditions.
 
-**Enemy Pathing and Difficulty**
-*   Enemy pathing and the presence of spots in the map where enemies did not cover led to users feeling as though enemies were not dangerous.
+### **Enemy Pathing and Difficulty**
+
+*   **Issues:** Enemy pathing and the presence of spots in the map where enemies did not cover led to users feeling as though enemies were not dangerous.
 *   **Solutions:** We implemented a new type of enemy, the floating enemy, which would intercept the player regardless of map position, and revised the enemy pathing to cover the whole map.
 
 #### Heuristic Evaluation
-To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desiribility bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes were then compiled and then subsequently worked over.
+To complement the Think-Aloud method, and to make up for the tendency of its results to be skewed by the social desiribility bias, we also utilised the Heuristic evaluation method as well. Five participants spent approximately half an hour going through the game and its interfaces multiple times, noting down any issues in the game’s usability as according to Nielsen’s 10 Principles of heuristic evaluation. These notes are compiled in the table below.
 
 | Interface Component | Issue | Heuristic(s) | Frequency (0-4) | Impact (0-4) | Persistence (0-4) | Severity (F+I+P)/3 |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
@@ -970,7 +976,7 @@ To complement the Think-Aloud method, and to make up for the tendency of its res
 
 Based on the severity scores, we prioritised fixes into three tiers, with 1 being critical, and 3 being minor. 🔴 Tier 1 (Critical) addressed the issues with the UI and the Level Design, as these were preventing users from carrying out the core principles of the game. 🟡 Tier 2 (Major) focused on the Enemy Pathing and Hitboxes, ensuring that the game felt responsive to player inputs. 🟢 Tier 3 (Minor) involved changing the way difficulty and enemy spawn times were implemented, which were addressed only once the first two tiers had been addressed.
 
-#### Quantitative Analysis: System Usability Scale (SUS)
+## Quantitative Analysis: System Usability Scale (SUS)
 To evaluate our game’s improvements, we transitioned from qualitative feedback to empirical, quantitative testing. We specifically measured whether players felt a heightened sense of danger and a clearer understanding of win conditions. Although we conducted tests for different difficulties, we decided on the System Usability Scale (SUS) over the NASA Task Load (TLX) to measure if we had met our objectives. This was because we wanted to ensure player satisfaction and good usability was attained, rather than simply measuring the volume of user workload.
 
 Ten participants were randomly selected to complete SUS evaluations for both “Easy” and “Hard” difficulties. We sought high usability scores to prove that the game is intuitive and to verify our refinements had enhanced the user experience.
@@ -994,9 +1000,13 @@ Ten participants were randomly selected to complete SUS evaluations for both “
     <img src="./image/sus_chart2.png" alt="SUS Usability Chart"width="50%">
 </p>
 
-*Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
+*Figure 21: Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
 
-**Performance Analysis & Interpretation:** The Wilcoxon Signed Rank Test yielded a p-value of 1.0 confirming that the shift in difficulty did not statistically impact usability. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the data proves that the fixes to collision, boundaries and enemy pathing were effective. The consistency of the scores suggests that difficulty was implemented correctly; the game remained intuitive, and the “Hard” difficulty provided a challenge without causing frustration from encountering bugs. However, these scores do reveal clear room for improvement, with users highlighting the need for enhanced accessibility (customisable controls) and better visual design. Overall, the study clearly shows that the initial issues had been successfully resolved, providing an engaging sense of danger to drive users to pursue the win conditions.
+### Performance Analysis & Interpretation: 
+
+The Wilcoxon Signed Rank Test produced a very high p-value (p ~ 1.0) , indicating no statistically significant difference in usability following the shift in difficulty. With average scores of 68.25 and 68.2 (consistent with the industry average of 68), the results suggest that the fixes to collision, boundaries and enemy pathing were effective in maintaining a consistent user experience. The minimal variation in scores indicates that the difficulty adjustment was well balanced; the game remained intuitive, and the “Hard” mode introduced challenge without causing frustration from technical issues or unintended behaviour.
+
+However, the findings also highlight areas for improvement, particularly in accessibility through customisable controls and enhanced visual design. Overall, the results indicate that the initial issues were successfully resolved, allowing the gameplay to deliver a consistent sense of challenge that supports engagement with the win conditions.
 
 #### Testing
 
