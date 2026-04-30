@@ -134,9 +134,9 @@ By selecting the strongest archetype from each genre, we maximised the breadth o
 
 *Figures 8, 9: Paper Prototyping*
 
-These Paper Prototyping sessions provided critical data that shaped our final product. Users enjoyed the Super Crate Box concept, noting that it had clearer objectives and more intuitive game mechanics. This feedback, combined with the team's assessment of the project's Technical Scalability, led us to pivot away from the Launcher genre.
+These Paper Prototyping sessions provided critical data that shaped our final product. Users enjoyed the Super Crate Box concept, noting that it had clearer objectives and more intuitive game mechanics. This feedback, combined with the team's assessment of the project's technical scalability, led us to pivot away from the Launcher genre.
 
-A standout success from the testing was the 'Lights Out!' mechanic seen above. Initially only a throwaway prototype, its popularity during user testing led us to prioritise it as a strong Should-Have requirement. It evolved into the 'Dark Mine' area in our final game, adding atmospheric depth and a unique challenge to the Level 1 environment.
+A standout success from the testing was the 'Lights Out!' mechanic seen above. Initially only a throwaway prototype, its popularity during user testing led us to prioritise it as a strong Should-Have requirement. It evolved into the 'Cave' area in our final game, adding atmospheric depth and a unique challenge to the Level 1 environment.
 
 ## Identification of Stakeholders
 
@@ -197,7 +197,6 @@ We categorized our requirements into a range of Epics to ensure all stakeholder 
 In order for us to be able to empathise with our users, and consider how development changes would impact different groups, we also developed a range of distinct User Personas derived from our initial surrogate stakeholder feedback. 
 
 This sped up development by allowing us to easily question what ‘Sam the Sensitive Hearing Gamer’ and other personas would think about a given change, and adjust accordingly. 
-
 
 ![User Personas](./image/user_personas.png)
 
