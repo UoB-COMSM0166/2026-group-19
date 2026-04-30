@@ -3,8 +3,7 @@
 <center><strong>Outrun, outshoot, and outlast the growing chaos!</strong></center>
 
 [CLICK HERE TO PLAY!](https://uob-comsm0166.github.io/2026-group-19/)
-
-VIDEO. Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
+[CLICK HERE TO WATCH OUR VIDEO 🎥!](https://www.youtube.com/watch?v=ibzO6W-_klo)
 
 # Table of Contents
 1. [Development Team](#1-development-team)
