@@ -1,10 +1,18 @@
 ![Banner](image/banner.png)
 
-<center><strong>Outrun, outshoot, and outlast the growing chaos!</strong></center>
+<center>
+    <p>
+          <strong>Outrun, outshoot, and outlast the growing chaos!</strong>  
+    </p>
+    <p>
+        <a href="https://uob-comsm0166.github.io/2026-group-19/">CLICK HERE TO PLAY!</a>
+    </p>
+	<p>
+         <a href="https://www.youtube.com/watch?v=ibzO6W-_klo">CLICK HERE TO WATCH OUR VIDEO 🎥!</a>   
+    </p>
+</center>
 
-[CLICK HERE TO PLAY!](https://uob-comsm0166.github.io/2026-group-19/)
 
-[CLICK HERE TO WATCH OUR VIDEO 🎥!](https://www.youtube.com/watch?v=ibzO6W-_klo)
 
 # Table of Contents
 1. [Development Team](#1-development-team)
@@ -28,14 +36,14 @@
 
 *Figure 1: Group Photo*
 
-| Name          | Email                 | Primary Roles                            |
-| ------------- | --------------------- | -----------------------------------------|
-| Alex Hoover   | lv25122@bristol.ac.uk | Backend, ECS Framework, Physics System   |
-| Jui Cheng Ho  | ax25117@bristol.ac.uk |                                          |
-| Wei Lun Chang | jb25862@bristol.ac.uk |                                          |
-| Chi-Wei Feng  | yx25778@bristol.ac.uk | Frontend, Shader, Sound Effects          |
-| Johnny Fraser | qk18837@bristol.ac.uk | Frontend, User Interfaces, Accessibility  |
-| Oliver Parry  | nf25715@bristol.ac.uk | Frontend, Enemy Types, Entity Animations |
+| Name          | Email                 | Primary Roles                                              |
+| ------------- | --------------------- | ---------------------------------------------------------- |
+| Alex Hoover   | lv25122@bristol.ac.uk | Backend, ECS Framework, Physics System, Project Management |
+| Jui Cheng Ho  | ax25117@bristol.ac.uk | Backend, Level Design, Playability and Difficulty Design   |
+| Wei Lun Chang | jb25862@bristol.ac.uk | Backend, Weapon Design and Implementation                  |
+| Chi-Wei Feng  | yx25778@bristol.ac.uk | Frontend, Shader, Sound Effects                            |
+| Johnny Fraser | qk18837@bristol.ac.uk | Frontend, User Interfaces, Accessibility                   |
+| Oliver Parry  | nf25715@bristol.ac.uk | Frontend, Enemy Types, Entity Animations                   |
 
 
 # 2. Introduction
@@ -73,7 +81,7 @@ Each level in Crate Expectations features a unique theme, each with a different 
 *Figures 3, 4, 5: Showcase of Different Level Themes*
 
 
-How long will you survive the endless onslaught? Just remember, with Crate Expectations come Crate Responsibility (sequel coming soon).
+How long will you survive the endless onslaught? Just remember, with Crate Expectations comes Crate Responsibility (sequel coming soon).
 
 # 3. Requirements
 ## Genre Ideation & Investigation
@@ -704,8 +712,6 @@ classDiagram
 
 ​    +maxRange
 
-​    +pellets
-
 ​    +bounce
 
   }
@@ -718,8 +724,6 @@ classDiagram
 
 ​    +bounce
 
-​    +pierce
-
 ​    +duration
 
 ​    +spawnTime
@@ -727,12 +731,6 @@ classDiagram
 ​    +lastHitEnemy
 
 ​    +hitEnemies : Set
-
-​    +followEntity
-
-​    +followDirection
-
-​    +followOffset
 
   }
 
@@ -942,7 +940,7 @@ A further issue arose from differences in screen aspect ratios, which caused lev
 
 # 6. Evaluation
 
-As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. We assessed the game using quantitative and qualitative methods, to give us the clearest picture possible of any potential usability issues whilst minimising the weaknesses that any one method may have.
+As part of the development process, the game went through several rounds of evaluation to ensure that the software was meeting the user requirements we had set out to achieve previously. We used a combination of quantitative and qualitative methods to gain a well-rounded understanding of potential usability issues, while reducing the limitations associated with relying on a single evaluation approach.
 
 #### Qualitative Evaluation: Think-Aloud
 Sixteen participants were gathered in total from workshops. During this evaluation, users were asked to navigate around the map, interact with enemy entities, and pick up crates that spawned around the map. Players were encouraged to express their thoughts as they played. The results are as follows:
@@ -1010,9 +1008,8 @@ Ten participants were randomly selected to complete SUS evaluations for both “
 | 10 | 70 | 72.5 | 2.5 |
 | **Average** | **68.25** | **68.1** | **-0.15** |
 
-
 <p align="center">
-    <img src="./image/sus_chart2.png" alt="SUS Usability Chart"width="50%">
+    <img src="./image/sus_chart2.png" alt="SUS Usability Chart"width="70%">
 </p>
 
 *Figure 21: Comparison of System Usability Scale (SUS) Scores across Easy and Hard difficulties.*
@@ -1023,15 +1020,17 @@ The Wilcoxon Signed Rank Test produced a high p-value of 0.8336 (p > 0.05) , ind
 
 However, the findings also highlight areas for improvement, particularly in accessibility through customisable controls and enhanced visual design. Overall, the results indicate that the initial issues were successfully resolved, allowing the gameplay to deliver a consistent sense of challenge that supports engagement with the win conditions.
 
-#### Testing
+## Testing
 
 We adopted a varied approach to testing to ensure that requirements were being conformed to. The majority of our quality assurance was achieved through black-box methods, looking at the player perception without relying on internal code knowledge.
 
 As part of fulfilling the black-box method, we utilised **Boundary Value Analysis (BVA)** to test edge cases within our code. For example, we identified that the player would phase through boundary walls when a weapon was used and the knockback mechanic would be applied. Additionally, **Equivalence Partitioning** was used to categorise object interactions. Inputs were divided into valid and invalid partitions to test how the system handled different classes of collisions, such as player vs. crate, and player vs. enemy.
 
-We also adopted **white-box testing** to ensure core internal systems were running correctly. These tests were written using the Jest framework and organised into four suites. Contrary to the black-box testing, this allowed us to directly inspect internal implementation details and prioritise high code coverage across our most critical systems. Using the Jest framework, we were able to acheive a 94.36% Statement Coverage and an 82.6% Branch Coverage across our core logic. This ensured that we were not only executing the code but also validating nearly every logical path within the ECS and Physics components. These high metrics show that we were conforming to user requirements, and ensuring that internal events like player-death and collision handling were responding correctly to game data under a wide variety of conditions, thereby reducing potential maintenance costs and identifying defects early in the development cycle.
+We also adopted **Whitebox Testing** to ensure core internal systems were running correctly. These tests were written using the Jest framework and organised into four suites. Contrary to the black-box testing, this allowed us to directly inspect internal implementation details and prioritise high code coverage across our most critical systems. Using the Jest framework, we were able to achieve a 94% statement coverage and an 83% branch coverage across our core logic. This ensured that we were not only executing the code but also validating nearly every logical path within the ECS and Physics components. These high metrics provide evidence that the game conforms to user requirements, and ensures that internal events like player-death and collision handling respond correctly to game data across a range of conditions. This helps reduce potential maintenance costs and allows defects to be identified early in the development cycle.
 
 <img src="./image/jest_coverage.png" alt="Jest Coverage Report" width="100%">
+
+*Figure 22: Whitebox Test Coverage Statistics*
 
 
 # 7. Process 
@@ -1042,13 +1041,13 @@ At project onset, our team adopted a flat structure where all members contribute
 To ensure our development stayed aligned with stakeholder expectations, one team member consistently acted as the **Client/Product Owner**. This role was responsible for validating features against our initial requirements and providing critical feedback during our "live" demonstrations, ensuring the "user's voice" was never lost in the technical implementation.
 
 ## Sprint Cadence: Planning & Retrospectives
-Our development followed a rigorous weekly agile cadence. We utilized **Tuesday workshop sessions** for **Sprint Planning**, where we brainstormed objectives, estimated task complexity, and assigned Jira tickets. To ensure transparency and iterative growth, we held **Friday Retrospectives** to showcase new features, reflect on the week's blockers, and discuss areas for improvement. This routine allowed us to transition from abstract ideas to technical proof-of-concepts effectively.
+Our development followed a rigorous weekly agile cadence. We utilized Tuesday workshop sessions for **Sprint Planning**, where we brainstormed objectives, estimated task complexity, and assigned Jira tickets. To ensure transparency and iterative growth, we held **Friday Retrospectives** to showcase new features, reflect on the week's blockers, and discuss areas for improvement. This routine allowed us to transition from abstract ideas to technical proof-of-concepts effectively.
 
 | **Sprint Management (Jira)** | **Visual Prototyping (Miro)** |
 | :---: | :---: |
 | <img src="./image/jira_kanban.png" width="400"> | <img src="./image/miro.png" width="400"> |
 
-*Figures 22, 23: Project Management Tools*
+*Figures 23, 24: Project Management Tools*
 
 During the early stages, we also utilized physical **Paper Prototyping** to validate our mechanics before writing a single line of code. This "low-fidelity" approach was instrumental in deciding to prioritize the "Lights Out" mechanic, which eventually became a core feature of the game.
 
@@ -1059,7 +1058,7 @@ To maintain high code quality and a clean project history, we implemented a stri
 | :---: | :---: |
 | <img src="./image/commit_style.png" width="400"> | <img src="./image/gitflow.png" width="400"> |
 
-*Figures 24, 25: Git Quality Control*
+*Figures 25, 26: Git Quality Control*
 
 ## Reflections & Adaptations
 
@@ -1210,7 +1209,7 @@ The insights from this framework were then used to construct a SusAF diagram, wh
 
 ![SusAF](image/SusAF-diagram.png)
 
-*Figure 26: SusAF Diagram*
+*Figure 27: SusAF Diagram*
 
 ## Sustainability in Design
 
@@ -1247,7 +1246,7 @@ By storing animation frames in one compact resource, we reduce bandwidth usage a
 
 ![SpriteSheet](src/assets/spriteEnemy.png)
 
-*Figure 27: Sprite Sheet*
+*Figure 28: Sprite Sheet*
 
 **2.  Optimising Image Size for Display [3]**
 
@@ -1312,7 +1311,7 @@ Overall, this project has been a wonderful learning experience. It has allowed u
 
 # 11. AI Statement
 
-We used AI tools in a limited way during the development of *Crate Expectations*. They were mainly used to help check grammar and improve figure style in our report. All technical content and analysis were written and checked by the team.
+We used AI tools in a limited way during the development of *Crate Expectations*. They were mainly used to help check grammar and improve figure style in our report. All technical content and analysis was written and checked by the team.
 
 We also used AI to help create some visual assets, such as background images and other artwork used in the game.
 
@@ -1322,10 +1321,10 @@ AI was **not** used to design or build the game systems, write gameplay code, or
 
 [1] Green Software Foundation, *Software Carbon Intensity (SCI) Specification*, Green Software Foundation. [Online]. Available: https://sci.greensoftware.foundation/. [Accessed: 26-Apr-2026].
 
-[2] Green Software Foundation, “Deprecate GIFs for animated content,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/deprecate-gifs/](https://patterns.greensoftware.foundation/catalog/web/deprecate-gifs/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
+[2] Green Software Foundation, “Deprecate GIFs for animated content,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/deprecate-gifs/](https://patterns.greensoftware.foundation/catalog/web/deprecate-gifs/). [Accessed: 26-Apr-2026].
 
-[3] Green Software Foundation, “Properly sized images,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/](https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
+[3] Green Software Foundation, “Properly sized images,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/](https://patterns.greensoftware.foundation/catalog/web/properly-sized-images/). [Accessed: 26-Apr-2026].
 
-[4] Green Software Foundation, “Cache static data,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/](https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/?utm_source=chatgpt.com). [Accessed: 26-Apr-2026].
+[4] Green Software Foundation, “Cache static data,” *Green Software Patterns*, [Online]. Available: [https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/](https://patterns.greensoftware.foundation/catalog/cloud/cache-static-data/). [Accessed: 26-Apr-2026].
 
 [5] "SH17A, "Tiny Clouds," *Shadertoy*. [Online]. Available: https://www.shadertoy.com/view/lsBfDz. [Accessed: 26-Apr-2026].
