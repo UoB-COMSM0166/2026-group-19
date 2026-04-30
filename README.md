@@ -33,7 +33,7 @@
 | Alex Hoover   | lv25122@bristol.ac.uk | Backend, ECS Framework, Physics System   |
 | Jui Cheng Ho  | ax25117@bristol.ac.uk |                                          |
 | Wei Lun Chang | jb25862@bristol.ac.uk |                                          |
-| Chi-Wei Feng  | yx25778@bristol.ac.uk |                                          |
+| Chi-Wei Feng  | yx25778@bristol.ac.uk | Frontend, Shader, Sound Effects          |
 | Johnny Fraser | qk18837@bristol.ac.uk | Frontend, User Interfaces, Accessibility  |
 | Oliver Parry  | nf25715@bristol.ac.uk | Frontend, Enemy Types, Entity Animations |
 
