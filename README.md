@@ -1,6 +1,6 @@
 ![Banner](image/banner.png)
 
-<center>
+<div align="center">
     <p>
           <strong>Outrun, outshoot, and outlast the growing chaos!</strong>  
     </p>
@@ -10,7 +10,7 @@
 	<p>
          <a href="https://www.youtube.com/watch?v=ibzO6W-_klo">CLICK HERE TO WATCH OUR VIDEO 🎥!</a>   
     </p>
-</center>
+</div>
 
 
 
