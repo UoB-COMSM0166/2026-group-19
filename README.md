@@ -1314,7 +1314,7 @@ We used AI tools in a limited way during the development of *Crate Expectations*
 
 We also used AI to help create some visual assets, such as background images and other artwork used in the game.
 
-AI was **not** used to design or build the game systems, write gameplay code, or produce evaluation results. All of the core development work was done by the team.
+AI was **not** used in decision-making, to design or build the game systems, or to produce evaluation results. All of the core development work was done by the team.
 
 # 12. References
 
